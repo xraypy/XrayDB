@@ -1,0 +1,2 @@
+include versioneer.py
+include xraydb/_version.py

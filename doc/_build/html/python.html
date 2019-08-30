@@ -1,0 +1,714 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using XrayDB from Python &mdash; X-ray DB:  X-ray Reference Data in SQLite</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="X-ray DB:  X-ray Reference Data in SQLite" href="index.html" />
+    <link rel="prev" title="Using the XrayDB xraydb.sqlite" href="dbschema.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dbschema.html" title="Using the XrayDB xraydb.sqlite"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using XrayDB from Python</a><ul>
+<li><a class="reference internal" href="#module-xraydb">XrayDB module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dbschema.html"
+                        title="previous chapter">Using the XrayDB  xraydb.sqlite</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/python.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-xraydb-from-python">
+<h1>Using XrayDB from Python<a class="headerlink" href="#using-xraydb-from-python" title="Permalink to this headline">¶</a></h1>
+<p>The wrappers/python directly contains a Python module for XrayDB.  This
+module gives a higher-level wrapping of the XrayDB, including the
+conversion of data from json-encoded data to numpy arrays.  The module
+requires the json, numpy, and sqlalchemy modules, and can be installed
+with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<div class="section" id="module-xraydb">
+<span id="xraydb-module"></span><h2>XrayDB module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
+<p>To use the XrayDB from python, create an instance, and start using it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="k">import</span> <span class="n">XrayDB</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">XrayDB</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span><span class="o">.</span><span class="n">xray_edge</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="go">XrayEdge(edge=25514.0, fyield=0.821892, jump_ratio=6.334)</span>
+</pre></div>
+</div>
+<blockquote id="xraydb-methods-table">
+<span id="index-0"></span><div><p>Table of XrayDB methods for Atomic and X-ray data for the elements.
+calculate and return some element-specific properties, given the
+element symbol or atomic number.  Most data extends to Z=98 (Cf), but
+much data for elements with atomic number &gt; 92 (U) may not be
+available, and may not be very reliable when provided.  Except where
+noted, the data comes from <span class="citation"><a class="reference internal" href="biblio.html#citation-elam-etal">Elam et al.</a><span> </span></span></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">XrayDB method</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.atomic_number" title="xraydb.XrayDB.atomic_number"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.atomic_number()</span></code></a></td>
+<td>atomic number from symbol</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.atomic_number" title="xraydb.XrayDB.atomic_number"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.atomic_number()</span></code></a></td>
+<td>atomic number from symbol</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.symbol" title="xraydb.XrayDB.symbol"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.symbol()</span></code></a></td>
+<td>atomic symbol from number</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.molar_mass" title="xraydb.XrayDB.molar_mass"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.molar_mass()</span></code></a></td>
+<td>atomic mass</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.density" title="xraydb.XrayDB.density"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.density()</span></code></a></td>
+<td>density of pure element</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.xray_edge" title="xraydb.XrayDB.xray_edge"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.xray_edge()</span></code></a></td>
+<td>xray edge data for a particular element and edge</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.xray_edges" title="xraydb.XrayDB.xray_edges"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.xray_edges()</span></code></a></td>
+<td>dictionary of all X-ray edges data for an element</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.xray_lines" title="xraydb.XrayDB.xray_lines"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.xray_lines()</span></code></a></td>
+<td>dictionary of all X-ray emission line data for an element</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.xray_line_strengths" title="xraydb.XrayDB.xray_line_strengths"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.xray_line_strengths()</span></code></a></td>
+<td>absolute line strength in cm^2/gr for all available lines</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.mu_elam" title="xraydb.XrayDB.mu_elam"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.mu_elam()</span></code></a></td>
+<td>absorption cross sectionm photo-electric or total</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.cross_section_elam" title="xraydb.XrayDB.cross_section_elam"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.cross_section_elam()</span></code></a></td>
+<td>photo-electric, coherent, or incoherent cross sections.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.corehole_width" title="xraydb.XrayDB.corehole_width"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.corehole_width()</span></code></a></td>
+<td>core level width for an element and edge (<span class="citation"></span>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.f0" title="xraydb.XrayDB.f0"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.f0()</span></code></a></td>
+<td>elastic scattering factor (<span class="citation"><a class="reference internal" href="biblio.html#citation-waasmaier-kirfel">Waasmaier and Kirfel</a><span> </span></span>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.f0_ions" title="xraydb.XrayDB.f0_ions"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.f0_ions()</span></code></a></td>
+<td>list of valid &quot;ions&quot; for <code class="xref py py-meth docutils literal"><span class="pre">f0()</span></code>  (<span class="citation"><a class="reference internal" href="biblio.html#citation-waasmaier-kirfel">Waasmaier and Kirfel</a><span> </span></span>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.chantler_energies" title="xraydb.XrayDB.chantler_energies"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.chantler_energies()</span></code></a></td>
+<td>energies of tabulation for Chantler data (<span class="citation"><a class="reference internal" href="biblio.html#citation-chantler">Chantler</a><span> </span></span>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.f1_chantler" title="xraydb.XrayDB.f1_chantler"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.f1_chantler()</span></code></a></td>
+<td><span class="math">\(f'(E)\)</span> anomalous scattering factor (<span class="citation"><a class="reference internal" href="biblio.html#citation-chantler">Chantler</a><span> </span></span>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#xraydb.XrayDB.f2_chantler" title="xraydb.XrayDB.f2_chantler"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.f2_chantler()</span></code></a></td>
+<td><span class="math">\(f&quot;(E)\)</span> anomalous scattering factor (<span class="citation"><a class="reference internal" href="biblio.html#citation-chantler">Chantler</a><span> </span></span>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#xraydb.XrayDB.mu_chantler" title="xraydb.XrayDB.mu_chantler"><code class="xref py py-meth docutils literal"><span class="pre">XrayDB.mu_chantler()</span></code></a></td>
+<td>absorption cross section (<span class="citation"><a class="reference internal" href="biblio.html#citation-chantler">Chantler</a><span> </span></span>)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div></blockquote>
+<dl class="class">
+<dt id="xraydb.XrayDB">
+<em class="property">class </em><code class="descclassname">xraydb.</code><code class="descname">XrayDB</code><span class="sig-paren">(</span><em>dbname='xraydb.sqlite'</em>, <em>read_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Database of Atomic and X-ray Data</p>
+<p>This XrayDB object gives methods to access the Atomic and
+X-ray data in th SQLite3 database xraydb.sqlite.</p>
+<p>Much of the data in this database comes from the compilation
+of Elam, Ravel, and Sieber, with additional data from Chantler,
+and other sources. See the documention and bibliography for
+a complete listing.</p>
+<dl class="method">
+<dt id="xraydb.XrayDB.atomic_number">
+<code class="descname">atomic_number</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.atomic_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>return element's atomic number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">atomic number</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">integer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.symbol">
+<code class="descname">symbol</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.symbol" title="Permalink to this definition">¶</a></dt>
+<dd><p>return element symbol</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">element symbol</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.molar_mass">
+<code class="descname">molar_mass</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.molar_mass" title="Permalink to this definition">¶</a></dt>
+<dd><p>return molar mass of element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">molar mass of element in amu</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.density">
+<code class="descname">density</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.density" title="Permalink to this definition">¶</a></dt>
+<dd><p>return density of pure element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">density of element in gr/cm^3</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.xray_edges">
+<code class="descname">xray_edges</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.xray_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns dictionary of X-ray absorption edge energy (in eV),
+fluorescence yield, and jump ratio for an element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>keys of edge (iupac symbol), and values of</dt>
+<dd>XrayEdge namedtuple of (energy, fyield, edge_jump))</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Elam, Ravel, and Sieber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.xray_edge">
+<code class="descname">xray_edge</code><span class="sig-paren">(</span><em>element</em>, <em>edge</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.xray_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns XrayEdge for an element and edge</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</li>
+<li><strong>edge</strong> (<em>string</em>) -- X-ray edge</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">namedtuple of (energy, fyield, edge_jump))</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">XrayEdge</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">XrayDB</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span><span class="o">.</span><span class="n">xray_edge</span><span class="p">(</span><span class="s1">&#39;Co&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="go">XrayEdge(edge=7709.0, fyield=0.381903, jump_ratio=7.796)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Elam, Ravel, and Sieber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.xray_lines">
+<code class="descname">xray_lines</code><span class="sig-paren">(</span><em>element</em>, <em>initial_level=None</em>, <em>excitation_energy=None</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.xray_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns dictionary of X-ray emission lines of an element, with</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>initial_level</strong> (<em>string or list/tuple of string</em>) -- initial level(s) to
+limit output.</li>
+<li><strong>excitation_energy</strong> (<em>float</em>) -- energy of excitation, limit output those
+excited by X-rays of this energy (in eV).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">keys of lines (iupac symbol), values of Xray Lines</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>if both excitation_energy and initial_level are given, excitation_level
+will limit output</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">XrayDB</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">xdb</span><span class="o">.</span><span class="n">xray_lines</span><span class="p">(</span><span class="s1">&#39;Ga&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>     <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+<span class="go">&#39;Ka3&#39;, XrayLine(energy=9068.0, intensity=0.000326203, initial_level=u&#39;K&#39;, final_level=u&#39;L1&#39;)</span>
+<span class="go">&#39;Ka2&#39;, XrayLine(energy=9223.8, intensity=0.294438, initial_level=u&#39;K&#39;, final_level=u&#39;L2&#39;)</span>
+<span class="go">&#39;Ka1&#39;, XrayLine(energy=9250.6, intensity=0.57501, initial_level=u&#39;K&#39;, final_level=u&#39;L3&#39;)</span>
+<span class="go">&#39;Kb3&#39;, XrayLine(energy=10263.5, intensity=0.0441511, initial_level=u&#39;K&#39;, final_level=u&#39;M2&#39;)</span>
+<span class="go">&#39;Kb1&#39;, XrayLine(energy=10267.0, intensity=0.0852337, initial_level=u&#39;K&#39;, final_level=u&#39;M3&#39;)</span>
+<span class="go">&#39;Kb5&#39;, XrayLine(energy=10348.3, intensity=0.000841354, initial_level=u&#39;K&#39;, final_level=u&#39;M4,5&#39;)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Elam, Ravel, and Sieber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.xray_line_strengths">
+<code class="descname">xray_line_strengths</code><span class="sig-paren">(</span><em>element</em>, <em>excitation_energy=None</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.xray_line_strengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the absolute line strength in cm^2/gr for all available lines</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- Atomic symbol or number for element</li>
+<li><strong>excitation_energy</strong> (<em>float</em>) -- incident energy, in eV</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">elemental line with fluorescence cross section in cm2/gr.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Elam, Ravel, and Sieber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.ck_probability">
+<code class="descname">ck_probability</code><span class="sig-paren">(</span><em>element</em>, <em>initial</em>, <em>final</em>, <em>total=True</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.ck_probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>return Coster-Kronig transition probability for an element and
+initial/final levels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- Atomic symbol or number for element</li>
+<li><strong>initial</strong> (<em>string</em>) -- initial level</li>
+<li><strong>final</strong> (<em>string</em>) -- final level</li>
+<li><strong>total</strong> (<em>bool</em>) -- whether to return total or partial probability</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">transition probability</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">XrayDB</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span><span class="o">.</span><span class="n">CK_probability</span><span class="p">(</span><span class="s1">&#39;Cu&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;L3&#39;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">0.681</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Elam, Ravel, and Sieber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.corehole_width">
+<code class="descname">corehole_width</code><span class="sig-paren">(</span><em>element</em>, <em>edge</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.corehole_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns core hole width for an element and edge</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string, integer</em>) -- atomic number or symbol for element</li>
+<li><strong>edge</strong> (<em>string</em>) -- edge for hole.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">corehole width in eV.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Keski-Rahkonen and Krause</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.cross_section_elam">
+<code class="descname">cross_section_elam</code><span class="sig-paren">(</span><em>element</em>, <em>energies</em>, <em>kind='photo'</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.cross_section_elam" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns Elam Cross Section values for an element and energies</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol for element</li>
+<li><strong>energies</strong> (<em>float or ndarray</em>) -- energies (in eV) to calculate cross-sections</li>
+<li><strong>kind</strong> (<em>string</em>) -- one of 'photo', 'coh', and 'incoh' for photo-absorption,
+coherent scattering, and incoherent scattering cross sections,
+respectively. Default is 'photo'.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ndarray of scattering data</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Elam, Ravel, and Sieber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.mu_elam">
+<code class="descname">mu_elam</code><span class="sig-paren">(</span><em>element</em>, <em>energies</em>, <em>kind='total'</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.mu_elam" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns attenuation cross section for an element at energies (in eV)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol for element</li>
+<li><strong>energies</strong> (<em>float or ndarray</em>) -- energies (in eV) to calculate cross-sections</li>
+<li><strong>kind</strong> (<em>string</em>) -- one of 'photo' or 'total' for photo-electric or
+total attenuation, respectively.  Default is 'total'.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ndarray of scattering values in units of cm^2/gr</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Elam, Ravel, and Sieber.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.chantler_energies">
+<code class="descname">chantler_energies</code><span class="sig-paren">(</span><em>element</em>, <em>emin=0</em>, <em>emax=1000000000.0</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.chantler_energies" title="Permalink to this definition">¶</a></dt>
+<dd><p>return array of energies (in eV) at which data is
+tabulated in the Chantler tables for a particular element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</li>
+<li><strong>emin</strong> (<em>float</em>) -- minimum energy (in eV) [0]</li>
+<li><strong>emax</strong> (<em>float</em>) -- maximum energy (in eV) [1.e9]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">energies</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Chantler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.f1_chantler">
+<code class="descname">f1_chantler</code><span class="sig-paren">(</span><em>element</em>, <em>energy</em>, <em>**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.f1_chantler" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns f1 -- real part of anomalous X-ray scattering factor
+for selected input energy (or energies) in eV.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</li>
+<li><strong>energy</strong> (<em>float or ndarray</em>) -- energies (in eV).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">real part of anomalous scattering factor</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Chantler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.f2_chantler">
+<code class="descname">f2_chantler</code><span class="sig-paren">(</span><em>element</em>, <em>energy</em>, <em>**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.f2_chantler" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns f2 -- imaginary part of anomalous X-ray scattering factor
+for selected input energy (or energies) in eV.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</li>
+<li><strong>energy</strong> (<em>float or ndarray</em>) -- energies (in eV).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">imaginary part of anomalous scattering factor</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Chantler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.mu_chantler">
+<code class="descname">mu_chantler</code><span class="sig-paren">(</span><em>element</em>, <em>energy</em>, <em>incoh=False</em>, <em>photo=False</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.mu_chantler" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns X-ray mass attenuation coefficient, mu/rho in cm^2/gr
+for selected input energy (or energies) in eV.
+default is to return total attenuation coefficient.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>string or int</em>) -- atomic number or symbol</li>
+<li><strong>energy</strong> (<em>float or ndarray</em>) -- energies (in eV).</li>
+<li><strong>photo</strong> (<em>bool</em>) -- return only the photo-electric contribution [False]</li>
+<li><strong>incoh</strong> (<em>bool</em>) -- return only the incoherent contribution [False]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mass attenuation coefficient in cm^2/gr</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Chantler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.f0_ions">
+<code class="descname">f0_ions</code><span class="sig-paren">(</span><em>element=None</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.f0_ions" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list of ion names supported for the .f0() function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> (<em>string, int, pr None</em>) -- atomic number, symbol, or ionic symbol
+of scattering element.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>if element is None, all 211 ions are returned.</dt>
+<dd>if element is not None, the ions for that element are returned</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">XrayDB</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span><span class="o">.</span><span class="n">f0_ions</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">)</span>
+<span class="go">[&#39;Fe&#39;, &#39;Fe2+&#39;, &#39;Fe3+&#39;]</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Z values from 1 to 98 (and symbols 'H' to 'Cf') are supported.</p>
+<p class="rubric">References</p>
+<p>Waasmaier and Kirfel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xraydb.XrayDB.f0">
+<code class="descname">f0</code><span class="sig-paren">(</span><em>ion</em>, <em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.XrayDB.f0" title="Permalink to this definition">¶</a></dt>
+<dd><p>return f0(q) -- elastic X-ray scattering factor from Waasmaier and Kirfel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ion</strong> (<em>string, int, or None</em>) -- atomic number, symbol or ionic symbol
+of scattering element.</li>
+<li><strong>q</strong> (<em>float, list, ndarray</em>) -- value(s) of q for scattering factors</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">elastic scattering factors</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">XrayDB</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span><span class="o">.</span><span class="n">f0</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="go">array([ 25.994603  ,   6.55945765,   3.21048827,   1.65112769,</span>
+<span class="go">         1.21133507,   1.0035555 ,   0.81012185,   0.61900285,</span>
+<span class="go">         0.43883403,   0.27673021])</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>q = sin(theta) / lambda, where theta = incident angle,
+and lambda = X-ray wavelength</p>
+<p class="rubric">References</p>
+<p>Waasmaier and Kirfel</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dbschema.html" title="Using the XrayDB xraydb.sqlite"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright Matthew Newville, The University of Chicago, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+    </div>
+  </body>
+</html>

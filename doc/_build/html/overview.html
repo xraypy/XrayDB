@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview of Atomic and X-ray Data &mdash; X-ray DB:  X-ray Reference Data in SQLite</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="X-ray DB:  X-ray Reference Data in SQLite" href="index.html" />
+    <link rel="next" title="Using the XrayDB xraydb.sqlite" href="dbschema.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dbschema.html" title="Using the XrayDB xraydb.sqlite"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview of Atomic and X-ray Data</a><ul>
+<li><a class="reference internal" href="#elements">Elements</a></li>
+<li><a class="reference internal" href="#x-ray-edges">X-ray Edges</a></li>
+<li><a class="reference internal" href="#x-ray-lines">X-ray Lines</a></li>
+<li><a class="reference internal" href="#energies">Energies</a></li>
+<li><a class="reference internal" href="#cross-sections">Cross Sections</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dbschema.html"
+                        title="next chapter">Using the XrayDB  xraydb.sqlite</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/overview.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="overview-of-atomic-and-x-ray-data">
+<h1>Overview of Atomic and X-ray Data<a class="headerlink" href="#overview-of-atomic-and-x-ray-data" title="Permalink to this headline">¶</a></h1>
+<p>The data provided in XrayDB includes Atomic data and characteristic
+energies and cross sections for the interaction of X-rays with elements.  A
+few definitions and conventions necessary for using this data are discussed
+here.</p>
+<div class="section" id="elements">
+<h2>Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h2>
+<p>Most of the data resources are accessed by an elements <em>Atomic Symbol</em>.
+For the Python module, most methods will take <cite>element</cite> as the first
+argument, and this can either be the integer atomic number or the string
+for the atomic symbol.</p>
+<p>Elemental densities are given in gr/cm^3, and molar masses are given in
+AMU.</p>
+</div>
+<div class="section" id="x-ray-edges">
+<h2>X-ray Edges<a class="headerlink" href="#x-ray-edges" title="Permalink to this headline">¶</a></h2>
+<p>Several resources (database tables, python methods) take either an <code class="docutils literal"><span class="pre">edge</span></code>
+or a <code class="docutils literal"><span class="pre">level</span></code> argument to signify a core electronic level.  These must be
+one of the levels listed in the <a class="reference internal" href="#xraydb-edge-table"><span class="std std-ref">Table of X-ray edge names</span></a>.</p>
+<blockquote id="xraydb-edge-table">
+<span id="index-0"></span><div><p>Table of X-ray Edges and Core electronic levels.  The Names are the
+IUPAC symbols for the core electronic levels.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="40%" />
+<col width="10%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">electronic level</th>
+<th class="head">Name</th>
+<th class="head">electronic level</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>K</td>
+<td><span class="math">\(1s\)</span></td>
+<td>N5</td>
+<td><span class="math">\(4d_{5/2}\)</span></td>
+</tr>
+<tr class="row-odd"><td>L3</td>
+<td><span class="math">\(2p_{3/2}\)</span></td>
+<td>N4</td>
+<td><span class="math">\(4d_{3/2}\)</span></td>
+</tr>
+<tr class="row-even"><td>L2</td>
+<td><span class="math">\(2p_{1/2}\)</span></td>
+<td>N3</td>
+<td><span class="math">\(4p_{3/2}\)</span></td>
+</tr>
+<tr class="row-odd"><td>L1</td>
+<td><span class="math">\(2s\)</span></td>
+<td>N2</td>
+<td><span class="math">\(4p_{1/2}\)</span></td>
+</tr>
+<tr class="row-even"><td>M5</td>
+<td><span class="math">\(3d_{5/2}\)</span></td>
+<td>N1</td>
+<td><span class="math">\(4s\)</span></td>
+</tr>
+<tr class="row-odd"><td>M4</td>
+<td><span class="math">\(3d_{3/2}\)</span></td>
+<td>O3</td>
+<td><span class="math">\(5p_{3/2}\)</span></td>
+</tr>
+<tr class="row-even"><td>M3</td>
+<td><span class="math">\(3p_{3/2}\)</span></td>
+<td>O2</td>
+<td><span class="math">\(5p_{1/2}\)</span></td>
+</tr>
+<tr class="row-odd"><td>M2</td>
+<td><span class="math">\(3p_{1/2}\)</span></td>
+<td>O1</td>
+<td><span class="math">\(5s\)</span></td>
+</tr>
+<tr class="row-even"><td>M1</td>
+<td><span class="math">\(3s\)</span></td>
+<td>P3</td>
+<td><span class="math">\(6p_{3/2}\)</span></td>
+</tr>
+<tr class="row-odd"><td>N7</td>
+<td><span class="math">\(4f_{7/2}\)</span></td>
+<td>P2</td>
+<td><span class="math">\(6p_{1/2}\)</span></td>
+</tr>
+<tr class="row-even"><td>N6</td>
+<td><span class="math">\(4f_{5/2}\)</span></td>
+<td>P1</td>
+<td><span class="math">\(6s\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="x-ray-lines">
+<h2>X-ray Lines<a class="headerlink" href="#x-ray-lines" title="Permalink to this headline">¶</a></h2>
+<p>Many resources (database tables or methods) take emission line arguments.
+These follow the latinized version of the Siegbahn notation as indicated in
+the <a class="reference internal" href="#xraydb-lines-table"><span class="std std-ref">Table of X-ray emission line names</span></a>.</p>
+<blockquote id="xraydb-lines-table">
+<span id="index-1"></span><div><blockquote>
+<div>Table of X-ray emission line names and the corresponding Siegbahn and IUPAC notations</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="11%" />
+<col width="30%" />
+<col width="8%" />
+<col width="13%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">IUPAC</th>
+<th class="head">Siegbahn</th>
+<th class="head">Name</th>
+<th class="head">IUPAC</th>
+<th class="head">Siegbahn</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Ka1</td>
+<td>K-L3</td>
+<td><span class="math">\(K\alpha_1\)</span></td>
+<td>Lb4</td>
+<td>L1-M2</td>
+<td><span class="math">\(L\beta_4\)</span></td>
+</tr>
+<tr class="row-odd"><td>Ka2</td>
+<td>K-L2</td>
+<td><span class="math">\(K\alpha_2\)</span></td>
+<td>Lb5</td>
+<td>L3-O4,5</td>
+<td><span class="math">\(L\beta_5\)</span></td>
+</tr>
+<tr class="row-even"><td>Ka3</td>
+<td>K-L1</td>
+<td><span class="math">\(K\alpha_3\)</span></td>
+<td>Lb6</td>
+<td>L3-N1</td>
+<td><span class="math">\(L\beta_6\)</span></td>
+</tr>
+<tr class="row-odd"><td>Kb1</td>
+<td>K-M3</td>
+<td><span class="math">\(K\beta_1\)</span></td>
+<td>Lg1</td>
+<td>L2-N4</td>
+<td><span class="math">\(L\gamma_1\)</span></td>
+</tr>
+<tr class="row-even"><td>Kb2</td>
+<td>K-N2,3</td>
+<td><span class="math">\(K\beta_2\)</span></td>
+<td>Lg2</td>
+<td>L1-N2</td>
+<td><span class="math">\(L\gamma_2\)</span></td>
+</tr>
+<tr class="row-odd"><td>Kb3</td>
+<td>K-M2</td>
+<td><span class="math">\(K\beta_3\)</span></td>
+<td>Lg3</td>
+<td>L1-N3</td>
+<td><span class="math">\(L\gamma_3\)</span></td>
+</tr>
+<tr class="row-even"><td>Kb4</td>
+<td>K-N4,5</td>
+<td><span class="math">\(K\beta_2\)</span></td>
+<td>Lg6</td>
+<td>L2-O4</td>
+<td><span class="math">\(L\gamma_6\)</span></td>
+</tr>
+<tr class="row-odd"><td>Kb5</td>
+<td>K-M4,5</td>
+<td><span class="math">\(K\beta_3\)</span></td>
+<td>Ll</td>
+<td>L3-M1</td>
+<td><span class="math">\(Ll\)</span></td>
+</tr>
+<tr class="row-even"><td>La1</td>
+<td>L3-M5</td>
+<td><span class="math">\(L\alpha_1\)</span></td>
+<td>Ln</td>
+<td>L2-M1</td>
+<td><span class="math">\(L\nu\)</span></td>
+</tr>
+<tr class="row-odd"><td>La2</td>
+<td>L3-M4</td>
+<td><span class="math">\(L\alpha_1\)</span></td>
+<td>Ma</td>
+<td>M5-N6,7</td>
+<td><span class="math">\(M\alpha\)</span></td>
+</tr>
+<tr class="row-even"><td>Lb1</td>
+<td>L2-M4</td>
+<td><span class="math">\(L\beta_1\)</span></td>
+<td>Mb</td>
+<td>M4-N6</td>
+<td><span class="math">\(M\beta\)</span></td>
+</tr>
+<tr class="row-odd"><td>Lb2,15</td>
+<td>L3-N4,5</td>
+<td><span class="math">\(L\beta_2,L\beta_{15}\)</span></td>
+<td>Mg</td>
+<td>M3-N5</td>
+<td><span class="math">\(M\gamma\)</span></td>
+</tr>
+<tr class="row-even"><td>Lb3</td>
+<td>L1-M3</td>
+<td><span class="math">\(L\beta_3\)</span></td>
+<td>Mz</td>
+<td>M4,5-N6,7</td>
+<td><span class="math">\(M\zeta\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="energies">
+<h2>Energies<a class="headerlink" href="#energies" title="Permalink to this headline">¶</a></h2>
+<p>Unless otherwise stated, all energies are in units of eV.</p>
+</div>
+<div class="section" id="cross-sections">
+<h2>Cross Sections<a class="headerlink" href="#cross-sections" title="Permalink to this headline">¶</a></h2>
+<p>The photoabsorption and scattering cross sections from <span class="citation"><a class="reference internal" href="biblio.html#citation-elam-etal">Elam, Ravel and Sieber</a><span> </span><span>[</span><a class="reference internal" href="biblio.html#citation-elam-etal">2</a><span>]</span></span>
+and <span class="citation"><a class="reference internal" href="biblio.html#citation-chantler">Chantler</a><span> </span><span>[</span><a class="reference internal" href="biblio.html#citation-chantler">1</a><span>]</span></span> are in cm^2/gr.</p>
+<p>The data from <span class="citation"><a class="reference internal" href="biblio.html#citation-elam-etal">Elam, Ravel and Sieber</a><span> </span><span>[</span><a class="reference internal" href="biblio.html#citation-elam-etal">2</a><span>]</span></span> is held as logarithms of energy, cross
+section, and logarithm of the 2nd derivative of cross section that allows
+for cubic spline interpolation in log-log space.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dbschema.html" title="Using the XrayDB xraydb.sqlite"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright Matthew Newville, The University of Chicago, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+    </div>
+  </body>
+</html>

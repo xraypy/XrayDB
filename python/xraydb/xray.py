@@ -295,7 +295,7 @@ def incoherent_cross_section_elam(element, energy):
 def atomic_number(element):
     "return z for element name"
     xdb = get_xraydb()
-    return int(xdb._elem_data(element).atomic_number)
+    return int(xdb._elem_data(element).Z)
 
 
 def atomic_symbol(z):

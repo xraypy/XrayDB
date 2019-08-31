@@ -17,7 +17,7 @@ from sqlalchemy.pool import SingletonThreadPool
 
 from .utils import elam_spline, as_ndarray
 
-XrayEdge = namedtuple('XrayEdge', ('edge', 'fyield', 'jump_ratio'))
+XrayEdge = namedtuple('XrayEdge', ('energy', 'fyield', 'jump_ratio'))
 XrayLine = namedtuple('XrayLine', ('energy', 'intensity', 'initial_level',
                                    'final_level'))
 ElementData = namedtuple('ElementData', ('Z', 'symbol', 'mass', 'density'))
@@ -532,8 +532,8 @@ class XrayDB():
                 ilevel, _ = eline.initial_level.split(',')
                 edge = self.xray_edge(element, ilevel)
             if edge is not None:
-                mu = self.mu_elam(element, [edge.edge*(0.999),
-                                            edge.edge*(1.001)], kind='photo')
+                mu = self.mu_elam(element, [edge.energy*(0.999),
+                                            edge.energy*(1.001)], kind='photo')
                 out[label] = (mu[1]-mu[0]) * eline.intensity * edge.fyield
         return out
 

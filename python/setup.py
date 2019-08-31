@@ -6,10 +6,10 @@ from setuptools import setup
 import versioneer
 
 dbfile = 'xraydb.sqlite'
+matfile = 'materials.dat'
 
 dest_dbfile = os.path.join('xraydb', dbfile)
 src_dbfile = os.path.join('..', dbfile)
-
 if (not os.path.exists(dest_dbfile) and
     os.path.exists(src_dbfile)):
     shutil.copy(src_dbfile, dest_dbfile)
@@ -30,4 +30,4 @@ setup(name = 'xraydb',
       install_requires=('sqlalchemy', 'numpy', 'scipy'),
       package_dir={'xraydb': 'xraydb'},
       packages=['xraydb'],
-      package_data={'xraydb': [dbfile]})
+      package_data={'xraydb': [dbfile, matfile]})

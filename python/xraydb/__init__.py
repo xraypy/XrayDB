@@ -14,7 +14,7 @@ del get_versions
 
 from .xraydb import XrayDB
 
-from .chemparse import chemparse
+from .chemparser import chemparse
 from .materials import (material_mu, material_mu_components,
                         get_material, add_material)
 

@@ -200,6 +200,9 @@ class XrayDB():
         References:
             Waasmaier and Kirfel
         """
+        if ion not in self.f0_ions():
+            raise ValueError('No ion {:s} from Waasmaier table'.format(ion))
+
         wtab = self.tables['Waasmaier']
         if isinstance(ion, int):
             row = self.query(wtab).filter(wtab.c.atomic_number == ion).all()[0]

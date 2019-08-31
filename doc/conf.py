@@ -28,7 +28,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.extlinks',
               'sphinxcontrib.napoleon',
               'sphinxcontrib.argdoc',
-              'natbib',  ##  NOTE:  Requires pybtex! (pip install pybtex)
+              'sphinxcontrib.bibtex',
               ]
 
 todo_include_todos = True
@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'xraydb'
-copyright = u'Matthew Newville, The University of Chicago, 2016'
+copyright = u'Matthew Newville, The University of Chicago, 2018'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -114,9 +114,9 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = 'sphinxdoc'
+# html_theme = 'sphinxdoc'
 # html_theme = 'alabaster'
-# html_theme = 'nature'
+html_theme = 'nature'
 # html_theme = 'agogo'
 # html_theme_options = {'pagewidth':'85em', 'documentwidth':'60em', 'sidebarwidth': '25em',
 #                       # 'headercolor1': '#000080',

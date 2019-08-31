@@ -1,2 +1,5 @@
+include README INSTALL LICENSE MANIFEST.in setup.py setup.cfg requirements.txt
 include versioneer.py
-include xraydb/_version.py
+include xraydb/xraydb.sqlite
+recursive-include xraydb *.py
+exclude *.pyc core.* *~ *.pdf

@@ -1,8 +1,6 @@
 
-Bibliography
+References
 ==================================
-
-.. rubric:: References
 
 .. bibliography:: xraydb.bib
     :cited:

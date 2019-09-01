@@ -21,11 +21,10 @@ CREATE TABLE Waasmaier (id integer primary key,
         offset real, scale text, exponents text);
 CREATE TABLE KeskiRahkonen_Krause (id integer primary key,
         atomic_number integer, element text, edge text, width float);
-CREATE TABLE Chantler_coarse (id integer primary key,
-        element text, sigma_mu real, mue_f2 real, density real,
-        corr_henke float, corr_cl35 float, corr_nucl float,
-        energy text, f1 text, f2 text, mu_photo text,
-        mu_incoh text, mu_total text);
+CREATE TABLE Krause_Oliver (id integer primary key,
+        atomic_number integer, element text, edge text, width float);
+CREATE TABLE corelevel_widths (id integer primary key,
+        atomic_number integer, element text, edge text, width float);
 CREATE TABLE Chantler (id integer primary key,
         element text, sigma_mu real, mue_f2 real, density real,
         corr_henke float, corr_cl35 float, corr_nucl float,

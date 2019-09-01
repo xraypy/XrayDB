@@ -19,14 +19,14 @@ database as JSON-encoded strings, and will need to be unpacked to be used.
 
 The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and
-absorption cross sections from :cite:`Elam_Ravel_Sieber`, who assembled data
-from a several sources.  More data has since been added additional sources.
-Energy widths of core holes for excited electronic levels from
-:cite:`Keski_Krause` is included.  Elastic X-ray scattering data,
-:math:`f_0(q)` is taken from :cite:`Waasmaier_Kirfel`.  Resonant
-scattering cross sections :math:`f'(E)` and :math:`f''(E)` and absorption
-cross sections from :cite:`Chantler` (as from the `FFAST webpage`_)
-are also included.
+absorption cross sections from :cite:`Elam_Ravel_Sieber`, who assembled
+data from a several sources.  More data has since been added additional
+sources.  Energy widths of core holes for excited electronic levels from
+:cite:`Keski_Krause` and :cite:`Keski_Oliver` are included.  Elastic X-ray
+scattering data, :math:`f_0(q)` is taken from :cite:`Waasmaier_Kirfel`.
+Resonant scattering cross sections :math:`f'(E)` and :math:`f''(E)` and
+absorption cross sections from :cite:`Chantler` (as from the `FFAST
+webpage`_) are also included.
 
 In general, cross sections are in cm^2/gr, and energies are given in eV.
 Energy-dependent data for cross-sections are typically valid in the range
@@ -37,6 +37,8 @@ A Poster-sized X-ray Periodic Table of the Elements built from these data
 is also included.
 
 All data source and code are at `XrayDB Github Page`_.
+
+The current version of the XrayDB is 4.
 
 .. toctree::
    :maxdepth: 2

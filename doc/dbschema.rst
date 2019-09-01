@@ -24,75 +24,86 @@ Overall Database Schema
 -----------------------------
 
 The schema for the SQLite3 database describes where data is held in the
-database, and how to access it.  The schema for the current version (2)
+database, and how to access it.  The schema for the current version (4)
 looks like this::
 
-    TABLE Version (id integer primary key,
-		   tag text,
-		   date text,
-		   notes text);
-    TABLE elements (atomic_number integer primary key,
-		    element text,
-		    molar_mass real,
-		    density real);
-    TABLE xray_levels (id integer primary key,
-		       element text,
-		       iupac_symbol text,
-		       absorption_edge real,
-		       fluorescence_yield real,
-		       jump_ratio real);
-    TABLE xray_transitions (id integer primary key,
-			    element text,
-			    iupac_symbol text,
-			    siegbahn_symbol text,
-			    initial_level text,
-			    final_level text,
-			    emission_energy real,
-			    intensity real);
-    TABLE photoabsorption (id integer primary key,
-			   element text,
-			   log_energy text,
-			   log_photoabsorption text,
-			   log_photoabsorption_spline text);
-    TABLE scattering (id integer primary key,
-		      element text,
-		      log_energy text,
-		      log_coherent_scatter text,
-		      log_coherent_scatter_spline text,
-		      log_incoherent_scatter text,
-		      log_incoherent_scatter_spline text);
-    TABLE Coster_Kronig (id integer primary key,
-			 element text,
-			 initial_level text,
-			 final_level text,
-			 transition_probability real,
-			 total_transition_probability real);
-    TABLE Waasmaier (id integer primary key,
-		     atomic_number integer,
-		     element text,
-		     ion text,
-		     offset real,
-		     scale text,
-		     exponents text);
-    TABLE KeskiRahkonen_Krause (id integer primary key,
-				atomic_number integer,
-				element text,
-				edge text,
-				width float);
-    TABLE Chantler (id integer primary key,
-		    element text,
-		    sigma_mu real,
-		    mue_f2 real,
-		    density real,
-		    corr_henke float,
-		    corr_cl35 float,
-		    corr_nucl float,
-		    energy text,
-		    f1 text,
-		    f2 text,
-		    mu_photo text,
-		    mu_incoh text,
-		    mu_total text);
+    Table Version (id integer primary key,
+                   tag text,
+                   date text,
+                   notes text);
+    Table elements (atomic_number integer primary key,
+                    element text,
+                    molar_mass real,
+                    density real);
+    Table xray_levels (id integer primary key,
+                       element text,
+                       iupac_symbol text,
+                       absorption_edge real,
+                       fluorescence_yield real,
+                       jump_ratio real);
+    Table xray_transitions (id integer primary key,
+                            element text,
+                            iupac_symbol text,
+                            siegbahn_symbol text,
+                            initial_level text,
+                            final_level text,
+                            emission_energy real,
+                            intensity real);
+    Table Coster_Kronig (id integer primary key,
+                         element text,
+                         initial_level text,
+                         final_level text,
+                         transition_probability real,
+                         total_transition_probability real);
+    Table photoabsorption (id integer primary key,
+                           element text,
+                           log_energy text,
+                           log_photoabsorption text,
+                           log_photoabsorption_spline text);
+    Table scattering (id integer primary key,
+                      element text,
+                      log_energy text,
+                      log_coherent_scatter text,
+                      log_coherent_scatter_spline text,
+                      log_incoherent_scatter text,
+                      log_incoherent_scatter_spline text);
+    Table Waasmaier (id integer primary key,
+                     atomic_number integer,
+                     element text,
+                     ion text,
+                     offset real,
+                     scale text,
+                     exponents text);
+    Table KeskiRahkonen_Krause (id integer primary key,
+                                atomic_number integer,
+                                element text,
+                                edge text,
+                                width float);
+    Table Krause_Oliver (id integer primary key,
+                         atomic_number integer,
+                         element text,
+                         edge text,
+                         width float);
+    Table corelevel_widths (id integer primary key,
+                            atomic_number integer,
+                            element text,
+                            edge text,
+                            width float);
+    Table Chantler (id integer primary key,
+                    element text,
+                    sigma_mu real,
+                    mue_f2 real,
+                    density real,
+                    corr_henke float,
+                    corr_cl35 float,
+                    corr_nucl float,
+                    energy text,
+                    f1 text,
+                    f2 text,
+                    mu_photo text,
+                    mu_incoh text,
+                    mu_total text);
+
 
 
 More details for each table are given below.
@@ -368,7 +379,7 @@ energy level for an element.
 .. index:: DB Table of Core Hole Widths
 .. _db_keski_table:
 
-   DB Table of Core Hole Widths
+   DB Table of Core Hole Widths from Keski-Rahkonen and Krause
 
     +-------------------------------+--------------+---------------------------------------+
     |  Column                       |  Type        | Description                           |
@@ -384,6 +395,33 @@ energy level for an element.
     | width                         |  float       | width of level (eV)                   |
     +-------------------------------+--------------+---------------------------------------+
 
+
+
+Krause_Oliver Table
+------------------------------
+
+The `Krause_Oliver` table holds data for energy widths of the core electronic
+levels from :cite:`Krause_Oliver`.  Values are in eV, and each row represents an
+energy level for an element.
+
+.. index:: DB Table of Core Hole Widths
+.. _db_krause_table:
+
+   DB Table of Core Hole Widths from Krause and Oliver
+
+    +-------------------------------+--------------+---------------------------------------+
+    |  Column                       |  Type        | Description                           |
+    +===============================+==============+=======================================+
+    |  id                           | integer      | Index (primary key)                   |
+    +-------------------------------+--------------+---------------------------------------+
+    |  atomic_number                | integer      | Atomic Number, Z                      |
+    +-------------------------------+--------------+---------------------------------------+
+    | element                       |  text        | Atomic symbol for element             |
+    +-------------------------------+--------------+---------------------------------------+
+    | edge                          |  text        | IUPAC symbol for energy level ('K')   |
+    +-------------------------------+--------------+---------------------------------------+
+    | width                         |  float       | width of level (eV)                   |
+    +-------------------------------+--------------+---------------------------------------+
 
 
 

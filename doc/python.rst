@@ -20,9 +20,44 @@ To use the XrayDB from Python, you can import the `xraydb` module and start
 using it:
 
     >>> import xraydb
-    >>> xraydb.xray_edge('Ag', 'K')
-    XrayEdge(energy=25514.0, fyield=0.821892, jump_ratio=6.334)
-
+    >>> xraydb.atomic_number('Ag')
+    47
+    #
+    # X-ray elastic (Thomson) scattering factors:
+    >>> import numpy as np
+    >>> q =np.linspace(0, 5, 11)
+    >>> xraydb.f0('Fe', q)
+    array([25.994603  , 11.50848469,  6.55945765,  4.71039413,  3.21048827,
+           2.20939146,  1.65112769,  1.36705887,  1.21133507,  1.10155689,
+           1.0035555 ])
+    #
+    # X-ray emission lines:
+    >>> for name, line in xraydb.xray_lines('Zn', 'K').items():
+    ...     print(name, ' = ', line)
+    ...
+    Ka3  =  XrayLine(energy=8462.8, intensity=0.000316256, initial_level='K', final_level='L1')
+    Ka2  =  XrayLine(energy=8614.1, intensity=0.294353, initial_level='K', final_level='L2')
+    Ka1  =  XrayLine(energy=8637.2, intensity=0.576058, initial_level='K', final_level='L3')
+    Kb3  =  XrayLine(energy=9567.6, intensity=0.0438347, initial_level='K', final_level='M2')
+    Kb1  =  XrayLine(energy=9570.4, intensity=0.0846229, initial_level='K', final_level='M3')
+    Kb5  =  XrayLine(energy=9648.8, intensity=0.000815698, initial_level='K', final_level='M4,5')
+    #
+    # X-ray absorption edges:
+    >>> xraydb.xray_edge('As', 'K')
+    XrayEdge(energy=11867.0, fyield=0.548989, jump_ratio=7.314)
+    #
+    # X-ray attenuation factors:
+    >>> as_kedge = xraydb.xray_edge('As', 'K').energy
+    >>> energies = np.linspace(-50, 50, 5) + as_kedge
+    >>> muvals = xraydb.mu_elam('As', energies)
+    >>> for en, mu in zip(energies, muvals):
+    ...     print("{:.0f}   {:8.2f}".format(en, mu))
+    ...
+    11817      26.07
+    11842      25.92
+    11867      25.77
+    11892     178.32
+    11917     177.38
 
 .. index:: xraydb Python module
 .. _xraydb-function_table:
@@ -54,7 +89,7 @@ using it:
       :func:`chantler_energies`               energies of tabulation for Chantler data (:cite:`Chantler`)
       :func:`f1_chantler`                     :math:`f'(E)` anomalous scattering factor (:cite:`Chantler`)
       :func:`f2_chantler`                     :math:`f"(E)` anomalous scattering factor (:cite:`Chantler`)
-      :func:`mu_chantler`                     absorption cross section (:cite:`Chantler`)
+      :func:`mu_chantler`                     absorption cross-section (:cite:`Chantler`)
       :func:`guess_edge`                      guess element and edge from energy of absorption edge
       :func:`chemparse`                       parse a chemical formula to atomic abundances
       :func:`material_mu`                     absorption cross-section for a material at X-ray energies

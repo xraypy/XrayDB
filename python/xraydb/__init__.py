@@ -8,9 +8,7 @@
             Center for Advanced Radiation Sources,
             The University of Chicago
 """
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+
 
 from .xraydb import XrayDB
 
@@ -25,3 +23,8 @@ from .xray import (f0, f0_ions, chantler_energies, f1_chantler,
                    atomic_symbol, atomic_mass, atomic_density, xray_edges,
                    xray_edge, xray_lines, xray_line, fluo_yield,
                    ck_probability, core_width, guess_edge, xray_delta_beta)
+
+
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions

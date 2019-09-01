@@ -121,58 +121,64 @@ def get_xraydb():
     return _xraydb
 
 def f0(ion, q):
-    """returns elastic x-ray scattering factor, f0(q), for an ion.
+    """elastic X-ray scattering factor, f0(q), for an ion.
 
-    based on calculation from
-       D. Waasmaier and A. Kirfel, Acta Cryst. A51 p416 (1995)
-    and tables from International Tables for Crystallography, Vol. C.
+    Args:
+       ion (int or str):  atomic number, atomic symbol or ionic symbol of scatterer
 
-    arguments
-    ---------
-    ion:  atomic number, atomic symbol or ionic symbol
-           (case insensitive) of scatterer
+       q  (float, ndarray):  Q value(s)  for scattering
 
-    q:    single q value, list, tuple, or numpy array of q value
-              q = sin(theta) / lambda
-          theta = incident angle, lambda = x-ray wavelength
-    Z values from 1 to 98 (and symbols 'H' to 'Cf') are supported.
-    The list of ionic symbols can be read with the function .f0_ions()
+    Returns
+       scattering factor for each Q value
+
+    Notes:
+       1.  from D. Waasmaier and A. Kirfel, Acta Cryst. A51 p416 (1995) and
+           International Tables for Crystallography, Vol. C.
+       2.  `ion` can be of the form: 26, `Fe`, `Fe2+`.  For a full list of ions
+           use `f0_ions()`
+       3. elements supported are from Z = 1 to 98 ('H' to 'Cf')
+       4. q = sin(theta) / lambda, where theta=incident angle, lambda=X-ray wavelength
+
     """
     xdb = get_xraydb()
     return xdb.f0(ion, q)
 
 def f0_ions(element=None):
-    """return list of ion names supported in the f0() calculation from
+    """list ion names supported in the f0() calculation from
     Waasmaier and Kirfel.
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol or ionic symbol
-              (case insensitive) of scatterer
+    Args:
+      element (None, int, str):  scatterer
 
-    if element is None, all 211 ions are returned.  If element is
-    not None, the ions for that element (atomic symbol) are returned
+    Returns:
+      list of strings for matching ion names
+
+    Notes:
+        if element is None, all 211 ions are returned.
     """
     xdb = get_xraydb()
     return xdb.f0_ions(element=element)
 
 def chantler_energies(element, emin=0, emax=1.e9):
-    """ return array of energies (in eV) at which data is
-    tabulated in the Chantler tables for a particular element.
+    """energies at which Chantler data is tabulated for a particular element.
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        emin (float):        lower bound of energies (default=0)
+        emax (float):        upper bound of energies (default=1.e9)
 
-    emin:  lower bound of energies in eV returned (default=0)
-    emax:  upper bound of energies in eV returned (default=1.e9)
+    Returns:
+        ndarray of energies
+
+    Notes:
+        energies are in eV
     """
     xdb = get_xraydb()
     return xdb.chantler_energies(element, emin=emin, emax=emax)
 
 
 def chantler_data(element, energy, column, **kws):
-    """returns data from Chantler tables.
+    """data from Chantler tables.
 
     arguments
     ---------
@@ -293,19 +299,40 @@ def incoherent_cross_section_elam(element, energy):
 
 
 def atomic_number(element):
-    "return z for element name"
+    """z for element name
+
+    Args:
+        element (str):  atomic symbol
+
+    Returns:
+        atomic number
+    """
     xdb = get_xraydb()
     return int(xdb._elem_data(element).Z)
 
 
 def atomic_symbol(z):
-    "return element symbol from z"
+    """atomic symbol for atomic number
+
+    Args:
+        z (int):  atomic number
+
+    Returns:
+        atomic symbol
+    """
     xdb = get_xraydb()
     return xdb._elem_data(z).symbol
 
 
 def atomic_mass(element):
-    "return molar mass (amu) from element symbol or atomic number"
+    """molar mass for an element
+
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+
+    Return:
+        atomic mass, in AMU
+    """
     xdb = get_xraydb()
     if isinstance(element, int):
         element = atomic_symbol(element)

@@ -14,7 +14,7 @@ and can be installed with::
 The Python xraydb module
 ----------------------------------
 
-
+.. module:: xraydb
 
 To use the XrayDB from Python, you can import the `xraydb` module and start
 using it:
@@ -24,84 +24,100 @@ using it:
     XrayEdge(energy=25514.0, fyield=0.821892, jump_ratio=6.334)
 
 
-.. index:: methods of the xraydb Python module
-.. _xraydb-methods_table:
+.. index:: xraydb Python module
+.. _xraydb-function_table:
 
-    Table of XrayDB methods for Atomic and X-ray data for the elements.
-    calculate and return some element-specific properties, given the
-    element symbol or atomic number.  Most data extends to Z=98 (Cf), but
-    much data for elements with atomic number > 92 (U) may not be
-    available, and may not be very reliable when provided.  Except where
-    noted, the data comes from :cite:`Elam_Ravel_Sieber`.
+   **Table of XrayDB function for Atomic and X-ray data for the elements**
 
-     =============================== =======================================================================
-      xraydb method                              description
-     =============================== =======================================================================
-      :meth:`atomic_number`           atomic number from symbol
-      :meth:`atomic_symbol`           atomic symbol from number
-      :meth:`atomic_mass`             atomic mass
-      :meth:`atomic_density`          density of pure element
-      :meth:`xray_edge`               xray edge data for a particular element and edge
-      :meth:`xray_edges`              dictionary of all X-ray edges data for an element
-      :meth:`xray_lines`              dictionary of all X-ray emission line data for an element
-      :meth:`mu_elam`                 absorption cross sectionm photo-electric or total
-      :meth:`core_width`              core level width for an element and edge (:cite:`Keski_Krause`)
-      :meth:`f0`                      elastic scattering factor (:cite:`Waasmaier_Kirfel`)
-      :meth:`f0_ions`                 list of valid "ions" for :meth:`f0`  (:cite:`Waasmaier_Kirfel`)
-      :meth:`chantler_energies`       energies of tabulation for Chantler data (:cite:`Chantler`)
-      :meth:`f1_chantler`             :math:`f'(E)` anomalous scattering factor (:cite:`Chantler`)
-      :meth:`f2_chantler`             :math:`f"(E)` anomalous scattering factor (:cite:`Chantler`)
-      :meth:`mu_chantler`             absorption cross section (:cite:`Chantler`)
-     =============================== =======================================================================
+   Most of these function return some element-specific property from the
+   element symbol or atomic number.  Some of the data extends to Z=98 (Cf),
+   but some data may not be available for Z > 92 (U).  Except where noted,
+   the data comes from :cite:`Elam_Ravel_Sieber`.
 
+     ======================================= =======================================================================
+      xraydb functions                             description
+     ======================================= =======================================================================
+      :func:`atomic_number`                   atomic number from symbol
+      :func:`atomic_symbol`                   atomic symbol from number
+      :func:`atomic_mass`                     atomic mass
+      :func:`atomic_density`                  density of pure element
+      :func:`f0`                              elastic scattering factor (:cite:`Waasmaier_Kirfel`)
+      :func:`f0_ions`                         list of valid "ions" for :func:`f0`  (:cite:`Waasmaier_Kirfel`)
+      :func:`xray_edge`                       xray edge data for a particular element and edge
+      :func:`xray_edges`                      dictionary of all X-ray edges data for an element
+      :func:`xray_lines`                      dictionary of all X-ray emission line data for an element
+      :func:`fluor_yield`                     fluorescent yield for an X-ray emission line
+      :func:`ck_probability`                  Coster-Kronig transition probability between two atomic levels
+      :func:`mu_elam`                         absorption cross-section, photo-electric or total for an element
+      :func:`coherent_cross_section_elam`     coherent scattering cross-section for an element
+      :func:`incoherent_cross_section_elam`   incoherent scattering cross-section for an element
+      :func:`chantler_energies`               energies of tabulation for Chantler data (:cite:`Chantler`)
+      :func:`f1_chantler`                     :math:`f'(E)` anomalous scattering factor (:cite:`Chantler`)
+      :func:`f2_chantler`                     :math:`f"(E)` anomalous scattering factor (:cite:`Chantler`)
+      :func:`mu_chantler`                     absorption cross section (:cite:`Chantler`)
+      :func:`guess_edge`                      guess element and edge from energy of absorption edge
+      :func:`chemparse`                       parse a chemical formula to atomic abundances
+      :func:`material_mu`                     absorption cross-section for a material at X-ray energies
+      :func:`material_mu_components`          dictionary of elemental components of `mu` for material
+      :func:`get_material`                    get a material (name, formula, density from materials database
+      :func:`add_material`                    add a material (name, formula, density) to local materials database
+      :func:`xray_delta_beta`                 return anomalous index of refraction for material and energy
+     ======================================= =======================================================================
 
-
-.. module:: xraydb
-
-.. automethod:: xray.atomic_number
-
-.. automethod:: xray.atomic_symbol
-
-.. automethod:: xray.atomic_mass
-
-.. automethod:: xray.atomic_density
-
-.. automethod:: xray.f0
-
-.. automethod:: xray.f0_ions
+:mod:`xraydb` functions
+------------------------------
 
 
-.. automethod:: xray.xray_edge
+.. autofunction:: atomic_number
 
-.. automethod:: xray.xray_edges
+.. autofunction:: atomic_symbol
 
-.. automethod:: xray.xray_lines
+.. autofunction:: atomic_mass
 
-.. automethod:: xray.ck_probability
+.. autofunction:: atomic_density
 
-.. automethod:: xray.core_width
+.. autofunction:: f0
 
-.. automethod:: xray.mu_elam
+.. autofunction:: f0_ions
 
-.. automethod:: xray.coherent_cross_section_elam
+.. autofunction:: xray_edge
 
-.. automethod:: xray.incoherent_cross_section_elam
+.. autofunction:: xray_edges
 
-.. automethod:: xray.chantler_energies
+.. autofunction:: xray_lines
 
-.. automethod:: xray.f1_chantler
+.. autofunction:: fluor_yield
 
-.. automethod:: xray.f2_chantler
+.. autofunction:: ck_probability
 
-.. automethod:: xray.mu_chantler
+.. autofunction:: core_width
 
+.. autofunction:: mu_elam
 
-.. automethod:: chemparser.chemparse
+.. autofunction:: coherent_cross_section_elam
 
-.. automethod:: materials.material_mu
+.. autofunction:: incoherent_cross_section_elam
 
-.. automethod:: materials.material_mu_components
+.. autofunction:: chantler_energies
 
-.. automethod:: materials.get_material
+.. autofunction:: f1_chantler
 
-.. automethod:: materials.add_material
+.. autofunction:: f2_chantler
+
+.. autofunction:: mu_chantler
+
+.. autofunction:: guess_edge
+
+.. autofunction:: xray_delta_beta
+
+.. autofunction:: chemparse
+
+.. autofunction:: material_mu
+
+.. autofunction:: material_mu_components
+
+.. autofunction:: get_material
+
+.. autofunction:: add_material
+
+.. autofunction:: get_xraydb

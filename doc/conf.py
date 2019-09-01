@@ -106,8 +106,8 @@ pygments_style = 'sphinx'
 # Sphinx are currently 'default' and 'sphinxdoc'.
 # html_theme = 'sphinxdoc'
 html_theme = 'alabaster'
-# html_theme = 'nature'
-html_theme = 'agogo'
+html_theme = 'nature'
+# html_theme = 'agogo'
 # html_theme_options = {'pagewidth':'85em', 'documentwidth':'60em', 'sidebarwidth': '25em',
 #                       # 'headercolor1': '#000080',
 #                       # 'headercolor2': '#0000A0',

@@ -6,7 +6,6 @@ energies and cross sections for the interaction of X-rays with elements.  A
 few definitions and conventions necessary for using this data are discussed
 here.
 
-
 Elements
 -----------
 
@@ -15,16 +14,20 @@ For the Python module, most methods will take `element` as the first
 argument, and this can either be the integer atomic number or the string
 for the atomic symbol.
 
+Physical Units
+-----------------
+
 Elemental densities are given in gr/cm^3, and molar masses are given in
-AMU.
+AMU. Unless otherwise stated, all energies are in units of eV.
+
 
 X-ray Edges
 --------------
 
 Several resources (database tables, python methods) take either an ``edge``
-or a ``level`` argument to signify a core electronic level.  These must be
-one of the levels listed in the :ref:`Table of X-ray edge names
-<xraydb-edge_table>`.
+or a ``level`` argument to signify a core electronic level.  These are
+strings and must be one of the levels listed in the :ref:`Table of X-ray
+edge names <xraydb-edge_table>`.
 
 .. index:: Table of X-ray Edges
 .. _xraydb-edge_table:
@@ -63,8 +66,9 @@ X-ray Lines
 --------------
 
 Many resources (database tables or methods) take emission line arguments.
-These follow the latinized version of the Siegbahn notation as indicated in
-the :ref:`Table of X-ray emission line names <xraydb-lines_table>`.
+These are all strings and follow the latinized version of the Siegbahn
+notation as indicated in the :ref:`Table of X-ray emission line names
+<xraydb-lines_table>`.
 
 
 .. index:: Table of X-ray emission lines
@@ -101,11 +105,6 @@ the :ref:`Table of X-ray emission line names <xraydb-lines_table>`.
    +--------+-----------+-----------------------------+--------+-------------+-----------------------------+
    | Lb3    | L1-M3     | :math:`L\beta_3`            | Mz     | M4,5-N6,7   | :math:`M\zeta`              |
    +--------+-----------+-----------------------------+--------+-------------+-----------------------------+
-
-Energies
----------------
-
-Unless otherwise stated, all energies are in units of eV.
 
 
 Cross Sections

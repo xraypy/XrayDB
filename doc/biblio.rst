@@ -1,8 +1,9 @@
-:orphan:
 
-.. only:: html
+Bibliography
+==================================
 
-    Bibliography
-    ============
+.. rubric:: References
 
-.. cite:refs::
+.. bibliography:: xraydb.bib
+    :cited:
+    :list: citation_key

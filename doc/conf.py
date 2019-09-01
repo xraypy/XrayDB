@@ -46,8 +46,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'xraydb'
-copyright = u'Matthew Newville, The University of Chicago, 2018'
+project = 'xraydb'
+copyright = 'Matthew Newville, The University of Chicago, 2018'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -89,16 +89,6 @@ add_function_parentheses = True
 add_module_names = True
 
 
-# configures bibliography,
-# see for reference: http://wnielson.bitbucket.org/projects/sphinx-natbib/
-natbib = {'file': 'xraydb.bib',
-          'brackets': '[]',
-          'separator': ',',
-          'style': 'authors',
-          'sort': True}
-
-
-
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
 #show_authors = False
@@ -115,9 +105,9 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
 # html_theme = 'sphinxdoc'
-# html_theme = 'alabaster'
-html_theme = 'nature'
-# html_theme = 'agogo'
+html_theme = 'alabaster'
+# html_theme = 'nature'
+html_theme = 'agogo'
 # html_theme_options = {'pagewidth':'85em', 'documentwidth':'60em', 'sidebarwidth': '25em',
 #                       # 'headercolor1': '#000080',
 #                       # 'headercolor2': '#0000A0',
@@ -152,25 +142,6 @@ html_static_path = ['_static']
 # using the given strftime format.
 #html_last_updated_fmt = '%b %d, %Y'
 
-# If true, SmartyPants will be used to convert quotes and dashes to
-# typographically correct entities.
-html_use_smartypants = False # True
-
-# Custom sidebar templates, maps document names to template names.
-html_sidebars = {'index': ['indexsidebar.html','searchbox.html']}
-
-# Additional templates that should be rendered to pages, maps page names to
-# template names.
-#html_additional_pages = {}
-
-# If false, no module index is generated.
-#html_use_modindex = True
-
-# If false, no index is generated.
-#html_use_index = True
-
-# If true, the index is split into individual pages for each letter.
-#html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
 html_show_sourcelink = True
@@ -189,7 +160,7 @@ htmlhelp_basename = 'xraydbdoc'
 # -- Options for LaTeX output --------------------------------------------------
 
 # The paper size ('letter' or 'a4').
-#latex_paper_size = 'letter'
+# latex_paper_size = 'letter'
 
 # The font size ('10pt', '11pt' or '12pt').
 #latex_font_size = '10pt'
@@ -197,8 +168,8 @@ htmlhelp_basename = 'xraydbdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'xraydb.tex', u'xraydb documentation',
-   u'Xray Spectroscopy Team', 'manual'),
+  ('index', 'xraydb.tex', 'xraydb documentation',
+   'Xray Spectroscopy Team', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

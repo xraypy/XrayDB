@@ -326,7 +326,7 @@ Waasmaier Table
 ------------------------
 
 The `Waasmaier` table holds data for calculating elastic X-ray scattering
-factors :math:`f_0(k)`, from :cite:author:`Waasmaier_Kirfel`.  The scattering
+factors :math:`f_0(k)`, from :cite:`Waasmaier_Kirfel`.  The scattering
 factor is unitless, and :math:`k=\sin(\theta)/\lambda` where :math:`\theta`
 is the scattering angle and :math:`\lambda` is the X-ray wavelength.
 available for many common ionic states for each element.  Each row
@@ -362,7 +362,7 @@ KeskiRahkonen_Krause Table
 ------------------------------
 
 The `KeskiRahkonen_Krause` table holds data for energy widths of the core electronic
-levels from :cite:author:`Keski_Krause`.  Values are in eV, and each row represents an
+levels from :cite:`Keski_Krause`.  Values are in eV, and each row represents an
 energy level for an element.
 
 .. index:: DB Table of Core Hole Widths
@@ -394,7 +394,7 @@ Chantler Table
 
 The `Chantler` table holds data for resonant X-ray scattering factors
 :math:`f'(E)` and :math:`f''(E)` as well as photo-electric absorption,
-coherent, and incoherent scattering factors from :cite:author:`Chantler`.  As
+coherent, and incoherent scattering factors from :cite:`Chantler`.  As
 with other tables, scattering factors are unitless, and cross sections are
 in cm^2/gr. Each row represents an element.
 

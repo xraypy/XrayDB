@@ -111,9 +111,9 @@ Unless otherwise stated, all energies are in units of eV.
 Cross Sections
 ------------------
 
-The photoabsorption and scattering cross sections from :cite:ts:`Elam_etal`
-and :cite:ts:`Chantler` are in cm^2/gr.
+The photoabsorption and scattering cross sections from :cite:`Elam_Ravel_Sieber`
+and :cite:`Chantler` are in cm^2/gr.
 
-The data from :cite:ts:`Elam_etal` is held as logarithms of energy, cross
+The data from :cite:`Elam_Ravel_Sieber` is held as logarithms of energy, cross
 section, and logarithm of the 2nd derivative of cross section that allows
 for cubic spline interpolation in log-log space.

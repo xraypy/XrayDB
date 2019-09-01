@@ -6,28 +6,25 @@ PAPER         = letter
 BUILDDIR      = _build
 
 # Internal variables.
-PAPEROPT_a4     = -D latex_paper_size=a4
-PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(SPHINXOPTS) .
 
 .PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest pdf
-.PHONY: all install biblio
+.PHONY: all install confpy
 
-html: biblio
+html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 
-epub: biblio
+epub:
 	$(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(BUILDDIR)/html
 
+confpy:
+	touch conf.py
 
 pdf: latex
 	cd $(BUILDDIR)/latex && make all-pdf
 	cp -pr $(BUILDDIR)/latex/xraydb.pdf ./xraydb.pdf
 
 all: html pdf
-
-biblio:
-	touch biblio.rst
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"

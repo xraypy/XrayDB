@@ -19,6 +19,9 @@ Here links to X-ray Periodic Tables of the Elements are given.  There are 2
 sizes available, and a choice of 4 prominent scientists associated with the
 Periodic Table and X-ray spectroscopies.
 
+.. index:: X-ray Periodic Tables
+.. _periodic_table:
+
 **Table of X-ray Periodic Tables of the Elements** The poster comes in two sizes:
 Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 inches).
 
@@ -33,3 +36,8 @@ Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 
     +----------------------+------------------------+------------------------+
     | `Henry Moseley`_     | `Moseley (Large)`_     | `Moseley (Medium)`_    |
     +----------------------+------------------------+------------------------+
+
+In general, these table look like this:
+
+.. image:: images/xray_table.png
+   :width: 75%

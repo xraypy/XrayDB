@@ -5,8 +5,8 @@ Using XrayDB from Python
 The `python` directory contains the source code for a Python module for
 XrayDB.  This module gives a user-friendly wrapping of the XrayDB, and
 automates the the conversion of data from sqlite database into Python and
-numpy arrays. The module requires the numpy, scipy and sqlalchemy modules,
-and can be installed with::
+numpy arrays. The module requires the `numpy`, `scipy` and `sqlalchemy`
+modules, all of which are readily available and can be installed with::
 
     pip install xraydb
 
@@ -103,6 +103,9 @@ using it:
 ------------------------------
 
 
+Atomic Properties
+~~~~~~~~~~~~~~~~~~~~~~~
+
 .. autofunction:: atomic_number
 
 .. autofunction:: atomic_symbol
@@ -111,13 +114,26 @@ using it:
 
 .. autofunction:: atomic_density
 
+Elastic Scattering Factors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. autofunction:: f0
 
 .. autofunction:: f0_ions
 
+X-ray Edges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. autofunction:: xray_edge
 
 .. autofunction:: xray_edges
+
+.. autofunction:: core_width
+
+.. autofunction:: guess_edge
+
+X-ray Emission Lines
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autofunction:: xray_lines
 
@@ -125,7 +141,8 @@ using it:
 
 .. autofunction:: ck_probability
 
-.. autofunction:: core_width
+Absorption and Scattering Cross-sections
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autofunction:: mu_elam
 
@@ -141,7 +158,8 @@ using it:
 
 .. autofunction:: mu_chantler
 
-.. autofunction:: guess_edge
+Chemical and Materials calculations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autofunction:: xray_delta_beta
 

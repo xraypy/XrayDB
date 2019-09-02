@@ -15,9 +15,11 @@ X-ray Periodic Table of the Elements
 .. _Henry Moseley:      https://en.wikipedia.org/wiki/Henry_Moseley
 
 
-Here links to X-ray Periodic Tables of the Elements are given.  There are 2
-sizes available, and a choice of 4 prominent scientists associated with the
-Periodic Table and X-ray spectroscopies.
+XrayDB has been used to generate X-ray Periodic Tables of the Elements.
+
+There is a choice of two sizes, and a choice of an image of one of four
+prominent scientists associated with the Periodic Table and X-ray
+spectroscopies.
 
 .. index:: X-ray Periodic Tables
 .. _periodic_table:
@@ -26,7 +28,7 @@ Periodic Table and X-ray spectroscopies.
 Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 inches).
 
     +----------------------+------------------------+------------------------+
-    | Scientist            | Large Format Table     | Medium Format Table    |
+    | Scientist            | Large Periodic Table   | Medium Periodic Table  |
     +======================+========================+========================+
     | `Charles Barkla`_    | `Barkla (Large)`_      | `Barkla (Medium)`_     |
     +----------------------+------------------------+------------------------+
@@ -41,3 +43,5 @@ In general, these table look like this:
 
 .. image:: images/xray_table.png
    :width: 75%
+
+but you should definitely download the PDFs linked for high-quality results.

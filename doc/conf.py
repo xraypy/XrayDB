@@ -105,7 +105,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
 # html_theme = 'sphinxdoc'
-html_theme = 'alabaster'
+# html_theme = 'alabaster'
 html_theme = 'nature'
 # html_theme = 'agogo'
 # html_theme_options = {'pagewidth':'85em', 'documentwidth':'60em', 'sidebarwidth': '25em',
@@ -116,13 +116,7 @@ html_theme = 'nature'
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
 
-# The name for this set of Sphinx documents.  If None, it defaults to
-# "<project> v<release> documentation".
-#html_title = None
-html_title = 'X-ray DB:  X-ray Reference Data in SQLite'
-
-# A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = 'X-ray DB:  X-ray Reference Data in SQLite'
+html_title = html_short_title = 'X-ray DB:  X-ray Reference Data in SQLite'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.

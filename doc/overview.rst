@@ -110,7 +110,7 @@ notation as indicated in the :ref:`Table of X-ray emission line names
 Cross Sections
 ------------------
 
-The photoabsorption and scattering cross sections from :cite:`Elam_Ravel_Sieber`
+The photo-absorption and scattering cross sections from :cite:`Elam_Ravel_Sieber`
 and :cite:`Chantler` are in cm^2/gr.
 
 The data from :cite:`Elam_Ravel_Sieber` is held as logarithms of energy, cross

@@ -5,7 +5,7 @@ Installation
 .. _xrayDB on github.com: https://github.com/xraypy/XrayDB/
 
 The X-ray database is held in the SQLite3 file ``xraydb.sqlite``.  If you
-are looking for dirrect use with SQLite, you can download this from
+are looking for direct use with SQLite, you can download this from
 `xraydb.sqlite`_.
 
 

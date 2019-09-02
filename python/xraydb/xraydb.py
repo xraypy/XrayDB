@@ -564,7 +564,7 @@ class XrayDB():
         row = self.query(ctab).filter(ctab.c.element == elem)
         row = row.filter(ctab.c.initial_level == initial.title())
         row = row.filter(ctab.c.final_level == final.title()).all()
-        out = None
+        out = 0.0
         if len(row) > 0:
             row = row[0]
             out = row.transition_probability

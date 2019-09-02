@@ -16,6 +16,7 @@ if (not os.path.exists(dest_dbfile) and
 
 setup(name = 'xraydb',
       version=versioneer.get_version(),
+      cmdclass=versioneer.get_cmdclass(),
       author='Matthew Newville',
       author_email='newville@cars.uchicago.edu',
       url='http://github.com/xraypy/XrayDB',

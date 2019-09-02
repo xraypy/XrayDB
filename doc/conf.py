@@ -58,6 +58,8 @@ release = 'unknown'
 try:
     import xraydb
     release = xraydb.__version__
+    releese = release.replace('-', '   ')..replace('+', '   ').
+    version = release = xraydb.__version__.split()
 except ImportError:
     pass
 

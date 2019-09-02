@@ -10,6 +10,7 @@ import os
 import json
 from collections import namedtuple
 import numpy as np
+from scipy.interpolate import UnivariateSpline
 
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.orm import sessionmaker

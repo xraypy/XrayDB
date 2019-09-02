@@ -11,7 +11,7 @@ def get_user_materialsfile():
     With $HOME being the users home directory, this will be
     $HOME/.config/xraydb/materials.dat
     """
-    return os.path.join(get_homeder(), '.config', 'xraydb', 'materials.dat')
+    return os.path.join(get_homedir(), '.config', 'xraydb', 'materials.dat')
 
 def _read_materials_db():
     """return _materials dictionary, creating it if needed"""
@@ -46,33 +46,27 @@ def _read_materials_db():
     return _materials
 
 def material_mu(name, energy, density=None, kind='total'):
-    """
-    material_mu(name, energy, density=None, kind='total')
+    """X-ray attenuation length (in 1/cm) for a material by name or formula
 
-    return X-ray attenuation length (in 1/cm) for a material by name or formula
+    Args:
+        name (str): chemical formul or name of material from materials list.
+        energy (float or ndarray):   energy or array of energies in eV
+        density (None or float):  material density (gr/cm^3).
+        kind (str):  'photo' or 'total'for whether to
+                  return photo-absorption or total cross-section ['total']
+    Returns:
+        absorption length in 1/cm
 
-    arguments
-    ---------
-     name:     chemical formul or name of material from materials list.
-     energy:   energy or array of energies in eV
-     density:  material density (gr/cm^3).  If None, and material is a
-               known material, that density will be used.
-     kind:     'photo' or 'total' (default) for whether to
-               return photo-absorption or total cross-section.
-    returns
-    -------
-     mu, absorption length in 1/cm
+    Notes:
+        1.  material names are not case sensitive,
+            chemical compounds are case sensitive.
+        2.  mu_elam() is used for mu calculation.
+        3.  if density is None and material is known, that density will be used.
 
-    notes
-    -----
-      1.  material names are not case sensitive,
-          chemical compounds are case sensitive.
-      2.  mu_elam() is used for mu calculation.
 
-    example
-    -------
-      >>> print(material_mu('H2O', 10000.0))
-      5.32986401658495
+    Examples:
+        >>> material_mu('H2O', 10000.0)
+        5.32986401658495
     """
     global _materials
     if _materials is None:
@@ -103,24 +97,26 @@ def material_mu(name, energy, density=None, kind='total'):
 def material_mu_components(name, energy, density=None, kind='total'):
     """material_mu_components: absorption coefficient (in 1/cm) for a compound
 
-    arguments
-    ---------
-     name:     material name or compound formula
-     energy:   energy or array of energies at which to calculate mu
-     density:  compound density in gr/cm^3
-     kind:     cross-section to use ('total', 'photo') for mu_elam())
+    Args:
+        name (str): chemical formul or name of material from materials list.
+        energy (float or ndarray):   energy or array of energies in eV
+        density (None or float):  material density (gr/cm^3).
+        kind (str):  'photo' or 'total'for whether to
+                  return photo-absorption or total cross-section ['total']
 
-    returns
-    -------
-     dictionary of data for constructing mu per element,
-     with elements 'mass' (total mass), 'density', and
-     'elements' (list of atomic symbols for elements in material).
-     For each element, there will be an item (atomic symbol as key)
-     with tuple of (stoichiometric fraction, atomic mass, mu)
+    Returns:
+        dict for constructing mu per element,
+        with elements 'mass' (total mass), 'density', and
+       'elements' (list of atomic symbols for elements in material).
+        For each element, there will be an item (atomic symbol as key)
+        with tuple of (stoichiometric fraction, atomic mass, mu)
 
-     >>> material_mu_components('quartz', 10000)
-     {'Si': (1, 28.0855, 33.879432430185062), 'elements': ['Si', 'O'],
-     'mass': 60.0843, 'O': (2.0, 15.9994, 5.9528248152970837), 'density': 2.65}
+    Examples:
+        >>> xraydb.material_mu('quartz', 10000)
+        50.36774553547068a
+        >>> xraydb.material_mu_components('quartz', 10000)
+        {'mass': 60.0843, 'density': 2.65, 'elements': ['Si', 'O'],
+        'Si': (1, 28.0855, 33.87943243018506), 'O': (2.0, 15.9994, 5.952824815297084)}
      """
     global _materials
     if _materials is None:
@@ -144,7 +140,19 @@ def material_mu_components(name, energy, density=None, kind='total'):
     return out
 
 def get_material(name):
-    """lookup material """
+    """look up material name
+
+    Args:
+        name (str): name of material
+
+    Returns:
+        chemical formula, denisty of material
+
+    Examples:
+        >>> xraydb.get_material('kapton')
+        ('C22H10N2O5', 1.43)
+
+    """
     global _materials
     if _materials is None:
         _materials = _read_materials_db()
@@ -153,7 +161,24 @@ def get_material(name):
 
 
 def add_material(name, formula, density):
-    """ save material into users material db"""
+    """add a material to the users local material database
+
+    Args:
+        name (str): name of material
+        formula (str): chemical formula
+        density (float: density
+
+    Returns:
+        None
+
+    Notes:
+        the data will be saved to $HOME/.config/xraydb/materials.dat
+        in the users home directory, and wiill be useful in subsequent sessions.
+
+    Examples:
+        >>> xraydb.add_material('becopper', 'Cu0.98e0.02', 8.3)
+
+    """
     global _materials
     if _materials is not None:
         _materials = _read_materials_db()

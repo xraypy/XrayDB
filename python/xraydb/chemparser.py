@@ -147,25 +147,22 @@ def chemparse(formula):
     Returns:
         dict of element symbol and abundance.
 
-    >>> from xraydb import chemparse
-    >>> chemparse('Mn(SO4)2(H2O)7)')
-    {'H': 14.0, 'S': 2.0, 'Mn': 1, 'O': 15.0}
+    Examples:
+        >>> from xraydb import chemparse
+        >>> chemparse('Mn(SO4)2(H2O)7)')
+        {'H': 14.0, 'S': 2.0, 'Mn': 1, 'O': 15.0}
 
-decimal values for stoichiometry are supported:
+        >>> chemparse('Zn1.e-5Fe3O4')
+        {'Zn': 1e-05, 'Fe': 3.0, 'O': 4.0}
 
-    >>> chemparse('Zn1.e-5Fe3O4')
-    {'Zn': 1e-05, 'Fe': 3.0, 'O': 4.0}
+        >>> chemparse('CO')
+        {'C': 1, 'O': 1}
+        >>> chemparse('Co')
+        {'Co': 1}
 
-Note that element names are case-sensitive, and that the
-proper capitalization must be used:
-
-    >>> chemparse('CO')
-    {'C': 1, 'O': 1}
-    >>> chemparse('Co')
-    {'Co': 1}
-    >>> chemparse('co')
-    ValueError: unrecognized element or number:
-    co
+        >>> chemparse('co')
+        ValueError: unrecognized element or number:
+        co
     '''
     return ChemFormulaParser().parse(formula)
 

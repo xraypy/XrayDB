@@ -30,17 +30,16 @@ def make_engine(dbname):
                          poolclass=SingletonThreadPool)
 
 def isxrayDB(dbname):
-    """
-    return whether a file is a valid XrayDB database
+    """whether a file is a valid XrayDB database
 
-    Parameters:
+    Args:
         dbname (string): name of XrayDB file
 
     Returns:
         bool: is file a valid XrayDB
 
     Notes:
-        must be a sqlite db file, with tables named 'elements',
+      1. must be a sqlite db file, with tables named 'elements',
         'photoabsorption', 'scattering', 'xray_levels', 'Coster_Kronig',
         'Chantler', 'Waasmaier', and 'KeskiRahkonen_Krause'
     """
@@ -564,11 +563,13 @@ class XrayDB():
 
         row = self.query(ctab).filter(ctab.c.element == elem)
         row = row.filter(ctab.c.initial_level == initial.title())
-        row = row.filter(ctab.c.final_level == final.title()).all()[0]
-
-        out = row.transition_probability
-        if total:
-            out = row.total_transition_probability
+        row = row.filter(ctab.c.final_level == final.title()).all()
+        out = None
+        if len(row) > 0:
+            row = row[0]
+            out = row.transition_probability
+            if total:
+                out = row.total_transition_probability
         return out
 
     def corehole_width(self, element, edge=None, use_keski=False):

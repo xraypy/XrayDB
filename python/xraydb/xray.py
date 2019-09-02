@@ -115,6 +115,7 @@ _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
 _xraydb = None
 
 def get_xraydb():
+    """return xraydb"""
     global _xraydb
     if _xraydb is None:
         _xraydb = XrayDB()
@@ -180,63 +181,73 @@ def chantler_energies(element, emin=0, emax=1.e9):
 def chantler_data(element, energy, column, **kws):
     """data from Chantler tables.
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
-    energy:   energy or array of energies in eV
-    column:   one of 'f1', 'f2', 'mu_photo', 'mu_incoh', 'mu_total'
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        energy (float or ndarray):   energy or array of energies
+        column (str): data to return, one of 'f1', 'f2', 'mu_photo',
+                     'mu_incoh', 'mu_total'
+
+    Returns:
+        value or ndarray of values
     """
     xdb = get_xraydb()
     return xdb._from_chantler(element, energy, column=column, **kws)
 
 
 def f1_chantler(element, energy, **kws):
-    """returns real part of anomalous x-ray scattering factor for
-    a selected element and input energy (or array of energies) in eV.
-    Data is from the Chantler tables.
+    """real part of anomalous x-ray scattering factor for an element and
+    energy or array of energies.   Data is from the Chantler tables.
 
-    Values returned are in units of electrons
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        energy (float or ndarray):   energy or array of energies
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
-    energy:   energy or array of energies in eV
+    Returns:
+        float value or ndarray
+
+    Notes:
+        1. Values returned are in units of electrons
+
     """
     xdb = get_xraydb()
     return xdb._from_chantler(element, energy, column='f1', **kws)
 
 
 def f2_chantler(element, energy):
-    """returns imaginary part of anomalous x-ray scattering factor for
-    a selected element and input energy (or array of energies) in eV.
-    Data is from the Chantler tables.
+    """imaginary part of anomalous x-ray scattering factor for an element and
+    energy or array of energies.   Data is from the Chantler tables.
 
-    Values returned are in units of electrons.
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        energy (float or ndarray):   energy or array of energies
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
-    energy:   energy or array of energies in eV
+    Returns:
+        float value or ndarray
+
+    Notes:
+        1. Values returned are in units of electrons
+
     """
     xdb = get_xraydb()
     return xdb._from_chantler(element, energy, column='f2')
 
 
 def mu_chantler(element, energy, incoh=False, photo=False):
-    """returns x-ray mass attenuation coefficient, mu/rho, for a
-    selected element and input energy (or array of energies) in eV.
-    Data is from the Chantler tables.
+    """X-ray mass attenuation coeficient, mu/rho, for an element and
+    energy or array of energies.   Data is from the Chantler tables.
 
-    Values returned are in units of cm^2/gr.
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        energy (float or ndarray):   energy or array of energies
+        incoh (bool): whether to return only the incoherent contribution [False]
+        photo (bool): whether to return only the photo-electric contribution [False]
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
-    energy:   energy or array of energies in eV
-    photo=True: flag to return only the photo-electric contribution
-    incoh=True: flag to return only the incoherent contribution
+    Returns:
+        float value or ndarray
 
-    The default is to return total attenuation coefficient.
+    Notes:
+        1. Values returned are in units of cm^2/gr
+        2. The default is to return total attenuation coefficient.
     """
     xdb = get_xraydb()
     col = 'mu_total'
@@ -246,53 +257,58 @@ def mu_chantler(element, energy, incoh=False, photo=False):
 
 
 def mu_elam(element, energy, kind='total'):
-    """returns x-ray mass attenuation coefficient, mu/rho, for a
-    selected element and input energy (or array of energies) in eV.
-    Data is from the Elam tables.
+    """X-ray mass attenuation coefficient, mu/rho, for an element and
+    energy or array of energies.  Data is from the Elam tables.
 
-    Values returned are in units of cm^2/gr.
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        energy (float or ndarray):   energy or array of energies
+        kind (str):  type of cross-section to use, one of ('total',
+                     'photo', 'coh', 'incoh') ['total']
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
-    energy:   energy or array of energies in eV
-    kind:     one of 'total' (default) 'photo', 'coh', and 'incoh' for
-              total, photo-absorption, coherent scattering, and
-              incoherent scattering cross sections, respectively.
+    Returns:
+        float value or ndarray
 
-    Data from Elam, Ravel, and Sieber.
+    Notes:
+        1. Values returned are in units of cm^2/gr
+        2. The default is to return total attenuation coefficient.
+
     """
     xdb = get_xraydb()
     return xdb.mu_elam(element, energy, kind=kind)
 
 
 def coherent_cross_section_elam(element, energy):
-    """returns coherent scattering cross section
-    selected element and input energy (or array of energies) in eV.
-    Data is from the Elam tables.
+    """coherent scaattering cross-section for an element and
+    energy or array of energies.  Data is from the Elam tables.
 
-    Values returned are in units of cm^2/gr.
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        energy (float or ndarray):   energy or array of energies
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
-    energy:   energy or array of energies in eV
+    Returns:
+        float value or ndarray
+
+    Notes:
+        1. Values returned are in units of cm^2/gr
     """
     xdb = get_xraydb()
     return xdb.coherent_cross_section_elam(element, energy)
 
 
 def incoherent_cross_section_elam(element, energy):
-    """returns incoherent scattering cross section
-    selected element and input energy (or array of energies) in eV.
-    Data is from the Elam tables.
+    """incoherent scaattering cross-section for an element and
+    energy or array of energies.  Data is from the Elam tables.
 
-    Values returned are in units of cm^2/gr.
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        energy (float or ndarray):   energy or array of energies
 
-    arguments
-    ---------
-    element:  atomic number, atomic symbol for element
-    energy:   energy or array of energies in eV
+    Returns:
+        float value or ndarray
+
+    Notes:
+        1. Values returned are in units of cm^2/gr
     """
     xdb = get_xraydb()
     return xdb.incoherent_cross_section_elam(element, energy)
@@ -340,7 +356,15 @@ def atomic_mass(element):
 
 
 def atomic_density(element):
-    "return density (gr/cm^3) from element symbol or atomic number"
+    """density (gr/cm^3) for common for of an element
+
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+
+    Return:
+        density in gm/cm^3
+
+    """
     xdb = get_xraydb()
     if isinstance(element, int):
         element = atomic_symbol(element)
@@ -348,24 +372,38 @@ def atomic_density(element):
 
 
 def xray_edges(element):
-    """returns dictionary of all x-ray absorption edge energies
-    (in eV), fluorescence yield, and jump ratio for an element.
+    """get dictionary of x-ray absorption edges:
+         energy(in eV),
+         fluorescence yield, and
+         jump ratio for an element.
 
-    the returned dictionary has keys of edge (iupac symol),
-    each with value containing a tuple of (energy,
-    fluorescence_yield, edge_jump)
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
 
-    Data from Elam, Ravel, and Sieber
+    Return:
+        dictionary of XrayEdge named tuples.
+
+    Notes:
+        1. The dictionary will have keys of edge (iupac symbol)
+           and values containing an XrayEdge namedtuple containing
+           (energy, fluorescence_yield, edge_jump)
     """
     xdb = get_xraydb()
     return xdb.xray_edges(element)
 
 
 def xray_edge(element, edge, energy_only=False):
-    """returns edge energy (in eV), fluorescence yield, and
-    jump ratio for an element and edge.
+    """get x-ray absorption edge data for an element:
+    (energy(in eV), fluorescence yield, jump ratio)
 
-    Data from Elam, Ravel, and Sieber
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        edge (str): iupac symbol of X-ray edge
+        energy_only (bool): whether to return only the energy [False]
+
+    Returns:
+         XrayEdge namedtuple containing (energy,
+         fluorescence_yield, edge_jump) or float of energy
     """
     xdb = get_xraydb()
     out = xdb.xray_edge(element, edge)
@@ -375,40 +413,58 @@ def xray_edge(element, edge, energy_only=False):
 
 
 def xray_lines(element, initial_level=None, excitation_energy=None):
-    """returns dictionary of x-ray emission lines of an element, with
-    key = siegbahn symbol (Ka1, Lb1, etc)  and
-    value = (energy (in eV), intensity, initial_level, final_level)
+    """get dictionary of X-ray emission lines of an element
 
-    arguments
-    ---------
-    element:           atomic number, atomic symbol for element
-    initial_level:     limit output to an initial level(s) -- a string or list of strings
-    excitation_energy: limit output to those excited by given energy (in eV)
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        initial_level (None or str): iupac symbol of initial level
+        excitation_energy (None or float): exciation energy
 
-    Note that excitation energy will overwrite initial_level, as it means
-       'all intial levels with below this energy/
+    Returns:
+        dict of X-ray lines with keys of siegbahn notation and values of
+        XrayLine tuples of (energy, intensity, initial level, final level)
 
-    Data from Elam, Ravel, and Sieber.
+
+    Notes:
+        1. excitation energy will supercede initial_level, as it means
+           'all intial levels with below this energy
+
+    Exaample:
+        >>> for name, line in xraydb.xray_lines('Mn', 'K').items():
+        ...     print(name, line)
+        ...
+        Ka3 XrayLine(energy=5769.9, intensity=0.000265963, initial_level='K', final_level='L1')
+        Ka2 XrayLine(energy=5889.1, intensity=0.293941, initial_level='K', final_level='L2')
+        Ka1 XrayLine(energy=5900.3, intensity=0.58134, initial_level='K', final_level='L3')
+        Kb3 XrayLine(energy=6491.8, intensity=0.042234, initial_level='K', final_level='M2')
+        Kb1 XrayLine(energy=6491.8, intensity=0.0815329, initial_level='K', final_level='M3')
+        Kb5 XrayLine(energy=6537.0, intensity=0.000685981, initial_level='K', final_level='M4,5')
+
     """
     xdb = get_xraydb()
     return xdb.xray_lines(element, initial_level=initial_level,
                           excitation_energy=excitation_energy)
 
 
-def xray_line(element, line='Ka'):
-    """returns data for an  x-ray emission lines of an element, given
-    the siegbahn notation for the like (Ka1, Lb1, etc).  Returns:
+def xray_line(element, line):
+    """get data for an  x-ray emission line of an element, given
+    the siegbahn notation for the like (Ka1, Lb1, etc).
+
+    Returns:
          energy (in eV), intensity, initial_level, final_level
 
-    arguments
-    ---------
-    element:   atomic number, atomic symbol for element
-    line:      siegbahn notation for emission line
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        line (str):  siegbahn notation for emission line
 
-    if line is 'Ka', 'Kb', 'La', 'Lb', 'Lg', without number,
-    the weighted average for this family of lines is returned.
+    Returns:
+        an XrayLine namedtuple with (energy, intensity, intial_level, final_level)
 
-    Data from Elam, Ravel, and Sieber.
+    Notes:
+       1. if line is not a specifictransition but a generic name like
+       'Ka', 'Kb', 'La', 'Lb', 'Lg', without number,  the weighted average for this
+       family of lines is returned.
+
     """
     xdb = get_xraydb()
     lines = xdb.xray_lines(element)
@@ -428,49 +484,51 @@ def xray_line(element, line='Ka'):
                     linit = val[2]
                 if lfinal is None:
                     lfinal = val[3][0]
-        return (value/scale, scale, linit, lfinal)
+        return XrayLine(value/scale, scale, linit, lfinal)
     else:
         return lines.get(line.title(), None)
 
 
-def fluo_yield(symbol, edge, emission, energy,
-               energy_margin=-150):
-    """Given
-         atomic_symbol, edge, emission family, and incident energy,
+def fluor_yield(element, edge, line, energy):
+    """fluorescence yield for an X-ray emission line or family of lines.
 
-    where 'emission' is the family of emission lines ('Ka', 'Kb', 'Lb', etc)
-    returns
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        edge (str): iupac symbol of X-ray edge
+        line (str): siegbahn notation for emission line
+        energy (float): incident X-ray energy
 
-    fluorescence_yield, weighted-average fluorescence energy, net_probability
+    Returns:
+        fluorescence yield, weighted average fluorescence energy, net_probability
 
-    fyield = 0  if energy < edge_energy + energy_margin (default=-150)
 
-    > fluo_yield('Fe', 'K', 'Ka', 8000)
-    0.350985, 6400.752419799043, 0.874576096
+    Examples:
+        >>> xraydb.fluor_yield('Fe', 'K', 'Ka', 8000)
+        0.350985, 6400.752419799043, 0.874576096
 
-    > fluo_yield('Fe', 'K', 'Ka', 6800)
-    0.0, 6400.752419799043, 0.874576096
+        >>> xraydb.fluor_yield('Fe', 'K', 'Ka', 6800)
+        0.0, 6400.752419799043, 0.874576096
 
-    > fluo_yield('Ag', 'L3', 'La', 6000)
-    0.052, 2982.129655446868, 0.861899000000000
+        >>> xraydb.fluor_yield('Ag', 'L3', 'La', 6000)
+        0.052, 2982.129655446868, 0.861899000000000
 
-    compare to xray_lines() which gives the full set of emission lines
-    ('Ka1', 'Kb3', etc) and probabilities for each of these.
+    See Also:
+         `xray_lines` which gives the full set of emission lines ('Ka1', 'Kb3',
+         etc) and probabilities for each of these.
 
-    Adapted from code by Yong Choi
     """
-    e0, fyield, jump = xray_edge(symbol, edge)
+    e0, fyield, jump = xray_edge(element, edge)
     trans  = xray_lines(symbol, initial_level=edge)
 
     lines = []
     net_ener, net_prob = 0., 0.
     for name, vals in trans.items():
         en, prob = vals[0], vals[1]
-        if name.startswith(emission):
+        if name.startswith(line):
             lines.append([name, en, prob])
 
     for name, en, prob in lines:
-        if name.startswith(emission):
+        if name.startswith(line):
             net_ener += en*prob
             net_prob += prob
     if net_prob <= 0:
@@ -482,17 +540,17 @@ def fluo_yield(symbol, edge, emission, energy,
 
 
 def ck_probability(element, initial, final, total=True):
-    """return transition probability for an element, initial, and final levels.
+    """transition probability for an element, initial, and final levels.
 
-    arguments
-    ---------
-    element:     atomic number, atomic symbol for element
-    initial:     initial level ('K', 'L1', ...)
-    final:       final level ('L1', 'L2', ...)
-    total:       whether to include transitions via possible intermediate
-                 levels (default = True)
+    Args:
+        element (int, str):  atomic number, atomic symbol for element
+        initial (str):  iupac symbol for initial level
+        final (str):  iupac symbol for final level
+        total (bool): whether to include transitions via possible
+                      intermediate levels [True]
 
-    Data from Elam, Ravel, and Sieber.
+    Returns:
+        transition probability, or 0 if transition is not allowed.
     """
     xdb = get_xraydb()
     return xdb.ck_probability(element, initial, final, total=total)
@@ -501,13 +559,17 @@ def ck_probability(element, initial, final, total=True):
 def core_width(element, edge=None):
     """returns core hole width for an element and edge
 
-    arguments
-    ---------
-    if edge is None, values are return for all edges
+    Args:
+        element (int or str): element
+        edge (None or str):  edge to consider
 
+    Returns:
+        core width or list of core widths
 
-    Data from Krause and Oliver (1979) and
-    Keski-Rahkonen and Krause (1974)
+    Notes:
+       1. if edge is None, values are return for all edges
+       2. Data from Krause and Oliver (1979) and  Keski-Rahkonen and Krause (1974)
+
     """
     xdb = get_xraydb()
     return xdb.corehole_width(element, edge=edge)
@@ -515,14 +577,16 @@ def core_width(element, edge=None):
 def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
     """guess an element and edge based on energy (in eV)
 
-    Arguments
-    ---------
-    energy (float) : approximate edge energy (in eV)
-    edges (list of strings) : edges to consider ['K', 'L3', 'L2', 'L1', 'M5']
+    Args:
+        energy (float) : approximate edge energy (in eV)
+        edges (None or list of strings) : edges to consider
 
-    Returns
-    -------
-      (element symbol, edge)
+    Returns:
+        a tuple of (atomic symbol, edge) for best guess
+
+    Notes:
+        by default, the list of edges is ['K', 'L3', 'L2', 'L1', 'M5']
+
     """
     xdb = get_xraydb()
     ret = []
@@ -582,19 +646,16 @@ class Scatterer:
         self.mu_total = chantler_data(symbol, energy, 'mu_total')
 
 def xray_delta_beta(material, density, energy, photo_only=False):
-    """
-    return anomalous components of the index of refraction for a material,
+    """anomalous components of the index of refraction for a material,
     using the tabulated scattering components from Chantler.
 
-    arguments:
-    ----------
+    Args:
        material:   chemical formula  ('Fe2O3', 'CaMg(CO3)2', 'La1.9Sr0.1CuO4')
        density:    material density in g/cm^3
        energy:     x-ray energy in eV
        photo_only: boolean for returning photo cross-section component only
                    if False (default), the total cross-section is returned
-    returns:
-    ---------
+    Returns:
       (delta, beta, atlen)
 
     where
@@ -607,6 +668,7 @@ def xray_delta_beta(material, density, energy, photo_only=False):
     n = 1 - delta - i*beta = 1 - lambda**2 * r0/(2*pi) Sum_j (n_j * fj)
 
     Adapted from code by Yong Choi
+
     """
     lamb_cm = 1.e-8 * PLANCK_HC / energy # lambda in cm
     elements = []

@@ -3,3 +3,4 @@
   1.0  // 2016-04-11 12:00:00 // initial versioned database
   2.0  // 2016-04-25 16:23:35 // Chantler data on finer energy grid
   3.0  // 2016-11-16 10:00:00 // Fix Mz emission line (was M4,5-N6,7, now M4,5-N2,3)
+  4.0  // 2017-11-15 13:00:00 // Add Krause and Oliver data for improved core hole widths

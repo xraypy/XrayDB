@@ -39,15 +39,14 @@ def add_Version(dest, append=True):
     conn.commit()
     c.close()
 
-
-def add_KeskiRahkonen_Krause(dest, append=True):
+def add_corehole_data(dest, append=True):
     """add core-widths from Keski-Rahkonen and Krause. Data from
-    Atomic Data and Nuclear Data Tables, Vol 14, Number 2, 1974,
+    Atomic Data and Nuclear Data Tables, Vol 14, Number 2, 1974 and
+    from  Krause and Oliver, J. Phys. Chem. Ref. Data 8,329 (1979)
 
-    Note that the data in Corehole_Widths.dat was generated using
-    xraydb -- so this data one was bootstrapped...
     """
-    source = 'keskirahkonen_krause.dat'
+    kk_source = 'keskirahkonen_krause.dat'
+    ko_source = 'krause_oliver1979.dat'
     if os.path.exists(dest) and not append:
         raise IOError('File "%s" already exists -- cannot add core hole data')
 
@@ -56,8 +55,15 @@ def add_KeskiRahkonen_Krause(dest, append=True):
     c.execute(
         '''create table KeskiRahkonen_Krause (id integer primary key,
         atomic_number integer, element text, edge text, width float)''')
+    c.execute(
+        '''create table Krause_Oliver (id integer primary key,
+        atomic_number integer, element text, edge text, width float)''')
+    c.execute(
+        '''create table corelevel_widths (id integer primary key,
+        atomic_number integer, element text, edge text, width float)''')
 
-    f = open(source)
+    # Keski-Rahkonen and Krause data:
+    f = open(kk_source)
     lines = f.readlines()
     id = 0
     for line in lines:
@@ -68,6 +74,58 @@ def add_KeskiRahkonen_Krause(dest, append=True):
         atno, width = int(atno), float(width)
         c.execute('insert into KeskiRahkonen_Krause values (?,?,?,?,?)',
                       (id, atno, elem, edge, width))
+        c.execute('insert into corelevel_widths values (?,?,?,?,?)',
+                      (id, atno, elem, edge, width))
+
+    # Krause and Oliver data
+    f = open(ko_source)
+    lines = f.readlines()
+    id = 0
+    for line in lines:
+        if line.startswith('#'):
+            continue
+        words = line[:-1].strip().split()
+        atno, elem, kwid, l1wid, l2wid, l3wid = words[:6]
+        id +=1
+        atno = int(atno)
+        c.execute('insert into Krause_Oliver values (?,?,?,?,?)',
+                      (id, atno, elem, 'K', float(kwid)))
+        id +=1
+        c.execute('insert into Krause_Oliver values (?,?,?,?,?)',
+                      (id, atno, elem, 'L1', float(l1wid)))
+        id +=1
+        c.execute('insert into Krause_Oliver values (?,?,?,?,?)',
+                      (id, atno, elem, 'L2', float(l2wid)))
+        id +=1
+        c.execute('insert into Krause_Oliver values (?,?,?,?,?)',
+                      (id, atno, elem, 'L3', float(l3wid)))
+
+        c.execute('update corelevel_widths set width=? where atomic_number=? and edge=?',
+                      (float(kwid), atno, 'K'))
+        c.execute('update corelevel_widths set width=? where atomic_number=? and edge=?',
+                      (float(l1wid), atno, 'L1'))
+        c.execute('update corelevel_widths set width=? where atomic_number=? and edge=?',
+                      (float(l2wid), atno, 'L2'))
+        c.execute('update corelevel_widths set width=? where atomic_number=? and edge=?',
+                      (float(l3wid), atno, 'L3'))
+
+    conn.commit()
+    c.close()
+
+def add_Krause_Oliver(dest, append=True):
+    """add core-widths from Krause and Oliver,
+    J. Phys. Chem. Ref. Data 8,329 (1979)
+    """
+    source = 'krause_oliver1979.dat'
+    if os.path.exists(dest) and not append:
+        raise IOError('File "%s" already exists -- cannot add core hole data')
+
+    conn = sqlite3.connect(dest)
+    c = conn.cursor()
+    c.execute(
+        '''create table Krause_Oliver (id integer primary key,
+        atomic_number integer, element text, edge text, width float)''')
+
 
     conn.commit()
     c.close()
@@ -814,7 +872,7 @@ if __name__ == '__main__':
 
     add_Elam(dest, overwrite=args.force, silent=args.silent)
     add_Waasmaier(dest, append=True)
-    add_KeskiRahkonen_Krause(dest, append=True)
+    add_corehole_data(dest, append=True)
     add_Chantler(dest, table='Chantler_coarse', subdir='coarse', append=True)
     add_Chantler(dest, table='Chantler',        subdir='fine',   append=True)
     add_Version(dest)

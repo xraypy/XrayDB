@@ -32,7 +32,8 @@ Energy-dependent data for cross-sections are typically valid between about
 250 eV to about 200,000 eV.  Elements with Z=1 to 92 are supported, and
 some data is included for elements between Z=93 and Z=98.
 
-   * The current version of the XrayDB is 4.
+   * The current version of the XrayDB is 4, and the Version for the Python
+     module is |release|.
 
    * See `XrayDB Github Page`_ for data sources, code, development, and
      issues.

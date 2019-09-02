@@ -10,6 +10,8 @@ modules, all of which are readily available and can be installed with::
 
     pip install xraydb
 
+The current version of the Python module is |release|, corresponding to
+version 4 of `xraydb.sqlite`.
 
 The Python xraydb module
 ----------------------------------

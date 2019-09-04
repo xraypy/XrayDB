@@ -42,7 +42,7 @@
 <h1>X-ray DB: X-ray Reference Data in SQLite<a class="headerlink" href="#x-ray-db-x-ray-reference-data-in-sqlite" title="Permalink to this headline">¶</a></h1>
 <p>XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, <code class="docutils literal notranslate"><span class="pre">xraydb.sqlite</span></code>.  This
-file can be used directly with SQLite <a class="reference internal" href="biblio.html#sqlite" id="id1">[sqlite]</a> using standard SQL, or
+file can be used directly with SQLite <a class="reference internal" href="biblio.html#sqlite" id="id1">[Hipp (2012)]</a> using standard SQL, or
 from the many programming language that suppor SQLite.  A Python module
 providing such an interface is provided here.</p>
 <p>Because some of the components of the database hold arrays of numbers
@@ -50,13 +50,13 @@ providing such an interface is provided here.</p>
 database as JSON-encoded strings, and will need to be unpacked to be used.</p>
 <p>The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and
-absorption cross sections from <a class="reference internal" href="biblio.html#elam-ravel-sieber" id="id2">[Elam_Ravel_Sieber]</a>, who assembled
+absorption cross sections from <a class="reference internal" href="biblio.html#elam-ravel-sieber" id="id2">[Elam, Ravel, and Sieber (2002)]</a>, who assembled
 data from a several sources.  More data has been added from other sources.
 Energy widths of core holes for excited electronic levels from
-<a class="reference internal" href="biblio.html#keski-krause" id="id3">[Keski_Krause]</a> and <a class="reference internal" href="biblio.html#krause-oliver" id="id4">[Krause_Oliver]</a>.  Elastic X-ray scattering
-data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <a class="reference internal" href="biblio.html#waasmaier-kirfel" id="id5">[Waasmaier_Kirfel]</a>.  Resonant
+<a class="reference internal" href="biblio.html#keski-krause" id="id3">[Keski-Rahkonen and Krause (1974)]</a> and <a class="reference internal" href="biblio.html#krause-oliver" id="id4">[Krause and Oliver (1979)]</a>.  Elastic X-ray scattering
+data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <a class="reference internal" href="biblio.html#waasmaier-kirfel" id="id5">[Waasmaier and Kirfel (1995)]</a>.  Resonant
 scattering cross sections <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> and absorption
-cross sections from <a class="reference internal" href="biblio.html#chantler" id="id6">[Chantler]</a> (as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a>) are
+cross sections from <a class="reference internal" href="biblio.html#chantler" id="id6">[Chantler (2000)]</a> (as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a>) are
 also included.</p>
 <p>In general, cross sections are in cm^2/gr, and energies are given in eV.
 Energy-dependent data for cross-sections are typically valid between about
@@ -173,7 +173,8 @@ issues.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Matthew Newville, The University of Chicago, 2019.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Last updated on 2019-September-04.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>
 </html>

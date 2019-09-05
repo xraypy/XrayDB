@@ -11,7 +11,7 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     mu_chantler, mu_elam, coherent_cross_section_elam,
                     incoherent_cross_section_elam, atomic_number,
                     atomic_symbol, atomic_mass, atomic_density, xray_edges,
-                    xray_edge, xray_lines, xray_line, fluo_yield,
+                    xray_edge, xray_lines, xray_line, fluor_yield,
                     ck_probability, core_width, guess_edge,
                     xray_delta_beta, XrayDB)
 

@@ -370,7 +370,7 @@ class XrayDB():
         Returns:
             integer: atomic number
         """
-        return self._elem_data(element).atomic_number
+        return self._elem_data(element).Z
 
     def symbol(self, element):
         """
@@ -464,7 +464,7 @@ class XrayDB():
                  excited by X-rays of this energy (in eV).
 
         Returns:
-            dictionary: keys of lines (iupac symbol), values of Xray Lines
+            dictionary: keys of lines (Siegbahn symbol), values of Xray Lines
 
         Notes:
             if both excitation_energy and initial_level are given, excitation_level

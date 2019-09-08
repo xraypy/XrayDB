@@ -2,7 +2,7 @@ import sys
 import numpy as np
 
 from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC, index_nearest)
-from .xraydb import  XrayDB
+from .xraydb import  XrayDB,  XrayLine
 from .chemparser import chemparse
 
 _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
@@ -210,7 +210,7 @@ def f1_chantler(element, energy, **kws):
 
     """
     xdb = get_xraydb()
-    return xdb._from_chantler(element, energy, column='f1', **kws)
+    return xdb.f1_chantler(element, energy, **kws)
 
 
 def f2_chantler(element, energy):
@@ -229,7 +229,7 @@ def f2_chantler(element, energy):
 
     """
     xdb = get_xraydb()
-    return xdb._from_chantler(element, energy, column='f2')
+    return xdb.f2_chantler(element, energy)
 
 
 def mu_chantler(element, energy, incoh=False, photo=False):
@@ -250,11 +250,7 @@ def mu_chantler(element, energy, incoh=False, photo=False):
         2. The default is to return total attenuation coefficient.
     """
     xdb = get_xraydb()
-    col = 'mu_total'
-    if photo: col = 'mu_photo'
-    if incoh: col = 'mu_incoh'
-    return xdb._from_chantler(element, energy, column=col)
-
+    return xdb.mu_chantler(element, energy, incoh=incoh, photo=photo)
 
 def mu_elam(element, energy, kind='total'):
     """X-ray mass attenuation coefficient, mu/rho, for an element and
@@ -518,7 +514,7 @@ def fluor_yield(element, edge, line, energy):
 
     """
     e0, fyield, jump = xray_edge(element, edge)
-    trans  = xray_lines(symbol, initial_level=edge)
+    trans  = xray_lines(element, initial_level=edge)
 
     lines = []
     net_ener, net_prob = 0., 0.
@@ -534,7 +530,7 @@ def fluor_yield(element, edge, line, energy):
     if net_prob <= 0:
         net_prob = 1
     net_ener = net_ener / net_prob
-    if energy < e0 + energy_margin:
+    if energy < e0:
         fyield = 0
     return fyield, net_ener, net_prob
 

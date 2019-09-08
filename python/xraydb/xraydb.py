@@ -200,12 +200,11 @@ class XrayDB():
         References:
             Waasmaier and Kirfel
         """
-        if ion not in self.f0_ions():
-            raise ValueError('No ion {:s} from Waasmaier table'.format(ion))
-
         wtab = self.tables['Waasmaier']
         if isinstance(ion, int):
             row = self.query(wtab).filter(wtab.c.atomic_number == ion).all()[0]
+        elif ion not in self.f0_ions():
+            raise ValueError('No ion {:s} from Waasmaier table'.format(repr(ion)))
         else:
             row = self.query(wtab).filter(wtab.c.ion == ion.title()).all()[0]
         q = as_ndarray(q)
@@ -676,16 +675,19 @@ class XrayDB():
             Elam, Ravel, and Sieber.
         """
         calc = self.cross_section_elam
-        xsec = calc(element, energies, kind='photo')
-        if kind.lower().startswith('tot'):
+        kind = kind.lower()
+        if kind.startswith('tot'):
+            xsec = calc(element, energies, kind='photo')
             xsec += calc(element, energies, kind='coh')
             xsec += calc(element, energies, kind='incoh')
+        elif kind.startswith('photo'):
+            xsec = calc(element, energies, kind='photo')
         elif kind.lower().startswith('coh'):
             xsec = calc(element, energies, kind='coh')
         elif kind.lower().startswith('incoh'):
             xsec = calc(element, energies, kind='incoh')
         else:
-            xsec = calc(element, energies, kind='photo')
+            raise ValueError('unknown cross section kind=%s' % kind)
         return xsec
 
     def coherent_cross_section_elam(self, element, energies):

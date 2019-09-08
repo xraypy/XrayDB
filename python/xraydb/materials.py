@@ -113,7 +113,7 @@ def material_mu_components(name, energy, density=None, kind='total'):
 
     Examples:
         >>> xraydb.material_mu('quartz', 10000)
-        50.36774553547068a
+        50.36774553547068
         >>> xraydb.material_mu_components('quartz', 10000)
         {'mass': 60.0843, 'density': 2.65, 'elements': ['Si', 'O'],
         'Si': (1, 28.0855, 33.87943243018506), 'O': (2.0, 15.9994, 5.952824815297084)}

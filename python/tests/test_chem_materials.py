@@ -1,0 +1,159 @@
+#!/usr/bin/env python
+""" Tests of Larch Scripts  """
+import os
+import time
+import shutil
+import pytest
+import numpy as np
+from numpy.testing import assert_allclose
+
+from xraydb import (chemparse, material_mu, material_mu_components,
+                    get_material, add_material)
+
+from xraydb.materials import get_user_materialsfile
+
+def test_chemparse():
+    examples = {'H2O': {'H':2, 'O':1},
+                'Mn(SO4)2(H2O)7':  {'H': 14.0, 'S': 2.0, 'Mn': 1, 'O': 15.0},
+                'Mg(SO4)2': {'Mg': 1, 'S': 2, 'O':8},
+                'Mg0.5Fe0.5' : {'Mg': 0.5, 'Fe': 0.5},
+                'CO': {'C': 1, 'O': 1} }
+    for formula, cert in examples.items():
+        ret = chemparse(formula)
+        for elem, quant in cert.items():
+            v = ret.pop(elem)
+            assert_allclose(v, quant, rtol=1.e3)
+        assert len(ret)==0
+
+def test_material_mu1():
+    en = np.linspace(8500, 9500, 21)
+    known_mu = np.array([236.2, 232.4, 228.7, 225.1, 221.5, 218.1, 214.7,
+                         211.4, 208.1, 204.9, 1403.6, 1385.6, 1367.9, 1350.6,
+                         1333.5, 1316.7, 1300.3, 1284.0, 1268.1, 1252.4,
+                         1237.0])
+
+    mu = material_mu('CuO', en, density=6.3)
+    assert_allclose(mu, known_mu, rtol=0.005)
+
+def test_material_mu2():
+    en = np.linspace(5000, 10000, 21)
+    known_mu = np.array([0.0528, 0.0457, 0.0398, 0.0349, 0.0307, 0.0272,
+                         0.0242, 0.0216, 0.0194, 0.0175, 0.0158, 0.0143,
+                         0.0130, 0.0119, 0.0109, 0.0100, 0.0092, 0.0085,
+                         0.0078, 0.0072, 0.0067])
+
+
+    mu = material_mu('air', en)
+    assert_allclose(mu, known_mu, rtol=0.05)
+
+def test_material_mu3():
+    en = np.linspace(5000, 10000, 21)
+
+    known_mu = np.array([42.592, 36.801, 32.006, 28.005, 24.641, 21.794,
+                         19.367, 17.288, 15.496, 13.943, 12.592, 11.411,
+                         10.373, 9.458, 8.649, 7.931, 7.291, 6.719, 6.206,
+                         5.745, 5.330])
+
+    mu = material_mu('H2O', en)
+    assert_allclose(mu, known_mu, rtol=0.05)
+
+def test_material_mu4():
+    en = np.linspace(5000, 10000, 21)
+
+    known_mu = np.array([42.592, 36.801, 32.006, 28.005, 24.641, 21.794,
+                         19.367, 17.288, 15.496, 13.943, 12.592, 11.411,
+                         10.373, 9.458, 8.649, 7.931, 7.291, 6.719, 6.206,
+                         5.745, 5.330])
+
+    with pytest.raises(Warning):
+        out = material_mu('H2SO4', en)
+
+
+def test_material_mu_components1():
+    mu = material_mu('quartz', 10000)
+    assert_allclose(mu, 50.368, rtol=0.001)
+
+    comps = material_mu_components('quartz', 10000)
+
+    known_comps =  {'mass': 60.08, 'density': 2.65, 'elements': ['Si', 'O'],
+                    'Si': (1, 28.1, 33.879), 'O': (2.0, 16.0, 5.953)}
+
+
+    assert 'Si'in comps['elements']
+    assert 'O'in comps['elements']
+
+    for attr in ('mass', 'density'):
+        assert_allclose(comps[attr], known_comps[attr], rtol=0.01)
+
+    for attr in ('Si', 'O'):
+        assert_allclose(comps[attr][0], known_comps[attr][0], rtol=0.01)
+        assert_allclose(comps[attr][1], known_comps[attr][1], rtol=0.01)
+        assert_allclose(comps[attr][2], known_comps[attr][2], rtol=0.01)
+
+
+def test_material_mu_components2():
+    mu = material_mu('TiO2', 10000, density=4.23)
+    assert_allclose(mu, 292.767, rtol=0.001)
+
+    comps = material_mu_components('TiO2', 10000, density=4.23)
+
+
+    known_comps =  {'mass': 79.88, 'density': 4.23, 'elements': ['Ti', 'O'],
+                    'Ti': (1, 47.88, 110.676), 'O': (2.0, 15.9994, 5.953)}
+
+    assert 'Ti'in comps['elements']
+    assert 'O'in comps['elements']
+
+    for attr in ('mass', 'density'):
+        assert_allclose(comps[attr], known_comps[attr], rtol=0.01)
+
+    for attr in ('Ti', 'O'):
+        assert_allclose(comps[attr][0], known_comps[attr][0], rtol=0.01)
+        assert_allclose(comps[attr][1], known_comps[attr][1], rtol=0.01)
+        assert_allclose(comps[attr][2], known_comps[attr][2], rtol=0.01)
+
+    with pytest.raises(Warning):
+        c = material_mu_components('TiO2', 10000)
+
+
+def test_material_get():
+    mat_  = {'kapton': ('C22H10N2O5', 1.43),
+             'lead': ('Pb', 11.34),
+             'aluminum': ('Al', 2.72),
+             'water': ('H2O', 1.0)}
+
+    for mname in mat_.keys():
+        formula, density = get_material(mname)
+        f1 = chemparse(formula)
+        f2 = chemparse(mat_[mname][0])
+        for k, v in f2.items():
+            assert v == f1[k]
+        assert_allclose(density, mat_[mname][1], rtol=0.1)
+
+def test_material_add():
+    matfile = get_user_materialsfile()
+    savefile = matfile + '_Save'
+
+    if not os.path.exists(matfile):
+        fh =open(matfile, 'w')
+        fh.write('')
+        fh.close()
+        time.sleep(2)
+
+    shutil.move(matfile, savefile)
+    assert get_material('caffeine') is None
+
+    add_material('caffeine', 'C8H10N4O2', density=1.23)
+    assert get_material('caffeine') is not None
+
+    time.sleep(2.0)
+
+    add_material('rutile', 'TiO2', density=4.23)
+
+
+    with open(matfile, 'r') as fh:
+        text = fh.read()
+
+    assert 'caffeine' in text
+    assert 'rutile' in text
+    shutil.move(savefile, matfile)

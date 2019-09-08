@@ -14,6 +14,8 @@ if (not os.path.exists(dest_dbfile) and
     os.path.exists(src_dbfile)):
     shutil.copy(src_dbfile, dest_dbfile)
 
+desc="X-ray Reference Data for the Elements using SQLite"
+
 setup(name = 'xraydb',
       version=versioneer.get_version(),
       cmdclass=versioneer.get_cmdclass(),
@@ -22,8 +24,8 @@ setup(name = 'xraydb',
       url='http://github.com/xraypy/XrayDB',
       download_url='http://github.com/xrapy/XrayDB',
       license='public domain',
-      description="X-ray Reference Data for the Elements using SQLite",
-      long_description=descrption,
+      description=desc,
+      long_description=desc,
       platforms=('Windows', 'Linux', 'Mac OS X'),
       classifiers=['Intended Audience :: Science/Research',
                    'Operating System :: OS Independent',

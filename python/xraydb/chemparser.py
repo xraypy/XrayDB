@@ -165,11 +165,3 @@ def chemparse(formula):
         co
     '''
     return ChemFormulaParser().parse(formula)
-
-if __name__ == '__main__':
-    examples = ('H2O', 'Mg(SO4)2','Mn(SO4)2(H2O)7',
-                'Mg0.5Fe0.5', 'Ti0.01Fe0.99(OH)2', 'Mg(FeO2)(H2O)3')
-    parser = ChemFormulaParser()
-    for formula in examples:
-        print('=== %s ' % formula)
-        print(parser.parse(formula))

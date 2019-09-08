@@ -133,14 +133,11 @@ def test_material_get():
 def test_material_add():
     matfile = get_user_materialsfile()
     savefile = matfile + '_Save'
+    had_matfile = False
+    if os.path.exists(matfile):
+        had_matfile = True
+        shutil.move(matfile, savefile)
 
-    if not os.path.exists(matfile):
-        fh =open(matfile, 'w')
-        fh.write('')
-        fh.close()
-        time.sleep(2)
-
-    shutil.move(matfile, savefile)
     assert get_material('caffeine') is None
 
     add_material('caffeine', 'C8H10N4O2', density=1.23)
@@ -156,4 +153,6 @@ def test_material_add():
 
     assert 'caffeine' in text
     assert 'rutile' in text
-    shutil.move(savefile, matfile)
+
+    if had_matfile:
+        shutil.move(savefile, matfile)

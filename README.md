@@ -26,7 +26,8 @@ by Christopher T. Chantler.
 The project has mostly been supported and maintained by Matt Newville.
 Suggestions and conributions are most welcome.
 
-# Some history:
+Some history:
+-------------
 
 This project has moved around a bit.  Originally part of Larch
 (https://xraypy.github.io/xraylarch/), and then

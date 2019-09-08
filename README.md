@@ -1,4 +1,14 @@
-# XrayDB
+
+.. image:: https://travis-ci.org/xraypy/XrayDB.png
+   :target: https://travis-ci.org/xraypy/XrayDB
+
+.. image:: https://codecov.io/gh/xraypy/XrayDB/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/xraypy/XrayDB
+
+
+XrayDB
+-------
+
 X-ray Reference Data in SQLite library, including a Python interface.
 
 The repository contains useful data about the intereactions of X-rays with
@@ -8,7 +18,8 @@ computer programming languages and environments.
 
 The data and code here are placed in the Public Domain.
 
-# About X-ray DB
+About X-ray DB
+---------------
 
 The X-ray Scattering data from the Elam Tables was modified from code
 originally written by Darren S. Dale.
@@ -19,7 +30,8 @@ by Christopher T. Chantler.
 The project has mostly been supported and maintained by Matt Newville.
 Suggestions and conributions are most welcome.
 
-# Some history:
+Some history:
+---------------
 
 This project has moved around a bit.  Originally part of Larch
 (https://xraypy.github.io/xraylarch/), and then

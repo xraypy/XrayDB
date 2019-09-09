@@ -63,11 +63,45 @@ and Mac OS X systems, you may need to use <cite>sudo</cite>.</p>
 <p class="admonition-title">Note</p>
 <p>The Python module supports Python 3.5 and above.</p>
 </div>
+<div class="section" id="development-version">
+<h2>Development Version<a class="headerlink" href="#development-version" title="Permalink to this headline">¶</a></h2>
 <p>To work with the data sources or to add or modify data in the XrayDB, you
 will want to clone or download the full source code kit
 <a class="reference external" href="https://github.com/xraypy/XrayDB/">xrayDB on github.com</a> which contains the current database, original
 source data, python module, and files for generating the Periodic Table
-posters.</p>
+posters. To get the latest development version,  use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">xraypy</span><span class="o">/</span><span class="n">XrayDB</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>There are a set of tests scripts for the Python interface that can be run with
+the <a class="reference external" href="https://pytest.org/">pytest</a> testing framework.  These are located in the <code class="docutils literal notranslate"><span class="pre">python/tests</span></code>
+folder. These tests are automatically run as part of the development process.
+For any release or any master branch from the git repository, running
+<code class="docutils literal notranslate"><span class="pre">pytest</span></code> should run all of these tests to completion without errors or
+failures.</p>
+</div>
+<div class="section" id="copyright-licensing-and-re-distribution">
+<h2>Copyright, Licensing, and Re-distribution<a class="headerlink" href="#copyright-licensing-and-re-distribution" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Public Domain
+
+To the extent possible, the data, code, and documentation here are placed in
+the public domain.  No claim of copyright is made by the authors and no
+restrictions of any kind placed on the use of the work here.
+
+The original sources of the data are mostly based on published works with
+the clear intent of providing data to the general public.  Some of the
+datasets have may not have clear statements of copyright or license, but
+have been freely available for many years. The work here is a compilation
+and reformatting of those datasets.
+
+If you use these resources and wish to cite the original data source, please
+see the documentation for more details.
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -76,6 +110,16 @@ posters.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#development-version">Development Version</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#copyright-licensing-and-re-distribution">Copyright, Licensing, and Re-distribution</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">X-ray DB: X-ray Reference Data in SQLite</a></p>
@@ -122,9 +166,9 @@ posters.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright Public Domain, mostly written by Matthew Newville.
-      Last updated on 2019-September-08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+        &#169; Copyright Public Domain.
+      Last updated on 2019-September-09.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>
 </html>

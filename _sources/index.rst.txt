@@ -6,6 +6,8 @@ X-ray DB: X-ray Reference Data in SQLite
 .. _XrayDB Github Page:  https://github.com/xraypy/XrayDB
 .. _FFAST webpage:       https://www.nist.gov/pml/data/ffast/index.cfm
 
+.. _PDF Version of this documentation:  https://xraypy.github.io/XrayDB/xraydb.pdf
+
 XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, ``xraydb.sqlite``.  This
 file can be used directly with SQLite :cite:`sqlite` using standard SQL, or
@@ -38,6 +40,7 @@ some data is included for elements between Z=93 and Z=98.
    * See `XrayDB Github Page`_ for data sources, code, development, and
      issues.
 
+   * A `PDF Version of this documentation`_ is available.
 
 Table of Contents
 -----------------------

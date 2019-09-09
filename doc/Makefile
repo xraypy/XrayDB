@@ -1,93 +1,29 @@
 # Makefile for Sphinx documentation
 #
-SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
-PAPER         = letter
-BUILDDIR      = _build
+SPHINXBUILD = sphinx-build
+PAPER       = letter
+BUILDDIR    = _build
+BIBFILE     = xraydb.bib
 
-# Internal variables.
-ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(SPHINXOPTS) .
+.PHONY: html all epub latex pdf clean
 
-.PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest pdf
-.PHONY: all install confpy
-
-html:
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+html: bib
+	$(SPHINXBUILD) -a . $(BUILDDIR)/html
 
 epub:
-	$(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	$(SPHINXBUILD) -a -b epub . $(BUILDDIR)/html
 
-confpy:
-	touch conf.py
-
-pdf: latex
-	cd $(BUILDDIR)/latex && make all-pdf
-	cp -pr $(BUILDDIR)/latex/xraydb.pdf ./xraydb.pdf
+bib:
+	touch $(BIBFILE)
 
 all: html pdf
 
-help:
-	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  html      to make standalone HTML files"
-	@echo "  dirhtml   to make HTML files named index.html in directories"
-	@echo "  pickle    to make pickle files"
-	@echo "  json      to make JSON files"
-	@echo "  htmlhelp  to make HTML files and a HTML help project"
-	@echo "  qthelp    to make HTML files and a qthelp project"
-	@echo "  latex     to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
-	@echo "  changes   to make an overview of all changed/added/deprecated items"
-	@echo "  linkcheck to check all external links for integrity"
-	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
+latex: bib
+	$(SPHINXBUILD) -a -b latex . $(BUILDDIR)/latex
+
+pdf: latex
+	cd $(BUILDDIR)/latex && make all-pdf
+	cp -pr $(BUILDDIR)/latex/xraydb.pdf $(BUILDDIR)/html/xraydb.pdf
 
 clean:
 	-rm -rf $(BUILDDIR)/*
-
-dirhtml:
-	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
-	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
-
-pickle:
-	$(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) $(BUILDDIR)/pickle
-	@echo
-	@echo "Build finished; now you can process the pickle files."
-
-json:
-	$(SPHINXBUILD) -b json $(ALLSPHINXOPTS) $(BUILDDIR)/json
-	@echo
-	@echo "Build finished; now you can process the JSON files."
-
-htmlhelp:
-	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) $(BUILDDIR)/htmlhelp
-	@echo
-	@echo "Build finished; now you can run HTML Help Workshop with the" \
-	      ".hhp project file in $(BUILDDIR)/htmlhelp."
-
-latex:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
-	@echo
-	@echo "Build finished; the LaTeX files are in _build/latex."
-	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
-	      "run these through (pdf)latex."
-
-latexpdf:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
-	@echo "Running LaTeX files through pdflatex..."
-	make -C _build/latex all-pdf
-	@echo "pdflatex finished; the PDF files are in _build/latex."
-
-changes:
-	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(BUILDDIR)/changes
-	@echo
-	@echo "The overview file is in $(BUILDDIR)/changes."
-
-linkcheck:
-	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck
-	@echo
-	@echo "Link check complete; look for any errors in the above output " \
-	      "or in $(BUILDDIR)/linkcheck/output.txt."
-
-doctest:
-	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
-	@echo "Testing of doctests in the sources finished, look at the " \
-	      "results in $(BUILDDIR)/doctest/output.txt."

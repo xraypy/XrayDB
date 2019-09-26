@@ -14,7 +14,8 @@ version = release = release.split(' ')[0]
 project = 'xraydb'
 html_title = html_short_title = 'X-ray DB:  X-ray Reference Data in SQLite'
 
-copyright = 'Public Domain, mostly written by Matthew Newville'
+author = 'Matthew Newville'
+copyright = 'Public Domain'
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.mathjax',
               'sphinx.ext.extlinks', 'sphinxcontrib.napoleon',

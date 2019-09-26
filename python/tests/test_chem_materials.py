@@ -37,14 +37,24 @@ def test_material_mu1():
 
 def test_material_mu2():
     en = np.linspace(5000, 10000, 21)
-    known_mu = np.array([0.0528, 0.0457, 0.0398, 0.0349, 0.0307, 0.0272,
-                         0.0242, 0.0216, 0.0194, 0.0175, 0.0158, 0.0143,
-                         0.0130, 0.0119, 0.0109, 0.0100, 0.0092, 0.0085,
-                         0.0078, 0.0072, 0.0067])
-
+    known_mu = np.array([0.04934, 0.04267, 0.03715, 0.03254, 0.02866,
+                         0.02538, 0.02257, 0.02016, 0.01809, 0.01629,
+                         0.01472, 0.01334, 0.01214, 0.01108, 0.01014,
+                         0.00930, 0.00856, 0.00789, 0.00729, 0.00675,
+                         0.00626])
 
     mu = material_mu('air', en)
     assert_allclose(mu, known_mu, rtol=0.05)
+
+    air_formula, air_density = get_material('air')
+
+    air_comps = chemparse(air_formula)
+
+    assert air_comps['Ar'] < 0.013
+    assert air_comps['Ar'] > 0.007
+
+    mu = material_mu('air', en, density=2.0*air_density)
+    assert_allclose(mu, 2.0*known_mu, rtol=0.05)
 
 def test_material_mu3():
     en = np.linspace(5000, 10000, 21)
@@ -93,7 +103,13 @@ def test_material_mu_components1():
 
 def test_material_mu_components2():
     mu = material_mu('TiO2', 10000, density=4.23)
-    assert_allclose(mu, 292.767, rtol=0.001)
+    assert_allclose(mu, 290.7, rtol=0.001)
+
+    mu = material_mu('TiO2', 10000)
+    assert_allclose(mu, 290.7, rtol=0.001)
+
+    mu = material_mu('TiO2', 10000, density=4.5)
+    assert_allclose(mu, 309.26, rtol=0.001)
 
     comps = material_mu_components('TiO2', 10000, density=4.23)
 

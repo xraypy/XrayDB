@@ -72,17 +72,20 @@ def material_mu(name, energy, density=None, kind='total'):
     if _materials is None:
         _materials = _read_materials_db()
     formula = None
+    _density  = None
     mater = _materials.get(name.lower(), None)
     if mater is not None:
-        formula, density = mater
+        formula, _density = mater
     else:
         for key, val in _materials.items():
             if name.lower() == val[0].lower(): # match formula
-                formula, density = val
+                formula, _density = val
                 break
     # default to using passed in name as a formula
     if formula is None:
         formula = name
+    if density is None:
+        density = _density
     if density is None:
         raise Warning('material_mu(): must give density for unknown materials')
 

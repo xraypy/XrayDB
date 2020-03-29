@@ -142,14 +142,15 @@ def material_mu_components(name, energy, density=None, kind='total'):
         out['elements'].append(atom)
     return out
 
+
 def get_material(name):
     """look up material name
 
     Args:
-        name (str): name of material
+        name (str): name of material or chemical formula
 
     Returns:
-        chemical formula, denisty of material
+        chemical formula, density of material
 
     Examples:
         >>> xraydb.get_material('kapton')
@@ -157,10 +158,20 @@ def get_material(name):
 
     """
     global _materials
+    
     if _materials is None:
         _materials = _read_materials_db()
 
-    return _materials.get(name.lower(), None)
+    material =  _materials.get(name.lower(), None)
+    
+    if material is None:
+        formulas = [v[0] for v in _materials.values()]
+        densities = [v[1] for v in _materials.values()]
+        if name in formulas:
+            density = dict(zip(formulas, densities))[name]
+            material = (name, density)
+
+    return material
 
 
 def add_material(name, formula, density):

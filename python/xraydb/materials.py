@@ -176,14 +176,14 @@ def add_material(name, formula, density):
 
     Notes:
         the data will be saved to $HOME/.config/xraydb/materials.dat
-        in the users home directory, and wiill be useful in subsequent sessions.
+        in the users home directory, and will be useful in subsequent sessions.
 
     Examples:
         >>> xraydb.add_material('becopper', 'Cu0.98e0.02', 8.3)
 
     """
     global _materials
-    if _materials is not None:
+    if _materials is None:
         _materials = _read_materials_db()
     formula = formula.replace(' ', '')
     _materials[name.lower()] = (formula, float(density))

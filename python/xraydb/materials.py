@@ -158,19 +158,17 @@ def get_material(name):
 
     """
     global _materials
-    
+
     if _materials is None:
         _materials = _read_materials_db()
 
     material =  _materials.get(name.lower(), None)
-    
+
     if material is None:
         formulas = [v[0] for v in _materials.values()]
-        densities = [v[1] for v in _materials.values()]
+        densities = {v[0]:v[1] for v in _materials.values()}
         if name in formulas:
-            density = dict(zip(formulas, densities))[name]
-            material = (name, density)
-
+            material = (name, densities[name])
     return material
 
 

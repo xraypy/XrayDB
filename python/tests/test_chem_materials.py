@@ -137,6 +137,11 @@ def test_material_get():
              'lead': ('Pb', 11.34),
              'aluminum': ('Al', 2.72),
              'water': ('H2O', 1.0)}
+    
+    form_ = {'C22H10N2O5': ('C22H10N2O5', 1.43),
+             'Pb': ('Pb', 11.34),
+             'Al': ('Al', 2.72),
+             'H2O': ('H2O', 1.0)}
 
     for mname in mat_.keys():
         formula, density = get_material(mname)
@@ -145,7 +150,16 @@ def test_material_get():
         for k, v in f2.items():
             assert v == f1[k]
         assert_allclose(density, mat_[mname][1], rtol=0.1)
-
+        
+    for fname in form_.keys():
+        formula, density = get_material(fname)
+        f1 = chemparse(formula)
+        f2 = chemparse(form_[fname][0])
+        for k, v in f2.items():
+            assert v == f1[k]
+        assert_allclose(density, form_[fname][1], rtol=0.1)
+        
+        
 def test_material_add():
     matfile = get_user_materialsfile()
     savefile = matfile + '_Save'

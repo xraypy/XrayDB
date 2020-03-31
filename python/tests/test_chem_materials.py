@@ -146,6 +146,16 @@ def test_material_get():
             assert v == f1[k]
         assert_allclose(density, mat_[mname][1], rtol=0.1)
 
+    for formula, density in mat_.values():
+        _f, _d = get_material(formula)
+        assert _f == formula
+        assert_allclose(density, _d, rtol=0.1)
+
+    for formula in ('WSO3', 'CdAs140CO3', 'KAs'):
+        out = get_material('C2H31W4')
+        assert out == None
+
+
 def test_material_add():
     matfile = get_user_materialsfile()
     savefile = matfile + '_Save'

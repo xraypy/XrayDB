@@ -1,4 +1,4 @@
-from larch.xray.xraydb import XrayDB
+from xraydb import XrayDB
 db = XrayDB()
 
 def extract(dat, key):

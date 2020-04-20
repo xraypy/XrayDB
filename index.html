@@ -7,12 +7,12 @@
     <title>X-ray DB: X-ray Reference Data in SQLite &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" /> 
@@ -42,7 +42,7 @@
 <h1>X-ray DB: X-ray Reference Data in SQLite<a class="headerlink" href="#x-ray-db-x-ray-reference-data-in-sqlite" title="Permalink to this headline">¶</a></h1>
 <p>XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, <code class="docutils literal notranslate"><span class="pre">xraydb.sqlite</span></code>.  This
-file can be used directly with SQLite <a class="reference internal" href="biblio.html#sqlite" id="id1">[Hipp (2012)]</a> using standard SQL, or
+file can be used directly with SQLite <a class="bibtex reference internal" href="biblio.html#sqlite" id="id1">[Hipp (2012)]</a> using standard SQL, or
 from the many programming language that suppor SQLite.  A Python module
 providing such an interface is provided here.</p>
 <p>Because some of the components of the database hold arrays of numbers
@@ -50,13 +50,13 @@ providing such an interface is provided here.</p>
 database as JSON-encoded strings, and will need to be unpacked to be used.</p>
 <p>The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and
-absorption cross sections from <a class="reference internal" href="biblio.html#elam-ravel-sieber" id="id2">[Elam, Ravel, and Sieber (2002)]</a>, who assembled
+absorption cross sections from <a class="bibtex reference internal" href="biblio.html#elam-ravel-sieber" id="id2">[Elam, Ravel, and Sieber (2002)]</a>, who assembled
 data from a several sources.  More data has been added from other sources.
 Energy widths of core holes for excited electronic levels from
-<a class="reference internal" href="biblio.html#keski-krause" id="id3">[Keski-Rahkonen and Krause (1974)]</a> and <a class="reference internal" href="biblio.html#krause-oliver" id="id4">[Krause and Oliver (1979)]</a>.  Elastic X-ray scattering
-data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <a class="reference internal" href="biblio.html#waasmaier-kirfel" id="id5">[Waasmaier and Kirfel (1995)]</a>.  Resonant
+<a class="bibtex reference internal" href="biblio.html#keski-krause" id="id3">[Keski-Rahkonen and Krause (1974)]</a> and <a class="bibtex reference internal" href="biblio.html#krause-oliver" id="id4">[Krause and Oliver (1979)]</a>.  Elastic X-ray scattering
+data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <a class="bibtex reference internal" href="biblio.html#waasmaier-kirfel" id="id5">[Waasmaier and Kirfel (1995)]</a>.  Resonant
 scattering cross sections <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> and absorption
-cross sections from <a class="reference internal" href="biblio.html#chantler" id="id6">[Chantler (2000)]</a> (as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a>) are
+cross sections from <a class="bibtex reference internal" href="biblio.html#chantler" id="id6">[Chantler (2000)]</a> (as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a>) are
 also included.</p>
 <p>In general, cross sections are in cm^2/gr, and energies are given in eV.
 Energy-dependent data for cross-sections are typically valid between about
@@ -65,7 +65,7 @@ some data is included for elements between Z=93 and Z=98.</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>The current version of the XrayDB is 4, and the Version for the Python
-module is 4.3.</p></li>
+module is 4.3.1.</p></li>
 <li><p>See <a class="reference external" href="https://github.com/xraypy/XrayDB">XrayDB Github Page</a> for data sources, code, development, and
 issues.</p></li>
 <li><p>A <a class="reference external" href="https://xraypy.github.io/XrayDB/xraydb.pdf">PDF Version of this documentation</a> is available.</p></li>
@@ -157,7 +157,7 @@ issues.</p></li>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -179,8 +179,8 @@ issues.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2019-October-09.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Last updated on 2020-April-19.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>

@@ -1,14 +1,19 @@
 X-ray Periodic Table of the Elements
 =============================================
 
-.. _Barkla (Large):     https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_50in_Barkla.pdf
-.. _Curie (Large):      https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_50in_Curie.pdf
-.. _Mendeleev (Large):  https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_50in_Meneleev.pdf
-.. _Moseley (Large):    https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_50in_Moseley.pdf
-.. _Barkla (Medium):    https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_36in_Barkla.pdf
-.. _Curie (Medium):     https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_36in_Curie.pdf
-.. _Mendeleev (Medium): https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_36in_Meneleev.pdf
-.. _Moseley (Medium):   https://millenia.cars.aps.anl.gov/gsecars/Data/XrayTable/xray_table_36in_Moseley.pdf
+
+https://docs.xrayabsorption.org/XrayPeriodicTable/xray_table_50in_Barkla.pdf
+
+
+
+.. _Barkla (Large):     https://docs.xrayabsorption.org/XrayTable/xray_table_50in_Barkla.pdf
+.. _Curie (Large):      https://docs.xrayabsorption.org/XrayTable/xray_table_50in_Curie.pdf
+.. _Mendeleev (Large):  https://docs.xrayabsorption.org/XrayTable/xray_table_50in_Mendeleev.pdf
+.. _Moseley (Large):    https://docs.xrayabsorption.org/XrayTable/xray_table_50in_Moseley.pdf
+.. _Barkla (Medium):    https://docs.xrayabsorption.org/XrayTable/xray_table_36in_Barkla.pdf
+.. _Curie (Medium):     https://docs.xrayabsorption.org/XrayTable/xray_table_36in_Curie.pdf
+.. _Mendeleev (Medium): https://docs.xrayabsorption.org/XrayTable/xray_table_36in_Mendeleev.pdf
+.. _Moseley (Medium):   https://docs.xrayabsorption.org/XrayTable/xray_table_36in_Moseley.pdf
 .. _Charles Barkla:     https://en.wikipedia.org/wiki/Charles_Glover_Barkla
 .. _Marie Curie:        https://en.wikipedia.org/wiki/Marie_Curie
 .. _Dmitri Mendeleev:   https://en.wikipedia.org/wiki/Dmitri_Mendeleev

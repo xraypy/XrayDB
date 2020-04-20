@@ -7,12 +7,12 @@
     <title>Using XrayDB from Python &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="References" href="biblio.html" />
@@ -52,13 +52,13 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.3, corresponding to
+<p>The current version of the Python module is 4.3.1, corresponding to
 version 4 of <cite>xraydb.sqlite</cite>.</p>
 <div class="section" id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
 <p>To use the XrayDB from Python, you can import the <cite>xraydb</cite> module and start
 using it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">xraydb</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">xraydb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">atomic_number</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">)</span>
 <span class="go">47</span>
 <span class="go">#</span>
@@ -104,7 +104,7 @@ using it:</p>
 <p>Most of these function return some element-specific property from the
 element symbol or atomic number.  Some of the data extends to Z=98 (Cf),
 but some data may not be available for Z &gt; 92 (U).  Except where noted,
-the data comes from <a class="reference internal" href="biblio.html#elam-ravel-sieber" id="id1">[Elam, Ravel, and Sieber (2002)]</a>.</p>
+the data comes from <a class="bibtex reference internal" href="biblio.html#elam-ravel-sieber" id="id1">[Elam, Ravel, and Sieber (2002)]</a>.</p>
 <blockquote>
 <div><table class="docutils align-default">
 <colgroup>
@@ -130,10 +130,10 @@ the data comes from <a class="reference internal" href="biblio.html#elam-ravel-s
 <td><p>density of pure element</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a></p></td>
-<td><p>elastic scattering factor (<a class="reference internal" href="biblio.html#waasmaier-kirfel" id="id2">[Waasmaier and Kirfel (1995)]</a>)</p></td>
+<td><p>elastic scattering factor (<a class="bibtex reference internal" href="biblio.html#waasmaier-kirfel" id="id2">[Waasmaier and Kirfel (1995)]</a>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f0_ions" title="xraydb.f0_ions"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0_ions()</span></code></a></p></td>
-<td><p>list of valid “ions” for <a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a>  (<a class="reference internal" href="biblio.html#waasmaier-kirfel" id="id3">[Waasmaier and Kirfel (1995)]</a>)</p></td>
+<td><p>list of valid “ions” for <a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a>  (<a class="bibtex reference internal" href="biblio.html#waasmaier-kirfel" id="id3">[Waasmaier and Kirfel (1995)]</a>)</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.xray_edge" title="xraydb.xray_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_edge()</span></code></a></p></td>
 <td><p>xray edge data for a particular element and edge</p></td>
@@ -160,16 +160,16 @@ the data comes from <a class="reference internal" href="biblio.html#elam-ravel-s
 <td><p>incoherent scattering cross-section for an element</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.chantler_energies" title="xraydb.chantler_energies"><code class="xref py py-func docutils literal notranslate"><span class="pre">chantler_energies()</span></code></a></p></td>
-<td><p>energies of tabulation for Chantler data (<a class="reference internal" href="biblio.html#chantler" id="id4">[Chantler (2000)]</a>)</p></td>
+<td><p>energies of tabulation for Chantler data (<a class="bibtex reference internal" href="biblio.html#chantler" id="id4">[Chantler (2000)]</a>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f1_chantler" title="xraydb.f1_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f1_chantler()</span></code></a></p></td>
-<td><p><span class="math notranslate nohighlight">\(f'(E)\)</span> anomalous scattering factor (<a class="reference internal" href="biblio.html#chantler" id="id5">[Chantler (2000)]</a>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(f'(E)\)</span> anomalous scattering factor (<a class="bibtex reference internal" href="biblio.html#chantler" id="id5">[Chantler (2000)]</a>)</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f2_chantler" title="xraydb.f2_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f2_chantler()</span></code></a></p></td>
-<td><p><span class="math notranslate nohighlight">\(f&quot;(E)\)</span> anomalous scattering factor (<a class="reference internal" href="biblio.html#chantler" id="id6">[Chantler (2000)]</a>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(f&quot;(E)\)</span> anomalous scattering factor (<a class="bibtex reference internal" href="biblio.html#chantler" id="id6">[Chantler (2000)]</a>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.mu_chantler" title="xraydb.mu_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">mu_chantler()</span></code></a></p></td>
-<td><p>absorption cross-section (<a class="reference internal" href="biblio.html#chantler" id="id7">[Chantler (2000)]</a>)</p></td>
+<td><p>absorption cross-section (<a class="bibtex reference internal" href="biblio.html#chantler" id="id7">[Chantler (2000)]</a>)</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.guess_edge" title="xraydb.guess_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">guess_edge()</span></code></a></p></td>
 <td><p>guess element and edge from energy of absorption edge</p></td>
@@ -419,7 +419,7 @@ XrayLine tuples of (energy, intensity, initial level, final level)</p>
 ‘all intial levels with below this energy</p></li>
 </ol>
 <dl>
-<dt>Exaample:</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_lines</span><span class="p">(</span><span class="s1">&#39;Mn&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<dt>Exaample:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_lines</span><span class="p">(</span><span class="s1">&#39;Mn&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="go">Ka3 XrayLine(energy=5769.9, intensity=0.000265963, initial_level=&#39;K&#39;, final_level=&#39;L1&#39;)</span>
@@ -452,15 +452,15 @@ XrayLine tuples of (energy, intensity, initial level, final level)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;Ka&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;Ka&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
 <span class="go">0.350985, 6400.752419799043, 0.874576096</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;Ka&#39;</span><span class="p">,</span> <span class="mi">6800</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;Ka&#39;</span><span class="p">,</span> <span class="mi">6800</span><span class="p">)</span>
 <span class="go">0.0, 6400.752419799043, 0.874576096</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="s1">&#39;L3&#39;</span><span class="p">,</span> <span class="s1">&#39;La&#39;</span><span class="p">,</span> <span class="mi">6000</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="s1">&#39;L3&#39;</span><span class="p">,</span> <span class="s1">&#39;La&#39;</span><span class="p">,</span> <span class="mi">6000</span><span class="p">)</span>
 <span class="go">0.052, 2982.129655446868, 0.861899000000000</span>
 </pre></div>
 </div>
@@ -698,22 +698,22 @@ atlen :  attenuation length in cm</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="k">import</span> <span class="n">chemparse</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">chemparse</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Mn(SO4)2(H2O)7)&#39;</span><span class="p">)</span>
 <span class="go">{&#39;H&#39;: 14.0, &#39;S&#39;: 2.0, &#39;Mn&#39;: 1, &#39;O&#39;: 15.0}</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Zn1.e-5Fe3O4&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Zn1.e-5Fe3O4&#39;</span><span class="p">)</span>
 <span class="go">{&#39;Zn&#39;: 1e-05, &#39;Fe&#39;: 3.0, &#39;O&#39;: 4.0}</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;CO&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;CO&#39;</span><span class="p">)</span>
 <span class="go">{&#39;C&#39;: 1, &#39;O&#39;: 1}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Co&#39;</span><span class="p">)</span>
 <span class="go">{&#39;Co&#39;: 1}</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;co&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;co&#39;</span><span class="p">)</span>
 <span class="go">ValueError: unrecognized element or number:</span>
 <span class="go">co</span>
 </pre></div>
@@ -746,7 +746,7 @@ chemical compounds are case sensitive.</p></li>
 <li><p>if density is None and material is known, that density will be used.</p></li>
 </ol>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">)</span>
 <span class="go">5.32986401658495</span>
 </pre></div>
 </div>
@@ -778,7 +778,7 @@ with tuple of (stoichiometric fraction, atomic mass, mu)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;quartz&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;quartz&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="go">50.36774553547068</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu_components</span><span class="p">(</span><span class="s1">&#39;quartz&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="go">{&#39;mass&#39;: 60.0843, &#39;density&#39;: 2.65, &#39;elements&#39;: [&#39;Si&#39;, &#39;O&#39;],</span>
@@ -800,7 +800,7 @@ with tuple of (stoichiometric fraction, atomic mass, mu)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">get_material</span><span class="p">(</span><span class="s1">&#39;kapton&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">get_material</span><span class="p">(</span><span class="s1">&#39;kapton&#39;</span><span class="p">)</span>
 <span class="go">(&#39;C22H10N2O5&#39;, 1.43)</span>
 </pre></div>
 </div>
@@ -826,7 +826,7 @@ with tuple of (stoichiometric fraction, atomic mass, mu)</p>
 <p>the data will be saved to $HOME/.config/xraydb/materials.dat
 in the users home directory, and wiill be useful in subsequent sessions.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">add_material</span><span class="p">(</span><span class="s1">&#39;becopper&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu0.98e0.02&#39;</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">add_material</span><span class="p">(</span><span class="s1">&#39;becopper&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu0.98e0.02&#39;</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -886,7 +886,7 @@ in the users home directory, and wiill be useful in subsequent sessions.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -911,8 +911,8 @@ in the users home directory, and wiill be useful in subsequent sessions.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2019-October-09.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Last updated on 2020-April-19.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>

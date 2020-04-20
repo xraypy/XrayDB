@@ -1,0 +1,64 @@
+%%
+%%  Periodic Table of X-ray absorption edges and emission lines
+%%
+%%  using data from Elam, Ravel, and Sieber,
+%%  Radiation Physics and Chemistry 63 (2002)
+%%
+%%  latex sources based on periodic_table  from Ivan Griffin,
+%%
+%%  modified by Matt Newville, Jan-2013
+%%
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[]{article}
+
+\usepackage{verbatim}
+\usepackage{tikz}
+\usepackage[active,tightpage]{preview}
+
+\usetikzlibrary{shapes,calc,arrows}
+
+
+  \pgfdeclareimage[height=35mm]{Curie}{images/Marie_Curie}
+  \pgfdeclareimage[height=34mm]{Barkla}{images/Charles_Barkla}
+  \pgfdeclareimage[height=34mm]{Moseley}{images/Henry_Moseley}
+  \pgfdeclareimage[height=34mm]{Mendeleev}{images/Dmitri_Mendeleev}
+  \pgfdeclareimage[width=20mm]{qrcode}{images/xraytable_qr}
+
+ \newcommand{\Moseley}{ \pgfbox[center,bottom]{\pgfuseimage{Moseley}}\\   Henry Moseley \\}
+ \newcommand{\Curie}{\pgfbox[center,bottom]{\pgfuseimage{Curie}}\\   Marie Sklodowska Curie\\ }
+ \newcommand{\Barkla}{\pgfbox[center,bottom]{\pgfuseimage{Barkla}}\\   Charles G. Barkla\\}
+ \newcommand{\Mendeleev}{\pgfbox[center,bottom]{\pgfuseimage{Mendeleev}}\\      Dmitri Mendeleev \\}
+
+
+%% Fill Color Styles
+  \tikzstyle{ElementFill} = [fill=yellow!6]
+  \tikzstyle{Element} = [draw=black, ElementFill,
+  minimum width=70mm, minimum height=70mm, node distance=70mm]
+
+  \tikzstyle{SpaceFill} = [fill=white]
+  \tikzstyle{Space} = [draw=white, SpaceFill,
+  minimum width=5mm, minimum height=5mm, node distance=5mm]
+
+  \tikzstyle{TitleLabel} = [font={\sffamily\Huge\bfseries}, scale=3.50]
+  \tikzstyle{SubTitleLabel} = [font={\Huge}, scale=2.50]
+
+  \definecolor{MedRed}{rgb}{0.8,0,0}
+  \definecolor{MedBlue}{rgb}{0,0,0.8}
+  \definecolor{DeepBlue}{rgb}{0,0,0.6}
+
+
+  \newcommand{\Color}[2]{{\textcolor{#1}{#2}}}
+  \newcommand{\BRed}[1]{{\Color{MedRed}{\textbf{#1}}}}
+  \newcommand{\BBlue}[1]{{\Color{MedBlue}{\textbf{#1}}}}
+  \newcommand{\Red}[1]{{\Color{MedRed}{#1}}}
+  \newcommand{\Blue}[1]{{\Color{MedBlue}{#1}}}
+  \newcommand{\Name}[1]{{\Color{DeepBlue}{\textsf{\textbf{#1}}}}}

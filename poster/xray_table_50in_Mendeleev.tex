@@ -1,0 +1,24 @@
+
+\input{header}
+\input{atoms}
+\newcommand{\ScientistPhoto}{\Mendeleev}
+
+\begin{document}
+\begin{preview}
+
+%% Note on Size:
+%%   with scale=1.00, the poster made is (roughly)
+%%     127.5 cm x  61 cm    (~50.4 in x 24.2 in)
+%%
+%%  To make a poster of a different size, set scale appropriately:
+%%      scale=0.22  for letter size paper (11in width)
+%%      scale=0.78  for 1 meter width
+%%      scale=0.714 for 36 inch width
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \begin{tikzpicture}[font=\sffamily, scale=1.0, transform shape]
+        \input{ptable}
+        \input{elines}
+    \end{tikzpicture}
+\end{preview}
+\end{document}

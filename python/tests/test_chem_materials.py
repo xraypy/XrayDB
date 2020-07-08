@@ -7,8 +7,8 @@ import pytest
 import numpy as np
 from numpy.testing import assert_allclose
 
-from xraydb import (chemparse, material_mu, material_mu_components,
-                    get_material, add_material)
+from xraydb import (chemparse, validate_formula, material_mu,
+                    material_mu_components, get_material, add_material)
 
 from xraydb.materials import get_user_materialsfile
 
@@ -24,6 +24,15 @@ def test_chemparse():
             v = ret.pop(elem)
             assert_allclose(v, quant, rtol=1.e3)
         assert len(ret)==0
+
+def test_validate_formula():
+    examples = {'H2O': True,
+                'Mn(SO4)2(H2O)7':  True,
+                'Mn(SO42(H2O)7': False,
+                'Z': False}
+    for formula, cert in examples.items():
+        ret = validate_formula(formula)
+        assert (ret == cert)
 
 def test_material_mu1():
     en = np.linspace(8500, 9500, 21)
@@ -159,12 +168,10 @@ def test_material_get():
 def test_material_add():
     matfile = get_user_materialsfile()
     savefile = matfile + '_Save'
-    had_matfile = False
     if os.path.exists(matfile):
         had_matfile = True
         shutil.move(matfile, savefile)
-
-    assert get_material('caffeine') is None
+        time.sleep(2.0)
 
     add_material('caffeine', 'C8H10N4O2', density=1.23)
     assert get_material('caffeine') is not None
@@ -173,12 +180,12 @@ def test_material_add():
 
     add_material('rutile', 'TiO2', density=4.23)
 
-
     with open(matfile, 'r') as fh:
         text = fh.read()
 
     assert 'caffeine' in text
     assert 'rutile' in text
 
-    if had_matfile:
+    os.unlink(matfile)
+    if os.path.exists(savefile):
         shutil.move(savefile, matfile)

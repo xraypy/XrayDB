@@ -127,7 +127,7 @@ class ChemFormulaParser(object):
                 if self.tok.tvalue in ELEMENTS:
                     thisseq = ElementSequence(ELEMENTS[self.tok.tvalue])
                 else:
-                    self.tok.error(BARDSYM.format(self.tok.tvalue))
+                    self.tok.error(BADSYM.format(self.tok.tvalue))
                 self.tok.gettoken()
             # followed by optional count
             if self.tok.ttype == NUM:
@@ -165,3 +165,31 @@ def chemparse(formula):
         co
     '''
     return ChemFormulaParser().parse(formula)
+
+def validate_formula(formula):
+    '''return whether a chemical formula is valid and
+    can be parsed to a dictionary with chemparse()
+
+    Args:
+        formula (str): chemical formula
+
+    Returns:
+        bool (True or False) for whether chemparse() will succeed
+
+    Examples:
+        >>> from xraydb import validate_formula
+        >>> validate_formula('Mn(SO4)2(H2O)7)')
+        True
+
+        >>> validate_formula('Mn(SO4)2(H2O7')
+        False
+
+        >>> validate_formula('Z')
+        False
+
+    '''
+    try:
+        t = chemparse(formula)
+        return len(t) > 0
+    except:
+        return False

@@ -94,6 +94,7 @@ using it:
       :func:`mu_chantler`                     absorption cross-section (:cite:`Chantler`)
       :func:`guess_edge`                      guess element and edge from energy of absorption edge
       :func:`chemparse`                       parse a chemical formula to atomic abundances
+      :func:`validate_formula`                test whether a chemical formula can be parsed.
       :func:`material_mu`                     absorption cross-section for a material at X-ray energies
       :func:`material_mu_components`          dictionary of elemental components of `mu` for material
       :func:`get_material`                    get a material (name, formula, density from materials database
@@ -166,6 +167,8 @@ Chemical and Materials calculations
 .. autofunction:: xray_delta_beta
 
 .. autofunction:: chemparse
+
+.. autofunction:: validate_formula
 
 .. autofunction:: material_mu
 

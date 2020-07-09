@@ -28,9 +28,8 @@ __version__ = '1.4'
 def make_engine(dbname):
     "create engine for sqlite connection"
     return create_engine('sqlite:///%s' % (dbname),
-                         # poolclass=SingletonThreadPool,
+                         poolclass=SingletonThreadPool,
                          connect_args={'check_same_thread': False})
-
 
 def isxrayDB(dbname):
     """whether a file is a valid XrayDB database

@@ -171,6 +171,38 @@ def get_material(name):
             material = (name, densities[name])
     return material
 
+def get_materials(force_read=False):
+    """get dictionary of available materials
+
+    Args:
+        force_read (bool): whether to force a re-reading of the
+                         materials database [False]
+
+    Returns:
+        dict with keys of material name and values of
+        (chemical formula, density of material)
+
+    Examples:
+        >>> for name, data in xraydb.get_materials().items():
+        ...      print(name, data[0], data[1])
+        ...
+        water H2O 1.0
+        lead Pb 11.34
+        aluminum Al 2.7
+        kapton C22H10N2O5 1.42
+        polyimide C22H10N2O5 1.42
+        nitrogen N 0.00125
+        argon Ar 0.001784
+        ...
+
+
+    """
+    global _materials
+
+    if force_read or _materials is None:
+        _materials = _read_materials_db()
+    return _materials
+
 
 def add_material(name, formula, density):
     """add a material to the users local material database

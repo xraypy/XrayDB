@@ -8,7 +8,8 @@ import numpy as np
 from numpy.testing import assert_allclose
 
 from xraydb import (chemparse, validate_formula, material_mu,
-                    material_mu_components, get_material, add_material)
+                    material_mu_components, get_materials, get_material,
+                    add_material)
 
 from xraydb.materials import get_user_materialsfile
 
@@ -33,6 +34,18 @@ def test_validate_formula():
     for formula, cert in examples.items():
         ret = validate_formula(formula)
         assert (ret == cert)
+
+def test_get_materials():
+    examples = {'water': True, 'lead': True, 'acetone': True,
+                'kapton': True, 'sapphire': True,
+                'cheese': False, 'spice': False, 'bicycle': False}
+
+    known_materials = get_materials()
+    for name, found in examples.items():
+        if found:
+            assert (name in known_materials)
+        else:
+            assert (name not in known_materials)
 
 def test_material_mu1():
     en = np.linspace(8500, 9500, 21)

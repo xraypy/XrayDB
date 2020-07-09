@@ -14,7 +14,7 @@ from .xraydb import XrayDB
 
 from .chemparser import chemparse, validate_formula
 
-from .materials import (material_mu, material_mu_components,
+from .materials import (material_mu, material_mu_components, get_materials,
                         get_material, add_material)
 
 from .xray import (atomic_number, atomic_symbol, atomic_mass,

@@ -52,7 +52,7 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.3.1, corresponding to
+<p>The current version of the Python module is 4.3.2, corresponding to
 version 4 of <cite>xraydb.sqlite</cite>.</p>
 <div class="section" id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
@@ -186,13 +186,16 @@ the data comes from <a class="bibtex reference internal" href="biblio.html#elam-
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.material_mu_components" title="xraydb.material_mu_components"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu_components()</span></code></a></p></td>
 <td><p>dictionary of elemental components of <cite>mu</cite> for material</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.get_material" title="xraydb.get_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_material()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.get_materials" title="xraydb.get_materials"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_materials()</span></code></a></p></td>
+<td><p>get a dictionary of known materials {name:(formula, density)}</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.get_material" title="xraydb.get_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_material()</span></code></a></p></td>
 <td><p>get a material (name, formula, density from materials database</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.add_material" title="xraydb.add_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_material()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.add_material" title="xraydb.add_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_material()</span></code></a></p></td>
 <td><p>add a material (name, formula, density) to local materials database</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_delta_beta" title="xraydb.xray_delta_beta"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.xray_delta_beta" title="xraydb.xray_delta_beta"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></p></td>
 <td><p>return anomalous index of refraction for material and energy</p></td>
 </tr>
 </tbody>
@@ -820,6 +823,36 @@ with tuple of (stoichiometric fraction, atomic mass, mu)</p>
 </dd></dl>
 
 <dl class="py function">
+<dt id="xraydb.get_materials">
+<code class="sig-name descname">get_materials</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">force_read</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_materials" title="Permalink to this definition">¶</a></dt>
+<dd><p>get dictionary of available materials</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force_read</strong> (<em>bool</em>) – whether to force a re-reading of the
+materials database [False]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict with keys of material name and values of
+(chemical formula, density of material)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">get_materials</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>     <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">...</span>
+<span class="go">water H2O 1.0</span>
+<span class="go">lead Pb 11.34</span>
+<span class="go">aluminum Al 2.7</span>
+<span class="go">kapton C22H10N2O5 1.42</span>
+<span class="go">polyimide C22H10N2O5 1.42</span>
+<span class="go">nitrogen N 0.00125</span>
+<span class="go">argon Ar 0.001784</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt id="xraydb.get_material">
 <code class="sig-name descname">get_material</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_material" title="Permalink to this definition">¶</a></dt>
 <dd><p>look up material name</p>
@@ -943,7 +976,7 @@ in the users home directory, and will be useful in subsequent sessions.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-July-08.
+      Last updated on 2020-July-09.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
     </div>
   </body>

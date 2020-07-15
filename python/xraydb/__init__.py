@@ -15,7 +15,7 @@ from .xraydb import XrayDB
 from .chemparser import chemparse, validate_formula
 
 from .materials import (material_mu, material_mu_components, get_materials,
-                        get_material, add_material)
+                        get_material, find_material, add_material)
 
 from .xray import (atomic_number, atomic_symbol, atomic_mass,
                    atomic_density, xray_edges, xray_edge, xray_lines,
@@ -24,6 +24,7 @@ from .xray import (atomic_number, atomic_symbol, atomic_mass,
                    mu_chantler, mu_elam, coherent_cross_section_elam,
                    incoherent_cross_section_elam, guess_edge,
                    xray_delta_beta, get_xraydb)
+
 
 from ._version import get_versions
 __version__ = get_versions()['version']

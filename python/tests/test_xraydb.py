@@ -10,7 +10,7 @@ from xraydb import XrayDB
 def test_xraydb_version():
     xdb = XrayDB()
     version = xdb.get_version()
-    assert 'XrayDB Version: 4.0, Python' in version
+    assert 'XrayDB Version: 5.0, Python' in version
 
     hist = xdb.get_version(with_history=True)
     assert len(hist) > 350

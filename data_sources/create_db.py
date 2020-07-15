@@ -12,7 +12,6 @@ import time
 import sqlite3
 from collections import namedtuple
 
-
 def add_Version(dest, append=True):
     """add Version Information"""
     if os.path.exists(dest) and not append:
@@ -888,6 +887,5 @@ if __name__ == '__main__':
     add_Waasmaier(dest, append=True)
     add_elementaldata(dest)
     add_corehole_data(dest, append=True)
-    add_Chantler(dest, table='Chantler_coarse', subdir='coarse', append=True)
     add_Chantler(dest, table='Chantler',        subdir='fine',   append=True)
     add_Version(dest)

@@ -635,13 +635,12 @@ class Scatterer:
         self.symbol = symbol
         self.number = atomic_number(symbol)
         self.mass   = atomic_mass(symbol)
-        self.f1     = chantler_data(symbol, energy, 'f1')
-        self.f1     = self.f1 + self.number
-        self.f2     = chantler_data(symbol, energy, 'f2')
+        self.f1     = self.number + f1_chantler(symbol, energy)
+        self.f2     = f2_chantler(symbol, energy)
         self.mu_photo = chantler_data(symbol, energy, 'mu_photo')
         self.mu_total = chantler_data(symbol, energy, 'mu_total')
 
-def xray_delta_beta(material, density, energy, photo_only=False):
+def xray_delta_beta(material, density, energy):
     """anomalous components of the index of refraction for a material,
     using the tabulated scattering components from Chantler.
 
@@ -649,8 +648,7 @@ def xray_delta_beta(material, density, energy, photo_only=False):
        material:   chemical formula  ('Fe2O3', 'CaMg(CO3)2', 'La1.9Sr0.1CuO4')
        density:    material density in g/cm^3
        energy:     x-ray energy in eV
-       photo_only: boolean for returning photo cross-section component only
-                   if False (default), the total cross-section is returned
+
     Returns:
       (delta, beta, atlen)
 
@@ -666,8 +664,10 @@ def xray_delta_beta(material, density, energy, photo_only=False):
     Adapted from code by Yong Choi
 
     """
+    
     lamb_cm = 1.e-8 * PLANCK_HC / energy # lambda in cm
     elements = []
+    
     for symbol, number in chemparse(material).items():
         elements.append((number, Scatterer(symbol, energy)))
 
@@ -680,8 +680,7 @@ def xray_delta_beta(material, density, energy, photo_only=False):
         total_mass += number * scat.mass
 
     scale = lamb_cm * lamb_cm * R_ELECTRON_CM / (2*np.pi*total_mass)
-    delta = delta * scale
-    beta  = beta_total * scale
-    if photo_only:
-        beta  = beta_photo * scale
-    return delta, beta, lamb_cm/(4*np.pi*beta)
+    delta  *= scale
+    beta_photo *= scale
+    beta_total *= scale
+    return delta, beta_photo, lamb_cm/(4*np.pi*beta_total)

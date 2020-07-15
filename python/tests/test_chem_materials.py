@@ -174,7 +174,7 @@ def test_material_get():
         assert_allclose(density, _d, rtol=0.1)
 
     for formula in ('WSO3', 'CdAs140CO3', 'KAs'):
-        out = get_material('C2H31W4')
+        out = get_material(formula)
         assert out == None
 
 

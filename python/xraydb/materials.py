@@ -1,10 +1,13 @@
 import os
 import numpy as np
+from collections import namedtuple
 from .chemparser import chemparse
 from .xray import mu_elam, atomic_mass
 from .utils import get_homedir
 
 _materials = None
+
+Material = namedtuple('Material', ('formula', 'density', 'name', 'categories'))
 
 def get_user_materialsfile():
     """return name for user-specific materials.dat file
@@ -26,23 +29,37 @@ def _read_materials_db():
             for line in lines:
                 line = line.strip()
                 if len(line) > 2 and not line.startswith('#'):
-                    try:
-                        name, f, den = [i.strip() for i in line.split('|')]
-                        name = name.lower()
-                        _materials[name] = (f.replace(' ', ''), float(den))
-                    except:
-                        pass
+                    words = [i.strip() for i in line.split('|')]
+                    name = words[0].lower()
+                    formula = None
+                    if len(words) == 3: # older style
+                        # "name | formula | density"  or  "name | density | formula"
+                        iformula = 1
+                        try:
+                            density = float(words[2])
+                        except ValueError:
+                            density = float(words[1])
+                            iformula = 2
+                        formula = words[iformula]
+                        categories = []
+                    elif len(words) == 4: # newer style, with categories
+                        density = float(words[1])
+                        categories = [w.strip() for w in words[2].split(',')]
+                        formula = words[3]
+                    if formula is not None:
+                        formula = formula.replace(' ', '')
+                        _materials[name] = Material(formula, density, name, categories)
 
         # first, read from standard list
         local_dir, _ = os.path.split(__file__)
         fname = os.path.join(local_dir, 'materials.dat')
         if os.path.exists(fname):
             read_materialsfile(fname)
-
         # next, read from users materials file
         fname = get_user_materialsfile()
         if os.path.exists(fname):
             read_materialsfile(fname)
+            
     return _materials
 
 def material_mu(name, energy, density=None, kind='total'):
@@ -74,18 +91,20 @@ def material_mu(name, energy, density=None, kind='total'):
     formula = None
     _density  = None
     mater = _materials.get(name.lower(), None)
-    if mater is not None:
-        formula, _density = mater
-    else:
+    if mater is None:
         for key, val in _materials.items():
             if name.lower() == val[0].lower(): # match formula
-                formula, _density = val
+                mater = val
                 break
+
     # default to using passed in name as a formula
     if formula is None:
-        formula = name
-    if density is None:
-        density = _density
+        if mater is None:
+            formula = name
+        else:
+            formula = mater.formula
+    if density is None and mater is not None:
+        density = mater.density
     if density is None:
         raise Warning('material_mu(): must give density for unknown materials')
 
@@ -130,8 +149,8 @@ def material_mu_components(name, energy, density=None, kind='total'):
         if density is None:
             raise Warning('material_mu(): must give density for unknown materials')
     else:
-        formula, density = mater
-
+        formula = mater.formula
+        density = mater.density
 
     out = {'mass': 0.0, 'density': density, 'elements':[]}
     for atom, frac in chemparse(formula).items():
@@ -144,7 +163,8 @@ def material_mu_components(name, energy, density=None, kind='total'):
 
 
 def get_material(name):
-    """look up material name
+    """look up material name, return formula and density
+    
 
     Args:
         name (str): name of material or chemical formula
@@ -156,35 +176,62 @@ def get_material(name):
         >>> xraydb.get_material('kapton')
         ('C22H10N2O5', 1.43)
 
+    See Also:
+       find_material()
+   
+    """
+    material = find_material(name)
+    if material is None:
+        return None
+    return material.formula, material.density
+
+def find_material(name):
+    """look up material name, return material instance
+
+    Args:
+        name (str): name of material or chemical formula
+
+    Returns:
+        material instance
+
+    Examples:
+        >>> xraydb.find_material('kapton')
+        Material(formula='C22H10N2O5', density=1.42, name='kapton', categories=['polymer'])
+        
+    See Also:
+       get_material()
+   
     """
     global _materials
-
     if _materials is None:
         _materials = _read_materials_db()
 
-    material =  _materials.get(name.lower(), None)
+    mat =  _materials.get(name.lower(), None)
 
-    if material is None:
-        formulas = [v[0] for v in _materials.values()]
-        densities = {v[0]:v[1] for v in _materials.values()}
-        if name in formulas:
-            material = (name, densities[name])
-    return material
+    if mat is not None:
+        return mat
+    for mat in _materials.values():
+        if mat.formula == name:
+            return mat
+    return None
+    
+    
 
-def get_materials(force_read=False):
-    """get dictionary of available materials
+def get_materials(force_read=False, categories=None):
+    """get dictionary of all available materials
 
     Args:
         force_read (bool): whether to force a re-reading of the
                          materials database [False]
+        categories (list of strings or None): restrict results
+                         to those that match category names
 
     Returns:
-        dict with keys of material name and values of
-        (chemical formula, density of material)
+        dict with keys of material name and values of Materials instances
 
     Examples:
-        >>> for name, data in xraydb.get_materials().items():
-        ...      print(name, data[0], data[1])
+        >>> for name, m in xraydb.get_materials().items():
+        ...      print(name, m)
         ...
         water H2O 1.0
         lead Pb 11.34
@@ -204,13 +251,14 @@ def get_materials(force_read=False):
     return _materials
 
 
-def add_material(name, formula, density):
+def add_material(name, formula, density, categories=None):
     """add a material to the users local material database
 
     Args:
         name (str): name of material
         formula (str): chemical formula
-        density (float: density
+        density (float): density
+        categories (list of strings or None): list of category names
 
     Returns:
         None
@@ -220,14 +268,17 @@ def add_material(name, formula, density):
         in the users home directory, and will be useful in subsequent sessions.
 
     Examples:
-        >>> xraydb.add_material('becopper', 'Cu0.98e0.02', 8.3)
+        >>> xraydb.add_material('becopper', 'Cu0.98e0.02', 8.3, categories=['metal'])
 
     """
     global _materials
     if _materials is None:
         _materials = _read_materials_db()
     formula = formula.replace(' ', '')
-    _materials[name.lower()] = (formula, float(density))
+
+    if categories is None:
+        categories = []
+    _materials[name.lower()] = Material(formula, float(density), name, categories)
 
     fname = get_user_materialsfile()
 
@@ -243,9 +294,10 @@ def add_material(name, formula, density):
             except FileExistsError:
                 pass
         text = ['# user-specific database of materials\n',
-                '# name, formula, density\n']
+                '# name  |  density |  categories | formulan']
 
-    text.append(" %s | %s | %g\n" % (name, formula, density))
+    catstring = ', '.join(categories)
+    text.append(" %s | %g  | %s | %s\n" % (name, density, catstring, formula))
 
     with open(fname, 'w') as fh:
         fh.write(''.join(text))

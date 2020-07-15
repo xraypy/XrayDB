@@ -11,74 +11,106 @@
 ##
 ######################################################################
 ##
-## This file is a very simple database.  (1) Blank lines or lines
-## beginning with a hash (#) are ignored.  (2) Entries contain three
-## fields, separated by a vertical bar (|).  The first field is the
-## common name of the material.  The second field is the chemical
-## formula, written according to the rules of Chemistry::Formula.  The
-## third field is the density of the material.
+## This file contains a simple database of materials of interest in
+## X-ray and esspecially synchrotron X-ray work.
+##   Blank lines or lines beginning with a hash (#) are ignored.
+##   Entries contain four fields on single line, separated by a vertical bar (|)
+##   The fields are:
+##      1.  common name 
+##      2.  density in gr/cm^3
+##      3.  comma delimited list of categories
+##      4.  chemical formula
 ##
-## The materials chosen in this file are materials of interest to the
-## synchrotron scientist.
-##
-## Many of these materials were swiped from a list provided by Erik
-## Gullikson at Berkeley's center for X-Ray Optics.
-##
+##   Current "categories" are the non-exclusive terms:
+##    element, gas, solvent, polymer, ceramic, mineral,
+##    semiconductor, metal
 
-# Name          |  Formula        | Density (g/cm^3)
-  water         |  H2O            | 1
-  lead          |  Pb             | 11.34
-  aluminum      |  Al             | 2.70
-  kapton        |  C22 H10 N2 O5  | 1.42
-  polyimide     |  C22 H10 N2 O5  | 1.42
-  nitrogen      |  N              | 0.00125
-  argon         |  Ar             | 0.001784
-  helium        |  He             | 0.0001786
-  neon          |  Ne             | 0.0009002
-  krypton       |  Kr             | 0.00379
-  xenon         |  Xe             | 0.005894
-  air           |  (N2)0.78 (O2)0.21 (CO2)0.04 Ar0.0093 Kr0.000001 Xe0.0000009 | 0.001225
-  diamond       |  C              | 3.52
-  graphite      |  C              | 2.23
-  carbon        |  C              | 2.23
-  boron nitride |  BN             | 2.1
-  cubic boron nitride |  BN       | 3.45
-  silicon nitride |  Si3N4        | 3.17
-  yag           |  Y3 Al5 O12     | 4.56
-  sapphire      |  Al2O3          | 4.0
-  polypropylene |  C3H6           | 0.86
-  pmma          |  C5 H8 O2       | 1.18
-  polycarbonate |  C16 H14 O3     | 1.2
-  kimol         |  C16 H14 O3     | 1.2
-  mylar         |  C10 H8 O4      | 1.4
-  teflon        |  C2F4           | 2.2
-  parylene-c    |  C8 H7 Cl       | 1.29
-  parylene-n    |  C8H8           | 1.11
-  fluorite      |  CaF2           | 3.18
-  mica          |  K Al3 Si3 O12 H2   | 2.83
-  salt          |  NaCl           | 2.165
-  silica        |  SiO2           | 2.2
-  quartz        |  SiO2           | 2.65
-  rutile        |  TiO2           | 4.23
-  ule           |  Si0.925 Ti0.075 O2 | 2.205
-  zerodur       |  Si0.56 Al0.5 P0.16 Li0.04 Ti0.02 Zr0.02 Zn0.03 O2.46 | 2.53
-## metals
-  beryllium     |  Be             | 1.85
-  copper        |  Cu             | 8.96
-  molybdenum    |  Mo             | 10.28
-  iron          |  Fe             | 7.86
-  zinc          |  Zn             | 7.14
-  silicon       |  Si             | 2.329
-  germanium     |  Ge             | 5.323
-  gold          |  Au             | 19.3
-  silver        |  Ag             | 10.49
-  platinum      |  Pt             | 21.45
-  tungsten      |  W              | 19.25
-  tantalum      |  Ta             | 16.69
-## solvents
-  ethanol       |  C2H5OH         | 0.789
-  acetone       |  C3H6O          | 0.790
-  methanol      |  CH3OH          | 0.792
-  isopropanol   |  C3H8O          | 0.804
-  toluene       |  C7H8           | 0.867
-  xylene        |  C6H4(CH3)2     | 0.844
+# Name               | density    | Categories          | Formula 
+  helium             | 0.0001786  | gas, element        | He             
+  nitrogen           | 0.00125    | gas, element        | N              
+  neon               | 0.0009002  | gas, element        | Ne             
+  argon              | 0.001784   | gas, element        | Ar        
+  krypton            | 0.00379    | gas, element        | Kr             
+  xenon              | 0.005894   | gas, element        | Xe             
+  air                | 0.001225   | gas, element        | (N2)0.78 (O2)0.21 (CO2)0.04 Ar0.0093 Kr0.000001 Xe0.0000009
+  water              | 1.0        | solvent             | H2O            
+  ethanol            | 0.789      | solvent             | C2H5OH         
+  acetone            | 0.785      | solvent             | C3H6O          
+  methanol           | 0.791      | solvent             | CH3OH          
+  isopropanol        | 0.803      | solvent             | C3H8O          
+  toluene            | 0.867      | solvent             | C7H8           
+  xylene             | 0.844      | solvent             | C6H4(CH3)2     
+  benzene            | 0.877      | solvent             | C6H6
+  butanol            | 0.810      | solvent             | C4H10O
+  chlorobenzene      | 1.106      | solvent             | C6H5Cl
+  cyclohexane        | 0.774      | solvent             | C6H12
+  dimethyl sulfoxide | 1.09       | solvent             | C2H6OS
+  ethylene glycol    | 1.115      | solvent             | C2H6O2
+  glycerin           | 1.261      | solvent             | C3H8O3
+  heptane            | 0.684      | solvent             | C7H16
+  hexane             | 0.659      | solvent             | C6H14
+
+  kapton             | 1.42       | polymer             | C22 H10 N2 O5  
+  polyimide          | 1.42       | polymer             | C22 H10 N2 O5  
+  polypropylene      | 0.86       | polymer             | C3 H6           
+  pmma               | 1.18       | polymer             | C5 H8 O2       
+  polycarbonate      | 1.2        | polymer             | C16 H14 O3    
+  kimol              | 1.2        | polymer             | C16 H14 O3  
+  mylar              | 1.4        | polymer             | C10 H8 O4      
+  teflon             | 2.2        | polymer             | C2 F4           
+  parylene-c         | 1.29       | polymer             | C8 H7 Cl       
+  parylene-n         | 1.11       | polymer             | C8 H8          
+  boron nitride      | 2.1        | ceramic             | BN             
+  cubic boron nitride| 3.45       | ceramic             | BN       
+  silicon nitride    | 3.17       | ceramic             | Si3 N4        
+  yag                | 4.56       | ceramic, mineral    | Y3 Al5 O12     
+  sapphire           | 4.0        | ceramic, mineral    | Al2 O3          
+  ule glass          | 2.205      | ceraminc            | Si0.925 Ti0.075 O2 
+  zerodur            | 2.53       | ceramic             | Si0.56 Al0.5 P0.16 Li0.04 Ti0.02 Zr0.02 Zn0.03 O2.46 
+  fluorite           | 3.18       | mineral             | Ca F2           
+  mica               | 2.83       | mineral             | K Al3 Si3 O12 H2
+  fayalite           | 4.392      | mineral             | Fe2SiO4
+  forsterite         | 3.27       | mineral             | Mg2SiO4 
+  wustite            | 5.7        | mineral             | FeO
+  salt               | 2.165      | mineral             | NaCl           
+  silica             | 2.2        | ceramic, mineral    | SiO2           
+  quartz             | 2.65       | ceramic, mineral    | SiO2           
+  cristobalite	     | 2.27       | mineral             | SiO2
+  rutile             | 4.23       | mineral             | TiO2
+  magnesium dioxide  | 3.6        | mineral             | MgO
+  galena             | 7.60       | mineral             | PbS
+  cadmium telluride  | 5.85       | semiconductor       | CdTe
+  gallium arsenide   | 5.318      | semiconductor       | GaAs
+  beryllium copper   | 8.4        | metal, alloy        | Cu0.98e0.02 
+  
+  diamond carbon     | 3.52       | element             | C            
+  graphite carbon    | 2.23       | element             | C             
+  beryllium          | 1.85       | metal, element      | Be          
+  aluminum           | 2.70       | metal, element      | Al             
+  silicon            | 2.329      | semiconductor, element | Si             
+  titanium           | 4.51       | metal, element      | Ti
+  chromium           | 7.15       | metal, element      | Cr
+  iron               | 7.87       | metal, element      | Fe             
+  nickel             | 8.9        | metal, element      | Ni
+  copper             | 8.96       | metal, element      | Cu
+  zinc               | 7.14       | metal, element      | Zn
+  gallium            | 5.91       | metal, element      | Ga             
+  germanium          | 5.323      | semiconductor, element  | Ge             
+  molybdenum         | 10.28      | metal, element      | Mo
+  ruthenium          | 12.1       | metal, element      | Ru
+  rhodium            | 12.4       | metal, element      | Rh
+  palladium          | 12.0       | metal, element      | Pd
+  silver             | 10.49      | metal, element      | Ag             
+  indium             | 7.31       | metal, element      | In             
+  tin                | 7.26       | metal, element      | Sn
+  tantalum           | 16.4       | metal, element      | Ta             
+  tungsten           | 19.25      | metal, element      | W              
+  rhenium            | 20.8       | metal, element      | Re
+  osmium             | 22.59      | metal, element      | Os             
+  iridium            | 22.5       | metal, element      | Ir
+  platinum           | 21.5       | metal, element      | Pt             
+  gold               | 19.3       | metal, element      | Au             
+  mercury            | 13.53      | metal, element      | Hg
+  lead               | 11.34      | metal, element      | Pb             
+  uranium            | 19.1       | metal, element      | U
+

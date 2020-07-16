@@ -100,6 +100,7 @@ using it:
       :func:`get_materials`                   get a dictionary of known materials {name:(formula, density)}
       :func:`get_material`                    get a material (name, formula, density from materials database
       :func:`add_material`                    add a material (name, formula, density) to local materials database
+      :func:`find_material`                   return a Material named tuple for a known materials
       :func:`xray_delta_beta`                 return anomalous index of refraction for material and energy
      ======================================= =======================================================================
 
@@ -176,6 +177,8 @@ Chemical and Materials calculations
 .. autofunction:: material_mu_components
 
 .. autofunction:: get_materials
+
+.. autofunction:: find_material
 
 .. autofunction:: get_material
 

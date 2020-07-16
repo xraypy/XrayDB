@@ -41,8 +41,6 @@ def add_Version(dest, append=True):
 def add_elementaldata(dest):
     source = 'elemental_data.txt'
     if not os.path.isfile(source):
-        if silent:
-            return
         raise IOError('File "%s" does not exist' % source)
 
     conn = sqlite3.connect(dest)
@@ -56,6 +54,26 @@ def add_elementaldata(dest):
                 continue
             num, sym, mw, rho = line[:-1].split()
             c.execute('insert into elements values (?,?,?,?)', (num, sym, mw, rho))
+    conn.commit()
+    c.close()
+
+def add_ionization_potentials(dest):
+    source = 'ion_chamber_potentials.txt'
+    if not os.path.isfile(source):
+        raise IOError('File "%s" does not exist' % source)
+
+    conn = sqlite3.connect(dest)
+    c = conn.cursor()
+    c.execute('create table ionization_potentials (gas text,  potential real)')
+    with io.open(source, encoding='ascii') as f:
+        for line in f.readlines():
+            if line.startswith('#'):
+                continue
+
+            line = line[:-1].strip()
+            if len(line)  > 2:
+                gas, potential = line.split()
+                c.execute('insert into ionization_potentials values (?,?)', (gas, potential))
     conn.commit()
     c.close()
 
@@ -886,6 +904,7 @@ if __name__ == '__main__':
     add_Elam(dest, overwrite=args.force, silent=args.silent)
     add_Waasmaier(dest, append=True)
     add_elementaldata(dest)
+    add_ionization_potentials(dest)
     add_corehole_data(dest, append=True)
     add_Chantler(dest, table='Chantler',        subdir='fine',   append=True)
     add_Version(dest)

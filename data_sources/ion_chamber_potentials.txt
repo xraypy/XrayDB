@@ -1,0 +1,10 @@
+# effective ionization potentials, energy in eV per ion pair
+# from G. F. Knoll, Radiation Detection and Measurement,  Table 5-1.
+
+argon      26.4
+helium     41.3
+hydrogen   36.5
+nitrogren  34.8
+air        33.8
+oxygen     30.8
+methane    27.3

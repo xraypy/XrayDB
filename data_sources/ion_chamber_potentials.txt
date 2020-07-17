@@ -8,3 +8,11 @@ nitrogren  34.8
 air        33.8
 oxygen     30.8
 methane    27.3
+Ar     26.4
+He     41.3
+H      36.5
+N      34.8
+N2     34.8
+O      30.8
+O2     30.8
+CH4    27.3

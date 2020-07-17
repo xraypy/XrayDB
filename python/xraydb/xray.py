@@ -570,6 +570,38 @@ def core_width(element, edge=None):
     xdb = get_xraydb()
     return xdb.corehole_width(element, edge=edge)
 
+def ionization_potential(gas):
+    """return effective ionization potential for a gas,
+    as appropriate for ionization chambers in the linear
+    regime (not in the 'proportional counter' regime)
+
+    Args:
+        gas (string):  name of gas
+
+    Returns:
+        ionization potential in eV
+
+    Notes:
+       Data from G. F. Knoll, Radiation Detection and Measurement, Table 5-1.
+       Supported gas names and their effective potentials:
+
+           ================== ================
+            gas names          potential (eV)
+           ------------------ ----------------
+            argon, Ar           26.4
+            helium, He          41.3
+            hydrogen, H         36.5
+            nitrogren, N, N2    34.8
+            air                 33.8
+            oxygen, O, O2       30.8
+            methane, CH4        27.3
+           ================== ================
+
+    """
+    xdb = get_xraydb()
+    return xdb.ionization_potential(gas)
+
+
 def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
     """guess an element and edge based on energy (in eV)
 
@@ -664,10 +696,10 @@ def xray_delta_beta(material, density, energy):
     Adapted from code by Yong Choi
 
     """
-    
+
     lamb_cm = 1.e-8 * PLANCK_HC / energy # lambda in cm
     elements = []
-    
+
     for symbol, number in chemparse(material).items():
         elements.append((number, Scatterer(symbol, energy)))
 

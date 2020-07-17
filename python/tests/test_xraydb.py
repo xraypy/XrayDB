@@ -26,8 +26,12 @@ def test_molar_mass():
 
 def test_density():
     xdb = XrayDB()
-    assert_allclose(xdb.molar_mass('Pb'), 207.2, rtol=0.001)
-
+    assert_allclose(xdb.density('Ne'), 0.00090, rtol=0.01)
+    assert_allclose(xdb.density('Ti'), 4.506,   rtol=0.01)
+    assert_allclose(xdb.density('Kr'), 0.00375, rtol=0.01)
+    assert_allclose(xdb.density('Mo'), 10.28,   rtol=0.01)
+    assert_allclose(xdb.density('Pd'), 12.03,   rtol=0.01)
+    assert_allclose(xdb.density('Au'), 19.3,    rtol=0.01)
     with pytest.raises(ValueError):
         xdb.density('Mx')
 
@@ -49,3 +53,12 @@ def test_xray_line_strengths():
     assert len(xdb.xray_line_strengths('Hg', excitation_energy=12500)) == 9
     assert len(xdb.xray_line_strengths('Hg', excitation_energy=14300)) == 13
     assert len(xdb.xray_line_strengths('Hg', excitation_energy=16000)) == 17
+
+def test_ionization_potentials():
+    xdb = XrayDB()
+    assert xdb.ionization_potential('air') == 33.8
+    assert xdb.ionization_potential('helium') == 41.3
+    assert xdb.ionization_potential('He') == 41.3
+
+    with pytest.raises(ValueError):
+        xdb.ionization_potential('p10')

@@ -102,11 +102,14 @@ using it:
       :func:`add_material`                    add a material (name, formula, density) to local materials database
       :func:`find_material`                   return a Material named tuple for a known materials
       :func:`xray_delta_beta`                 return anomalous index of refraction for material and energy
+      :func:`ionization_potential`            return effective ionization potential for a gas, as for ion chambers
      ======================================= =======================================================================
 
 :mod:`xraydb` functions
 ------------------------------
 
+
+.. autofunction:: get_xraydb
 
 Atomic Properties
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,4 +187,4 @@ Chemical and Materials calculations
 
 .. autofunction:: add_material
 
-.. autofunction:: get_xraydb
+.. autofunction:: ionization_potential

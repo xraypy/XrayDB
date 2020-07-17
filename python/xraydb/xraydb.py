@@ -707,7 +707,7 @@ class XrayDB():
         return self.cross_section_elam(element, energies, kind='coh')
 
     def incoherent_cross_section_elam(self, element, energies):
-        """returns incoherenet scattering cross section for an element
+        """return incoherenet scattering cross section for an element
         at energies (in eV)
 
         returns values in units of cm^2 / gr
@@ -720,3 +720,24 @@ class XrayDB():
         Data from Elam, Ravel, and Sieber.
         """
         return self.cross_section_elam(element, energies, kind='incoh')
+
+    def ionization_potential(self, gas):
+        """return effective ionization potential for a gas,
+        as appropriate for ionization chambers in the linear
+        regime (not in the 'proportional counter' regime)
+
+        returns values in units of eV
+
+        argument
+        ---------
+        gas (string):  name of gas
+
+        notes
+        -----
+        Data from G. F. Knoll, Radiation Detection and Measurement, Table 5-1.
+        """
+        itab = self.tables['ionization_potentials']
+        out = self.query(itab).filter(itab.c.gas == gas).all()
+        if len(out) != 1:
+            raise ValueError('unknown gas for ionization potential: %s' % gas)
+        return float(out[0].potential)

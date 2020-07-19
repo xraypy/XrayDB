@@ -103,14 +103,13 @@ using it:
       :func:`material_mu_components`          dictionary of elemental components of `mu` for material
       :func:`xray_delta_beta`                 anomalous index of refraction for material and energy
       :func:`mirror_reflectivity`             X-ray reflectivities for mirror materials (thick slab limit)
+      :func:`ionization_potential`            return effective ionization potential for a gas, as for ion chambers
      ======================================= =======================================================================
 
 :mod:`xraydb` functions
 ------------------------------
 
-
 .. autofunction:: get_xraydb
-
 
 Atomic Properties
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,6 +175,8 @@ Chemical and Materials database
 
 .. autofunction:: get_materials
 
+.. autofunction:: find_material
+
 .. autofunction:: get_material
 
 .. autofunction:: add_material
@@ -195,4 +196,4 @@ X-ray properties of materials
 
 .. autofunction:: mirror_reflectivity
 		  
-
+.. autofunction:: ionization_potential

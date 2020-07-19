@@ -10,9 +10,7 @@ import json
 import os
 import time
 import sqlite3
-from string import maketrans
 from collections import namedtuple
-
 
 def add_Version(dest, append=True):
     """add Version Information"""
@@ -36,6 +34,46 @@ def add_Version(dest, append=True):
             c.execute('insert into Version values (?,?,?,?)',
                       (rowid, _tag, _date, _notes))
 
+    conn.commit()
+    c.close()
+
+
+def add_elementaldata(dest):
+    source = 'elemental_data.txt'
+    if not os.path.isfile(source):
+        raise IOError('File "%s" does not exist' % source)
+
+    conn = sqlite3.connect(dest)
+    c = conn.cursor()
+    c.execute('''create table elements (atomic_number integer primary key,
+        element text, molar_mass real, density real)
+        ''')
+    with io.open(source, encoding='ascii') as f:
+        for line in f.readlines():
+            if line.startswith('#'):
+                continue
+            num, sym, mw, rho = line[:-1].split()
+            c.execute('insert into elements values (?,?,?,?)', (num, sym, mw, rho))
+    conn.commit()
+    c.close()
+
+def add_ionization_potentials(dest):
+    source = 'ion_chamber_potentials.txt'
+    if not os.path.isfile(source):
+        raise IOError('File "%s" does not exist' % source)
+
+    conn = sqlite3.connect(dest)
+    c = conn.cursor()
+    c.execute('create table ionization_potentials (gas text,  potential real)')
+    with io.open(source, encoding='ascii') as f:
+        for line in f.readlines():
+            if line.startswith('#'):
+                continue
+
+            line = line[:-1].strip()
+            if len(line)  > 2:
+                gas, potential = line.split()
+                c.execute('insert into ionization_potentials values (?,?)', (gas, potential))
     conn.commit()
     c.close()
 
@@ -151,7 +189,7 @@ def add_Waasmaier(dest, append=True):
     if 'Elastic Photon-Atom Scatt' not in lines[1]:
         raise RuntimeError('Source file not recognized for f0_WaasKirf data')
 
-    strip_ion = maketrans('0123456789+-', ' '*12)
+    strip_ion = str.maketrans('0123456789+-', ' '*12)
     id = 0
     while lines:
         line = lines.pop(0)
@@ -250,6 +288,7 @@ def add_Chantler(dest, append=True, table='Chantler', subdir='fine', suffix='.da
     conn.commit()
     c.close()
 
+
 def add_Elam(dest, overwrite=False, silent=False):
     source = 'elam.dat'
     if not os.path.isfile(source):
@@ -273,11 +312,6 @@ def add_Elam(dest, overwrite=False, silent=False):
     conn = sqlite3.connect(dest)
     c = conn.cursor()
 
-    c.execute(
-        '''create table elements (atomic_number integer primary key,
-        element text, molar_mass real, density real)
-        '''
-        )
     current_edge_id = 0
     c.execute(
         '''create table xray_levels (id integer primary key, element text,
@@ -319,9 +353,6 @@ def add_Elam(dest, overwrite=False, silent=False):
         line = lines.pop(0)
         if line.startswith('Element'):
             sym, num, mw, rho = line.split()[1:]
-            c.execute(
-                'insert into elements values (?,?,?,?)', (num, sym, mw, rho)
-                )
             current_element = sym
         elif line.startswith('Edge'):
             current_edge_id += 1
@@ -872,7 +903,8 @@ if __name__ == '__main__':
 
     add_Elam(dest, overwrite=args.force, silent=args.silent)
     add_Waasmaier(dest, append=True)
+    add_elementaldata(dest)
+    add_ionization_potentials(dest)
     add_corehole_data(dest, append=True)
-    add_Chantler(dest, table='Chantler_coarse', subdir='coarse', append=True)
     add_Chantler(dest, table='Chantler',        subdir='fine',   append=True)
     add_Version(dest)

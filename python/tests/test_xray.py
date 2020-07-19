@@ -24,7 +24,8 @@ def test_atomic_data():
     assert atomic_mass(45) > 102.8
     assert atomic_mass(45) < 103.0
     assert atomic_density(29) == atomic_density('cu')
-    assert atomic_density(22) > 4.51
+    assert atomic_density(22) > 4.50
+    assert atomic_density(79) > 19.2
 
 
 def test_edge_energies():
@@ -538,7 +539,7 @@ def test_delta_beta():
 
     en = np.linspace(6500, 7500, 51)
     d, b, a = xray_delta_beta('Fe2O3', 5.25, en)
-    
+
     assert_allclose(delta, d, rtol=0.005)
     assert_allclose(beta_photo, b, rtol=0.005)
     assert_allclose(atten, a, rtol=0.005)

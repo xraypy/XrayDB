@@ -8,8 +8,8 @@ import numpy as np
 from numpy.testing import assert_allclose
 
 from xraydb import (chemparse, validate_formula, material_mu,
-                    material_mu_components, get_materials, get_material,
-                    add_material)
+                    material_mu_components, find_material, get_materials,
+                    get_material, add_material)
 
 from xraydb.materials import get_user_materialsfile
 
@@ -152,6 +152,25 @@ def test_material_mu_components2():
 
     with pytest.raises(Warning):
         c = material_mu_components('TiO2', 10000)
+
+
+def test_material_find():
+    mat_  = {'kapton': ('C22H10N2O5', 1.43, 'polymer'),
+             'lead': ('Pb', 11.34, 'metal'),
+             'aluminum': ('Al', 2.72, 'metal'),
+             'water': ('H2O', 1.0, 'solvent')}
+    for mname, mdat in mat_.items():
+        mat = find_material(mname)
+        f1 = chemparse(mat.formula)
+        f2 = chemparse(mdat[0])
+        for k, v in f2.items():
+            assert v == f1[k]
+        assert_allclose(mat.density, mdat[1], rtol=0.1)
+        assert(mdat[2] in mat.categories)
+
+    for formula in ('WSO3', 'CdAs140CO3', 'KAs'):
+        out = find_material(formula)
+        assert out == None
 
 
 def test_material_get():

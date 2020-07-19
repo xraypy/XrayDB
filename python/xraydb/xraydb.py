@@ -241,6 +241,7 @@ class XrayDB():
         if column == 'mu':
             column = 'mu_total'
         ty = np.array(json.loads(getattr(row, column)))[nemin:nemax+1]
+        ty[np.where(abs(ty) < 1.e-99)] =  1.e-99
         if column == 'f1':
             out = UnivariateSpline(te, ty, s=smoothing)(energy)
         else:

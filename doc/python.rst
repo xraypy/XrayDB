@@ -95,16 +95,21 @@ using it:
       :func:`guess_edge`                      guess element and edge from energy of absorption edge
       :func:`chemparse`                       parse a chemical formula to atomic abundances
       :func:`validate_formula`                test whether a chemical formula can be parsed.
+      :func:`get_materials`                   get a dictionary of known materials {name:(formula, density)}
+      :func:`get_material`                    get a (formula, density) tuple for a material in the materials database
+      :func:`find_material`                   get a material instance for a material in the materials database
+      :func:`add_material`                    add a material to local materials database
       :func:`material_mu`                     absorption cross-section for a material at X-ray energies
       :func:`material_mu_components`          dictionary of elemental components of `mu` for material
-      :func:`get_materials`                   get a dictionary of known materials {name:(formula, density)}
-      :func:`get_material`                    get a material (name, formula, density from materials database
-      :func:`add_material`                    add a material (name, formula, density) to local materials database
-      :func:`xray_delta_beta`                 return anomalous index of refraction for material and energy
+      :func:`xray_delta_beta`                 anomalous index of refraction for material and energy
+      :func:`mirror_reflectivity`             X-ray reflectivities for mirror materials (thick slab limit)
      ======================================= =======================================================================
 
 :mod:`xraydb` functions
 ------------------------------
+
+
+.. autofunction:: get_xraydb
 
 
 Atomic Properties
@@ -162,18 +167,12 @@ Absorption and Scattering Cross-sections
 
 .. autofunction:: mu_chantler
 
-Chemical and Materials calculations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. autofunction:: xray_delta_beta
+Chemical and Materials database
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autofunction:: chemparse
 
 .. autofunction:: validate_formula
-
-.. autofunction:: material_mu
-
-.. autofunction:: material_mu_components
 
 .. autofunction:: get_materials
 
@@ -181,4 +180,19 @@ Chemical and Materials calculations
 
 .. autofunction:: add_material
 
-.. autofunction:: get_xraydb
+.. autofunction:: find_material		  
+
+
+
+X-ray properties of materials 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autofunction:: material_mu
+
+.. autofunction:: material_mu_components
+
+.. autofunction:: xray_delta_beta
+
+.. autofunction:: mirror_reflectivity
+		  
+

@@ -13,7 +13,7 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     atomic_symbol, atomic_mass, atomic_density, xray_edges,
                     xray_edge, xray_lines, xray_line, fluor_yield,
                     ck_probability, core_width, guess_edge,
-                    xray_delta_beta, XrayDB)
+                    xray_delta_beta, mirror_reflectivity, XrayDB)
 
 
 from xraydb.xray import chantler_data
@@ -542,3 +542,18 @@ def test_delta_beta():
     assert_allclose(delta, d, rtol=0.005)
     assert_allclose(beta_photo, b, rtol=0.005)
     assert_allclose(atten, a, rtol=0.005)
+
+def test_mirror_reflectivity():
+    rh1 = np.array([0.97198455, 0.97747452, 0.95358979, 0.92354935, 0.9358574 ,
+                    0.94247205, 0.94768843, 0.95135659, 0.95414534, 0.95691969,
+                    0.95904662, 0.96067686, 0.96191894, 0.96296549, 0.96374609,
+                    0.96432608, 0.96456307, 0.96441244, 0.9638434 , 0.96270155,
+                    0.9606895 , 0.95699329, 0.94567543, 0.6932395 , 0.65846868,
+                    0.57053494, 0.40617449, 0.26793184, 0.18829047, 0.13975991])
+
+    r1 = mirror_reflectivity('Rh', 0.0025, np.arange(1000, 31000, 1000))
+    assert_allclose(rh1, r1, rtol=0.005)    
+
+    assert_allclose(mirror_reflectivity('Pt', 0.001, 80000), 0.74, rtol=0.005)
+
+    

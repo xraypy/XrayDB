@@ -23,7 +23,8 @@ from .xray import (atomic_number, atomic_symbol, atomic_mass,
                    f0_ions, chantler_energies, f1_chantler, f2_chantler,
                    mu_chantler, mu_elam, coherent_cross_section_elam,
                    incoherent_cross_section_elam, guess_edge,
-                   xray_delta_beta, get_xraydb)
+                   xray_delta_beta, get_xraydb,
+                   mirror_reflectivity)
 
 
 from ._version import get_versions

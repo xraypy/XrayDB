@@ -683,4 +683,55 @@ def xray_delta_beta(material, density, energy):
     delta  *= scale
     beta_photo *= scale
     beta_total *= scale
+    if isinstance(beta_total, np.ndarray):
+        beta_total[np.where(beta_total<1.e-99)] = 1.e-99
+    else:
+        beta_total = max(beta_total, 1.e-19)
     return delta, beta_photo, lamb_cm/(4*np.pi*beta_total)
+
+def mirror_reflectivity(formula, theta, energy, density=None,
+                        roughness=0.0, polarization='s'):
+    """mirror reflectivity for a thick, singl-layer mirror.
+
+    Args:
+       formula (string):           material name or formula ('Si', 'Rh', 'silicon')
+       theta (float or nd-array):  mirror angle in radians
+       energy (float or nd-array): X-ray energy in eV
+       density (float or None):    material density in g/cm^3
+       roughness (float):          mirror roughness in Angstroms
+       polarization ('s' or 'p'):  mirror orientation relative to X-ray polarization
+
+    Returns:
+       mirror reflectivity values
+
+    Notes:
+       1. only one of theta or energy can be an nd-array
+       2. density can be `None` for known materials
+       3. polarization of 's' puts the X-ray polarization along the mirror
+          surface, 'p' puts it normal to the mirror surface. For
+          horizontally polarized X-ray beams from storage rings, 's' will
+          usually mean 'vertically deflecting' and 'p' will usually mean
+          'horizontally deflecting'.
+    """
+    from .materials import get_material
+    if density is None:
+        formula, density = get_material(formula)
+
+    delta, beta, _ = xray_delta_beta(formula, density, energy)
+    n = 1 - delta - 1j*beta
+
+    # kiz is k in air/vacuum,  with n = 1.
+    # ktz is k in mirror material, with n < 1.
+    # Note: kiz and ktz should have a factor of (2*pi/lambda)
+    # but this will cancel in the calculation of r_amp, so we drop it here.
+    kiz = np.sin(theta)
+    ktz = np.sqrt(n**2 - np.cos(theta)**2)
+
+    # polarization correction will be tiny for small angles
+    if polarization == 'p':
+        ktz = ktz / n
+
+    r_amp = (kiz - ktz)/(kiz + ktz)
+    if roughness > 1.e-12:
+        r_amp = r_amp * np.exp(-2*(roughness**2*kiz*ktz))
+    return (r_amp*r_amp.conjugate()).real

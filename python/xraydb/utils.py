@@ -18,8 +18,17 @@ AVOGADRO = consts.Avogadro
 # Planck's Constant:  h*c ~= 12398.42 eV*Ang
 PLANCK_HC = 1.e10 * consts.Planck * consts.c / consts.e
 
+QCHARGE = consts.e
+
 # classical electron radius in cm
 R_ELECTRON_CM = 100.0 * consts.codata.physical_constants['classical electron radius'][0]
+
+
+SI_PREFIXES = {'f': 1.e-15, 'femto': 1.e-15,
+               'p': 1.e-12, 'pico': 1.e-12,
+               'n': 1.e-9, 'nano': 1.e-9,
+               '\u03bc': 1.e-6, 'u': 1.e-6, 'micro': 1.e-6,
+               'm': 1.e-3, 'milli': 1.e-3}
 
 def index_nearest(array, value):
     """return index of array *nearest* to value

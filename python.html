@@ -52,7 +52,7 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.3.2, corresponding to
+<p>The current version of the Python module is 4.3.4, corresponding to
 version 4 of <cite>xraydb.sqlite</cite>.</p>
 <div class="section" id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
@@ -180,33 +180,59 @@ the data comes from <a class="bibtex reference internal" href="biblio.html#elam-
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.validate_formula" title="xraydb.validate_formula"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate_formula()</span></code></a></p></td>
 <td><p>test whether a chemical formula can be parsed.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.get_materials" title="xraydb.get_materials"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_materials()</span></code></a></p></td>
+<td><p>get a dictionary of known materials {name:(formula, density)}</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.get_material" title="xraydb.get_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_material()</span></code></a></p></td>
+<td><p>get a (formula, density) tuple for a material in the materials database</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.find_material" title="xraydb.find_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_material()</span></code></a></p></td>
+<td><p>get a material instance for a material in the materials database</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.add_material" title="xraydb.add_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_material()</span></code></a></p></td>
+<td><p>add a material to local materials database</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.material_mu" title="xraydb.material_mu"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu()</span></code></a></p></td>
 <td><p>absorption cross-section for a material at X-ray energies</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.material_mu_components" title="xraydb.material_mu_components"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu_components()</span></code></a></p></td>
 <td><p>dictionary of elemental components of <cite>mu</cite> for material</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.get_materials" title="xraydb.get_materials"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_materials()</span></code></a></p></td>
-<td><p>get a dictionary of known materials {name:(formula, density)}</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_delta_beta" title="xraydb.xray_delta_beta"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></p></td>
+<td><p>anomalous index of refraction for material and energy</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.get_material" title="xraydb.get_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_material()</span></code></a></p></td>
-<td><p>get a material (name, formula, density from materials database</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.mirror_reflectivity" title="xraydb.mirror_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></p></td>
+<td><p>X-ray reflectivities for mirror materials (thick slab limit)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.add_material" title="xraydb.add_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_material()</span></code></a></p></td>
-<td><p>add a material (name, formula, density) to local materials database</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></p></td>
+<td><p>effective ionization potential for a gas, as for ion chambers</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.xray_delta_beta" title="xraydb.xray_delta_beta"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></p></td>
-<td><p>return anomalous index of refraction for material and energy</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></p></td>
+<td><p>calculate fluxes from ion chamber voltages, gases, and sensitivites</p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
 </div></blockquote>
+<dl class="py function">
+<dt id="xraydb.get_xraydb">
+<code class="sig-name descname">get_xraydb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_xraydb" title="Permalink to this definition">¶</a></dt>
+<dd><p>return instance of the XrayDB</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>XrayDB</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">xraydb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">get_xraydb</span><span class="p">()</span>
+</pre></div>
 </div>
-<div class="section" id="xraydb-functions">
-<h2><a class="reference internal" href="#module-xraydb" title="xraydb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xraydb</span></code></a> functions<a class="headerlink" href="#xraydb-functions" title="Permalink to this headline">¶</a></h2>
+</dd></dl>
+
+</div>
 <div class="section" id="atomic-properties">
-<h3>Atomic Properties<a class="headerlink" href="#atomic-properties" title="Permalink to this headline">¶</a></h3>
+<h2>Atomic Properties<a class="headerlink" href="#atomic-properties" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="xraydb.atomic_number">
 <code class="sig-name descname">atomic_number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.atomic_number" title="Permalink to this definition">¶</a></dt>
@@ -265,7 +291,7 @@ the data comes from <a class="bibtex reference internal" href="biblio.html#elam-
 
 </div>
 <div class="section" id="elastic-scattering-factors">
-<h3>Elastic Scattering Factors<a class="headerlink" href="#elastic-scattering-factors" title="Permalink to this headline">¶</a></h3>
+<h2>Elastic Scattering Factors<a class="headerlink" href="#elastic-scattering-factors" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="xraydb.f0">
 <code class="sig-name descname">f0</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ion</span></em>, <em class="sig-param"><span class="n">q</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.f0" title="Permalink to this definition">¶</a></dt>
@@ -312,7 +338,7 @@ Waasmaier and Kirfel.</p>
 
 </div>
 <div class="section" id="x-ray-edges">
-<h3>X-ray Edges<a class="headerlink" href="#x-ray-edges" title="Permalink to this headline">¶</a></h3>
+<h2>X-ray Edges<a class="headerlink" href="#x-ray-edges" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="xraydb.xray_edge">
 <code class="sig-name descname">xray_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em>, <em class="sig-param"><span class="n">edge</span></em>, <em class="sig-param"><span class="n">energy_only</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.xray_edge" title="Permalink to this definition">¶</a></dt>
@@ -401,7 +427,7 @@ and values containing an XrayEdge namedtuple containing
 
 </div>
 <div class="section" id="x-ray-emission-lines">
-<h3>X-ray Emission Lines<a class="headerlink" href="#x-ray-emission-lines" title="Permalink to this headline">¶</a></h3>
+<h2>X-ray Emission Lines<a class="headerlink" href="#x-ray-emission-lines" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="xraydb.xray_lines">
 <code class="sig-name descname">xray_lines</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em>, <em class="sig-param"><span class="n">initial_level</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">excitation_energy</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.xray_lines" title="Permalink to this definition">¶</a></dt>
@@ -499,7 +525,7 @@ intermediate levels [True]</p></li>
 
 </div>
 <div class="section" id="absorption-and-scattering-cross-sections">
-<h3>Absorption and Scattering Cross-sections<a class="headerlink" href="#absorption-and-scattering-cross-sections" title="Permalink to this headline">¶</a></h3>
+<h2>Absorption and Scattering Cross-sections<a class="headerlink" href="#absorption-and-scattering-cross-sections" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="xraydb.mu_elam">
 <code class="sig-name descname">mu_elam</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em>, <em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">'total'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.mu_elam" title="Permalink to this definition">¶</a></dt>
@@ -659,38 +685,8 @@ energy or array of energies.   Data is from the Chantler tables.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="chemical-and-materials-calculations">
-<h3>Chemical and Materials calculations<a class="headerlink" href="#chemical-and-materials-calculations" title="Permalink to this headline">¶</a></h3>
-<dl class="py function">
-<dt id="xraydb.xray_delta_beta">
-<code class="sig-name descname">xray_delta_beta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">material</span></em>, <em class="sig-param"><span class="n">density</span></em>, <em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">photo_only</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.xray_delta_beta" title="Permalink to this definition">¶</a></dt>
-<dd><p>anomalous components of the index of refraction for a material,
-using the tabulated scattering components from Chantler.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>material</strong> – chemical formula  (‘Fe2O3’, ‘CaMg(CO3)2’, ‘La1.9Sr0.1CuO4’)</p></li>
-<li><p><strong>density</strong> – material density in g/cm^3</p></li>
-<li><p><strong>energy</strong> – x-ray energy in eV</p></li>
-<li><p><strong>photo_only</strong> – boolean for returning photo cross-section component only
-if False (default), the total cross-section is returned</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(delta, beta, atlen)</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>where</dt><dd><p>delta :  real part of index of refraction
-beta  :  imag part of index of refraction
-atlen :  attenuation length in cm</p>
-</dd>
-</dl>
-<p>These are the anomalous scattering components of the index of refraction:</p>
-<p>n = 1 - delta - i*beta = 1 - lambda**2 * r0/(2*pi) Sum_j (n_j * fj)</p>
-<p>Adapted from code by Yong Choi</p>
-</dd></dl>
-
+<div class="section" id="chemical-and-materials-database">
+<h2>Chemical and Materials database<a class="headerlink" href="#chemical-and-materials-database" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="xraydb.chemparse">
 <code class="sig-name descname">chemparse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formula</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.chemparse" title="Permalink to this definition">¶</a></dt>
@@ -755,6 +751,114 @@ can be parsed to a dictionary with chemparse()</p>
 </div>
 </dd></dl>
 
+<dl class="py function">
+<dt id="xraydb.get_materials">
+<code class="sig-name descname">get_materials</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">force_read</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">categories</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_materials" title="Permalink to this definition">¶</a></dt>
+<dd><p>get dictionary of all available materials</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>force_read</strong> (<em>bool</em>) – whether to force a re-reading of the
+materials database [False]</p></li>
+<li><p><strong>categories</strong> (<em>list of strings</em><em> or </em><em>None</em>) – restrict results
+to those that match category names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict with keys of material name and values of Materials instances</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">get_materials</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>     <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">water H2O 1.0</span>
+<span class="go">lead Pb 11.34</span>
+<span class="go">aluminum Al 2.7</span>
+<span class="go">kapton C22H10N2O5 1.42</span>
+<span class="go">polyimide C22H10N2O5 1.42</span>
+<span class="go">nitrogen N 0.00125</span>
+<span class="go">argon Ar 0.001784</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="xraydb.find_material">
+<code class="sig-name descname">find_material</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.find_material" title="Permalink to this definition">¶</a></dt>
+<dd><p>look up material name, return material instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – name of material or chemical formula</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>material instance</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">find_material</span><span class="p">(</span><span class="s1">&#39;kapton&#39;</span><span class="p">)</span>
+<span class="go">Material(formula=&#39;C22H10N2O5&#39;, density=1.42, name=&#39;kapton&#39;, categories=[&#39;polymer&#39;])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>get_material()</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="xraydb.get_material">
+<code class="sig-name descname">get_material</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_material" title="Permalink to this definition">¶</a></dt>
+<dd><p>look up material name, return formula and density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – name of material or chemical formula</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>chemical formula, density of material</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">get_material</span><span class="p">(</span><span class="s1">&#39;kapton&#39;</span><span class="p">)</span>
+<span class="go">(&#39;C22H10N2O5&#39;, 1.43)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>find_material()</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="xraydb.add_material">
+<code class="sig-name descname">add_material</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">formula</span></em>, <em class="sig-param"><span class="n">density</span></em>, <em class="sig-param"><span class="n">categories</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.add_material" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a material to the users local material database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – name of material</p></li>
+<li><p><strong>formula</strong> (<em>str</em>) – chemical formula</p></li>
+<li><p><strong>density</strong> (<em>float</em>) – density</p></li>
+<li><p><strong>categories</strong> (<em>list of strings</em><em> or </em><em>None</em>) – list of category names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>the data will be saved to $HOME/.config/xraydb/materials.dat
+in the users home directory, and will be useful in subsequent sessions.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">add_material</span><span class="p">(</span><span class="s1">&#39;becopper&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu0.98e0.02&#39;</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;metal&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="x-ray-properties-of-materials">
+<h2>X-ray properties of materials<a class="headerlink" href="#x-ray-properties-of-materials" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="xraydb.material_mu">
 <code class="sig-name descname">material_mu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">density</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">'total'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.material_mu" title="Permalink to this definition">¶</a></dt>
@@ -823,86 +927,204 @@ with tuple of (stoichiometric fraction, atomic mass, mu)</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="xraydb.get_materials">
-<code class="sig-name descname">get_materials</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">force_read</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_materials" title="Permalink to this definition">¶</a></dt>
-<dd><p>get dictionary of available materials</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>force_read</strong> (<em>bool</em>) – whether to force a re-reading of the
-materials database [False]</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>dict with keys of material name and values of
-(chemical formula, density of material)</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">get_materials</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<span class="gp">... </span>     <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="gp">...</span>
-<span class="go">water H2O 1.0</span>
-<span class="go">lead Pb 11.34</span>
-<span class="go">aluminum Al 2.7</span>
-<span class="go">kapton C22H10N2O5 1.42</span>
-<span class="go">polyimide C22H10N2O5 1.42</span>
-<span class="go">nitrogen N 0.00125</span>
-<span class="go">argon Ar 0.001784</span>
-<span class="gp">...</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="xraydb.get_material">
-<code class="sig-name descname">get_material</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_material" title="Permalink to this definition">¶</a></dt>
-<dd><p>look up material name</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – name of material or chemical formula</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>chemical formula, density of material</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">get_material</span><span class="p">(</span><span class="s1">&#39;kapton&#39;</span><span class="p">)</span>
-<span class="go">(&#39;C22H10N2O5&#39;, 1.43)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="xraydb.add_material">
-<code class="sig-name descname">add_material</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">formula</span></em>, <em class="sig-param"><span class="n">density</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.add_material" title="Permalink to this definition">¶</a></dt>
-<dd><p>add a material to the users local material database</p>
+<dt id="xraydb.xray_delta_beta">
+<code class="sig-name descname">xray_delta_beta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">material</span></em>, <em class="sig-param"><span class="n">density</span></em>, <em class="sig-param"><span class="n">energy</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.xray_delta_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>anomalous components of the index of refraction for a material,
+using the tabulated scattering components from Chantler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – name of material</p></li>
-<li><p><strong>formula</strong> (<em>str</em>) – chemical formula</p></li>
-<li><p><strong>(</strong><strong>float</strong> (<em>density</em>) – density</p></li>
+<li><p><strong>material</strong> – chemical formula  (‘Fe2O3’, ‘CaMg(CO3)2’, ‘La1.9Sr0.1CuO4’)</p></li>
+<li><p><strong>density</strong> – material density in g/cm^3</p></li>
+<li><p><strong>energy</strong> – x-ray energy in eV</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p>(delta, beta, atlen)</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>where</dt><dd><p>delta :  real part of index of refraction
+beta  :  imag part of index of refraction
+atlen :  attenuation length in cm</p>
+</dd>
+</dl>
+<p>These are the anomalous scattering components of the index of refraction:</p>
+<p>n = 1 - delta - i*beta = 1 - lambda**2 * r0/(2*pi) Sum_j (n_j * fj)</p>
+<p>Adapted from code by Yong Choi</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="xraydb.mirror_reflectivity">
+<code class="sig-name descname">mirror_reflectivity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formula</span></em>, <em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">density</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">roughness</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">polarization</span><span class="o">=</span><span class="default_value">'s'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.mirror_reflectivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>mirror reflectivity for a thick, singl-layer mirror.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formula</strong> (<em>string</em>) – material name or formula (‘Si’, ‘Rh’, ‘silicon’)</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>nd-array</em>) – mirror angle in radians</p></li>
+<li><p><strong>energy</strong> (<em>float</em><em> or </em><em>nd-array</em>) – X-ray energy in eV</p></li>
+<li><p><strong>density</strong> (<em>float</em><em> or </em><em>None</em>) – material density in g/cm^3</p></li>
+<li><p><strong>roughness</strong> (<em>float</em>) – mirror roughness in Angstroms</p></li>
+<li><p><strong>polarization</strong> (<em>'s'</em><em> or </em><em>'p'</em>) – mirror orientation relative to X-ray polarization</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>mirror reflectivity values</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>the data will be saved to $HOME/.config/xraydb/materials.dat
-in the users home directory, and will be useful in subsequent sessions.</p>
+<ol class="arabic simple">
+<li><p>only one of theta or energy can be an nd-array</p></li>
+<li><p>density can be <cite>None</cite> for known materials</p></li>
+<li><p>polarization of ‘s’ puts the X-ray polarization along the mirror
+surface, ‘p’ puts it normal to the mirror surface. For
+horizontally polarized X-ray beams from storage rings, ‘s’ will
+usually mean ‘vertically deflecting’ and ‘p’ will usually mean
+‘horizontally deflecting’.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt id="xraydb.ionization_potential">
+<code class="sig-name descname">ionization_potential</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gas</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.ionization_potential" title="Permalink to this definition">¶</a></dt>
+<dd><p>return effective ionization potential for a gas, as appropriate for
+ionization chambers in the linear regime (not ‘proportional counter’ regime)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gas</strong> (<em>string</em>) – name of gas</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ionization potential in eV</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Data from G. F. Knoll, Radiation Detection and Measurement, Table 5-1, and
+from ICRU Report 31, 1979.  Supported gas names and effective potentials:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 56%" />
+<col style="width: 44%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>gas names</p></td>
+<td><p>potential (eV)</p></td>
+</tr>
+<tr class="row-even"><td><p>hydrogen, H</p></td>
+<td><p>36.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>helium, He</p></td>
+<td><p>41.3</p></td>
+</tr>
+<tr class="row-even"><td><p>nitrogren, N, N2</p></td>
+<td><p>34.8</p></td>
+</tr>
+<tr class="row-odd"><td><p>oxygen, O, O2</p></td>
+<td><p>30.8</p></td>
+</tr>
+<tr class="row-even"><td><p>neon, Ne</p></td>
+<td><p>35.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>argon, Ar</p></td>
+<td><p>26.4</p></td>
+</tr>
+<tr class="row-even"><td><p>krypton, Kr</p></td>
+<td><p>24.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>xenon, Xe</p></td>
+<td><p>22.1</p></td>
+</tr>
+<tr class="row-even"><td><p>air</p></td>
+<td><p>33.8</p></td>
+</tr>
+<tr class="row-odd"><td><p>methane, CH4</p></td>
+<td><p>27.3</p></td>
+</tr>
+<tr class="row-even"><td><p>carbondioxide, CO2</p></td>
+<td><p>33.0</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>If the gas is not recognized the default value of 32.0 eV will be returned.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="xraydb.ionchamber_fluxes">
+<code class="sig-name descname">ionchamber_fluxes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gas</span><span class="o">=</span><span class="default_value">'nitrogen'</span></em>, <em class="sig-param"><span class="n">volts</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">100.0</span></em>, <em class="sig-param"><span class="n">energy</span><span class="o">=</span><span class="default_value">10000.0</span></em>, <em class="sig-param"><span class="n">sensitivity</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">sensitivity_units</span><span class="o">=</span><span class="default_value">'A/V'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.ionchamber_fluxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>return ion chamber fluxes for a gas or mixture of gases, ion chamber
+length, X-ray energy, recorded voltage and current amplifier sensitivity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gas</strong> (<em>string</em><em> or </em><em>dict</em>) – name or formula of fill gas (see note 1) [‘nitrogen’]</p></li>
+<li><p><strong>volts</strong> (<em>float</em>) – measured voltage output of current amplifier  [1.0]</p></li>
+<li><p><strong>length</strong> (<em>float</em>) – active length of ion chamber in mm [100]</p></li>
+<li><p><strong>energy</strong> (<em>float</em>) – X-ray energy in eV [10000]</p></li>
+<li><p><strong>sensitivity</strong> (<em>float</em>) – current amplifier sensitivity [1.e-6]</p></li>
+<li><p><strong>sensitivity_units</strong> (<em>string</em>) – units of current amplifier sensitivity
+(see note 2 for options) [‘A/V’]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>named tuple IonchamberFluxes with fields</p>
+<blockquote>
+<div><p><cite>photo</cite>       flux absorbed by photo-electric effect in Hz,</p>
+<p><cite>incident</cite>    flux of beam incident on ion chamber in Hz,</p>
+<p><cite>transmitted</cite> flux of beam output of ion chamber in Hz</p>
+</div></blockquote>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ol class="arabic">
+<li><p>The gas argument can either be a string for the name of chemical
+formula for the gas, or dictionary with keys that are gas names or
+formulas and values that are the relative fraction for mixes gases.</p>
+<dl class="simple">
+<dt>The gas formula is used in two ways:</dt><dd><ol class="loweralpha simple">
+<li><p>to get the photo- and total- absorption coefficient, and</p></li>
+<li><p>to get the effective ionization potential for the gas.</p></li>
+</ol>
+</dd>
+</dl>
+<p>The effective ionization potentials are known for a handful of
+gases (see <cite>ionization_potential</cite> function), all ranging between
+20 and 45 eV. For unknown gases the value of 32.0 eV will be
+used.</p>
+</li>
+<li><p>The <cite>sensitivity</cite> and <cite>sensitivity_units</cite> arguments have some overlap
+to specify the sensitivity or gain of the current amplifier.
+Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of</p>
+<p>‘p’, ‘pico’, ‘n’, ‘nano’, ‘μ’, ‘u’, ‘micro’, ‘m’, ‘milli’</p>
+<dl class="simple">
+<dt>so that, for example</dt><dd><p>ionchamber_fluxes(…, sensitivity=1.e-6)</p>
+</dd>
+<dt>and</dt><dd><p>ionchamber_fluxes(…, sensitivity=1, sensitivity_units=’uA/V’)</p>
+</dd>
+</dl>
+<p>will both give a sensitivity of 1 microAmp / Volt .</p>
+</li>
+</ol>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">add_material</span><span class="p">(</span><span class="s1">&#39;becopper&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu0.98e0.02&#39;</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;helium&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
+<span class="go">                      energy=10000.0, sensitivity=1.e-9)</span>
+<span class="go">IonChamberFluxes(photo=16110895.3, incident=15452608024.6, transmitted=15316549138.8)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
+<span class="go">                      energy=10000.0, sensitivity=1.e-9)</span>
+<span class="go">IonChamberFluxes(photo=13575282.2, incident=23102328.0, transmitted=8759458.7)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;helium&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
+<span class="go">                      length=200.0, energy=10000.0, sensitivity=1.e-9)</span>
+<span class="go">IonChamberFluxes(photo=14843088.8, incident=7737855176.4, transmitted=7662654298.8)</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt id="xraydb.get_xraydb">
-<code class="sig-name descname">get_xraydb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.get_xraydb" title="Permalink to this definition">¶</a></dt>
-<dd><p>return xraydb</p>
-</dd></dl>
-
-</div>
 </div>
 </div>
 
@@ -916,15 +1138,13 @@ in the users home directory, and will be useful in subsequent sessions.</p>
   <ul>
 <li><a class="reference internal" href="#">Using XrayDB from Python</a><ul>
 <li><a class="reference internal" href="#module-xraydb">The Python xraydb module</a></li>
-<li><a class="reference internal" href="#xraydb-functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xraydb</span></code> functions</a><ul>
 <li><a class="reference internal" href="#atomic-properties">Atomic Properties</a></li>
 <li><a class="reference internal" href="#elastic-scattering-factors">Elastic Scattering Factors</a></li>
 <li><a class="reference internal" href="#x-ray-edges">X-ray Edges</a></li>
 <li><a class="reference internal" href="#x-ray-emission-lines">X-ray Emission Lines</a></li>
 <li><a class="reference internal" href="#absorption-and-scattering-cross-sections">Absorption and Scattering Cross-sections</a></li>
-<li><a class="reference internal" href="#chemical-and-materials-calculations">Chemical and Materials calculations</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#chemical-and-materials-database">Chemical and Materials database</a></li>
+<li><a class="reference internal" href="#x-ray-properties-of-materials">X-ray properties of materials</a></li>
 </ul>
 </li>
 </ul>
@@ -976,8 +1196,8 @@ in the users home directory, and will be useful in subsequent sessions.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-July-09.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
+      Last updated on 2020-July-21.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
     </div>
   </body>
 </html>

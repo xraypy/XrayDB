@@ -16,3 +16,14 @@ N2     34.8
 O      30.8
 O2     30.8
 CH4    27.3
+
+# these data apparently from ICRU Report 31,  1979, 
+# from a presentation of Michael Hale, Dalhousie University
+carbondioxide  33.0 
+neon 35.4
+krypton  24.4
+xenon    22.1
+CO2 33.0
+Ne   35.4
+Kr    24.4
+Xe    22.1

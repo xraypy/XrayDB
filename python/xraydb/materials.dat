@@ -34,7 +34,10 @@
   argon              | 0.001784   | gas, element        | Ar
   krypton            | 0.003749   | gas, element        | Kr
   xenon              | 0.005894   | gas, element        | Xe
-  air                | 0.001225   | gas, element        | (N2)0.78 (O2)0.21 (CO2)0.04 Ar0.0093 Kr0.000001 Xe0.0000009
+  air                | 0.001225   | gas                 | (N2)0.78 (O2)0.21 (CO2)0.04 Ar0.0093 Kr0.000001 Xe0.0000009
+  methane            | 0.000657   | gas                 | CH4
+  carbon dioxide     | 0.001562   | gas                 | CO2
+
   water              | 1.0        | solvent             | H2O
   ethanol            | 0.789      | solvent             | C2H5OH
   acetone            | 0.785      | solvent             | C3H6O

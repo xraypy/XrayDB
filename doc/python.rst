@@ -103,16 +103,16 @@ using it:
       :func:`material_mu_components`          dictionary of elemental components of `mu` for material
       :func:`xray_delta_beta`                 anomalous index of refraction for material and energy
       :func:`mirror_reflectivity`             X-ray reflectivities for mirror materials (thick slab limit)
-      :func:`ionization_potential`            return effective ionization potential for a gas, as for ion chambers
+      :func:`ionization_potential`            effective ionization potential for a gas, as for ion chambers
+      :func:`ionchamber_fluxes`               calculate fluxes from ion chamber voltages, gases, and sensitivites
      ======================================= =======================================================================
 
-:mod:`xraydb` functions
-------------------------------
 
 .. autofunction:: get_xraydb
 
+
 Atomic Properties
-~~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. autofunction:: atomic_number
 
@@ -123,14 +123,14 @@ Atomic Properties
 .. autofunction:: atomic_density
 
 Elastic Scattering Factors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. autofunction:: f0
 
 .. autofunction:: f0_ions
 
 X-ray Edges
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. autofunction:: xray_edge
 
@@ -141,7 +141,7 @@ X-ray Edges
 .. autofunction:: guess_edge
 
 X-ray Emission Lines
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. autofunction:: xray_lines
 
@@ -150,7 +150,7 @@ X-ray Emission Lines
 .. autofunction:: ck_probability
 
 Absorption and Scattering Cross-sections
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 .. autofunction:: mu_elam
 
@@ -167,7 +167,7 @@ Absorption and Scattering Cross-sections
 .. autofunction:: mu_chantler
 
 Chemical and Materials database
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. autofunction:: chemparse
 
@@ -181,12 +181,10 @@ Chemical and Materials database
 
 .. autofunction:: add_material
 
-.. autofunction:: find_material		  
 
 
-
-X-ray properties of materials 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+X-ray properties of materials
+------------------------------------
 
 .. autofunction:: material_mu
 
@@ -195,5 +193,8 @@ X-ray properties of materials
 .. autofunction:: xray_delta_beta
 
 .. autofunction:: mirror_reflectivity
-		  
+
 .. autofunction:: ionization_potential
+
+.. autofunction:: ionchamber_fluxes
+		  

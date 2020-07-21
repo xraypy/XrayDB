@@ -13,7 +13,8 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     atomic_symbol, atomic_mass, atomic_density, xray_edges,
                     xray_edge, xray_lines, xray_line, fluor_yield,
                     ck_probability, core_width, guess_edge,
-                    xray_delta_beta, mirror_reflectivity, XrayDB)
+                    xray_delta_beta, mirror_reflectivity,
+                    ionchamber_fluxes, XrayDB)
 
 
 from xraydb.xray import chantler_data
@@ -557,3 +558,22 @@ def test_mirror_reflectivity():
     assert_allclose(mirror_reflectivity('Pt', 0.001, 80000), 0.74, rtol=0.005)
 
     
+def test_ionchamber_fluxes():
+        ic1 = ionchamber_fluxes(gas='helium', volts=1.25, length=200.0,
+                              energy=10000.0, sensitivity=1.e-9)
+
+        assert_allclose(ic1.photo, 16110895.3, rtol=0.01)
+        assert_allclose(ic1.transmitted, 15316549138.8, rtol=0.01)
+
+        ic2 = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=200.0,
+                                energy=10000.0, sensitivity=1.e-9)
+
+        assert_allclose(ic2.photo, 13575282.2, rtol=0.01)
+        assert_allclose(ic2.incident, 23102328.0, rtol=0.01)
+        
+        ic3 = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
+                                length=200.0, energy=10000.0, sensitivity=1.e-9)
+
+        assert_allclose(ic3.photo, 14843088.8, rtol=0.01)
+        assert_allclose(ic3.incident, 7737855176.4, rtol=0.01)
+        assert_allclose(ic3.transmitted, 7662654298.8, rtol=0.01)

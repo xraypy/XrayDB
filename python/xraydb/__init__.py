@@ -24,7 +24,7 @@ from .xray import (atomic_number, atomic_symbol, atomic_mass,
                    mu_chantler, mu_elam, coherent_cross_section_elam,
                    incoherent_cross_section_elam, guess_edge,
                    xray_delta_beta, get_xraydb,
-                   mirror_reflectivity,
+                   mirror_reflectivity, ionchamber_fluxes,
                    ionization_potential)
 
 from ._version import get_versions

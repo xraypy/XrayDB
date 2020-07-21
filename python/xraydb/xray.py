@@ -1,9 +1,18 @@
 import sys
+from collections import namedtuple
 import numpy as np
 
-from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC, index_nearest)
-from .xraydb import  XrayDB,  XrayLine
+from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
+                    QCHARGE, SI_PREFIXES, index_nearest)
+
+
+from .xraydb import XrayDB,  XrayLine
 from .chemparser import chemparse
+
+fluxes = namedtuple('IonChamberFluxes', ('photo',
+                                         'incident',
+                                         'transmitted'))
+
 
 _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
                                  284.2, 409.9, 543.1, 696.7, 870.2, 1070.8,
@@ -115,7 +124,16 @@ _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
 _xraydb = None
 
 def get_xraydb():
-    """return xraydb"""
+    """return instance of the XrayDB
+
+    Returns:
+        XrayDB
+
+    Example:
+        >>> import xraydb
+        >>> xdb = xraydb.get_xraydb()
+
+    """
     global _xraydb
     if _xraydb is None:
         _xraydb = XrayDB()
@@ -571,9 +589,8 @@ def core_width(element, edge=None):
     return xdb.corehole_width(element, edge=edge)
 
 def ionization_potential(gas):
-    """return effective ionization potential for a gas,
-    as appropriate for ionization chambers in the linear
-    regime (not in the 'proportional counter' regime)
+    """return effective ionization potential for a gas, as appropriate for
+    ionization chambers in the linear regime (not 'proportional counter' regime)
 
     Args:
         gas (string):  name of gas
@@ -582,24 +599,33 @@ def ionization_potential(gas):
         ionization potential in eV
 
     Notes:
-       Data from G. F. Knoll, Radiation Detection and Measurement, Table 5-1.
-       Supported gas names and their effective potentials:
+       Data from G. F. Knoll, Radiation Detection and Measurement, Table 5-1, and
+       from ICRU Report 31, 1979.  Supported gas names and effective potentials:
 
-           ================== ================
-            gas names          potential (eV)
-           ------------------ ----------------
-            argon, Ar           26.4
-            helium, He          41.3
-            hydrogen, H         36.5
-            nitrogren, N, N2    34.8
-            air                 33.8
-            oxygen, O, O2       30.8
-            methane, CH4        27.3
-           ================== ================
+           ==================== ================
+            gas names            potential (eV)
+           -------------------- ----------------
+            hydrogen, H           36.5
+            helium, He            41.3
+            nitrogren, N, N2      34.8
+            oxygen, O, O2         30.8
+            neon, Ne              35.4
+            argon, Ar             26.4
+            krypton, Kr           24.4
+            xenon, Xe             22.1
+            air                   33.8
+            methane, CH4          27.3
+            carbondioxide, CO2    33.0
+           ==================== ================
+
+       If the gas is not recognized the default value of 32.0 eV will be returned.
 
     """
     xdb = get_xraydb()
-    return xdb.ionization_potential(gas)
+    try:
+        return xdb.ionization_potential(gas)
+    except:
+        return 32.0
 
 
 def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
@@ -767,3 +793,115 @@ def mirror_reflectivity(formula, theta, energy, density=None,
     if roughness > 1.e-12:
         r_amp = r_amp * np.exp(-2*(roughness**2*kiz*ktz))
     return (r_amp*r_amp.conjugate()).real
+
+
+def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
+                      energy=10000.0, sensitivity=1.e-6,
+                      sensitivity_units='A/V'):
+    
+    """return ion chamber fluxes for a gas or mixture of gases, ion chamber
+    length, X-ray energy, recorded voltage and current amplifier sensitivity.
+
+    Args:
+        gas (string or dict):  name or formula of fill gas (see note 1) ['nitrogen']
+        volts (float):  measured voltage output of current amplifier  [1.0]
+        length (float): active length of ion chamber in mm [100]
+        energy (float): X-ray energy in eV [10000]
+        sensitivity (float): current amplifier sensitivity [1.e-6]
+        sensitivity_units (string): units of current amplifier sensitivity
+                                    (see note 2 for options) ['A/V']
+
+    Returns:
+        named tuple IonchamberFluxes with fields
+
+            `photo`       flux absorbed by photo-electric effect in Hz,
+            
+            `incident`    flux of beam incident on ion chamber in Hz,
+            
+            `transmitted` flux of beam output of ion chamber in Hz 
+
+    Notes:
+       1. The gas argument can either be a string for the name of chemical
+          formula for the gas, or dictionary with keys that are gas names or
+          formulas and values that are the relative fraction for mixes gases.
+
+          The gas formula is used in two ways:
+             a) to get the photo- and total- absorption coefficient, and
+             b) to get the effective ionization potential for the gas.
+
+          The effective ionization potentials are known for a handful of
+          gases (see `ionization_potential` function), all ranging between
+          20 and 45 eV. For unknown gases the value of 32.0 eV will be
+          used.
+
+       2. The `sensitivity` and `sensitivity_units` arguments have some overlap
+          to specify the sensitivity or gain of the current amplifier.
+          Generally, the units in `A/V`, but you can add a common SI prefix of
+ 
+          'p', 'pico', 'n', 'nano', '\u03bc', 'u', 'micro', 'm', 'milli'
+          
+          so that, for example
+             ionchamber_fluxes(..., sensitivity=1.e-6)
+          and 
+             ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')
+
+          will both give a sensitivity of 1 microAmp / Volt . 
+               
+    Examples:
+        >>> ionchamber_fluxes(gas='helium', volts=1.25, length=200.0,
+                              energy=10000.0, sensitivity=1.e-9)
+        IonChamberFluxes(photo=16110895.3, incident=15452608024.6, transmitted=15316549138.8)
+
+        >>> ionchamber_fluxes(gas='nitrogen', volts=1.25, length=200.0,
+                              energy=10000.0, sensitivity=1.e-9)
+        IonChamberFluxes(photo=13575282.2, incident=23102328.0, transmitted=8759458.7)
+
+        >>> ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
+                              length=200.0, energy=10000.0, sensitivity=1.e-9)
+        IonChamberFluxes(photo=14843088.8, incident=7737855176.4, transmitted=7662654298.8)
+
+    
+    """
+    from .materials import material_mu
+
+    fin = fout = fphoto = 0.0
+
+    units = sensitivity_units.replace('Volts', 'V').replace('Volt', 'V')
+    units = units.replace('Amperes', 'A').replace('Ampere', 'A')
+    units = units.replace('Amps', 'A').replace('Amp', 'A')    
+    units = units.replace('A/V', '')
+    sensitivity *= SI_PREFIXES.get(units, 1)
+
+    if isinstance(gas, str):
+        gas = {gas: 1.0}
+    
+    gas_total = 0.0
+    gas_comps = []
+    for gname, frac in gas.items():
+        ionpot = ionization_potential(gname)
+        if gname == 'N2': gname = 'nitrogen'
+        if gname == 'O2': gname = 'oxygen'
+        gas_total += frac
+        gas_comps.append((gname, frac, ionpot))
+
+
+    # note on Photo v Total attenuation:
+    # the current is from the photo-electric cross-section, so that
+    #   flux_photo = flux_in * [1 - exp(-t*mu_photo)]
+    # while total attenuation means
+    #   flux_out = flux_in * exp(-t*mu_total)
+
+    for gas, frac, ionpot in gas_comps:
+        mu_photo = material_mu(gas, energy=energy, kind='photo')
+        mu_total = material_mu(gas, energy=energy, kind='total')
+
+        flux_photo = volts * sensitivity * ionpot / (2 * QCHARGE * energy)
+        flux_photo *= (frac/gas_total)
+        flux_in    = flux_photo / (1.0 - np.exp(-length*mu_photo))
+        flux_out   = flux_in * np.exp(-length*mu_total)
+
+        fphoto += flux_photo
+        fin    += flux_in 
+        fout   += flux_out
+
+    return fluxes(photo=fphoto, incident=fin,transmitted=fout)

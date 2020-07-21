@@ -72,7 +72,9 @@ def add_ionization_potentials(dest):
 
             line = line[:-1].strip()
             if len(line)  > 2:
-                gas, potential = line.split()
+                words = line.split()
+                potential = words.pop()
+                gas = ' '.join(words)
                 c.execute('insert into ionization_potentials values (?,?)', (gas, potential))
     conn.commit()
     c.close()

@@ -13,6 +13,9 @@ fluxes = namedtuple('IonChamberFluxes', ('photo',
                                          'incident',
                                          'transmitted'))
 
+DarwinWidth = namedtuple('DarwinWidth', ('intensity', 'zeta', 'dtheta',
+                                          'denergy', 'theta'))
+
 
 _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
                                  284.2, 409.9, 543.1, 696.7, 870.2, 1070.8,
@@ -905,3 +908,67 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         fout   += flux_out
 
     return fluxes(photo=fphoto, incident=fin,transmitted=fout)
+
+
+def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
+    """darwin width for a crystal reflection and energy
+
+    Args
+    -----
+    energy (float):    X-ray energy in eV
+    crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
+    hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
+    m (int):           order of reflection    [1]
+    
+    Returns
+    -------
+    A named tuple 'DarwinWidth' with the following fields:
+
+         intensity: nd-array of reflected intensity
+         zeta     : nd-array of Zeta parameter (delta Lambda / Lambda)
+         dtheta   : nd-array of angles away from Bragg angle, theta in rad
+         denergy  : nd-array of energies away from Bragg energy, in eV
+         theta    : float, nominal Bragg angle, in rad
+         
+    Notes
+    ------
+     1. This follows the calculation from Eleements of Modernn X-ray Physics,
+        J Als-Nielsen, and D. McMorrow, section 5.4.
+     2. Only diamond structure crystals (Si, Ge, diamond) are currently supported.
+    """
+    lattice_constants = {'Si': 5.431, 'Ge': 5.658, 'C': 3.567}
+    h_, k_, l_ = hkl
+    hklsum = (h_ + k_ + l_)
+    if hklsum % 4 == 0:
+        eqr = 8
+    elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
+        eqr = np.sqrt(17)
+    else:
+        raise ValueError("hkl must sum to 4 or be all odd")    
+
+    latt_a = lattice_constants[crystal.title()]
+    dspace = latt_a / np.sqrt(h_*h_ + k_*k_ + l_*l_)
+    lambd  = PLANCK_HC / energy 
+    theta  = np.arcsin(lambd/(2*dspace))
+
+    q  = 0.5 / dspace
+    f1 = f1_chantler(crystal, energy)
+    f2 = f2_chantler(crystal, energy)    
+
+    gs = 2   * dspace**2 * 1.e8 * R_ELECTRON_CM/(m*latt_a**3)
+    g0 = 8   * gs * (f0(crystal, 0) + f1 - 1j*f2)
+    g  = eqr * gs * (f0(crystal, q) + f1 - 1j*f2)
+
+    zeta   = np.linspace(-5.e-4, 5.e-4, 10001)
+    
+    xc     = (m*np.pi*zeta - g0)/g
+    xc_pos = np.where(xc.real > 1)[0]
+    xc_neg = np.where(xc.real < -1)[0]
+
+    r_amp  = xc - 1j * np.sqrt(1 - xc**2)
+    r_amp[xc_pos] = (xc - np.sqrt(xc**2 -1))[xc_pos]
+    r_amp[xc_neg] = (xc + np.sqrt(xc**2 -1))[xc_neg]
+
+    return DarwinWidth(intensity=abs(r_amp*r_amp.conjugate()),
+                       zeta=zeta, dtheta=zeta*np.tan(theta),
+                       denergy=-zeta*energy, theta=theta)

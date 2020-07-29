@@ -801,7 +801,7 @@ def mirror_reflectivity(formula, theta, energy, density=None,
 def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
                       energy=10000.0, sensitivity=1.e-6,
                       sensitivity_units='A/V'):
-    
+
     """return ion chamber fluxes for a gas or mixture of gases, ion chamber
     length, X-ray energy, recorded voltage and current amplifier sensitivity.
 
@@ -818,10 +818,10 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         named tuple IonchamberFluxes with fields
 
             `photo`       flux absorbed by photo-electric effect in Hz,
-            
+
             `incident`    flux of beam incident on ion chamber in Hz,
-            
-            `transmitted` flux of beam output of ion chamber in Hz 
+
+            `transmitted` flux of beam output of ion chamber in Hz
 
     Notes:
        1. The gas argument can either be a string for the name of chemical
@@ -840,16 +840,16 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
        2. The `sensitivity` and `sensitivity_units` arguments have some overlap
           to specify the sensitivity or gain of the current amplifier.
           Generally, the units in `A/V`, but you can add a common SI prefix of
- 
+
           'p', 'pico', 'n', 'nano', '\u03bc', 'u', 'micro', 'm', 'milli'
-          
+
           so that, for example
              ionchamber_fluxes(..., sensitivity=1.e-6)
-          and 
+          and
              ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')
 
-          will both give a sensitivity of 1 microAmp / Volt . 
-               
+          will both give a sensitivity of 1 microAmp / Volt .
+
     Examples:
         >>> ionchamber_fluxes(gas='helium', volts=1.25, length=200.0,
                               energy=10000.0, sensitivity=1.e-9)
@@ -863,7 +863,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
                               length=200.0, energy=10000.0, sensitivity=1.e-9)
         IonChamberFluxes(photo=14843088.8, incident=7737855176.4, transmitted=7662654298.8)
 
-    
+
     """
     from .materials import material_mu
 
@@ -871,13 +871,13 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
 
     units = sensitivity_units.replace('Volts', 'V').replace('Volt', 'V')
     units = units.replace('Amperes', 'A').replace('Ampere', 'A')
-    units = units.replace('Amps', 'A').replace('Amp', 'A')    
+    units = units.replace('Amps', 'A').replace('Amp', 'A')
     units = units.replace('A/V', '')
     sensitivity *= SI_PREFIXES.get(units, 1)
 
     if isinstance(gas, str):
         gas = {gas: 1.0}
-    
+
     gas_total = 0.0
     gas_comps = []
     for gname, frac in gas.items():
@@ -904,7 +904,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         flux_out   = flux_in * np.exp(-length*mu_total)
 
         fphoto += flux_photo
-        fin    += flux_in 
+        fin    += flux_in
         fout   += flux_out
 
     return fluxes(photo=fphoto, incident=fin,transmitted=fout)
@@ -919,24 +919,25 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
     hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
     m (int):           order of reflection    [1]
-    
+
     Returns
     -------
     A named tuple 'DarwinWidth' with the following fields:
 
          intensity: nd-array of reflected intensity
-         zeta     : nd-array of Zeta parameter (delta Lambda / Lambda)
+         zeta     : nd-array of Zeta parameter (delta_Lambda / Lambda)
          dtheta   : nd-array of angles away from Bragg angle, theta in rad
          denergy  : nd-array of energies away from Bragg energy, in eV
          theta    : float, nominal Bragg angle, in rad
-         
+
     Notes
     ------
-     1. This follows the calculation from Eleements of Modernn X-ray Physics,
-        J Als-Nielsen, and D. McMorrow, section 5.4.
-     2. Only diamond structure crystals (Si, Ge, diamond) are currently supported.
+     1. This follows the calculation from section 5.4 of
+        Eleements of Modernn X-ray Physics, J Als-Nielsen, and D. McMorrow.
+     2. Only diamond structures (Si, Ge, diamond) are currently supported.
     """
     lattice_constants = {'Si': 5.431, 'Ge': 5.658, 'C': 3.567}
+
     h_, k_, l_ = hkl
     hklsum = (h_ + k_ + l_)
     if hklsum % 4 == 0:
@@ -944,31 +945,35 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
         eqr = np.sqrt(17)
     else:
-        raise ValueError("hkl must sum to 4 or be all odd")    
+        raise ValueError("hkl must sum to 4 or be all odd")
 
     latt_a = lattice_constants[crystal.title()]
     dspace = latt_a / np.sqrt(h_*h_ + k_*k_ + l_*l_)
-    lambd  = PLANCK_HC / energy 
+    lambd  = PLANCK_HC / energy
     theta  = np.arcsin(lambd/(2*dspace))
 
     q  = 0.5 / dspace
     f1 = f1_chantler(crystal, energy)
-    f2 = f2_chantler(crystal, energy)    
+    f2 = f2_chantler(crystal, energy)
 
     gs = 2   * dspace**2 * 1.e8 * R_ELECTRON_CM/(m*latt_a**3)
     g0 = 8   * gs * (f0(crystal, 0) + f1 - 1j*f2)
     g  = eqr * gs * (f0(crystal, q) + f1 - 1j*f2)
 
-    zeta   = np.linspace(-5.e-4, 5.e-4, 10001)
-    
-    xc     = (m*np.pi*zeta - g0)/g
-    xc_pos = np.where(xc.real > 1)[0]
-    xc_neg = np.where(xc.real < -1)[0]
+    #  hueristic zeta range and step sizes for crystals:
+    sz = {'Si': 0.25,  'Ge': 0.50, 'C':  0.15}[crystal]
+    dz = 0.001 * sz
+    zeta = 0.001 * np.concatenate((np.arange(-sz,   0, 2.5*dz),
+                                   np.arange(0,    sz, 1.0*dz),
+                                   np.arange(sz, 2*sz, 2.5*dz)))
+    xc = (m*np.pi*zeta - g0)/g
+    _p = np.where(xc.real > 1)[0]
+    _n = np.where(xc.real < -1)[0]
 
-    r_amp  = xc - 1j * np.sqrt(1 - xc**2)
-    r_amp[xc_pos] = (xc - np.sqrt(xc**2 -1))[xc_pos]
-    r_amp[xc_neg] = (xc + np.sqrt(xc**2 -1))[xc_neg]
+    r     = (xc - 1j * np.sqrt(1 - xc**2))
+    r[_p] = (xc - np.sqrt(xc**2 -1))[_p]
+    r[_n] = (xc + np.sqrt(xc**2 -1))[_n]
 
-    return DarwinWidth(intensity=abs(r_amp*r_amp.conjugate()),
-                       zeta=zeta, dtheta=zeta*np.tan(theta),
-                       denergy=-zeta*energy, theta=theta)
+    return DarwinWidth(intensity=abs(r*r.conjugate()), zeta=zeta,
+                       dtheta=zeta*np.tan(theta), denergy=-zeta*energy,
+                       theta=theta)

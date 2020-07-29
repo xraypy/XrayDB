@@ -102,6 +102,7 @@ using it:
       :func:`material_mu`                     absorption cross-section for a material at X-ray energies
       :func:`material_mu_components`          dictionary of elemental components of `mu` for material
       :func:`xray_delta_beta`                 anomalous index of refraction for material and energy
+      :func:`darwin_width`                    Darwin widths for monochromator crystals
       :func:`mirror_reflectivity`             X-ray reflectivities for mirror materials (thick slab limit)
       :func:`ionization_potential`            effective ionization potential for a gas, as for ion chambers
       :func:`ionchamber_fluxes`               calculate fluxes from ion chamber voltages, gases, and sensitivites
@@ -192,9 +193,10 @@ X-ray properties of materials
 
 .. autofunction:: xray_delta_beta
 
+.. autofunction:: darwin_width
+
 .. autofunction:: mirror_reflectivity
 
 .. autofunction:: ionization_potential
 
 .. autofunction:: ionchamber_fluxes
-		  

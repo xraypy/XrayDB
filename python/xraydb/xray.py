@@ -13,8 +13,9 @@ fluxes = namedtuple('IonChamberFluxes', ('photo',
                                          'incident',
                                          'transmitted'))
 
-DarwinWidth = namedtuple('DarwinWidth', ('intensity', 'zeta', 'dtheta',
-                                          'denergy', 'theta'))
+DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_fwhm',
+                                         'energy_fwhm', 'zeta', 'dtheta',
+                                         'denergy', 'intensity'))
 
 
 _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
@@ -854,11 +855,9 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         >>> ionchamber_fluxes(gas='helium', volts=1.25, length=200.0,
                               energy=10000.0, sensitivity=1.e-9)
         IonChamberFluxes(photo=16110895.3, incident=15452608024.6, transmitted=15316549138.8)
-
         >>> ionchamber_fluxes(gas='nitrogen', volts=1.25, length=200.0,
                               energy=10000.0, sensitivity=1.e-9)
         IonChamberFluxes(photo=13575282.2, incident=23102328.0, transmitted=8759458.7)
-
         >>> ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
                               length=200.0, energy=10000.0, sensitivity=1.e-9)
         IonChamberFluxes(photo=14843088.8, incident=7737855176.4, transmitted=7662654298.8)
@@ -913,28 +912,44 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
 def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     """darwin width for a crystal reflection and energy
 
-    Args
-    -----
-    energy (float):    X-ray energy in eV
-    crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
-    hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
-    m (int):           order of reflection    [1]
+    Args:
+      energy (float):    X-ray energy in eV
+      crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
+      hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
+      m (int):           order of reflection    [1]
 
-    Returns
-    -------
-    A named tuple 'DarwinWidth' with the following fields:
+    Returns:
 
-         intensity: nd-array of reflected intensity
-         zeta     : nd-array of Zeta parameter (delta_Lambda / Lambda)
-         dtheta   : nd-array of angles away from Bragg angle, theta in rad
-         denergy  : nd-array of energies away from Bragg energy, in eV
-         theta    : float, nominal Bragg angle, in rad
+      A named tuple 'DarwinWidth' with the following fields
 
-    Notes
-    ------
-     1. This follows the calculation from section 5.4 of
-        Eleements of Modernn X-ray Physics, J Als-Nielsen, and D. McMorrow.
-     2. Only diamond structures (Si, Ge, diamond) are currently supported.
+        `theta`       float, nominal Bragg angle, in rad,
+
+        `theta_fwhm`  float, estimated angular Darwin width, in rad,
+
+        `energy_fwhm`  float, estimated energy Darwin width, in eV,
+
+        `zeta`        nd-array of Zeta parameter (delta_Lambda / Lambda),
+
+        `dtheta`     nd-array of angles away from Bragg angle, theta in rad,
+
+        `denergy`     nd-array of energies away from Bragg energy, in eV,
+
+        `intensity`   nd-array of reflected intensity
+
+    Notes:
+
+     1. This follows the calculation from section 6.4 of
+        Elements of Modern X-ray Physics, 2nd Edition
+        J Als-Nielsen, and D. McMorrow.
+
+     2. Only diamond structures (Si, Ge, diamond) and sigma
+        polarization are currently supported.
+
+    Examples:
+        >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1)
+        >>> dw.theta_fwhm, dw.energy_fwhm
+        (2.0841049436681097e-05, 1.0333427816952565)
+
     """
     lattice_constants = {'Si': 5.431, 'Ge': 5.658, 'C': 3.567}
 
@@ -960,6 +975,8 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     g0 = 8   * gs * (f0(crystal, 0) + f1 - 1j*f2)
     g  = eqr * gs * (f0(crystal, q) + f1 - 1j*f2)
 
+    fwhm = abs(3 * g / (m*np.pi * np.sqrt(2)))[0]
+
     #  hueristic zeta range and step sizes for crystals:
     sz = {'Si': 0.25,  'Ge': 0.50, 'C':  0.15}[crystal]
     dz = 0.001 * sz
@@ -974,6 +991,9 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     r[_p] = (xc - np.sqrt(xc**2 -1))[_p]
     r[_n] = (xc + np.sqrt(xc**2 -1))[_n]
 
-    return DarwinWidth(intensity=abs(r*r.conjugate()), zeta=zeta,
-                       dtheta=zeta*np.tan(theta), denergy=-zeta*energy,
-                       theta=theta)
+    return DarwinWidth(theta=theta,
+                       theta_fwhm=fwhm*np.tan(theta),
+                       energy_fwhm=fwhm*energy, zeta=zeta,
+                       dtheta=zeta*np.tan(theta),
+                       denergy=-zeta*energy,
+                       intensity=abs(r*r.conjugate()))

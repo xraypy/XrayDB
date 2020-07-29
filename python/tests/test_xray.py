@@ -558,22 +558,36 @@ def test_mirror_reflectivity():
     assert_allclose(mirror_reflectivity('Pt', 0.001, 80000), 0.74, rtol=0.005)
 
 def test_darwin_width():
-    def dw_en(energy, crystal, hkl):
-        """estimate darwin width in energy (eV)"""
+    def dw_dide(energy, crystal, hkl):
+        """estimate darwin width in energy from min/max derivative"""
         dat = darwin_width(energy, crystal=crystal, hkl=hkl)
         dide = np.gradient(dat.intensity) / np.gradient(dat.denergy)
         return (dat.denergy[np.where(dide==dide.min())] -
                 dat.denergy[np.where(dide==dide.max())])[0]
-        return print(energy, crystal, hkl, del_en)
 
-    assert_allclose(dw_en( 5000, 'Si', (1, 1, 1)), 0.500, rtol=0.01)
-    assert_allclose(dw_en(10000, 'Si', (1, 1, 1)), 0.983, rtol=0.01)
+    def dw_fwhm(energy, crystal, hkl):
+        """as-calculated darwin width in energy (eV)"""
+        return darwin_width(energy, crystal=crystal, hkl=hkl).energy_fwhm
 
-    assert_allclose(dw_en(10000, 'Si', (2, 2, 0)), 0.595, rtol=0.01)
-    assert_allclose(dw_en(15000, 'Si', (2, 2, 0)), 0.881, rtol=0.01)
+    # fwhm from derivatives:
+    assert_allclose(dw_dide( 5000, 'Si', (1, 1, 1)), 0.500, rtol=0.01)
+    assert_allclose(dw_dide(10000, 'Si', (1, 1, 1)), 0.983, rtol=0.01)
 
-    assert_allclose(dw_en(10000, 'Si', (3, 1, 1)), 0.210, rtol=0.01)
-    assert_allclose(dw_en(20000, 'Si', (3, 1, 1)), 0.410, rtol=0.01)
+    assert_allclose(dw_dide(10000, 'Si', (2, 2, 0)), 0.595, rtol=0.01)
+    assert_allclose(dw_dide(15000, 'Si', (2, 2, 0)), 0.881, rtol=0.01)
+
+    assert_allclose(dw_dide(10000, 'Si', (3, 1, 1)), 0.210, rtol=0.01)
+    assert_allclose(dw_dide(20000, 'Si', (3, 1, 1)), 0.410, rtol=0.01)
+
+    # fwhm as cacluated
+    assert_allclose(dw_fwhm( 5000, 'Si', (1, 1, 1)), 0.527, rtol=0.01)
+    assert_allclose(dw_fwhm(10000, 'Si', (1, 1, 1)), 1.033, rtol=0.01)
+
+    assert_allclose(dw_fwhm(10000, 'Si', (2, 2, 0)), 0.624, rtol=0.01)
+    assert_allclose(dw_fwhm(15000, 'Si', (2, 2, 0)), 0.927, rtol=0.01)
+
+    assert_allclose(dw_fwhm(10000, 'Si', (3, 1, 1)), 0.220, rtol=0.01)
+    assert_allclose(dw_fwhm(20000, 'Si', (3, 1, 1)), 0.432, rtol=0.01)
 
 
 def test_ionchamber_fluxes():

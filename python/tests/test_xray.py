@@ -13,7 +13,7 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     atomic_symbol, atomic_mass, atomic_density, xray_edges,
                     xray_edge, xray_lines, xray_line, fluor_yield,
                     ck_probability, core_width, guess_edge,
-                    xray_delta_beta, mirror_reflectivity,
+                    xray_delta_beta, darwin_width, mirror_reflectivity,
                     ionchamber_fluxes, XrayDB)
 
 
@@ -553,11 +553,29 @@ def test_mirror_reflectivity():
                     0.9607325 , 0.95705164, 0.94578432, 0.69383757, 0.65937538,
                     0.57222587, 0.40829232, 0.26919575, 0.18904094, 0.14024917])
     r1 = mirror_reflectivity('Rh', 0.0025, np.arange(1000, 31000, 1000))
-    assert_allclose(rh1, r1, rtol=0.005)    
+    assert_allclose(rh1, r1, rtol=0.005)
 
     assert_allclose(mirror_reflectivity('Pt', 0.001, 80000), 0.74, rtol=0.005)
 
-    
+def test_darwin_width():
+    def dw_en(energy, crystal, hkl):
+        """estimate darwin width in energy (eV)"""
+        dat = darwin_width(energy, crystal=crystal, hkl=hkl)
+        dide = np.gradient(dat.intensity) / np.gradient(dat.denergy)
+        return (dat.denergy[np.where(dide==dide.min())] -
+                dat.denergy[np.where(dide==dide.max())])[0]
+        return print(energy, crystal, hkl, del_en)
+
+    assert_allclose(dw_en( 5000, 'Si', (1, 1, 1)), 0.500, rtol=0.01)
+    assert_allclose(dw_en(10000, 'Si', (1, 1, 1)), 0.983, rtol=0.01)
+
+    assert_allclose(dw_en(10000, 'Si', (2, 2, 0)), 0.595, rtol=0.01)
+    assert_allclose(dw_en(15000, 'Si', (2, 2, 0)), 0.881, rtol=0.01)
+
+    assert_allclose(dw_en(10000, 'Si', (3, 1, 1)), 0.210, rtol=0.01)
+    assert_allclose(dw_en(20000, 'Si', (3, 1, 1)), 0.410, rtol=0.01)
+
+
 def test_ionchamber_fluxes():
         ic1 = ionchamber_fluxes(gas='helium', volts=1.25, length=200.0,
                               energy=10000.0, sensitivity=1.e-9)
@@ -570,7 +588,7 @@ def test_ionchamber_fluxes():
 
         assert_allclose(ic2.photo, 13575282.2, rtol=0.01)
         assert_allclose(ic2.incident, 23102328.0, rtol=0.01)
-        
+
         ic3 = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
                                 length=200.0, energy=10000.0, sensitivity=1.e-9)
 

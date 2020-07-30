@@ -187,6 +187,8 @@ Chemical and Materials database
 X-ray properties of materials
 ------------------------------------
 
+For some further examples, see :ref:`example_calcs`.
+
 .. autofunction:: material_mu
 
 .. autofunction:: material_mu_components

@@ -59,7 +59,7 @@ def _read_materials_db():
         fname = get_user_materialsfile()
         if os.path.exists(fname):
             read_materialsfile(fname)
-            
+
     return _materials
 
 def material_mu(name, energy, density=None, kind='total'):
@@ -69,8 +69,8 @@ def material_mu(name, energy, density=None, kind='total'):
         name (str): chemical formul or name of material from materials list.
         energy (float or ndarray):   energy or array of energies in eV
         density (None or float):  material density (gr/cm^3).
-        kind (str):  'photo' or 'total'for whether to
-                  return photo-absorption or total cross-section ['total']
+        kind (str): 'photo' or 'total' for whether to return the
+                    photo-absorption or total cross-section ['total']
     Returns:
         absorption length in 1/cm
 
@@ -79,7 +79,6 @@ def material_mu(name, energy, density=None, kind='total'):
             chemical compounds are case sensitive.
         2.  mu_elam() is used for mu calculation.
         3.  if density is None and material is known, that density will be used.
-
 
     Examples:
         >>> material_mu('H2O', 10000.0)
@@ -164,7 +163,7 @@ def material_mu_components(name, energy, density=None, kind='total'):
 
 def get_material(name):
     """look up material name, return formula and density
-    
+
 
     Args:
         name (str): name of material or chemical formula
@@ -178,7 +177,7 @@ def get_material(name):
 
     See Also:
        find_material()
-   
+
     """
     material = find_material(name)
     if material is None:
@@ -197,10 +196,10 @@ def find_material(name):
     Examples:
         >>> xraydb.find_material('kapton')
         Material(formula='C22H10N2O5', density=1.42, name='kapton', categories=['polymer'])
-        
+
     See Also:
        get_material()
-   
+
     """
     global _materials
     if _materials is None:
@@ -214,8 +213,8 @@ def find_material(name):
         if mat.formula == name:
             return mat
     return None
-    
-    
+
+
 
 def get_materials(force_read=False, categories=None):
     """get dictionary of all available materials

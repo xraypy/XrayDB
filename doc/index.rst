@@ -53,4 +53,5 @@ Table of Contents
    overview
    dbschema
    python
+   examples
    biblio

@@ -276,7 +276,7 @@ def add_Chantler(dest, append=True, table='Chantler', subdir='fine', suffix='.da
             f2.append(words[2])
             mu_photo.append(words[3])
             mu_incoh.append(words[4])
-            mu_total.append(words[5])
+            mu_total.append(words[3]+words[4])
 
         query = 'insert into %s values %%s' % table
 

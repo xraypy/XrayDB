@@ -1,6 +1,12 @@
+#!/usr/bin/env python
+# XrayDB example script    python/examples/mu_water.py
+#
+# calculate the fraction of X-rays transmitted through 1 mm of water
+#
 import numpy as np
-from xraydb import material_mu
 import matplotlib.pyplot as plt
+
+from xraydb import material_mu
 
 energy = np.linspace(1000, 41000, 201)
 

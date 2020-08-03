@@ -611,7 +611,7 @@ def ionization_potential(gas):
            -------------------- ----------------
             hydrogen, H           36.5
             helium, He            41.3
-            nitrogren, N, N2      34.8
+            nitrogen, N, N2       34.8
             oxygen, O, O2         30.8
             neon, Ne              35.4
             argon, Ar             26.4

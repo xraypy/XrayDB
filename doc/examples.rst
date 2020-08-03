@@ -4,6 +4,9 @@
 Example Calculations of X-ray properties of materials
 =========================================================
 
+.. module:: xraydb
+   :noindex:
+
 Here, a few detailed examples of using the `xraydb.sqlite` to calculate the
 X-ray properties of materials are shown.  These all use the functions in
 the python `xraydb` module, which is describe in more detail in the next
@@ -42,7 +45,7 @@ strongly with :math:`E` -- approximately as :math:`E^3`. :math:`\mu` also
 depends strongly with *Z*, though the sharp absorption edges make this more
 complicated.
 
-You can also observe that at relatively high energies for relativly low-Z
+You can also observe that at relatively high energies for relatively low-Z
 elements (such as C above about 20 keV) that the attenuation levels off.
 This is because the coherent (Rayleigh) and incoherent (Compton) scattering
 processes dominate, so that the photo-electric absorption is no longer the
@@ -86,7 +89,7 @@ photo-electric cross-section dominates past 100 keV.
 :math:`\mu` calculations for materials
 ------------------------------------------
 
-While one can use the above values for :math:`\mu/\rho` to caclulate the
+While one can use the above values for :math:`\mu/\rho` to calculate the
 attenuation of X-rays by multi-element materials, the :func:`material_mu`
 function is available to do the more convenient calculation of the X-ray
 absorption coefficient :math:`\mu` in units of 1/cm for a material and
@@ -185,7 +188,7 @@ are all between 20 and 40 eV, given in the
            +--------------------+----------------+
            | helium, He         |   41.3         |
            +--------------------+----------------+
-           | nitrogren, N, N2   |   34.8         |
+           | nitrogen, N, N2   |   34.8         |
            +--------------------+----------------+
            | oxygen, O, O2      |   30.8         |
            +--------------------+----------------+
@@ -245,11 +248,30 @@ The output from  :func:`ionchamber_fluxes` is a named tuple with 3 fiels:
 Note that the ion chamber current is generated only by the photo-electric
 effect, which dominates for heavy elements and relatively low X-ray
 energies, but does not necessarily dominate for gases such as helium,
-nitrogen, and neon used in ion chambers, especailly at higher energies.
+nitrogen, and neon used in ion chambers, especially at higher energies.
 The coherent and incoherent scattering processes are included in the
 calculations done in :func:`ionchamber_fluxes` so that estimated incident
 flux from the measured current can be somewhat larger than if only the
 photo-electric effect was considered.
+
+As an example calculation of ion chamber currents::
+  
+   >>> fluxes = ionchamber_fluxes(gas='nitrogen', volts=1.25, energy=18000,
+                                  length=100.0, sensitivity=1.e-6)
+   >>> print("Incident flux= %g Hz" % fluxes.incident)
+   Incident flux= 1.1632e+11 Hz
+   >>> print("Downstream flux= %g Hz" % fluxes.transmitted)
+   Incident flux= 1.1632e+11 Hz
+   >>> print("Downstream flux= %g Hz" % fluxes.transmitted)
+   Downstream flux= 1.05463e+11 Hz
+
+   >>> print("Absorbed Photo flux= %g Hz" % fluxes.photo)
+   Absorbed Photo flux= 7.54182e+09 Hz
+   >>> print("Scattered flux= %g Hz" % (fluxes.incident - fluxes.transmitted - fluxes.photo))
+   Scattered flux= 3.31569e+09 Hz
+
+As for the example for carbon above, the non-photo-electric effects are not
+negligible for nitrogen at 18 keV.
 
 
 X-ray mirror reflectivities
@@ -260,7 +282,7 @@ external reflection from a material. The reflectivity can be very high
 at relatively low energies and shallow angles, but drops off dramatically
 with increasing energy, increasing angle, and decreasing electron density.
 Still, this reflectivity is one of the few ways to steer X-ray beams and so
-is widely used in synchrotron radiaion sources.
+is widely used in synchrotron radiation sources.
 
 The reflectivity can be calculated with the :func:`mirror_reflectivity`
 function which takes X-ray energy, incident angle, and mirror material as

@@ -40,7 +40,6 @@ some data is included for elements between Z=93 and Z=98.
    * See `XrayDB Github Page`_ for data sources, code, development, and
      issues.
 
-   * A `PDF Version of this documentation`_ is available.
 
 Table of Contents
 -----------------------
@@ -52,6 +51,6 @@ Table of Contents
    periodictable
    examples
    python
-   overview 
+   overview
    dbschema
    biblio

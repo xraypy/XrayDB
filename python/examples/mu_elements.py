@@ -12,7 +12,7 @@ energy = np.arange(500, 120000, 10)  # energy in eV
       
 for elem in ('C', 'Cu', 'Au'):
     mu = mu_elam(elem, energy)
-    plt.plot(energy, mu, label=elem, linewidth=3)
+    plt.plot(energy, mu, label=elem, linewidth=2)
  
 plt.title('X-ray mass attenuation')
 plt.xlabel('Energy (eV)')

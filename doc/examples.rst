@@ -1,43 +1,231 @@
+
 .. _example_calcs:
 
 Example Calculations of X-ray properties of materials
 =========================================================
 
-While the reference documentaion above describes how to call the `xraydb`
-functions, here we give more detailed examples of using the functions to
-calculate the X-ray properties of materials.  The basics of the X-ray
-physics will not be reviewed here - see, for example,
-:cite:`AlsNielson_McMorrow2011` for more details.
+Here, a few detailed examples of using the `xraydb.sqlite` to calculate the
+X-ray properties of materials are shown.  These all use the functions in
+the python `xraydb` module, which is describe in more detail in the next
+chapter, :ref:`python_api`.  The examples will explore some aspects of
+X-ray physics, but will not give a complete tutorial on the concepts here.
+For reference see :cite:`AlsNielson_McMorrow2011` for example.
 
 
-:math:`\mu` calculations
------------------------------------
+X-ray attenuation by elements
+-----------------------------------------------
 
-The absorption calculations from :func:`material_mu` returns the
-attenuation or X-ray absorption coefficient :math:`\mu` for a material and
-energy value.  This can be can used to calculate the :math:`1/e` length for
-X-rays in a material, or what fraction of the X-rays are transmitted
-through a material of known material.  As an example, we calculate the
-the fraction of X-ray transmitted through 1 mm of the water as a function
-of X-ray energy:
-
-.. literalinclude:: ../python/examples/mu_water.py
-
+The XrayDB database tabulates values of the X-ray mass attenuation
+coefficient, :math:`\mu/\rho`, for each element.  In most of the X-ray
+regime used in materials characterization (say, up to 150 keV), the
+photo-electric effect is the main process that causes X-ray attenuation.
+When the photo-electric process is dominant, the values for
+:math:`\mu/\rho` depends strongly on *Z* of the atom and on X-ray energy
+*E*.  In addition to these strong dependencies, sharp increases --
+so-called absorption edges -- with be see at energies of bound core
+electron levels of atoms.  To illustrate these characteristics, the
+following script will plot :math:`\mu/\rho` for selected elements:
+      
+.. literalinclude:: ../python/examples/mu_elements.py
 
 .. _fig_mu_depth:
 
-.. figure::  images/mu_water.png
-    :target: images/mu_water.png
+.. figure::  _images/mu_elements.png
+    :target: _images/mu_elements.png
+    :width: 75%
+    :align: center
+
+    X-ray mass attenuation coefficient for C, Cu, and Au.
+
+As you can see in Figure from this figure, the attenuation drops very
+strongly with :math:`E` -- approximately as :math:`E^3`. :math:`\mu` also
+depends strongly with *Z*, though the sharp absorption edges make this more
+complicated.
+
+You can also observe that at relatively high energies for relativly low-Z
+elements (such as C above about 20 keV) that the attenuation levels off.
+This is because the coherent (Rayleigh) and incoherent (Compton) scattering
+processes dominate, so that the photo-electric absorption is no longer the
+dominant X-ray scattering process.  This can be illustrated by plotting the
+different components of :math:`\mu/\rho` for C, as with the following script:
+
+.. literalinclude:: ../python/examples/mu_components_C.py
+
+which will generate the following plot:
+
+.. _fig_mu_components_C:
+
+.. figure::  _images/mu_components_C.png
+    :target: _images/mu_components_C.png
+    :width: 100%
+    :align: center
+
+    X-ray scattering and attenuation factors for C.
+
+Note that above 20 keV, the photo-electric absorption and incoherent
+Compton contributions are about equal, and that the Compton scattering
+dominates above 50 keV.  As shown above, the photo-electric scattering will
+be much higher for heavier elements. The Rayleigh and Compton scattering
+have a much weaker dependence on *Z*, so that the photo-electric process
+dominates to higher energies.  Replacing 'C' with 'Fe' in the script above
+will generate the following plot:
+
+.. _fig_mu_components_Fe:
+
+.. figure::  _images/mu_components_Fe.png
+    :target: _images/mu_components_Fe.png
+    :width: 100%
+    :align: center
+
+    X-ray scattering and attenuation factors for Fe.
+    
+which shows that the Compton scattering reaching about 0.1 to 0.25
+:math:`\rm cm^2/gr` for Fe, about the same value as it was for C, while the
+photo-electric cross-section dominates past 100 keV.
+    
+:math:`\mu` calculations for materials
+------------------------------------------
+
+While one can use the above values for :math:`\mu/\rho` to caclulate the
+attenuation of X-rays by multi-element materials, the :func:`material_mu`
+function is available to do the more convenient calculation of the X-ray
+absorption coefficient :math:`\mu` in units of 1/cm for a material and
+energy value and density (which are known for several common materials).
+This gives the length for which X-ray intensity is reduced by a factor of
+*e*, and so can be used to calculate the fraction of the X-rays transmitted
+through a material of known thickness, as :math:`\exp(-t\mu)` for a
+material of thickness *t*.  As a first example, we calculate the the
+fraction of X-ray transmitted through 1 mm of the water as a function of
+X-ray energy:
+
+.. literalinclude:: ../python/examples/mu_water.py
+
+.. _fig_mu_water:
+
+.. figure::  _images/mu_water.png
+    :target: _images/mu_water.png
     :width: 75%
     :align: center
 
     Fraction of X-rays absorbed and transmitted by water
 
 
+replacing::
+
+    mu = material_mu('H2O', energy)
+
+with::
+  
+    mu = material_mu('CaCO3', energy, density=2.71)
+
+would generate the following plot
+
+.. _fig_mu_calcite:
+
+.. figure::  _images/mu_calcite.png
+    :target: _images/mu_calcite.png
+    :width: 75%
+    :align: center
+
+    Fraction of X-rays absorbed and transmitted by calcite
+
+    
+For many X-ray experiments, selecting the size of a material size so that
+its thickness is approximately 1 to 2 absorption length is convenient so
+that X-ray scattering and emission can be observed strongly, with neither
+all primary and scattered X-rays being absorbed by the material itself, but
+also not simply passing through the material without any interaction.  For
+example, one can simply do::
+
+  >>> from xraydb import material_mu
+  >>> mu_20kev = xraydb.material_mu('CaCO3', 20000, density=2.71)
+  >>> print("CaCO3 1/e depth at 20keV = {:.3f} mm".format(10/mu_20kev))
+  CaCO3 1/e depth at 20keV = 0.648 mm
+
+    
 
 
-Ion chamber calculation of X-ray flux
-----------------------------------------
+Ionization chamber calculation of X-ray flux
+----------------------------------------------------
+
+A gas-filled ionization chamber is a widely used form an X-ray detector,
+used because it is simple, cheap, and can absorb a fraction of an incident
+X-ray beam and be linear in estimating the photon flux over many orders of
+magnitude.  X-rays entering a chamber filled with an inert gas (often a He,
+N2, or one of the noble gases, or a mixture of two of these) will be
+partially absorbed by the gas, with the strong energy dependence shown
+above.  The absorption will *ionize* the gas, generating free electrons and
+energetic ions.  In fact, the first ionization will generate an
+electron-ion pair with the energy of the X-ray minus the binding energy of
+the core electron, but the high-energy electron and ion will further ionize
+other gas molecules.  With an electric potential (typically on the order of
+1 kV /cm) across the chamber, a current can be measured that is
+proportional to the X-ray energy and fluence of the X-rays.
+
+The process of converting the photo-current into X-ray fluence involves
+several steps. First, the energy from a single X-ray generates a number of
+electron-ion pairs given by the *effective ionization potential* of the
+gas.  These are reasonably well-known values (see :cite:`Knoll2010`) that
+are all between 20 and 40 eV, given in the
+:ref:`Table of Effective Ionization Potentials <xray_ionpot_table>`.
+
+.. index:: Table of Effective Ionization Potentials
+.. _xray_ionpot_table:
+
+   Table of Effective Ionization Potentials. Many of these are taken from
+   :cite:`Knoll2010`, while others appear to come from International Commission
+   on Radiation Units & Measurement, Report 31, 1979.  The names given are
+   those supported by the functions :func:`ionization_potential` and
+   :func:`ionchamber_fluxes`. 
+
+           +--------------------+----------------+
+           | gas name(s)        | potential (eV) |
+           +====================+================+
+           | hydrogen, H        |   36.5         |
+           +--------------------+----------------+
+           | helium, He         |   41.3         |
+           +--------------------+----------------+
+           | nitrogren, N, N2   |   34.8         |
+           +--------------------+----------------+
+           | oxygen, O, O2      |   30.8         |
+           +--------------------+----------------+
+           | neon, Ne           |   35.4         |
+           +--------------------+----------------+
+           | argon, Ar          |   26.4         |
+           +--------------------+----------------+
+           | krypton, Kr        |   24.4         |
+           +--------------------+----------------+
+           | xenon, Xe          |   22.1         |
+           +--------------------+----------------+
+           | air                |   33.8         |
+           +--------------------+----------------+
+           | methane, CH4       |   27.3         |
+           +--------------------+----------------+
+           | carbondioxide, CO2 |   33.0         |
+           +--------------------+----------------+
+                 
+
+From this, we can see that the absorption of 1 X-ray of energy 10 keV will
+generate about 300 electron-ion pairs.  That is not much current, but if
+:math:`10^8 \,\rm Hz` are absorbed per second, then the current generated
+will be around 5 nA.  Of course, the thickness of the gas or more
+importantly the length of gas under ionizing potential will have an impact
+on how much current is generated.  The photo-current will then be
+amplified and converted to a voltage using a current amplifier, and that
+voltage will then recorded by a number of possible means.
+
+The function:func:`ionchamber_fluxes` will help generate X-ray fluxes
+associated with an ion chamber given the following inputs:
+
+  * the gas, or mixture of gases, used.
+  * the length of the ion chamber, in mm.
+  * the X-ray energy
+  * the voltage generated by the current amplifier
+  * the sensitivity or gain of the amplifier used to convert the
+    photo-current to the recorded voltage.
+
+
+
 
 
 X-ray mirror reflectivities
@@ -62,8 +250,8 @@ a few common mirror materials is given as
 
 .. _fig_mirrors:
 
-.. figure::  images/mirrors.png
-    :target: images/mirrors.png
+.. figure::  _images/mirrors.png
+    :target: _images/mirrors.png
     :width: 75%
     :align: center
 

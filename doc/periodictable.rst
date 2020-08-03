@@ -46,7 +46,7 @@ Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 
 
 In general, these table look like this:
 
-.. image:: images/xray_table.png
+.. image:: _images/xray_table.png
    :width: 75%
 
 but you should definitely download the PDFs linked for high-quality results.

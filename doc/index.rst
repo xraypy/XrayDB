@@ -50,8 +50,8 @@ Table of Contents
 
    installation
    periodictable
-   overview
-   dbschema
-   python
    examples
+   python
+   overview 
+   dbschema
    biblio

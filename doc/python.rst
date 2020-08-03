@@ -1,6 +1,7 @@
+.. _python_api:
+
 Using XrayDB from Python
 =========================
-
 
 The `python` directory contains the source code for a Python module for
 XrayDB.  This module gives a user-friendly wrapping of the XrayDB, and
@@ -11,7 +12,7 @@ modules, all of which are readily available and can be installed with::
     pip install xraydb
 
 The current version of the Python module is |release|, corresponding to
-version 4 of `xraydb.sqlite`.
+version 6 of `xraydb.sqlite`.
 
 The Python xraydb module
 ----------------------------------

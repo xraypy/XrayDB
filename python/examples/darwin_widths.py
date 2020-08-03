@@ -1,7 +1,6 @@
 import numpy as np
 from xraydb import darwin_width
 import matplotlib.pyplot as plt
-from matplotlib.ticker import (AutoLocator, AutoMinorLocator)
 
 dw_si111 = darwin_width(10000, 'Si', (1, 1, 1))
 dw_si333 = darwin_width(10000, 'Si', (1, 1, 1), m=3)

@@ -329,7 +329,6 @@ a few common mirror materials is given as
 
 
 
-
 Darwin widths of monochromator crystals
 -------------------------------------------
 
@@ -337,7 +336,6 @@ Bragg's law describes X-ray diffraction from crystals as
 
 .. math::
     m \lambda = 2 d \sin(\theta)
-
 
 where :math:`\lambda` is the X-ray wavelength, :math:`d` the d-spacing of
 the crystal lattice plane, :math:`\theta` the incident angle, and :math:`m`
@@ -355,7 +353,8 @@ scattering (as calculated with :func:`xray_delta_beta`) give non-symmetric
 attenuation of this reflectivity.
 
 All of these effects are included in the :func:`darwin_width` function,
-which takes inputs of
+which follows very closely the description from chapter 6.4 in
+:cite:`AlsNielson_McMorrow2011`.  The function takes inputs of
 
   * `energy`: the X-ray energy, in eV.
   * `crystal`: the atomic symbol for the crystal: 'Si', 'Ge', or 'C'. ['Si']

@@ -373,8 +373,8 @@ following fields:
    * `denergy` -  nd-array of energies around from Bragg energy, in eV
    * `intensity` - nd-array of reflected intensity at `zeta` values.
 
-Here, `dtheta` will be given by :math:`\delta\theta = \zeta \tan(\theta)`,
-and `denergy` will be given by :math:`\delta{E} = \zeta E`.  All of the
+Here, `dtheta` will be given by :math:`\Delta\theta = \zeta \tan(\theta)`,
+and `denergy` will be given by :math:`\Delta{E} = \zeta E`.  All of the
 nd-arrays will be the same size, so that plots of reflectivity can be
 readily made.  An example usage, printing the predicted energy and angular
 widths and plotting the intensity profile or "rocking curve" is 

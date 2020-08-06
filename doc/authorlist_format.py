@@ -3,6 +3,7 @@ import unicodedata
 from collections import Counter
 
 from pybtex.style.formatting.unsrt import Style as UnsrtStyle
+from pybtex.style.formatting.plain import Style as PlainStyle
 from pybtex.style.labels import BaseLabelStyle
 from pybtex.plugin import register_plugin
 
@@ -67,7 +68,11 @@ class AuthorsLabelStyle(BaseLabelStyle):
             result = '{:s} et al.'.format(lastname(persons[0]))
         return result
 
-class AuthorListStyle(UnsrtStyle):
+class AuthorListPlainStyle(PlainStyle):
     default_label_style = AuthorsLabelStyle
 
-register_plugin('pybtex.style.formatting', 'authorlist', AuthorListStyle)
+class AuthorListUnsrtStyle(UnsrtStyle):
+    default_label_style = AuthorsLabelStyle
+
+register_plugin('pybtex.style.formatting', 'authorlist', AuthorListPlainStyle)
+register_plugin('pybtex.style.formatting', 'authorlist_unsrt', AuthorListUnsrtStyle)

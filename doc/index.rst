@@ -27,24 +27,24 @@ Energy widths of core holes for excited electronic levels from
 data, :math:`f_0(q)` is taken from :cite:`Waasmaier_Kirfel`.  Resonant
 scattering cross sections :math:`f'(E)` and :math:`f''(E)` and absorption
 cross sections from :cite:`Chantler` as from the `FFAST webpage`_ (but on
-a finer energy grid) are also included.
+a finer energy grid, data from :cite:`Chantler2016`) are also included.
 
 In general, cross sections are in cm^2/gr, and energies are given in eV.
 Energy-dependent data for cross-sections are typically valid between about
 250 eV to about 200,000 eV.  Elements with Z=1 to 92 are supported, and
 some data is included for elements between Z=93 and Z=98.
 
-   * The current version of the XrayDB is 7.0, and the version of the
-     Python module is |release|.
+The current version of the XrayDB is **7.0**, and the version of the Python
+module is |release|. See Also:
 
-   * See `XrayDB Github Page`_ for data sources, code, development, and
-     issues.
+   * `PDF Version of this documentation`_
 
-   * A `PDF Version of this documentation`_ is available.
+   * `XrayDB Github Page`_ has data sources, code, development and issues.
 
-   * See `XrayDB Web App (beta!)`_ for an interactive web page to browse
-     some of the data in this database and make plots of X-ray attenuation
-     and mirror reflectivitiy.
+   * `XrayDB Web App (beta!)`_ is an interactive web page to browse some of
+     the data in this database and make plots of X-ray attenuation and
+     mirror reflectivitiy is at
+
 
 Table of Contents
 -----------------------

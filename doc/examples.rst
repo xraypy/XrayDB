@@ -4,6 +4,8 @@
 Example Calculations of X-ray properties of materials
 =========================================================
 
+.. _XrayDB Web App (beta!):  https://millenia.cars.aps.anl.gov/xraydb
+
 .. module:: xraydb
    :noindex:
 
@@ -12,7 +14,8 @@ X-ray properties of materials are shown.  These all use the functions in
 the python `xraydb` module, which is describe in more detail in the next
 chapter, :ref:`python_api`.  The examples will explore some aspects of
 X-ray physics, but will not give a complete tutorial on the concepts here.
-For reference see :cite:`AlsNielson_McMorrow2011` for example.
+For reference see :cite:`AlsNielson_McMorrow2011` for example.  Some of
+these calculations are also available at  `XrayDB Web App (beta!)`_.
 
 
 X-ray attenuation by elements
@@ -28,7 +31,7 @@ When the photo-electric process is dominant, the values for
 so-called absorption edges -- with be see at energies of bound core
 electron levels of atoms.  To illustrate these characteristics, the
 following script will plot :math:`\mu/\rho` for selected elements:
-      
+
 .. literalinclude:: ../python/examples/mu_elements.py
 
 .. _fig_mu_depth:
@@ -81,11 +84,11 @@ will generate the following plot:
     :align: center
 
     X-ray scattering and attenuation factors for Fe.
-    
+
 which shows that the Compton scattering reaching about 0.1 to 0.25
 :math:`\rm cm^2/gr` for Fe, about the same value as it was for C, while the
 photo-electric cross-section dominates past 100 keV.
-    
+
 :math:`\mu` calculations for materials
 ------------------------------------------
 
@@ -118,7 +121,7 @@ replacing::
     mu = material_mu('H2O', energy)
 
 with::
-  
+
     mu = material_mu('CaCO3', energy, density=2.71)
 
 would generate the following plot
@@ -132,7 +135,7 @@ would generate the following plot
 
     Fraction of X-rays absorbed and transmitted by calcite
 
-    
+
 For many X-ray experiments, selecting the size of a material size so that
 its thickness is approximately 1 to 2 absorption length is convenient so
 that X-ray scattering and emission can be observed strongly, with neither
@@ -145,7 +148,7 @@ example, one can simply do::
   >>> print("CaCO3 1/e depth at 20keV = {:.3f} mm".format(10/mu_20kev))
   CaCO3 1/e depth at 20keV = 0.648 mm
 
-    
+
 
 
 Ionization chamber calculation of X-ray flux
@@ -179,7 +182,7 @@ are all between 20 and 40 eV, given in the
    :cite:`Knoll2010`, while others appear to come from International Commission
    on Radiation Units & Measurement, Report 31, 1979.  The names given are
    those supported by the functions :func:`ionization_potential` and
-   :func:`ionchamber_fluxes`. 
+   :func:`ionchamber_fluxes`.
 
            +--------------------+----------------+
            | gas name(s)        | potential (eV) |
@@ -206,7 +209,7 @@ are all between 20 and 40 eV, given in the
            +--------------------+----------------+
            | carbondioxide, CO2 |   33.0         |
            +--------------------+----------------+
-                 
+
 
 From this, we can see that the absorption of 1 X-ray of energy 10 keV will
 generate about 300 electron-ion pairs.  That is not much current, but if
@@ -238,7 +241,7 @@ The default `sensitivity_units` is 'A/V' but can be set to any of the
 common SI prefixes such as 'p', 'pico', 'n', 'nano', :math:`\mu`
 (`'\\u03bc'`), 'u', 'micro', 'm', or 'milli', so that::
 
-  
+
     >>> fluxes = ionchamber_fluxes('N2', volts=1, energy=10000, length=100,
                                    sensitivity=1.e-9)
     >>> fluxes = ionchamber_fluxes('N2', volts=1, energy=10000, length=100,
@@ -262,7 +265,7 @@ flux from the measured current can be somewhat larger than if only the
 photo-electric effect was considered.
 
 As an example calculation of ion chamber currents::
-  
+
    >>> fluxes = ionchamber_fluxes(gas='nitrogen', volts=1.25, energy=18000,
                                   length=100.0, sensitivity=1.e-6)
    >>> print("Incident flux= %g Hz" % fluxes.incident)
@@ -377,10 +380,10 @@ Here, `dtheta` will be given by :math:`\Delta\theta = \zeta \tan(\theta)`,
 and `denergy` will be given by :math:`\Delta{E} = \zeta E`.  All of the
 nd-arrays will be the same size, so that plots of reflectivity can be
 readily made.  An example usage, printing the predicted energy and angular
-widths and plotting the intensity profile or "rocking curve" is 
+widths and plotting the intensity profile or "rocking curve" is
 
 .. literalinclude:: ../python/examples/darwin_widths.py
-		    
+
 which will print out values of::
 
   Darwin Width for Si(111) at 10 keV: 20.84 microrad, 1.03 eV
@@ -397,7 +400,7 @@ and generates a plot of
 
     X-ray monochromator diffracted intensities around the Si(111)
     reflection.
-    
+
 
 Note here that the width of the 3rd harmonic peak is specified not as the
 Si (3, 3, 3) peak, but as the (1, 1, 1) peak with m=3, as we want to ensure

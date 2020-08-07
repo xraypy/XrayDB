@@ -1,9 +1,8 @@
+
+.. _periodic_tables:
+
 X-ray Periodic Table of the Elements
 =============================================
-
-
-https://docs.xrayabsorption.org/XrayPeriodicTable/xray_table_50in_Barkla.pdf
-
 
 
 .. _Barkla (Large):     https://docs.xrayabsorption.org/XrayTable/xray_table_50in_Barkla.pdf

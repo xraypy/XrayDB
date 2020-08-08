@@ -29,10 +29,11 @@ scattering cross sections :math:`f'(E)` and :math:`f''(E)` and absorption
 cross sections from :cite:`Chantler` as from the `FFAST webpage`_ (but on
 a finer energy grid, data from :cite:`Chantler2016`) are also included.
 
-In general, cross sections are in cm^2/gr, and energies are given in eV.
-Energy-dependent data for cross-sections are typically reliable between
-about 250 eV to about 200,000 eV.  Elements from Z=1 to 92 are supported,
-and some data is included for elements between Z=93 and Z=98.
+In general, the values here use units that are SI and in common usage in
+X-ray work.  Cross sections are in cm^2/gr, and energies are in eV.
+Energy-dependent data for cross-sections are typically most reliable
+between about 250 eV to about 250,000 eV.  Elements from Z=1 to 92 are
+supported, with some data are included for elements between Z=93 and Z=98.
 
 The current version of the XrayDB is **7.0**, and the version of the Python
 module is |release|.
@@ -45,7 +46,7 @@ See Also:
 
    * `XrayDB Web App (beta!)`_ is an interactive web page to browse some of
      the data in this database and make plots of X-ray attenuation, 
-     mirror reflectivitiy, and more.
+     mirror reflectivity, and more.
 
    * :ref:`periodic_tables`.
 

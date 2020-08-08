@@ -106,7 +106,7 @@ using it:
       :func:`darwin_width`                    Darwin widths for monochromator crystals
       :func:`mirror_reflectivity`             X-ray reflectivities for mirror materials (thick slab limit)
       :func:`ionization_potential`            effective ionization potential for a gas, as for ion chambers
-      :func:`ionchamber_fluxes`               calculate fluxes from ion chamber voltages, gases, and sensitivites
+      :func:`ionchamber_fluxes`               calculate fluxes from ion chamber voltages, gases, and sensitivities
      ======================================= =======================================================================
 
 

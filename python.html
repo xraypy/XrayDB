@@ -15,8 +15,8 @@
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References" href="biblio.html" />
-    <link rel="prev" title="Using the XrayDB xraydb.sqlite" href="dbschema.html" /> 
+    <link rel="next" title="Overview of Atomic and X-ray Data" href="overview.html" />
+    <link rel="prev" title="Example Calculations of X-ray properties of materials" href="examples.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,10 +28,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="biblio.html" title="References"
+          <a href="overview.html" title="Overview of Atomic and X-ray Data"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="dbschema.html" title="Using the XrayDB xraydb.sqlite"
+          <a href="examples.html" title="Example Calculations of X-ray properties of materials"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li> 
       </ul>
@@ -43,7 +43,7 @@
           <div class="body" role="main">
             
   <div class="section" id="using-xraydb-from-python">
-<h1>Using XrayDB from Python<a class="headerlink" href="#using-xraydb-from-python" title="Permalink to this headline">¶</a></h1>
+<span id="python-api"></span><h1>Using XrayDB from Python<a class="headerlink" href="#using-xraydb-from-python" title="Permalink to this headline">¶</a></h1>
 <p>The <cite>python</cite> directory contains the source code for a Python module for
 XrayDB.  This module gives a user-friendly wrapping of the XrayDB, and
 automates the the conversion of data from sqlite database into Python and
@@ -52,8 +52,8 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.3.4, corresponding to
-version 4 of <cite>xraydb.sqlite</cite>.</p>
+<p>The current version of the Python module is 4.4, corresponding to
+version 6 of <cite>xraydb.sqlite</cite>.</p>
 <div class="section" id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
 <p>To use the XrayDB from Python, you can import the <cite>xraydb</cite> module and start
@@ -201,14 +201,17 @@ the data comes from <a class="bibtex reference internal" href="biblio.html#elam-
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_delta_beta" title="xraydb.xray_delta_beta"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></p></td>
 <td><p>anomalous index of refraction for material and energy</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.mirror_reflectivity" title="xraydb.mirror_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.darwin_width" title="xraydb.darwin_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">darwin_width()</span></code></a></p></td>
+<td><p>Darwin widths for monochromator crystals</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.mirror_reflectivity" title="xraydb.mirror_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></p></td>
 <td><p>X-ray reflectivities for mirror materials (thick slab limit)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></p></td>
 <td><p>effective ionization potential for a gas, as for ion chambers</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></p></td>
-<td><p>calculate fluxes from ion chamber voltages, gases, and sensitivites</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></p></td>
+<td><p>calculate fluxes from ion chamber voltages, gases, and sensitivities</p></td>
 </tr>
 </tbody>
 </table>
@@ -859,6 +862,7 @@ in the users home directory, and will be useful in subsequent sessions.</p>
 </div>
 <div class="section" id="x-ray-properties-of-materials">
 <h2>X-ray properties of materials<a class="headerlink" href="#x-ray-properties-of-materials" title="Permalink to this headline">¶</a></h2>
+<p>For some further examples, see <a class="reference internal" href="examples.html#example-calcs"><span class="std std-ref">Example Calculations of X-ray properties of materials</span></a>.</p>
 <dl class="py function">
 <dt id="xraydb.material_mu">
 <code class="sig-name descname">material_mu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">density</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">'total'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.material_mu" title="Permalink to this definition">¶</a></dt>
@@ -869,8 +873,8 @@ in the users home directory, and will be useful in subsequent sessions.</p>
 <li><p><strong>name</strong> (<em>str</em>) – chemical formul or name of material from materials list.</p></li>
 <li><p><strong>energy</strong> (<em>float</em><em> or </em><em>ndarray</em>) – energy or array of energies in eV</p></li>
 <li><p><strong>density</strong> (<em>None</em><em> or </em><em>float</em>) – material density (gr/cm^3).</p></li>
-<li><p><strong>kind</strong> (<em>str</em>) – ‘photo’ or ‘total’for whether to
-return photo-absorption or total cross-section [‘total’]</p></li>
+<li><p><strong>kind</strong> (<em>str</em>) – ‘photo’ or ‘total’ for whether to return the
+photo-absorption or total cross-section [‘total’]</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -955,6 +959,49 @@ atlen :  attenuation length in cm</p>
 </dd></dl>
 
 <dl class="py function">
+<dt id="xraydb.darwin_width">
+<code class="sig-name descname">darwin_width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">crystal</span><span class="o">=</span><span class="default_value">'Si'</span></em>, <em class="sig-param"><span class="n">hkl</span><span class="o">=</span><span class="default_value">1, 1, 1</span></em>, <em class="sig-param"><span class="n">m</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.darwin_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>darwin width for a crystal reflection and energy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – X-ray energy in eV</p></li>
+<li><p><strong>crystal</strong> (<em>string</em>) – name of crystal (one of ‘Si’, ‘Ge’, or ‘C’) [‘Si’]</p></li>
+<li><p><strong>hkl</strong> (<em>tuple</em>) – h, k, l for reflection  [(1, 1, 1)]</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – order of reflection    [1]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>A named tuple ‘DarwinWidth’ with the following fields</p>
+<blockquote>
+<div><p><cite>theta</cite>       float, nominal Bragg angle, in rad,</p>
+<p><cite>theta_fwhm</cite>  float, estimated angular Darwin width, in rad,</p>
+<p><cite>energy_fwhm</cite>  float, estimated energy Darwin width, in eV,</p>
+<p><cite>zeta</cite>        nd-array of Zeta parameter (delta_Lambda / Lambda),</p>
+<p><cite>dtheta</cite>     nd-array of angles away from Bragg angle, theta in rad,</p>
+<p><cite>denergy</cite>     nd-array of energies away from Bragg energy, in eV,</p>
+<p><cite>intensity</cite>   nd-array of reflected intensity</p>
+</div></blockquote>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ol class="arabic simple">
+<li><p>This follows the calculation from section 6.4 of
+Elements of Modern X-ray Physics, 2nd Edition
+J Als-Nielsen, and D. McMorrow.</p></li>
+<li><p>Only diamond structures (Si, Ge, diamond) and sigma
+polarization are currently supported.</p></li>
+</ol>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span><span class="o">.</span><span class="n">theta_fwhm</span><span class="p">,</span> <span class="n">dw</span><span class="o">.</span><span class="n">energy_fwhm</span>
+<span class="go">(2.0841049436681097e-05, 1.0333427816952565)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt id="xraydb.mirror_reflectivity">
 <code class="sig-name descname">mirror_reflectivity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formula</span></em>, <em class="sig-param"><span class="n">theta</span></em>, <em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">density</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">roughness</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">polarization</span><span class="o">=</span><span class="default_value">'s'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.mirror_reflectivity" title="Permalink to this definition">¶</a></dt>
 <dd><p>mirror reflectivity for a thick, singl-layer mirror.</p>
@@ -1017,7 +1064,7 @@ from ICRU Report 31, 1979.  Supported gas names and effective potentials:</p>
 <tr class="row-odd"><td><p>helium, He</p></td>
 <td><p>41.3</p></td>
 </tr>
-<tr class="row-even"><td><p>nitrogren, N, N2</p></td>
+<tr class="row-even"><td><p>nitrogen, N, N2</p></td>
 <td><p>34.8</p></td>
 </tr>
 <tr class="row-odd"><td><p>oxygen, O, O2</p></td>
@@ -1097,7 +1144,7 @@ used.</p>
 <li><p>The <cite>sensitivity</cite> and <cite>sensitivity_units</cite> arguments have some overlap
 to specify the sensitivity or gain of the current amplifier.
 Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of</p>
-<p>‘p’, ‘pico’, ‘n’, ‘nano’, ‘μ’, ‘u’, ‘micro’, ‘m’, ‘milli’</p>
+<p>‘p’, ‘pico’, ‘n’, ‘nano’, (unicode ‘u03bc’), ‘u’, ‘micro’, ‘m’, ‘milli’</p>
 <dl class="simple">
 <dt>so that, for example</dt><dd><p>ionchamber_fluxes(…, sensitivity=1.e-6)</p>
 </dd>
@@ -1111,14 +1158,10 @@ Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of<
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;helium&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
 <span class="go">                      energy=10000.0, sensitivity=1.e-9)</span>
 <span class="go">IonChamberFluxes(photo=16110895.3, incident=15452608024.6, transmitted=15316549138.8)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
 <span class="go">                      energy=10000.0, sensitivity=1.e-9)</span>
 <span class="go">IonChamberFluxes(photo=13575282.2, incident=23102328.0, transmitted=8759458.7)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;helium&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;helium&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
 <span class="go">                      length=200.0, energy=10000.0, sensitivity=1.e-9)</span>
 <span class="go">IonChamberFluxes(photo=14843088.8, incident=7737855176.4, transmitted=7662654298.8)</span>
 </pre></div>
@@ -1150,11 +1193,11 @@ Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of<
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="dbschema.html"
-                        title="previous chapter">Using the XrayDB  xraydb.sqlite</a></p>
+  <p class="topless"><a href="examples.html"
+                        title="previous chapter">Example Calculations of X-ray properties of materials</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="biblio.html"
-                        title="next chapter">References</a></p>
+  <p class="topless"><a href="overview.html"
+                        title="next chapter">Overview of Atomic and X-ray Data</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -1186,17 +1229,17 @@ Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of<
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="biblio.html" title="References"
+          <a href="overview.html" title="Overview of Atomic and X-ray Data"
              >next</a> |</li>
         <li class="right" >
-          <a href="dbschema.html" title="Using the XrayDB xraydb.sqlite"
+          <a href="examples.html" title="Example Calculations of X-ray properties of materials"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-July-21.
+      Last updated on 2020-August-07.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
     </div>
   </body>

@@ -1,6 +1,7 @@
+.. _python_api:
+
 Using XrayDB from Python
 =========================
-
 
 The `python` directory contains the source code for a Python module for
 XrayDB.  This module gives a user-friendly wrapping of the XrayDB, and
@@ -11,7 +12,7 @@ modules, all of which are readily available and can be installed with::
     pip install xraydb
 
 The current version of the Python module is |release|, corresponding to
-version 4 of `xraydb.sqlite`.
+version 6 of `xraydb.sqlite`.
 
 The Python xraydb module
 ----------------------------------
@@ -102,9 +103,10 @@ using it:
       :func:`material_mu`                     absorption cross-section for a material at X-ray energies
       :func:`material_mu_components`          dictionary of elemental components of `mu` for material
       :func:`xray_delta_beta`                 anomalous index of refraction for material and energy
+      :func:`darwin_width`                    Darwin widths for monochromator crystals
       :func:`mirror_reflectivity`             X-ray reflectivities for mirror materials (thick slab limit)
       :func:`ionization_potential`            effective ionization potential for a gas, as for ion chambers
-      :func:`ionchamber_fluxes`               calculate fluxes from ion chamber voltages, gases, and sensitivites
+      :func:`ionchamber_fluxes`               calculate fluxes from ion chamber voltages, gases, and sensitivities
      ======================================= =======================================================================
 
 
@@ -186,15 +188,18 @@ Chemical and Materials database
 X-ray properties of materials
 ------------------------------------
 
+For some further examples, see :ref:`example_calcs`.
+
 .. autofunction:: material_mu
 
 .. autofunction:: material_mu_components
 
 .. autofunction:: xray_delta_beta
 
+.. autofunction:: darwin_width
+
 .. autofunction:: mirror_reflectivity
 
 .. autofunction:: ionization_potential
 
 .. autofunction:: ionchamber_fluxes
-		  

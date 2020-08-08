@@ -56,19 +56,24 @@ Energy widths of core holes for excited electronic levels from
 <a class="bibtex reference internal" href="biblio.html#keski-krause" id="id3">[Keski-Rahkonen and Krause (1974)]</a> and <a class="bibtex reference internal" href="biblio.html#krause-oliver" id="id4">[Krause and Oliver (1979)]</a>.  Elastic X-ray scattering
 data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <a class="bibtex reference internal" href="biblio.html#waasmaier-kirfel" id="id5">[Waasmaier and Kirfel (1995)]</a>.  Resonant
 scattering cross sections <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> and absorption
-cross sections from <a class="bibtex reference internal" href="biblio.html#chantler" id="id6">[Chantler (2000)]</a> (as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a>) are
-also included.</p>
-<p>In general, cross sections are in cm^2/gr, and energies are given in eV.
-Energy-dependent data for cross-sections are typically valid between about
-250 eV to about 200,000 eV.  Elements with Z=1 to 92 are supported, and
-some data is included for elements between Z=93 and Z=98.</p>
+cross sections from <a class="bibtex reference internal" href="biblio.html#chantler" id="id6">[Chantler (2000)]</a> as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a> (but on
+a finer energy grid, data from <a class="bibtex reference internal" href="biblio.html#chantler2016" id="id7">[Chantler (2016)]</a>) are also included.</p>
+<p>In general, the values here use units that are SI and in common usage in
+X-ray work.  Cross sections are in cm^2/gr, and energies are in eV.
+Energy-dependent data for cross-sections are typically most reliable
+between about 250 eV to about 250,000 eV.  Elements from Z=1 to 92 are
+supported, with some data are included for elements between Z=93 and Z=98.</p>
+<p>The current version of the XrayDB is <strong>7.0</strong>, and the version of the Python
+module is 4.4.</p>
+<p>See Also:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>The current version of the XrayDB is 4, and the Version for the Python
-module is 4.3.4.</p></li>
-<li><p>See <a class="reference external" href="https://github.com/xraypy/XrayDB">XrayDB Github Page</a> for data sources, code, development, and
-issues.</p></li>
-<li><p>A <a class="reference external" href="https://xraypy.github.io/XrayDB/xraydb.pdf">PDF Version of this documentation</a> is available.</p></li>
+<li><p><a class="reference external" href="https://xraypy.github.io/XrayDB/xraydb.pdf">PDF Version of this documentation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/xraypy/XrayDB">XrayDB Github Page</a> has data sources, code, development and issues.</p></li>
+<li><p><a class="reference external" href="https://millenia.cars.aps.anl.gov/xraydb">XrayDB Web App (beta!)</a> is an interactive web page to browse some of
+the data in this database and make plots of X-ray attenuation,
+mirror reflectivity, and more.</p></li>
+<li><p><a class="reference internal" href="periodictable.html#periodic-tables"><span class="std std-ref">X-ray Periodic Table of the Elements</span></a>.</p></li>
 </ul>
 </div></blockquote>
 <div class="section" id="table-of-contents">
@@ -82,6 +87,25 @@ issues.</p></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="periodictable.html">X-ray Periodic Table of the Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Calculations of X-ray properties of materials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-attenuation-by-elements">X-ray attenuation by elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#ionization-chamber-calculation-of-x-ray-flux">Ionization chamber calculation of X-ray flux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-mirror-reflectivities">X-ray mirror reflectivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#darwin-widths-of-monochromator-crystals">Darwin widths of monochromator crystals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Using XrayDB from Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python.html#module-xraydb">The Python xraydb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#atomic-properties">Atomic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#elastic-scattering-factors">Elastic Scattering Factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-edges">X-ray Edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-emission-lines">X-ray Emission Lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#absorption-and-scattering-cross-sections">Absorption and Scattering Cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#chemical-and-materials-database">Chemical and Materials database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-properties-of-materials">X-ray properties of materials</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of Atomic and X-ray Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="overview.html#elements">Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overview.html#physical-units">Physical Units</a></li>
@@ -103,17 +127,6 @@ issues.</p></li>
 <li class="toctree-l2"><a class="reference internal" href="dbschema.html#keskirahkonen-krause-table">KeskiRahkonen_Krause Table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dbschema.html#krause-oliver-table">Krause_Oliver Table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dbschema.html#chantler-table">Chantler Table</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="python.html">Using XrayDB from Python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="python.html#module-xraydb">The Python xraydb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#atomic-properties">Atomic Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#elastic-scattering-factors">Elastic Scattering Factors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-edges">X-ray Edges</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-emission-lines">X-ray Emission Lines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#absorption-and-scattering-cross-sections">Absorption and Scattering Cross-sections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#chemical-and-materials-database">Chemical and Materials database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-properties-of-materials">X-ray properties of materials</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="biblio.html">References</a></li>
@@ -177,7 +190,7 @@ issues.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-July-21.
+      Last updated on 2020-August-07.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
     </div>
   </body>

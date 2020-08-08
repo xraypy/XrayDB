@@ -842,7 +842,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
           to specify the sensitivity or gain of the current amplifier.
           Generally, the units in `A/V`, but you can add a common SI prefix of
 
-          'p', 'pico', 'n', 'nano', '\u03bc', 'u', 'micro', 'm', 'milli'
+          'p', 'pico', 'n', 'nano', (unicode 'u03bc'), 'u', 'micro', 'm', 'milli'
 
           so that, for example
              ionchamber_fluxes(..., sensitivity=1.e-6)

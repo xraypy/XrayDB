@@ -238,8 +238,8 @@ using the following inputs:
     amplifier used to convert the photo-current to the recorded voltage.
 
 The default `sensitivity_units` is 'A/V' but can be set to any of the
-common SI prefixes such as 'p', 'pico', 'n', 'nano', :math:`\mu`
-(`'\\u03bc'`), 'u', 'micro', 'm', or 'milli', so that::
+common SI prefixes such as 'p', 'pico', 'n', 'nano', :math:`\mu`, 
+(unicode '03bc'), 'u', 'micro', 'm', or 'milli', so that::
 
 
     >>> fluxes = ionchamber_fluxes('N2', volts=1, energy=10000, length=100,

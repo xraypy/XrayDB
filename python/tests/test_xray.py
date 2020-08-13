@@ -280,6 +280,11 @@ def test_f1f2_chantler():
     assert_allclose(f1, chantler_data('Au', en, 'f1'), rtol=0.01)
     assert_allclose(f2, chantler_data('Au', en, 'f2'), rtol=0.01)
 
+def test_f1f2_chantler_mo():
+    en = np.linspace(1000, 500000, 501)
+    f1 = f1_chantler('Mo', en)
+    assert(len(f1) > 400)
+
 def test_chantler_energies():
 
     en = np.array([6876.64, 6945.41, 7014.86, 7085.01, 7155.86, 7227.42,

@@ -7,3 +7,4 @@
   5.0  // 2020-07-15 11:38:00 // Use elemental data (mass and density) from Wikipedia.
   6.0  // 2020-07-17 11:32:00 // Add ionization potential values from Knoll.
   7.0  // 2020-08-02 08:25:00 // Fix mu_total in Chantler table
+  8.0  // 2020-08-13 10:25:00 // Fix repeated energy for Mo in fine Chantler data

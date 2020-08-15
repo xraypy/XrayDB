@@ -958,7 +958,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     if hklsum % 4 == 0:
         eqr = 8
     elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
-        eqr = np.sqrt(17)
+        eqr =4*np.sqrt(2)  
     else:
         raise ValueError("hkl must sum to 4 or be all odd")
 
@@ -971,7 +971,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     f1 = f1_chantler(crystal, energy)
     f2 = f2_chantler(crystal, energy)
 
-    gs = 2   * dspace**2 * 1.e8 * R_ELECTRON_CM/(m*latt_a**3)
+    gs = 2   * (dspace/m)**2 * 1.e8 * R_ELECTRON_CM/(latt_a**3)
     g0 = 8   * gs * (f0(crystal, 0) + f1 - 1j*f2)
     g  = eqr * gs * (f0(crystal, q) + f1 - 1j*f2)
 

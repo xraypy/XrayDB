@@ -586,7 +586,7 @@ def test_darwin_width():
 
     # fwhm from derivatives:
     assert_allclose(dw_dide( 5000, 'Si', (1, 1, 1)), 0.685, rtol=0.01)
-    assert_allclose(dw_dide(10000, 'Si', (1, 1, 1)), 1.345, rtol=0.01)
+    assert_allclose(dw_dide(10000, 'Si', (1, 1, 1)), 1.340, rtol=0.01)
 
     assert_allclose(dw_dide(10000, 'Si', (2, 2, 0)), 0.595, rtol=0.01)
     assert_allclose(dw_dide(15000, 'Si', (2, 2, 0)), 0.881, rtol=0.01)

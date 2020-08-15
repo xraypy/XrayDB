@@ -971,11 +971,11 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     f1 = f1_chantler(crystal, energy)
     f2 = f2_chantler(crystal, energy)
 
-    gs = 2   * (dspace/m)**2 * 1.e8 * R_ELECTRON_CM/(latt_a**3)
-    g0 = 8   * gs * (f0(crystal, 0) + f1 - 1j*f2)
-    g  = eqr * gs * (f0(crystal, q) + f1 - 1j*f2)
+    gscale = 2 * (dspace)**2 * 1.e8 * R_ELECTRON_CM / (m*latt_a**3)
+    g0 = gscale * 8   * (f0(crystal, 0) + f1 - 1j*f2)[0]
+    g  = gscale * eqr * (f0(crystal, q) + f1 - 1j*f2)[0]
 
-    fwhm = abs(3 * g / (m*np.pi * np.sqrt(2)))[0]
+    fwhm = abs(3 * g / (m*np.pi * np.sqrt(2)))
 
     #  hueristic zeta range and step sizes for crystals:
     sz = {'Si': 0.25,  'Ge': 0.50, 'C':  0.15}[crystal]

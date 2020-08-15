@@ -387,7 +387,7 @@ widths and plotting the intensity profile or "rocking curve" is
 which will print out values of::
 
   Darwin Width for Si(111) at 10 keV: 28.59 microrad, 1.42 eV
-  Darwin Width for Si(333) at 10 keV: 1.06 microrad, 0.05 eV
+  Darwin Width for Si(333) at 10 keV: 3.18 microrad, 0.16 eV
 
 and generates a plot of
 

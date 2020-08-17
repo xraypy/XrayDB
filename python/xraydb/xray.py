@@ -909,7 +909,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
     return fluxes(photo=fphoto, incident=fin,transmitted=fout)
 
 
-def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
+def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1, polarization='s'):
     """darwin width for a crystal reflection and energy
 
     Args:
@@ -917,7 +917,8 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
       crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
       hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
       m (int):           order of reflection    [1]
-
+      polarization ('s' or 'p'):  mono orientation relative to X-ray polarization
+      
     Returns:
 
       A named tuple 'DarwinWidth' with the following fields
@@ -946,9 +947,9 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
         polarization are currently supported.
 
     Examples:
-        >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1)
+        >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
         >>> dw.theta_fwhm, dw.energy_fwhm
-        (2.0841049436681097e-05, 1.0333427816952565)
+        (2.8593683930207114e-05, 1.4177346002236872)
 
     """
     lattice_constants = {'Si': 5.431, 'Ge': 5.658, 'C': 3.567}
@@ -972,6 +973,9 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     f2 = f2_chantler(crystal, energy)
 
     gscale = 2 * (dspace)**2 * 1.e8 * R_ELECTRON_CM / (m*latt_a**3)
+    if polarization.startswith('p'):
+        gscale *= np.cos(2*theta)
+        
     g0 = gscale * 8   * (f0(crystal, 0) + f1 - 1j*f2)[0]
     g  = gscale * eqr * (f0(crystal, q) + f1 - 1j*f2)[0]
 
@@ -980,6 +984,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1):
     #  hueristic zeta range and step sizes for crystals:
     sz = {'Si': 0.25,  'Ge': 0.50, 'C':  0.15}[crystal]
     dz = 0.001 * sz
+    dz = dz/4
     zeta = 0.001 * np.concatenate((np.arange(-sz,   0, 2.5*dz),
                                    np.arange(0,    sz, 1.0*dz),
                                    np.arange(sz, 2*sz, 2.5*dz)))

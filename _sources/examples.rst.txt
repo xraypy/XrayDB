@@ -348,12 +348,14 @@ of any particular reflection is dominated by the spread in d-spacing and
 the mosaicity inherent in the crystal.  For perfect crystals, however, the
 angular width of a reflection is dominated by the fact that effectively all
 of the X-rays will scatter from the lattice well before any attenuation of
-the X-ray beam occurs. This *dynamical* diffraction gives a finite angular
-width to reflection usually called the Darwin width (named for
+the X-ray beam occurs. This *dynamical* diffraction gives a small but
+finite offset from the Bragg angle, and gives a broadened angular width to
+reflection.  This is usually called the Darwin width (named for
 Charles G. Darwin, grandson of the more famous Charles R. Darwin).  In
-addition, the refraction and absorption effects that give anomalous
-scattering (as calculated with :func:`xray_delta_beta`) give non-symmetric
-attenuation of this reflectivity.
+addition, the refraction and in particular the absorption effects that give
+anomalous scattering (as calculated with :func:`xray_delta_beta`) make the
+"rocking curve" of reflected intensity as a function of angle an asymmetric
+shape.
 
 All of these effects are included in the :func:`darwin_width` function,
 which follows very closely the description from chapter 6.4 in
@@ -362,15 +364,22 @@ which follows very closely the description from chapter 6.4 in
   * `energy`: the X-ray energy, in eV.
   * `crystal`: the atomic symbol for the crystal: 'Si', 'Ge', or 'C'. ['Si']
   * `hkl`: a tuple with (h, k, l) of the reflection used. [(1, 1, 1)]
+  * `a`: lattice constant [`None` - use nominal value for crystal]
+  * `polarization`: `s` or `p` to specify the monochromator polarization  relative to the X-ray source [`s`]
   * `m`: the order of the reflection. [1]
+  * `ignore_f1`: whether to ignore `f1`. [False]
+  * `ignore_f2`: whether to ignore `f2`. [False]
 
 As with :func:`ionchamber_fluxes`, the output here is complicated enough
 that it is put into a named `DarwinWidth` tuple that will contain the
 following fields:
 
    * `theta` - the nominal Bragg angle, in rad
-   * `theta_fwhm` - estimated angular Darwin width, in rad
-   * `energy_fwhm` - estimated energy Darwin width, in eV
+   * `theta_offset` - the offset from the nomimal Bragg angle, in rad.
+   * `theta_width` - estimated angular Darwin width, in rad
+   * `theta_fwhm` - estimated FWHM of the angular reflectivity curve, in rad
+   * `energy_width` - estimated energy Darwin width, in eV
+   * `energy_fwhm` - estimated FWHM energy reflectivity curve, in eV
    * `zeta` -  nd-array of :math:`\zeta = \Delta\lambda/\lambda`.
    * `dtheta`  - nd-array of angles around from Bragg angle, in rad
    * `denergy` -  nd-array of energies around from Bragg energy, in eV
@@ -386,8 +395,8 @@ widths and plotting the intensity profile or "rocking curve" is
 
 which will print out values of::
 
-  Darwin Width for Si(111) at 10 keV: 28.59 microrad, 1.42 eV
-  Darwin Width for Si(333) at 10 keV: 3.18 microrad, 0.16 eV
+  Darwin Width for Si(111) at 10 keV: 26.96 microrad,  1.34 eV
+  Darwin Width for Si(333) at 30 keV:  1.81 microrad,  0.27 eV
 
 and generates a plot of
 
@@ -399,9 +408,16 @@ and generates a plot of
     :align: center
 
     X-ray monochromator diffracted intensities around the Si(111)
-    reflection.
+    reflection. Here, :math:`i` represents the intensity of a single
+    reflection, and :math:`i^2` the intensity from 2 bounces, as for a
+    double-crystal monochromator.  The intensity and angular offset of the
+    third harmonic is also shown.
+    
 
-
-Note here that the width of the 3rd harmonic peak is specified not as the
-Si (3, 3, 3) peak, but as the (1, 1, 1) peak with m=3, as we want to ensure
-that the Bragg angle used is for the (1, 1, 1) reflection.
+Note that the values reported for `theta_fwhm` and `energy_fwhm` will be
+about 6% larger than the reported values for `theta_width` and
+`energy_width`.  The `width` values closely follow the region of the curve
+where the reflectivity ignoring absorption would be 1 - the flat top of the
+curve.  Since a double-crystal monochromator will suppress the tails of the
+reflectivity, this smaller value is the one typically reported as "the
+Darwin width", though some sources will report this smaller value as "FWHM".

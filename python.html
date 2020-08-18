@@ -960,7 +960,7 @@ atlen :  attenuation length in cm</p>
 
 <dl class="py function">
 <dt id="xraydb.darwin_width">
-<code class="sig-name descname">darwin_width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">crystal</span><span class="o">=</span><span class="default_value">'Si'</span></em>, <em class="sig-param"><span class="n">hkl</span><span class="o">=</span><span class="default_value">1, 1, 1</span></em>, <em class="sig-param"><span class="n">m</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.darwin_width" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">darwin_width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">crystal</span><span class="o">=</span><span class="default_value">'Si'</span></em>, <em class="sig-param"><span class="n">hkl</span><span class="o">=</span><span class="default_value">1, 1, 1</span></em>, <em class="sig-param"><span class="n">m</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">polarization</span><span class="o">=</span><span class="default_value">'s'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.darwin_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>darwin width for a crystal reflection and energy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -969,6 +969,7 @@ atlen :  attenuation length in cm</p>
 <li><p><strong>crystal</strong> (<em>string</em>) – name of crystal (one of ‘Si’, ‘Ge’, or ‘C’) [‘Si’]</p></li>
 <li><p><strong>hkl</strong> (<em>tuple</em>) – h, k, l for reflection  [(1, 1, 1)]</p></li>
 <li><p><strong>m</strong> (<em>int</em>) – order of reflection    [1]</p></li>
+<li><p><strong>polarization</strong> (<em>'s'</em><em> or </em><em>'p'</em>) – mono orientation relative to X-ray polarization</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -994,9 +995,9 @@ J Als-Nielsen, and D. McMorrow.</p></li>
 polarization are currently supported.</p></li>
 </ol>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span><span class="o">.</span><span class="n">theta_fwhm</span><span class="p">,</span> <span class="n">dw</span><span class="o">.</span><span class="n">energy_fwhm</span>
-<span class="go">(2.0841049436681097e-05, 1.0333427816952565)</span>
+<span class="go">(2.8593683930207114e-05, 1.4177346002236872)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1239,7 +1240,7 @@ Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of<
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-August-15.
+      Last updated on 2020-August-17.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
     </div>
   </body>

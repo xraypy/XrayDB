@@ -52,7 +52,7 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.4.2, corresponding to
+<p>The current version of the Python module is 4.4.3, corresponding to
 version 6 of <cite>xraydb.sqlite</cite>.</p>
 <div class="section" id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
@@ -960,7 +960,7 @@ atlen :  attenuation length in cm</p>
 
 <dl class="py function">
 <dt id="xraydb.darwin_width">
-<code class="sig-name descname">darwin_width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">crystal</span><span class="o">=</span><span class="default_value">'Si'</span></em>, <em class="sig-param"><span class="n">hkl</span><span class="o">=</span><span class="default_value">1, 1, 1</span></em>, <em class="sig-param"><span class="n">m</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">polarization</span><span class="o">=</span><span class="default_value">'s'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.darwin_width" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">darwin_width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">crystal</span><span class="o">=</span><span class="default_value">'Si'</span></em>, <em class="sig-param"><span class="n">hkl</span><span class="o">=</span><span class="default_value">1, 1, 1</span></em>, <em class="sig-param"><span class="n">a</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">polarization</span><span class="o">=</span><span class="default_value">'s'</span></em>, <em class="sig-param"><span class="n">ignore_f2</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">ignore_f1</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">m</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.darwin_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>darwin width for a crystal reflection and energy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -968,20 +968,26 @@ atlen :  attenuation length in cm</p>
 <li><p><strong>energy</strong> (<em>float</em>) – X-ray energy in eV</p></li>
 <li><p><strong>crystal</strong> (<em>string</em>) – name of crystal (one of ‘Si’, ‘Ge’, or ‘C’) [‘Si’]</p></li>
 <li><p><strong>hkl</strong> (<em>tuple</em>) – h, k, l for reflection  [(1, 1, 1)]</p></li>
+<li><p><strong>a</strong> (<em>float</em><em> or </em><em>None</em>) – lattice constant [None - use built-in value]</p></li>
+<li><p><strong>polarization</strong> (<em>'s'</em><em>,</em><em>'p'</em>) – mono orientation relative to X-ray polarization [‘s’]</p></li>
+<li><p><strong>ignore_f1</strong> (<em>bool</em>) – ignore contribution from f1 - dispersion (False)</p></li>
+<li><p><strong>ignore_f2</strong> (<em>bool</em>) – ignore contribution from f2 - absorption (False)</p></li>
 <li><p><strong>m</strong> (<em>int</em>) – order of reflection    [1]</p></li>
-<li><p><strong>polarization</strong> (<em>'s'</em><em> or </em><em>'p'</em>) – mono orientation relative to X-ray polarization</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>A named tuple ‘DarwinWidth’ with the following fields</p>
 <blockquote>
-<div><p><cite>theta</cite>       float, nominal Bragg angle, in rad,</p>
-<p><cite>theta_fwhm</cite>  float, estimated angular Darwin width, in rad,</p>
-<p><cite>energy_fwhm</cite>  float, estimated energy Darwin width, in eV,</p>
-<p><cite>zeta</cite>        nd-array of Zeta parameter (delta_Lambda / Lambda),</p>
-<p><cite>dtheta</cite>     nd-array of angles away from Bragg angle, theta in rad,</p>
-<p><cite>denergy</cite>     nd-array of energies away from Bragg energy, in eV,</p>
-<p><cite>intensity</cite>   nd-array of reflected intensity</p>
+<div><p><cite>theta</cite>        float, nominal Bragg angle, in rad,</p>
+<p><cite>theta_offset</cite> float, angular offset from Bragg angle, in rad,</p>
+<p><cite>theta_width</cite>  float, estimated angular Darwin width, in rad,</p>
+<p><cite>theta_fwhm</cite>   float, estimated FWHM of angular intensity, in rad,</p>
+<p><cite>energy_width</cite> float, estimated angular Darwin width, in rad,</p>
+<p><cite>energy_fwhm</cite>  float, estimated FWHM of energy intensity, in eV,</p>
+<p><cite>zeta</cite>         nd-array of Zeta parameter (delta_Lambda / Lambda),</p>
+<p><cite>dtheta</cite>       nd-array of angles away from Bragg angle, theta in rad,</p>
+<p><cite>denergy</cite>      nd-array of energies away from Bragg energy, in eV,</p>
+<p><cite>intensity</cite>    nd-array of reflected intensity</p>
 </div></blockquote>
 </p>
 </dd>
@@ -993,10 +999,21 @@ Elements of Modern X-ray Physics, 2nd Edition
 J Als-Nielsen, and D. McMorrow.</p></li>
 <li><p>Only diamond structures (Si, Ge, diamond) and sigma
 polarization are currently supported.</p></li>
+<li><p>Default values of lattice constant <cite>a</cite> are in Angstroms:
+5.4309 for Si, 5.6578, for ‘Ge’, and 3.567 for ‘C’.</p></li>
+</ol>
+<ol class="arabic simple" start="3">
+<li><p>The <cite>theta_width</cite> and <cite>energy_width</cite> values will closely match the
+width of the intensity profile that would = 1 when ignoring the
+effect of absorption.  These are the values commonly reported as
+‘Darwin Width’.  The value reported for <cite>theta_fwhm’ and
+`energy_fwhm</cite> are larger than this by sqrt(9/8) ~= 1.06.</p></li>
+<li><p>Polarization of ‘s’ would be for a vertically deflecting crystal and
+a horizontally-polarized, as for most synchrotron beamlines.</p></li>
 </ol>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span><span class="o">.</span><span class="n">theta_fwhm</span><span class="p">,</span> <span class="n">dw</span><span class="o">.</span><span class="n">energy_fwhm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span><span class="o">.</span><span class="n">theta_width</span><span class="p">,</span> <span class="n">dw</span><span class="o">.</span><span class="n">energy_width</span>
 <span class="go">(2.8593683930207114e-05, 1.4177346002236872)</span>
 </pre></div>
 </div>

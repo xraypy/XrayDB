@@ -5,6 +5,7 @@ import numpy as np
 from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
                     QCHARGE, SI_PREFIXES, index_nearest)
 
+R0 = 1.e8 * R_ELECTRON_CM 
 
 from .xraydb import XrayDB,  XrayLine
 from .chemparser import chemparse
@@ -13,9 +14,11 @@ fluxes = namedtuple('IonChamberFluxes', ('photo',
                                          'incident',
                                          'transmitted'))
 
-DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_fwhm',
-                                         'energy_fwhm', 'zeta', 'dtheta',
-                                         'denergy', 'intensity'))
+DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
+                                         'theta_width', 'theta_fwhm',
+                                         'energy_width', 'energy_fwhm',
+                                         'zeta', 'dtheta', 'denergy',
+                                         'intensity'))
 
 
 _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
@@ -909,33 +912,44 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
     return fluxes(photo=fphoto, incident=fin,transmitted=fout)
 
 
-def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1, polarization='s'):
+def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
+                 polarization='s', ignore_f2=False, ignore_f1=False, m=1):
+    
     """darwin width for a crystal reflection and energy
 
     Args:
       energy (float):    X-ray energy in eV
       crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
       hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
+      a (float or None): lattice constant [None - use built-in value]
+      polarization ('s','p'): mono orientation relative to X-ray polarization ['s']
+      ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
+      ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
       m (int):           order of reflection    [1]
-      polarization ('s' or 'p'):  mono orientation relative to X-ray polarization
       
     Returns:
 
       A named tuple 'DarwinWidth' with the following fields
 
-        `theta`       float, nominal Bragg angle, in rad,
+        `theta`        float, nominal Bragg angle, in rad,
 
-        `theta_fwhm`  float, estimated angular Darwin width, in rad,
+        `theta_offset` float, angular offset from Bragg angle, in rad,
 
-        `energy_fwhm`  float, estimated energy Darwin width, in eV,
+        `theta_width`  float, estimated angular Darwin width, in rad,
 
-        `zeta`        nd-array of Zeta parameter (delta_Lambda / Lambda),
+        `theta_fwhm`   float, estimated FWHM of angular intensity, in rad,
 
-        `dtheta`     nd-array of angles away from Bragg angle, theta in rad,
+        `energy_width` float, estimated angular Darwin width, in rad,
 
-        `denergy`     nd-array of energies away from Bragg energy, in eV,
+        `energy_fwhm`  float, estimated FWHM of energy intensity, in eV,
 
-        `intensity`   nd-array of reflected intensity
+        `zeta`         nd-array of Zeta parameter (delta_Lambda / Lambda),
+
+        `dtheta`       nd-array of angles away from Bragg angle, theta in rad,
+
+        `denergy`      nd-array of energies away from Bragg energy, in eV,
+
+        `intensity`    nd-array of reflected intensity
 
     Notes:
 
@@ -946,13 +960,25 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1, polarization='s'):
      2. Only diamond structures (Si, Ge, diamond) and sigma
         polarization are currently supported.
 
+     3. Default values of lattice constant `a` are in Angstroms:
+        5.4309 for Si, 5.6578, for 'Ge', and 3.567 for 'C'.
+        
+     3. The `theta_width` and `energy_width` values will closely match the
+        width of the intensity profile that would = 1 when ignoring the
+        effect of absorption.  These are the values commonly reported as
+        'Darwin Width'.  The value reported for `theta_fwhm' and
+        `energy_fwhm` are larger than this by sqrt(9/8) ~= 1.06.
+        
+     4. Polarization of 's' would be for a vertically deflecting crystal and
+        a horizontally-polarized, as for most synchrotron beamlines.
+        
     Examples:
         >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
-        >>> dw.theta_fwhm, dw.energy_fwhm
+        >>> dw.theta_width, dw.energy_width
         (2.8593683930207114e-05, 1.4177346002236872)
 
     """
-    lattice_constants = {'Si': 5.431, 'Ge': 5.658, 'C': 3.567}
+    lattice_constants = {'Si': 5.4309, 'Ge': 5.6578, 'C': 3.567}
 
     h_, k_, l_ = hkl
     hklsum = (h_ + k_ + l_)
@@ -963,24 +989,35 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1, polarization='s'):
     else:
         raise ValueError("hkl must sum to 4 or be all odd")
 
-    latt_a = lattice_constants[crystal.title()]
-    dspace = latt_a / np.sqrt(h_*h_ + k_*k_ + l_*l_)
+    if a is None:
+        a = lattice_constants[crystal.title()]
+    dspace = a / np.sqrt(h_*h_ + k_*k_ + l_*l_)
     lambd  = PLANCK_HC / energy
     theta  = np.arcsin(lambd/(2*dspace))
 
     q  = 0.5 / dspace
-    f1 = f1_chantler(crystal, energy)
-    f2 = f2_chantler(crystal, energy)
+    f1 = f2 = 0
+    if not ignore_f1: 
+        f1 = f1_chantler(crystal, energy)
+    if not ignore_f2:         
+        f2 = f2_chantler(crystal, energy)
 
-    gscale = 2 * (dspace)**2 * 1.e8 * R_ELECTRON_CM / (m*latt_a**3)
+    gscale = 2 * (dspace)**2 * R0 / (m*a**3)
     if polarization.startswith('p'):
         gscale *= np.cos(2*theta)
         
-    g0 = gscale * 8   * (f0(crystal, 0) + f1 - 1j*f2)[0]
-    g  = gscale * eqr * (f0(crystal, q) + f1 - 1j*f2)[0]
+    g0 = gscale * 8   * (f0(crystal, 0)[0] + f1 - 1j*f2)
+    g  = gscale * eqr * (f0(crystal, q)[0] + f1 - 1j*f2)
 
-    fwhm = abs(3 * g / (m*np.pi * np.sqrt(2)))
+    total = abs(2*g/(m*np.pi))
+    fwhm  = total * 3/(2*np.sqrt(2))  # where do A-N&M get this factor?
+    theta_offset = np.tan(theta)*g0.real/np.pi
 
+    # as a check, the following formula from L Berman (and X0h doc)
+    # will give identical results as theta_width. [sin(2x)= 2sin(x)*cos(x)]
+
+    # dw_lb = 2*R0*lambd**2 * eqr*abs(f0(crystal, q)[0] + f1 - 1j*f2)/(m*np.pi*a**3* np.sin(2*theta))
+    
     #  hueristic zeta range and step sizes for crystals:
     sz = {'Si': 0.25,  'Ge': 0.50, 'C':  0.15}[crystal]
     dz = 0.001 * sz
@@ -997,8 +1034,12 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), m=1, polarization='s'):
     r[_n] = (xc + np.sqrt(xc**2 -1))[_n]
 
     return DarwinWidth(theta=theta,
+                       theta_offset=theta_offset, 
+                       theta_width=total*np.tan(theta),
                        theta_fwhm=fwhm*np.tan(theta),
-                       energy_fwhm=fwhm*energy, zeta=zeta,
+                       energy_width=total*energy,
+                       energy_fwhm=fwhm*energy, 
+                       zeta=zeta,                       
                        dtheta=zeta*np.tan(theta),
                        denergy=-zeta*energy,
                        intensity=abs(r*r.conjugate()))

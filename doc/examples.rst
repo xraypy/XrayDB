@@ -150,23 +150,28 @@ example, one can simply do::
 
 
 
+X-ray flux calculations for ionization chambers and photodiodes
+---------------------------------------------------------------------
 
-Ionization chamber calculation of X-ray flux
-----------------------------------------------------
+Gas-filled ionization chambers are widely used X-ray detectors. They are
+simple to use, inexpensive, and can be highly linear in estimating the
+photon flux over many orders of magnitude.  X-rays entering a chamber
+filled with an inert gas (typically He, N2, or one of the noble gases, or a
+mixture of two of these) will be partially absorbed by the gas, with the
+strong energy dependence shown above.  By adjustng the composition of the
+gas, nearly any fraction of the incident X-ray beam can be absorbed at a
+particular X-ray energy, making these ideal detectors to sample the
+intensity of an X-ray beam incident on a sample, while attenuating only a
+fraction of the beam.
 
-A gas-filled ionization chamber is a widely used form an X-ray detector,
-used because it is simple, cheap, and can absorb a fraction of an incident
-X-ray beam and be linear in estimating the photon flux over many orders of
-magnitude.  X-rays entering a chamber filled with an inert gas (often a He,
-N2, or one of the noble gases, or a mixture of two of these) will be
-partially absorbed by the gas, with the strong energy dependence shown
-above.  The absorption will *ionize* the gas, generating free electrons and
-energetic ions.  In fact, the first ionization will generate an
-electron-ion pair with the energy of the X-ray minus the binding energy of
-the core electron, but the high-energy electron and ion will further ionize
-other gas molecules.  With an electric potential (typically on the order of
-1 kV /cm) across the chamber, a current can be measured that is
-proportional to the X-ray energy and fluence of the X-rays.
+Some of the X-rays in the gas will be absorbed by the photo-electric effect
+which will *ionize* the gas, generating free electrons and energetic ions.
+In fact, the first ionization will generate an electron-ion pair with the
+energy of the X-ray minus the binding energy of the core electron, but the
+high-energy electron and ion will further ionize other gas molecules.  With
+an electric potential (typically on the order of 1 kV /cm) across the
+chamber, a current can be measured that is proportional to the X-ray energy
+and fluence of the X-rays.
 
 The process of converting the photo-current into X-ray fluence involves
 several steps. First, the energy from a single X-ray generates a number of
@@ -182,55 +187,71 @@ are all between 20 and 40 eV, given in the
    :cite:`Knoll2010`, while others appear to come from International Commission
    on Radiation Units & Measurement, Report 31, 1979.  The names given are
    those supported by the functions :func:`ionization_potential` and
-   :func:`ionchamber_fluxes`.
+   :func:`ionchamber_fluxes`. 
 
-           +--------------------+----------------+
-           | gas name(s)        | potential (eV) |
-           +====================+================+
-           | hydrogen, H        |   36.5         |
-           +--------------------+----------------+
-           | helium, He         |   41.3         |
-           +--------------------+----------------+
-           | nitrogen, N, N2    |   34.8         |
-           +--------------------+----------------+
-           | oxygen, O, O2      |   30.8         |
-           +--------------------+----------------+
-           | neon, Ne           |   35.4         |
-           +--------------------+----------------+
-           | argon, Ar          |   26.4         |
-           +--------------------+----------------+
-           | krypton, Kr        |   24.4         |
-           +--------------------+----------------+
-           | xenon, Xe          |   22.1         |
-           +--------------------+----------------+
-           | air                |   33.8         |
-           +--------------------+----------------+
-           | methane, CH4       |   27.3         |
-           +--------------------+----------------+
-           | carbondioxide, CO2 |   33.0         |
-           +--------------------+----------------+
+           +----------------------+----------------+
+           | gas/materia name(s)  | potential (eV) |
+           +======================+================+
+           | hydrogen, H          |   36.5         |
+           +----------------------+----------------+
+           | helium, He           |   41.3         |
+           +----------------------+----------------+
+           | nitrogen, N, N2      |   34.8         |
+           +----------------------+----------------+
+           | oxygen, O, O2        |   30.8         |
+           +----------------------+----------------+
+           | neon, Ne             |   35.4         |
+           +----------------------+----------------+
+           | argon, Ar            |   26.4         |
+           +----------------------+----------------+
+           | krypton, Kr          |   24.4         |
+           +----------------------+----------------+
+           | xenon, Xe            |   22.1         |
+           +----------------------+----------------+
+           | air                  |   33.8         |
+           +----------------------+----------------+
+           | methane, CH4         |   27.3         |
+           +----------------------+----------------+
+           | carbondioxide, CO2   |   33.0         |
+           +----------------------+----------------+
+           | silicon, Si          |    3.68        |
+           +----------------------+----------------+
+           | germanium, Ge        |    2.97        |
+           +----------------------+----------------+
 
-
-From this, we can see that the absorption of 1 X-ray of energy 10 keV will
-generate about 300 electron-ion pairs.  That is not much current, but if
-:math:`10^8 \,\rm Hz` are absorbed per second, then the current generated
-will be around 5 nA.  Of course, the thickness of the gas or more
+From this table, we can see that the absorption of 1 X-ray of energy 10 keV
+will generate about 300 electron-ion pairs.  That is not much current, but
+if :math:`10^8 \,\rm Hz` X-rays are absorbed per second, then the current
+generated will be around 5 nA.  Of course, the thickness of the gas or more
 importantly the length of gas under ionizing potential will have an impact
 on how much current is generated.  The photo-current will then be amplified
 and converted to a voltage using a current amplifier, and that voltage will
 then recorded by a number of possible means.  Note that while the ion
 chamber itself will be linear over many orders of magnitude of flux
-(provided the potential between the plates is high enough), a current
-amplifier at a particular setting of sensitivity will be linear only over a
-couple orders of magnitude (typically between output voltage of 0.05 to 5
-V).  Because of this, the sensitivity of the ion chamber current amplifier
-needs careful attention.
+(provided the potential between the plates is high enough - typically in
+the 1 kV/cm range), a current amplifier at a particular setting of
+sensitivity will be linear only over a couple orders of magnitude
+(typically between output voltage of 0.05 to 5 V).  Because of this, the
+sensitivity of the current amplifier used with an ion chamber needs careful
+attention.
+
+A photo-diode works in much the same way as an ionization chamber.  X-rays
+incident on the diode (typically Si or Ge) will be absorbed and generate a
+photo-current that can be collected.  Typically PIN diodes are used, and
+with a small reverse bias voltage.  Because the electrons do not need to
+escape the material but generate a current transported in the
+semiconductor, the effective ionization potential is much lower - a few
+times the semiconductor band gap instead of a few time the lowest
+core-level ionization potential.  The current generated per X-ray will be
+larger than for an ion chamber, but still amplified with a current
+amplifier in the same way as is used for an ion chamber.  Generally, diodes
+are thick enough that they absorb all incident X-rays.
 
 The function :func:`ionchamber_fluxes` will help generate X-ray fluxes
 associated with an ion chamber and help handle all of these subtle issues,
 using the following inputs:
 
-  * `gas`: the gas, or mixture of gases, used.
+  * `gas`: the gas, or mixture of gases used or 'Si' or 'Ge' for diodes.
   * `length`: the length of the ion chamber, in mm.
   * `energy`: the X-ray energy, in eV.
   * `volts`: the output voltage of the current amplifier
@@ -255,14 +276,17 @@ The output from  :func:`ionchamber_fluxes` is a named tuple with 3 fiels:
   * `incident` - the flux incident on the ion chamber, in Hz.
   * `transmitted` - the flux beam leaving the ion chamber, in Hz.
 
-Note that the ion chamber current is generated only by the photo-electric
-effect, which dominates for heavy elements and relatively low X-ray
-energies, but does not necessarily dominate at high X-ray energies for
-gases such as helium, nitrogen which are often used in ion chambers.  The
-coherent and incoherent scattering processes are included in the
-calculations done in :func:`ionchamber_fluxes` so that estimated incident
-flux from the measured current can be somewhat larger than if only the
-photo-electric effect was considered.
+Note that the ion chamber (on photo-diode) current is generated only by the
+photo-electric effect, which dominates for heavy elements and relatively
+low X-ray energies, but does not necessarily dominate at high X-ray
+energies for light gases such as helium or nitrogen which are often used in
+ion chambers.  To account for this, the photo-electric cross-section is
+used to estimate the incident flux from the photo-current, but the total
+attenuation cross-section, including the coherent and incoherent
+cross-sections, is used to calculate the transmitted flu from the incident
+flux.  As a result, the transmitted flux will be less than the incident
+flux minus the photo-electric flux.  This difference will be substantial
+for helium above 5 keV and for nitrogren above 25 keV.
 
 As an example calculation of ion chamber currents::
 

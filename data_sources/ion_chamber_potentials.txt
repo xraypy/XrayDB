@@ -11,6 +11,7 @@ methane    27.3
 Ar     26.4
 He     41.3
 H      36.5
+H2     36.5
 N      34.8
 N2     34.8
 O      30.8
@@ -27,3 +28,9 @@ CO2 33.0
 Ne   35.4
 Kr    24.4
 Xe    22.1
+
+# and effective ionization potentials for Si and Ge diodes:
+Si  3.68
+silicon  3.68
+Ge 2.97
+germanium 2.97

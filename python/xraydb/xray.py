@@ -596,11 +596,12 @@ def core_width(element, edge=None):
     return xdb.corehole_width(element, edge=edge)
 
 def ionization_potential(gas):
-    """return effective ionization potential for a gas, as appropriate for
-    ionization chambers in the linear regime (not 'proportional counter' regime)
+    """return effective ionization potential for a gas or diode semiconductor, as
+    appropriate for ionization chambers in the linear regime (not in the
+    'proportional counter' regime) or for PIN photodiodes (not in 'avalanche' mode).
 
     Args:
-        gas (string):  name of gas
+        gas (string):  name of gas or 'Si' or 'Ge'
 
     Returns:
         ionization potential in eV
@@ -623,6 +624,8 @@ def ionization_potential(gas):
             air                   33.8
             methane, CH4          27.3
             carbondioxide, CO2    33.0
+            silicon, Si            3.68
+            germanium, Ge          2.97
            ==================== ================
 
        If the gas is not recognized the default value of 32.0 eV will be returned.
@@ -806,8 +809,9 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
                       energy=10000.0, sensitivity=1.e-6,
                       sensitivity_units='A/V'):
 
-    """return ion chamber fluxes for a gas or mixture of gases, ion chamber
-    length, X-ray energy, recorded voltage and current amplifier sensitivity.
+    """return ion chamber and PIN diode fluxes for a gas, mixture of gases, or
+    semiconductor material, ion chamber length (or diode thickness), X-ray energy,
+    recorded voltage and current amplifier sensitivity.
 
     Args:
         gas (string or dict):  name or formula of fill gas (see note 1) ['nitrogen']
@@ -828,18 +832,20 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
             `transmitted` flux of beam output of ion chamber in Hz
 
     Notes:
-       1. The gas argument can either be a string for the name of chemical
-          formula for the gas, or dictionary with keys that are gas names or
-          formulas and values that are the relative fraction for mixes gases.
+       1. The gas value can either be a string for the name of chemical
+          formula for the gas or diode material, or dictionary with keys
+          that are gas names or formulas and values that are the relative
+          fraction for mixes gases.  For diode materials, mixtures are not
+          supported.
 
           The gas formula is used in two ways:
              a) to get the photo- and total- absorption coefficient, and
-             b) to get the effective ionization potential for the gas.
+             b) to get the effective ionization potential for the material.
 
           The effective ionization potentials are known for a handful of
-          gases (see `ionization_potential` function), all ranging between
-          20 and 45 eV. For unknown gases the value of 32.0 eV will be
-          used.
+          gases and diodes (see `ionization_potential` function), and range
+          between 20 and 45 eV for gases, and around 3 eV for semiconductors.
+          For unknown gases the value of 32.0 eV will be used.
 
        2. The `sensitivity` and `sensitivity_units` arguments have some overlap
           to specify the sensitivity or gain of the current amplifier.

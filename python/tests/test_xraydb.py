@@ -10,7 +10,7 @@ from xraydb import XrayDB
 def test_xraydb_version():
     xdb = XrayDB()
     version = xdb.get_version()
-    assert 'XrayDB Version: 8.0, Python' in version
+    assert 'XrayDB Version: 8.1, Python' in version
 
     hist = xdb.get_version(with_history=True)
     assert len(hist) > 350
@@ -59,6 +59,7 @@ def test_ionization_potentials():
     assert xdb.ionization_potential('air') == 33.8
     assert xdb.ionization_potential('helium') == 41.3
     assert xdb.ionization_potential('He') == 41.3
+    assert xdb.ionization_potential('Si') == 3.68
 
     with pytest.raises(ValueError):
         xdb.ionization_potential('p10')

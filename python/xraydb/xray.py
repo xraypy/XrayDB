@@ -988,7 +988,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     h_, k_, l_ = hkl
     hklsum = (h_ + k_ + l_)
-    if hklsum % 4 == 0:
+    if hklsum % 4 == 0 and (h_ % 2 == 0 and k_ % 2 == 0 and l_ % 2 == 0):
         eqr = 8
     elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
         eqr =4*np.sqrt(2)  
@@ -1017,20 +1017,20 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     total = abs(2*g/(m*np.pi))
     fwhm  = total * 3/(2*np.sqrt(2))  # where do A-N&M get this factor?
-    theta_offset = np.tan(theta)*g0.real/np.pi
+
+    zeta_offset = g0.real/np.pi
+    theta_offset = np.tan(theta)*zeta_offset
 
     # as a check, the following formula from L Berman (and X0h doc)
     # will give identical results as theta_width. [sin(2x)= 2sin(x)*cos(x)]
-
     # dw_lb = 2*R0*lambd**2 * eqr*abs(f0(crystal, q)[0] + f1 - 1j*f2)/(m*np.pi*a**3* np.sin(2*theta))
     
     #  hueristic zeta range and step sizes for crystals:
-    sz = {'Si': 0.25,  'Ge': 0.50, 'C':  0.15}[crystal]
-    dz = 0.001 * sz
-    dz = dz/4
-    zeta = 0.001 * np.concatenate((np.arange(-sz,   0, 2.5*dz),
-                                   np.arange(0,    sz, 1.0*dz),
-                                   np.arange(sz, 2*sz, 2.5*dz)))
+    sz =  zeta_offset
+
+    zeta = np.concatenate((np.arange(-1.5*sz,    0, 0.05*total),
+                           np.arange(0,       2*sz, 0.01*total),
+                           np.arange(2*sz,  3.5*sz, 0.05*total)))
     xc = (m*np.pi*zeta - g0)/g
     _p = np.where(xc.real > 1)[0]
     _n = np.where(xc.real < -1)[0]

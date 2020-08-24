@@ -221,21 +221,26 @@ example, one can simply do:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="ionization-chamber-calculation-of-x-ray-flux">
-<h2>Ionization chamber calculation of X-ray flux<a class="headerlink" href="#ionization-chamber-calculation-of-x-ray-flux" title="Permalink to this headline">¶</a></h2>
-<p>A gas-filled ionization chamber is a widely used form an X-ray detector,
-used because it is simple, cheap, and can absorb a fraction of an incident
-X-ray beam and be linear in estimating the photon flux over many orders of
-magnitude.  X-rays entering a chamber filled with an inert gas (often a He,
-N2, or one of the noble gases, or a mixture of two of these) will be
-partially absorbed by the gas, with the strong energy dependence shown
-above.  The absorption will <em>ionize</em> the gas, generating free electrons and
-energetic ions.  In fact, the first ionization will generate an
-electron-ion pair with the energy of the X-ray minus the binding energy of
-the core electron, but the high-energy electron and ion will further ionize
-other gas molecules.  With an electric potential (typically on the order of
-1 kV /cm) across the chamber, a current can be measured that is
-proportional to the X-ray energy and fluence of the X-rays.</p>
+<div class="section" id="x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">
+<h2>X-ray flux calculations for ionization chambers and photodiodes<a class="headerlink" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes" title="Permalink to this headline">¶</a></h2>
+<p>Gas-filled ionization chambers are widely used X-ray detectors. They are
+simple to use, inexpensive, and can be highly linear in estimating the
+photon flux over many orders of magnitude.  X-rays entering a chamber
+filled with an inert gas (typically He, N2, or one of the noble gases, or a
+mixture of two of these) will be partially absorbed by the gas, with the
+strong energy dependence shown above.  By adjustng the composition of the
+gas, nearly any fraction of the incident X-ray beam can be absorbed at a
+particular X-ray energy, making these ideal detectors to sample the
+intensity of an X-ray beam incident on a sample, while attenuating only a
+fraction of the beam.</p>
+<p>Some of the X-rays in the gas will be absorbed by the photo-electric effect
+which will <em>ionize</em> the gas, generating free electrons and energetic ions.
+In fact, the first ionization will generate an electron-ion pair with the
+energy of the X-ray minus the binding energy of the core electron, but the
+high-energy electron and ion will further ionize other gas molecules.  With
+an electric potential (typically on the order of 1 kV /cm) across the
+chamber, a current can be measured that is proportional to the X-ray energy
+and fluence of the X-rays.</p>
 <p>The process of converting the photo-current into X-ray fluence involves
 several steps. First, the energy from a single X-ray generates a number of
 electron-ion pairs given by the <em>effective ionization potential</em> of the
@@ -251,11 +256,11 @@ those supported by the functions <a class="reference internal" href="python.html
 <blockquote>
 <div><table class="docutils align-default">
 <colgroup>
-<col style="width: 56%" />
-<col style="width: 44%" />
+<col style="width: 58%" />
+<col style="width: 42%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>gas name(s)</p></th>
+<tr class="row-odd"><th class="head"><p>gas/materia name(s)</p></th>
 <th class="head"><p>potential (eV)</p></th>
 </tr>
 </thead>
@@ -293,30 +298,48 @@ those supported by the functions <a class="reference internal" href="python.html
 <tr class="row-even"><td><p>carbondioxide, CO2</p></td>
 <td><p>33.0</p></td>
 </tr>
+<tr class="row-odd"><td><p>silicon, Si</p></td>
+<td><p>3.68</p></td>
+</tr>
+<tr class="row-even"><td><p>germanium, Ge</p></td>
+<td><p>2.97</p></td>
+</tr>
 </tbody>
 </table>
 </div></blockquote>
 </div></blockquote>
-<p>From this, we can see that the absorption of 1 X-ray of energy 10 keV will
-generate about 300 electron-ion pairs.  That is not much current, but if
-<span class="math notranslate nohighlight">\(10^8 \,\rm Hz\)</span> are absorbed per second, then the current generated
-will be around 5 nA.  Of course, the thickness of the gas or more
+<p>From this table, we can see that the absorption of 1 X-ray of energy 10 keV
+will generate about 300 electron-ion pairs.  That is not much current, but
+if <span class="math notranslate nohighlight">\(10^8 \,\rm Hz\)</span> X-rays are absorbed per second, then the current
+generated will be around 5 nA.  Of course, the thickness of the gas or more
 importantly the length of gas under ionizing potential will have an impact
 on how much current is generated.  The photo-current will then be amplified
 and converted to a voltage using a current amplifier, and that voltage will
 then recorded by a number of possible means.  Note that while the ion
 chamber itself will be linear over many orders of magnitude of flux
-(provided the potential between the plates is high enough), a current
-amplifier at a particular setting of sensitivity will be linear only over a
-couple orders of magnitude (typically between output voltage of 0.05 to 5
-V).  Because of this, the sensitivity of the ion chamber current amplifier
-needs careful attention.</p>
+(provided the potential between the plates is high enough - typically in
+the 1 kV/cm range), a current amplifier at a particular setting of
+sensitivity will be linear only over a couple orders of magnitude
+(typically between output voltage of 0.05 to 5 V).  Because of this, the
+sensitivity of the current amplifier used with an ion chamber needs careful
+attention.</p>
+<p>A photo-diode works in much the same way as an ionization chamber.  X-rays
+incident on the diode (typically Si or Ge) will be absorbed and generate a
+photo-current that can be collected.  Typically PIN diodes are used, and
+with a small reverse bias voltage.  Because the electrons do not need to
+escape the material but generate a current transported in the
+semiconductor, the effective ionization potential is much lower - a few
+times the semiconductor band gap instead of a few time the lowest
+core-level ionization potential.  The current generated per X-ray will be
+larger than for an ion chamber, but still amplified with a current
+amplifier in the same way as is used for an ion chamber.  Generally, diodes
+are thick enough that they absorb all incident X-rays.</p>
 <p>The function <a class="reference internal" href="python.html#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a> will help generate X-ray fluxes
 associated with an ion chamber and help handle all of these subtle issues,
 using the following inputs:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><cite>gas</cite>: the gas, or mixture of gases, used.</p></li>
+<li><p><cite>gas</cite>: the gas, or mixture of gases used or ‘Si’ or ‘Ge’ for diodes.</p></li>
 <li><p><cite>length</cite>: the length of the ion chamber, in mm.</p></li>
 <li><p><cite>energy</cite>: the X-ray energy, in eV.</p></li>
 <li><p><cite>volts</cite>: the output voltage of the current amplifier</p></li>
@@ -342,14 +365,17 @@ common SI prefixes such as ‘p’, ‘pico’, ‘n’, ‘nano’, <span class
 <li><p><cite>transmitted</cite> - the flux beam leaving the ion chamber, in Hz.</p></li>
 </ul>
 </div></blockquote>
-<p>Note that the ion chamber current is generated only by the photo-electric
-effect, which dominates for heavy elements and relatively low X-ray
-energies, but does not necessarily dominate at high X-ray energies for
-gases such as helium, nitrogen which are often used in ion chambers.  The
-coherent and incoherent scattering processes are included in the
-calculations done in <a class="reference internal" href="python.html#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a> so that estimated incident
-flux from the measured current can be somewhat larger than if only the
-photo-electric effect was considered.</p>
+<p>Note that the ion chamber (on photo-diode) current is generated only by the
+photo-electric effect, which dominates for heavy elements and relatively
+low X-ray energies, but does not necessarily dominate at high X-ray
+energies for light gases such as helium or nitrogen which are often used in
+ion chambers.  To account for this, the photo-electric cross-section is
+used to estimate the incident flux from the photo-current, but the total
+attenuation cross-section, including the coherent and incoherent
+cross-sections, is used to calculate the transmitted flu from the incident
+flux.  As a result, the transmitted flux will be less than the incident
+flux minus the photo-electric flux.  This difference will be substantial
+for helium above 5 keV and for nitrogren above 25 keV.</p>
 <p>As an example calculation of ion chamber currents:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">18000</span><span class="p">,</span>
 <span class="go">                               length=100.0, sensitivity=1.e-6)</span>
@@ -556,7 +582,7 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
 <li><a class="reference internal" href="#">Example Calculations of X-ray properties of materials</a><ul>
 <li><a class="reference internal" href="#x-ray-attenuation-by-elements">X-ray attenuation by elements</a></li>
 <li><a class="reference internal" href="#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
-<li><a class="reference internal" href="#ionization-chamber-calculation-of-x-ray-flux">Ionization chamber calculation of X-ray flux</a></li>
+<li><a class="reference internal" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">X-ray flux calculations for ionization chambers and photodiodes</a></li>
 <li><a class="reference internal" href="#x-ray-mirror-reflectivities">X-ray mirror reflectivities</a></li>
 <li><a class="reference internal" href="#darwin-widths-of-monochromator-crystals">Darwin widths of monochromator crystals</a></li>
 </ul>
@@ -610,7 +636,7 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-August-17.
+      Last updated on 2020-August-23.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
     </div>
   </body>

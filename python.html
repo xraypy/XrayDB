@@ -52,7 +52,7 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.4.3, corresponding to
+<p>The current version of the Python module is 4.4.4, corresponding to
 version 6 of <cite>xraydb.sqlite</cite>.</p>
 <div class="section" id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
@@ -1053,11 +1053,12 @@ usually mean ‘vertically deflecting’ and ‘p’ will usually mean
 <dl class="py function">
 <dt id="xraydb.ionization_potential">
 <code class="sig-name descname">ionization_potential</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gas</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.ionization_potential" title="Permalink to this definition">¶</a></dt>
-<dd><p>return effective ionization potential for a gas, as appropriate for
-ionization chambers in the linear regime (not ‘proportional counter’ regime)</p>
+<dd><p>return effective ionization potential for a gas or diode semiconductor, as
+appropriate for ionization chambers in the linear regime (not in the
+‘proportional counter’ regime) or for PIN photodiodes (not in ‘avalanche’ mode).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>gas</strong> (<em>string</em>) – name of gas</p>
+<dd class="field-odd"><p><strong>gas</strong> (<em>string</em>) – name of gas or ‘Si’ or ‘Ge’</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>ionization potential in eV</p>
@@ -1109,6 +1110,12 @@ from ICRU Report 31, 1979.  Supported gas names and effective potentials:</p>
 <tr class="row-even"><td><p>carbondioxide, CO2</p></td>
 <td><p>33.0</p></td>
 </tr>
+<tr class="row-odd"><td><p>silicon, Si</p></td>
+<td><p>3.68</p></td>
+</tr>
+<tr class="row-even"><td><p>germanium, Ge</p></td>
+<td><p>2.97</p></td>
+</tr>
 </tbody>
 </table>
 </div></blockquote>
@@ -1118,8 +1125,9 @@ from ICRU Report 31, 1979.  Supported gas names and effective potentials:</p>
 <dl class="py function">
 <dt id="xraydb.ionchamber_fluxes">
 <code class="sig-name descname">ionchamber_fluxes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gas</span><span class="o">=</span><span class="default_value">'nitrogen'</span></em>, <em class="sig-param"><span class="n">volts</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">100.0</span></em>, <em class="sig-param"><span class="n">energy</span><span class="o">=</span><span class="default_value">10000.0</span></em>, <em class="sig-param"><span class="n">sensitivity</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">sensitivity_units</span><span class="o">=</span><span class="default_value">'A/V'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.ionchamber_fluxes" title="Permalink to this definition">¶</a></dt>
-<dd><p>return ion chamber fluxes for a gas or mixture of gases, ion chamber
-length, X-ray energy, recorded voltage and current amplifier sensitivity.</p>
+<dd><p>return ion chamber and PIN diode fluxes for a gas, mixture of gases, or
+semiconductor material, ion chamber length (or diode thickness), X-ray energy,
+recorded voltage and current amplifier sensitivity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1144,20 +1152,22 @@ length, X-ray energy, recorded voltage and current amplifier sensitivity.</p>
 </dl>
 <p class="rubric">Notes</p>
 <ol class="arabic">
-<li><p>The gas argument can either be a string for the name of chemical
-formula for the gas, or dictionary with keys that are gas names or
-formulas and values that are the relative fraction for mixes gases.</p>
+<li><p>The gas value can either be a string for the name of chemical
+formula for the gas or diode material, or dictionary with keys
+that are gas names or formulas and values that are the relative
+fraction for mixes gases.  For diode materials, mixtures are not
+supported.</p>
 <dl class="simple">
 <dt>The gas formula is used in two ways:</dt><dd><ol class="loweralpha simple">
 <li><p>to get the photo- and total- absorption coefficient, and</p></li>
-<li><p>to get the effective ionization potential for the gas.</p></li>
+<li><p>to get the effective ionization potential for the material.</p></li>
 </ol>
 </dd>
 </dl>
 <p>The effective ionization potentials are known for a handful of
-gases (see <cite>ionization_potential</cite> function), all ranging between
-20 and 45 eV. For unknown gases the value of 32.0 eV will be
-used.</p>
+gases and diodes (see <cite>ionization_potential</cite> function), and range
+between 20 and 45 eV for gases, and around 3 eV for semiconductors.
+For unknown gases the value of 32.0 eV will be used.</p>
 </li>
 <li><p>The <cite>sensitivity</cite> and <cite>sensitivity_units</cite> arguments have some overlap
 to specify the sensitivity or gain of the current amplifier.
@@ -1257,7 +1267,7 @@ Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of<
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-August-17.
+      Last updated on 2020-August-23.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
     </div>
   </body>

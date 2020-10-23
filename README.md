@@ -18,11 +18,10 @@ The data and code here are placed in the Public Domain.
 
 ## Web interface 
 
-A web interface using XrayDB to display X-ray properties of the elements can be found at
-
+A web interface using XrayDB to display X-ray properties of the elements can be found at 
 https://millenia.cars.aps.anl.gov/xraydb/ and https://xraydb.xrayabsorption.org/
 
-The code for the web interface is at https://github.com/xraypy/xrayweb 
+The code for this web interface is at https://github.com/xraypy/xrayweb 
 
 ## About X-ray DB
 

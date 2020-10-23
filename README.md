@@ -16,7 +16,15 @@ computer programming languages and environments.
 
 The data and code here are placed in the Public Domain.
 
-# About X-ray DB
+## Web interface 
+
+A web interface using XrayDB to display X-ray properties of the elements can be found at
+
+https://millenia.cars.aps.anl.gov/xraydb/ and https://xraydb.xrayabsorption.org/
+
+The code for the web interface is at https://github.com/xraypy/xrayweb 
+
+## About X-ray DB
 
 The X-ray Scattering data from the Elam Tables was modified from code
 originally written by Darren S. Dale.

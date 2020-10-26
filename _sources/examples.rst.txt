@@ -389,10 +389,16 @@ which follows very closely the description from chapter 6.4 in
   * `crystal`: the atomic symbol for the crystal: 'Si', 'Ge', or 'C'. ['Si']
   * `hkl`: a tuple with (h, k, l) of the reflection used. [(1, 1, 1)]
   * `a`: lattice constant [`None` - use nominal value for crystal]
-  * `polarization`: `s` or `p` to specify the monochromator polarization  relative to the X-ray source [`s`]
+  * `polarization`: `s`, `p`, or `u` to specify the X-ray polarization relative to the crystal [`s`] 
   * `m`: the order of the reflection. [1]
   * `ignore_f1`: whether to ignore `f1`. [False]
   * `ignore_f2`: whether to ignore `f2`. [False]
+
+Polarization of `s` should be used for vertically deflecting monochromators
+at most synchrotron sources (which will normally be horizontally
+polarized), and `p` should be used for horizontally deflecting
+monochromators.  For crystals used to analyzed unpolarized X-ray emission,
+use `u`, which will give the average of `s` and `p` polarization.
 
 As with :func:`ionchamber_fluxes`, the output here is complicated enough
 that it is put into a named `DarwinWidth` tuple that will contain the

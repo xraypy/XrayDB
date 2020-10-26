@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Using XrayDB from Python &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -12,7 +13,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Overview of Atomic and X-ray Data" href="overview.html" />
@@ -33,7 +34,8 @@
         <li class="right" >
           <a href="examples.html" title="Example Calculations of X-ray properties of materials"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Using XrayDB from Python</a></li> 
       </ul>
     </div>  
 
@@ -52,7 +54,7 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.4.4, corresponding to
+<p>The current version of the Python module is 4.4.5, corresponding to
 version 6 of <cite>xraydb.sqlite</cite>.</p>
 <div class="section" id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this headline">¶</a></h2>
@@ -969,7 +971,7 @@ atlen :  attenuation length in cm</p>
 <li><p><strong>crystal</strong> (<em>string</em>) – name of crystal (one of ‘Si’, ‘Ge’, or ‘C’) [‘Si’]</p></li>
 <li><p><strong>hkl</strong> (<em>tuple</em>) – h, k, l for reflection  [(1, 1, 1)]</p></li>
 <li><p><strong>a</strong> (<em>float</em><em> or </em><em>None</em>) – lattice constant [None - use built-in value]</p></li>
-<li><p><strong>polarization</strong> (<em>'s'</em><em>,</em><em>'p'</em>) – mono orientation relative to X-ray polarization [‘s’]</p></li>
+<li><p><strong>polarization</strong> (<em>'s'</em><em>,</em><em>'p'</em><em>, </em><em>'u'</em>) – mono orientation relative to X-ray polarization [‘s’]</p></li>
 <li><p><strong>ignore_f1</strong> (<em>bool</em>) – ignore contribution from f1 - dispersion (False)</p></li>
 <li><p><strong>ignore_f2</strong> (<em>bool</em>) – ignore contribution from f2 - absorption (False)</p></li>
 <li><p><strong>m</strong> (<em>int</em>) – order of reflection    [1]</p></li>
@@ -993,23 +995,25 @@ atlen :  attenuation length in cm</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p>This follows the calculation from section 6.4 of
 Elements of Modern X-ray Physics, 2nd Edition
 J Als-Nielsen, and D. McMorrow.</p></li>
-<li><p>Only diamond structures (Si, Ge, diamond) and sigma
-polarization are currently supported.</p></li>
-<li><p>Default values of lattice constant <cite>a</cite> are in Angstroms:
-5.4309 for Si, 5.6578, for ‘Ge’, and 3.567 for ‘C’.</p></li>
-</ol>
-<ol class="arabic simple" start="3">
+<li><p>Only diamond structures (Si, Ge, diamond) are currently supported.
+Default values of lattice constant <cite>a</cite> are in Angstroms:</p>
+<blockquote>
+<div><p>5.4309 for Si, 5.6578, for ‘Ge’, and 3.567 for ‘C’.</p>
+</div></blockquote>
+</li>
 <li><p>The <cite>theta_width</cite> and <cite>energy_width</cite> values will closely match the
 width of the intensity profile that would = 1 when ignoring the
 effect of absorption.  These are the values commonly reported as
 ‘Darwin Width’.  The value reported for <cite>theta_fwhm’ and
 `energy_fwhm</cite> are larger than this by sqrt(9/8) ~= 1.06.</p></li>
-<li><p>Polarization of ‘s’ would be for a vertically deflecting crystal and
-a horizontally-polarized, as for most synchrotron beamlines.</p></li>
+<li><p>Polarization can be ‘s’, ‘p’, ‘u’,  or None. ‘s’ means vertically
+deflecting crystal and a horizontally-polarized source, as for most
+synchrotron beamlines. ‘p’ is for a horizontally-deflecting crystal.
+‘u’ or None is for unpolarized light, as for most fluorescence/emission.</p></li>
 </ol>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -1200,6 +1204,7 @@ Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of<
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1262,13 +1267,14 @@ Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of<
         <li class="right" >
           <a href="examples.html" title="Example Calculations of X-ray properties of materials"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Using XrayDB from Python</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-August-23.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
+      Last updated on 2020-October-26.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

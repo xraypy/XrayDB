@@ -928,7 +928,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
       crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
       hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
       a (float or None): lattice constant [None - use built-in value]
-      polarization ('s','p'): mono orientation relative to X-ray polarization ['s']
+      polarization ('s','p', None): mono orientation relative to X-ray polarization ['s']
       ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
       ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
       m (int):           order of reflection    [1]
@@ -963,11 +963,9 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         Elements of Modern X-ray Physics, 2nd Edition
         J Als-Nielsen, and D. McMorrow.
 
-     2. Only diamond structures (Si, Ge, diamond) and sigma
-        polarization are currently supported.
-
-     3. Default values of lattice constant `a` are in Angstroms:
-        5.4309 for Si, 5.6578, for 'Ge', and 3.567 for 'C'.
+     2. Only diamond structures (Si, Ge, diamond) are currently supported.
+        Default values of lattice constant `a` are in Angstroms:
+           5.4309 for Si, 5.6578, for 'Ge', and 3.567 for 'C'.
         
      3. The `theta_width` and `energy_width` values will closely match the
         width of the intensity profile that would = 1 when ignoring the
@@ -975,8 +973,10 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         'Darwin Width'.  The value reported for `theta_fwhm' and
         `energy_fwhm` are larger than this by sqrt(9/8) ~= 1.06.
         
-     4. Polarization of 's' would be for a vertically deflecting crystal and
-        a horizontally-polarized, as for most synchrotron beamlines.
+     4. Polarization can be 's', 'p', or None. 's' would be for a vertically
+        deflecting crystal and a horizontally-polarized source, as for most
+        synchrotron beamlines. 'p' would be for a horizontally-deflecting crystal.
+        None is for unpolarized light, as for most fluorescence/emission.
         
     Examples:
         >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
@@ -1009,8 +1009,11 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         f2 = f2_chantler(crystal, energy)
 
     gscale = 2 * (dspace)**2 * R0 / (m*a**3)
-    if polarization.startswith('p'):
-        gscale *= np.cos(2*theta)
+
+    if polarization is None: # unpolarized
+        gscale *= (1 + abs(np.cos(2*theta)))/2.0
+    elif polarization.startswith('p'):
+        gscale *= abs(np.cos(2*theta))
         
     g0 = gscale * 8   * (f0(crystal, 0)[0] + f1 - 1j*f2)
     g  = gscale * eqr * (f0(crystal, q)[0] + f1 - 1j*f2)

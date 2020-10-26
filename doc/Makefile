@@ -27,3 +27,9 @@ pdf: latex
 
 clean:
 	-rm -rf $(BUILDDIR)/*
+
+tarball: html pdf
+	cd $(BUILDDIR)/html
+	tar cvzf ../../../_doc.tgz *
+	cd ../..
+

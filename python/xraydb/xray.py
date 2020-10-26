@@ -999,8 +999,13 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         a = lattice_constants[crystal.title()]
     dspace = a / np.sqrt(h_*h_ + k_*k_ + l_*l_)
     lambd  = PLANCK_HC / energy
-    theta  = np.arcsin(lambd/(2*dspace))
+    if lambd > 2*dspace:
+        return DarwinWidth(theta=np.nan, theta_offset=np.nan,
+                           theta_width=np.nan, theta_fwhm=np.nan,
+                           energy_width=np.nan, energy_fwhm=np.nan,
+                           zeta=[], dtheta=[], denergy=[], intensity=[])
 
+    theta  = np.arcsin(lambd/(2*dspace))
     q  = 0.5 / dspace
     f1 = f2 = 0
     if not ignore_f1: 

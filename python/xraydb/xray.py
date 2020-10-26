@@ -928,7 +928,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
       crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
       hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
       a (float or None): lattice constant [None - use built-in value]
-      polarization ('s','p', None): mono orientation relative to X-ray polarization ['s']
+      polarization ('s','p', 'u'): mono orientation relative to X-ray polarization ['s']
       ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
       ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
       m (int):           order of reflection    [1]
@@ -973,10 +973,10 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         'Darwin Width'.  The value reported for `theta_fwhm' and
         `energy_fwhm` are larger than this by sqrt(9/8) ~= 1.06.
         
-     4. Polarization can be 's', 'p', or None. 's' would be for a vertically
+     4. Polarization can be 's', 'p', 'u',  or None. 's' means vertically
         deflecting crystal and a horizontally-polarized source, as for most
-        synchrotron beamlines. 'p' would be for a horizontally-deflecting crystal.
-        None is for unpolarized light, as for most fluorescence/emission.
+        synchrotron beamlines. 'p' is for a horizontally-deflecting crystal.
+        'u' or None is for unpolarized light, as for most fluorescence/emission.
         
     Examples:
         >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
@@ -1010,7 +1010,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     gscale = 2 * (dspace)**2 * R0 / (m*a**3)
 
-    if polarization is None: # unpolarized
+    if polarization is None or polarization.startswith('u'): # unpolarized
         gscale *= (1 + abs(np.cos(2*theta)))/2.0
     elif polarization.startswith('p'):
         gscale *= abs(np.cos(2*theta))

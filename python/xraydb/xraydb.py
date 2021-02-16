@@ -419,7 +419,7 @@ class XrayDB():
 
         Returns:
             dictionary:  keys of edge (iupac symbol), and values of
-                         XrayEdge namedtuple of (energy, fyield, edge_jump))
+                         XrayEdge namedtuple of (energy, fyield, edge_jump)
 
         References:
            Elam, Ravel, and Sieber.
@@ -442,7 +442,7 @@ class XrayDB():
             edge (string):  X-ray edge
 
         Returns:
-            XrayEdge:  namedtuple of (energy, fyield, edge_jump))
+            XrayEdge:  namedtuple of (energy, fyield, edge_jump)
 
         Example:
             >>> xdb = XrayDB()

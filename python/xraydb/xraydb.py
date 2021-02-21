@@ -656,8 +656,10 @@ class XrayDB():
         emin_tab = 10*int(0.102*np.exp(tab_lne[0]))
         en[np.where(en < emin_tab)] = emin_tab
         out = np.exp(elam_spline(tab_lne, tab_val, tab_spl, np.log(en)))
-        if len(out) == 1:
+
+        if isinstance(energies, (int, float)):
             return out[0]
+
         return out
 
     def mu_elam(self, element, energies, kind='total'):

@@ -171,6 +171,10 @@ def test_mu_elam():
     with pytest.raises(ValueError):
         mu_elam('Pb', en, kind='all')
 
+    # Check that array in -> array out, and scalar in -> scalar out
+    assert mu_elam('Pb', [1000]).shape == (1,)
+    assert isinstance(mu_elam('Pb', 1000), float)
+
 def test_elam_coh_incoh():
     en = np.linspace(13000, 17000, 51)
 

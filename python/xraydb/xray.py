@@ -816,7 +816,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
     Args:
         gas (string or dict):  name or formula of fill gas (see note 1) ['nitrogen']
         volts (float):  measured voltage output of current amplifier  [1.0]
-        length (float): active length of ion chamber in mm [100]
+        length (float): active length of ion chamber in cm [100]
         energy (float): X-ray energy in eV [10000]
         sensitivity (float): current amplifier sensitivity [1.e-6]
         sensitivity_units (string): units of current amplifier sensitivity

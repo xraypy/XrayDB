@@ -252,7 +252,7 @@ associated with an ion chamber and help handle all of these subtle issues,
 using the following inputs:
 
   * `gas`: the gas, or mixture of gases used or 'Si' or 'Ge' for diodes.
-  * `length`: the length of the ion chamber, in mm.
+  * `length`: the length of the ion chamber, in cm.
   * `energy`: the X-ray energy, in eV.
   * `volts`: the output voltage of the current amplifier
   * `sensitivity` and `sensitivity_units`: the sensitivity or gain of the

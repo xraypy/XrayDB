@@ -6,13 +6,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Example Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,7 +50,7 @@ X-ray properties of materials are shown.  These all use the functions in
 the python <cite>xraydb</cite> module, which is describe in more detail in the next
 chapter, <a class="reference internal" href="python.html#python-api"><span class="std std-ref">Using XrayDB from Python</span></a>.  The examples will explore some aspects of
 X-ray physics, but will not give a complete tutorial on the concepts here.
-For reference see <a class="bibtex reference internal" href="biblio.html#alsnielson-mcmorrow2011" id="id1">[Als-Nielsen and McMorrow (2011)]</a> for example.  Some of
+For reference see <span id="id1">[<a class="reference internal" href="biblio.html#id2">Als-Nielsen and McMorrow (2011)</a>]</span> for example.  Some of
 these calculations are also available at  <a class="reference external" href="https://millenia.cars.aps.anl.gov/xraydb">XrayDB Web App (beta!)</a>.</p>
 <div class="section" id="x-ray-attenuation-by-elements">
 <h2>X-ray attenuation by elements<a class="headerlink" href="#x-ray-attenuation-by-elements" title="Permalink to this headline">¶</a></h2>
@@ -246,12 +245,12 @@ and fluence of the X-rays.</p>
 <p>The process of converting the photo-current into X-ray fluence involves
 several steps. First, the energy from a single X-ray generates a number of
 electron-ion pairs given by the <em>effective ionization potential</em> of the
-gas.  These are reasonably well-known values (see <a class="bibtex reference internal" href="biblio.html#knoll2010" id="id2">[Knoll (2010)]</a>) that
+gas.  These are reasonably well-known values (see <span id="id2">[<a class="reference internal" href="biblio.html#id3">Knoll (2010)</a>]</span>) that
 are all between 20 and 40 eV, given in the
 <a class="reference internal" href="#xray-ionpot-table"><span class="std std-ref">Table of Effective Ionization Potentials</span></a>.</p>
 <blockquote id="xray-ionpot-table">
 <span id="index-0"></span><div><p>Table of Effective Ionization Potentials. Many of these are taken from
-<a class="bibtex reference internal" href="biblio.html#knoll2010" id="id3">[Knoll (2010)]</a>, while others appear to come from International Commission
+<span id="id3">[<a class="reference internal" href="biblio.html#id3">Knoll (2010)</a>]</span>, while others appear to come from International Commission
 on Radiation Units &amp; Measurement, Report 31, 1979.  The names given are
 those supported by the functions <a class="reference internal" href="python.html#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a> and
 <a class="reference internal" href="python.html#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a>.</p>
@@ -342,7 +341,7 @@ using the following inputs:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><cite>gas</cite>: the gas, or mixture of gases used or ‘Si’ or ‘Ge’ for diodes.</p></li>
-<li><p><cite>length</cite>: the length of the ion chamber, in mm.</p></li>
+<li><p><cite>length</cite>: the length of the ion chamber, in cm.</p></li>
 <li><p><cite>energy</cite>: the X-ray energy, in eV.</p></li>
 <li><p><cite>volts</cite>: the output voltage of the current amplifier</p></li>
 <li><p><cite>sensitivity</cite> and <cite>sensitivity_units</cite>: the sensitivity or gain of the
@@ -352,9 +351,9 @@ amplifier used to convert the photo-current to the recorded voltage.</p></li>
 <p>The default <cite>sensitivity_units</cite> is ‘A/V’ but can be set to any of the
 common SI prefixes such as ‘p’, ‘pico’, ‘n’, ‘nano’, <span class="math notranslate nohighlight">\(\mu\)</span>,
 (unicode ‘03bc’), ‘u’, ‘micro’, ‘m’, or ‘milli’, so that:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
 <span class="go">                               sensitivity=1.e-9)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
 <span class="go">                               sensitivity=1, sensitivity_units=&#39;nA/V&#39;)</span>
 </pre></div>
 </div>
@@ -380,18 +379,18 @@ flux minus the photo-electric flux.  This difference will be substantial
 for helium above 5 keV and for nitrogren above 25 keV.</p>
 <p>As an example calculation of ion chamber currents:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">18000</span><span class="p">,</span>
-<span class="go">                               length=100.0, sensitivity=1.e-6)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incident flux= </span><span class="si">%g</span><span class="s2"> Hz&quot;</span> <span class="o">%</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">incident</span><span class="p">)</span>
-<span class="go">Incident flux= 1.1632e+11 Hz</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downstream flux= </span><span class="si">%g</span><span class="s2"> Hz&quot;</span> <span class="o">%</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">transmitted</span><span class="p">)</span>
-<span class="go">Incident flux= 1.1632e+11 Hz</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downstream flux= </span><span class="si">%g</span><span class="s2"> Hz&quot;</span> <span class="o">%</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">transmitted</span><span class="p">)</span>
-<span class="go">Downstream flux= 1.05463e+11 Hz</span>
+<span class="go">                               length=10.0, sensitivity=1.e-6)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incident flux= </span><span class="si">{</span><span class="n">fluxes</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="go">Incident flux= 1.12885e+12 Hz</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transmitted flux= </span><span class="si">{</span><span class="n">fluxes</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="go">Transmitted flux= 1.1784e+12 Hz</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Absorbed Photo flux= </span><span class="si">%g</span><span class="s2"> Hz&quot;</span> <span class="o">%</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">photo</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Absorbed Photo flux= </span><span class="si">{fluxes.photo:g}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
 <span class="go">Absorbed Photo flux= 7.54182e+09 Hz</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scattered flux= </span><span class="si">%g</span><span class="s2"> Hz&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fluxes</span><span class="o">.</span><span class="n">incident</span> <span class="o">-</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">transmitted</span> <span class="o">-</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">photo</span><span class="p">))</span>
-<span class="go">Scattered flux= 3.31569e+09 Hz</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scatt</span> <span class="o">=</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">incident</span> <span class="o">-</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">transmitted</span> <span class="o">-</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">photo</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scattered flux= </span><span class="si">{scatt:g}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="go">Scattered flux= 3.46567e+09 Hz</span>
 </pre></div>
 </div>
 <p>As for the example for carbon above, the non-photo-electric effects are not
@@ -401,10 +400,10 @@ more gases so as to better control the fraction of X-rays absorbed in a
 chamber of fixed length. This can be specified by passing in a dictionary
 of gas name and fractional density, as with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;N2&#39;</span><span class="p">:</span><span class="mf">0.75</span><span class="p">,</span> <span class="s1">&#39;Ar&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">},</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
-<span class="go">                               energy=18000, length=100,</span>
+<span class="go">                               energy=18000, length=10,</span>
 <span class="go">                               sensitivity=0.2, sensitivity_units=&#39;microA/V&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;</span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fluxes</span><span class="o">.</span><span class="n">incident</span>
-<span class="go">&#39;1.77786e+10&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fluxes</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;1.70901e+11&#39;</span>
 </pre></div>
 </div>
 <p>Finally, the pressure of the gas is sometimes adjusted to alter the
@@ -477,7 +476,7 @@ anomalous scattering (as calculated with <a class="reference internal" href="pyt
 shape.</p>
 <p>All of these effects are included in the <a class="reference internal" href="python.html#xraydb.darwin_width" title="xraydb.darwin_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">darwin_width()</span></code></a> function,
 which follows very closely the description from chapter 6.4 in
-<a class="bibtex reference internal" href="biblio.html#alsnielson-mcmorrow2011" id="id4">[Als-Nielsen and McMorrow (2011)]</a>.  The function takes inputs of</p>
+<span id="id4">[<a class="reference internal" href="biblio.html#id2">Als-Nielsen and McMorrow (2011)</a>]</span>.  The function takes inputs of</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><cite>energy</cite>: the X-ray energy, in eV.</p></li>
@@ -645,8 +644,8 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2020-October-26.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Last updated on 2021-April-29.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>

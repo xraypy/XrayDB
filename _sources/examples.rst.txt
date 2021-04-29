@@ -252,7 +252,7 @@ associated with an ion chamber and help handle all of these subtle issues,
 using the following inputs:
 
   * `gas`: the gas, or mixture of gases used or 'Si' or 'Ge' for diodes.
-  * `length`: the length of the ion chamber, in mm.
+  * `length`: the length of the ion chamber, in cm.
   * `energy`: the X-ray energy, in eV.
   * `volts`: the output voltage of the current amplifier
   * `sensitivity` and `sensitivity_units`: the sensitivity or gain of the
@@ -263,9 +263,9 @@ common SI prefixes such as 'p', 'pico', 'n', 'nano', :math:`\mu`,
 (unicode '03bc'), 'u', 'micro', 'm', or 'milli', so that::
 
 
-    >>> fluxes = ionchamber_fluxes('N2', volts=1, energy=10000, length=100,
+    >>> fluxes = ionchamber_fluxes('N2', volts=1, energy=10000, length=10,
                                    sensitivity=1.e-9)
-    >>> fluxes = ionchamber_fluxes('N2', volts=1, energy=10000, length=100,
+    >>> fluxes = ionchamber_fluxes('N2', volts=1, energy=10000, length=10,
                                    sensitivity=1, sensitivity_units='nA/V')
 
 will give the same results.
@@ -291,18 +291,18 @@ for helium above 5 keV and for nitrogren above 25 keV.
 As an example calculation of ion chamber currents::
 
    >>> fluxes = ionchamber_fluxes(gas='nitrogen', volts=1.25, energy=18000,
-                                  length=100.0, sensitivity=1.e-6)
-   >>> print("Incident flux= %g Hz" % fluxes.incident)
-   Incident flux= 1.1632e+11 Hz
-   >>> print("Downstream flux= %g Hz" % fluxes.transmitted)
-   Incident flux= 1.1632e+11 Hz
-   >>> print("Downstream flux= %g Hz" % fluxes.transmitted)
-   Downstream flux= 1.05463e+11 Hz
+                                  length=10.0, sensitivity=1.e-6)
+   >>> print(f"Incident flux= {fluxes.incident:g} Hz")
+   Incident flux= 1.12885e+12 Hz
+   >>> print(f"Transmitted flux= {fluxes.transmitted:g} Hz")
+   Transmitted flux= 1.1784e+12 Hz
 
-   >>> print("Absorbed Photo flux= %g Hz" % fluxes.photo)
+   >>> print("Absorbed Photo flux= {fluxes.photo:g} Hz")
    Absorbed Photo flux= 7.54182e+09 Hz
-   >>> print("Scattered flux= %g Hz" % (fluxes.incident - fluxes.transmitted - fluxes.photo))
-   Scattered flux= 3.31569e+09 Hz
+
+   >>> scatt = fluxes.incident - fluxes.transmitted - fluxes.photo)
+   >>> print("Scattered flux= {scatt:g} Hz")
+   Scattered flux= 3.46567e+09 Hz
 
 As for the example for carbon above, the non-photo-electric effects are not
 negligible for nitrogen at 18 keV.
@@ -313,10 +313,10 @@ chamber of fixed length. This can be specified by passing in a dictionary
 of gas name and fractional density, as with::
 
    >>> fluxes = ionchamber_fluxes(gas={'N2':0.75, 'Ar': 0.25}, volts=1.25,
-                                  energy=18000, length=100,
+                                  energy=18000, length=10,
                                   sensitivity=0.2, sensitivity_units='microA/V')
-   >>> "%g" % fluxes.incident
-   '1.77786e+10'
+   >>> f"{fluxes.incident:g}"
+   '1.70901e+11'
 
 Finally, the pressure of the gas is sometimes adjusted to alter the
 fraction of the beam absorbed.  The calculations here all use the densities

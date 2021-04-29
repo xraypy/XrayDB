@@ -35,6 +35,8 @@ add_function_parentheses = True
 add_module_names = False
 pygments_style = 'sphinx'
 
+bibtex_bibfiles = ['xraydb.bib']
+
 # html themes: 'default', 'sphinxdoc',  'alabaster', 'agogo', 'nature'
 html_theme = 'nature'
 

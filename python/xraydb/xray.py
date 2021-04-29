@@ -861,16 +861,23 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
           will both give a sensitivity of 1 microAmp / Volt .
 
     Examples:
-        >>> ionchamber_fluxes(gas='helium', volts=1.25, length=200.0,
-                              energy=10000.0, sensitivity=1.e-9)
-        IonChamberFluxes(photo=16110895.3, incident=15452608024.6, transmitted=15316549138.8)
-        >>> ionchamber_fluxes(gas='nitrogen', volts=1.25, length=200.0,
-                              energy=10000.0, sensitivity=1.e-9)
-        IonChamberFluxes(photo=13575282.2, incident=23102328.0, transmitted=8759458.7)
-        >>> ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
-                              length=200.0, energy=10000.0, sensitivity=1.e-9)
-        IonChamberFluxes(photo=14843088.8, incident=7737855176.4, transmitted=7662654298.8)
 
+        >>> from xraydb import ionchamber_fluxes
+        >>> fluxes = ionchamber_fluxes(gas='helium', volts=1.25, length=20.0,
+                                        energy=10000.0, sensitivity=1.e-9)
+
+        >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
+        Fluxes: In= 1.54454e+11 Hz, Out= 1.54317e+11 Hz
+                                       
+        >>> fluxes = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
+                                       energy=10000.0, sensitivity=1.e-9)
+        >>>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
+        Fluxes: In= 1.60143e+08 Hz, Out= 1.45341e+08 Hz
+        
+        >>> fluxes = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
+                                            length=20.0, energy=10000.0, sensitivity=1.e-9)
+        >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
+        Fluxes: In= 7.73069e+10 Hz, Out= 7.72312e+10 Hz
 
     """
     from .materials import material_mu

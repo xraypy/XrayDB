@@ -5,7 +5,7 @@ import numpy as np
 from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
                     QCHARGE, SI_PREFIXES, index_nearest)
 
-R0 = 1.e8 * R_ELECTRON_CM 
+R0 = 1.e8 * R_ELECTRON_CM
 
 from .xraydb import XrayDB,  XrayLine
 from .chemparser import chemparse
@@ -868,12 +868,12 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
 
         >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
         Fluxes: In= 1.54454e+11 Hz, Out= 1.54317e+11 Hz
-                                       
+
         >>> fluxes = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
                                        energy=10000.0, sensitivity=1.e-9)
         >>>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
         Fluxes: In= 1.60143e+08 Hz, Out= 1.45341e+08 Hz
-        
+
         >>> fluxes = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
                                             length=20.0, energy=10000.0, sensitivity=1.e-9)
         >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
@@ -909,25 +909,26 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
     # while total attenuation means
     #   flux_out = flux_in * exp(-t*mu_total)
 
-    for gas, frac, ionpot in gas_comps:
-        mu_photo = material_mu(gas, energy=energy, kind='photo')
-        mu_total = material_mu(gas, energy=energy, kind='total')
+    # use weighted sums for mu and ionization potential
+    mu_photo, mu_total, ion_pot =  0.0, 0.0, 0.0
+    for gas_name, gas_frac, gas_ion_pot in gas_comps:
+        gasmu_photo = material_mu(gas_name, energy=energy, kind='photo')
+        gasmu_total = material_mu(gas_name, energy=energy, kind='total')
+        # gasmu_incoh = material_mu(gas_name, energy=energy, kind='incoh')
 
-        flux_photo = volts * sensitivity * ionpot / (2 * QCHARGE * energy)
-        flux_photo *= (frac/gas_total)
-        flux_in    = flux_photo / (1.0 - np.exp(-length*mu_photo))
-        flux_out   = flux_in * np.exp(-length*mu_total)
+        mu_photo += gasmu_photo * gas_frac / gas_total
+        mu_total += gasmu_total * gas_frac / gas_total
+        ion_pot  += gas_ion_pot * gas_frac / gas_total
 
-        fphoto += flux_photo
-        fin    += flux_in
-        fout   += flux_out
-
-    return fluxes(photo=fphoto, incident=fin,transmitted=fout)
+    flux_photo = volts * sensitivity * ion_pot / (2 * QCHARGE * energy)
+    flux_in    = flux_photo / (1.0 - np.exp(-length*mu_photo))
+    flux_out   = flux_in * np.exp(-length*mu_total)
+    return fluxes(photo=flux_photo, incident=flux_in, transmitted=flux_out)
 
 
 def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                  polarization='s', ignore_f2=False, ignore_f1=False, m=1):
-    
+
     """darwin width for a crystal reflection and energy
 
     Args:
@@ -939,7 +940,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
       ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
       ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
       m (int):           order of reflection    [1]
-      
+
     Returns:
 
       A named tuple 'DarwinWidth' with the following fields
@@ -973,18 +974,18 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
      2. Only diamond structures (Si, Ge, diamond) are currently supported.
         Default values of lattice constant `a` are in Angstroms:
            5.4309 for Si, 5.6578, for 'Ge', and 3.567 for 'C'.
-        
+
      3. The `theta_width` and `energy_width` values will closely match the
         width of the intensity profile that would = 1 when ignoring the
         effect of absorption.  These are the values commonly reported as
         'Darwin Width'.  The value reported for `theta_fwhm' and
         `energy_fwhm` are larger than this by sqrt(9/8) ~= 1.06.
-        
+
      4. Polarization can be 's', 'p', 'u',  or None. 's' means vertically
         deflecting crystal and a horizontally-polarized source, as for most
         synchrotron beamlines. 'p' is for a horizontally-deflecting crystal.
         'u' or None is for unpolarized light, as for most fluorescence/emission.
-        
+
     Examples:
         >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
         >>> dw.theta_width, dw.energy_width
@@ -998,7 +999,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     if hklsum % 4 == 0 and (h_ % 2 == 0 and k_ % 2 == 0 and l_ % 2 == 0):
         eqr = 8
     elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
-        eqr =4*np.sqrt(2)  
+        eqr =4*np.sqrt(2)
     else:
         raise ValueError("hkl must sum to 4 or be all odd")
 
@@ -1015,9 +1016,9 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     theta  = np.arcsin(lambd/(2*dspace))
     q  = 0.5 / dspace
     f1 = f2 = 0
-    if not ignore_f1: 
+    if not ignore_f1:
         f1 = f1_chantler(crystal, energy)
-    if not ignore_f2:         
+    if not ignore_f2:
         f2 = f2_chantler(crystal, energy)
 
     gscale = 2 * (dspace)**2 * R0 / (m*a**3)
@@ -1026,7 +1027,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         gscale *= (1 + abs(np.cos(2*theta)))/2.0
     elif polarization.startswith('p'):
         gscale *= abs(np.cos(2*theta))
-        
+
     g0 = gscale * 8   * (f0(crystal, 0)[0] + f1 - 1j*f2)
     g  = gscale * eqr * (f0(crystal, q)[0] + f1 - 1j*f2)
 
@@ -1039,7 +1040,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     # as a check, the following formula from L Berman (and X0h doc)
     # will give identical results as theta_width. [sin(2x)= 2sin(x)*cos(x)]
     # dw_lb = 2*R0*lambd**2 * eqr*abs(f0(crystal, q)[0] + f1 - 1j*f2)/(m*np.pi*a**3* np.sin(2*theta))
-    
+
     #  hueristic zeta range and step sizes for crystals:
     sz =  zeta_offset
 
@@ -1055,12 +1056,12 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     r[_n] = (xc + np.sqrt(xc**2 -1))[_n]
 
     return DarwinWidth(theta=theta,
-                       theta_offset=theta_offset, 
+                       theta_offset=theta_offset,
                        theta_width=total*np.tan(theta),
                        theta_fwhm=fwhm*np.tan(theta),
                        energy_width=total*energy,
-                       energy_fwhm=fwhm*energy, 
-                       zeta=zeta,                       
+                       energy_fwhm=fwhm*energy,
+                       zeta=zeta,
                        dtheta=zeta*np.tan(theta),
                        denergy=-zeta*energy,
                        intensity=abs(r*r.conjugate()))

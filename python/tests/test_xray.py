@@ -626,5 +626,5 @@ def test_ionchamber_fluxes():
                                 length=200.0, energy=10000.0, sensitivity=1.e-9)
 
         assert_allclose(ic3.photo, 14843088.8, rtol=0.01)
-        assert_allclose(ic3.incident, 7737855176.4, rtol=0.01)
-        assert_allclose(ic3.transmitted, 7662654298.8, rtol=0.01)
+        assert_allclose(ic3.incident, 41442270.9, rtol=0.01)
+        assert_allclose(ic3.transmitted, 25405858.6, rtol=0.01)

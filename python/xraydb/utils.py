@@ -15,10 +15,13 @@ except ImportError:
 # atoms/mol =  6.0221413e23  atoms/mol
 AVOGADRO = consts.Avogadro
 
-# Planck's Constant:  h*c ~= 12398.42 eV*Ang
-PLANCK_HC = 1.e10 * consts.Planck * consts.c / consts.e
-
 QCHARGE = consts.e
+
+# Planck's Constant:  h*c ~= 12398.42 eV*Ang
+PLANCK_HC = 1.e10 * consts.Planck * consts.c / QCHARGE
+
+# electron rest mass in eV
+E_MASS = consts.electron_mass * consts.c**2 / QCHARGE
 
 # classical electron radius in cm
 R_ELECTRON_CM = 100.0 * consts.codata.physical_constants['classical electron radius'][0]

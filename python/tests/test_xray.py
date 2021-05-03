@@ -610,21 +610,27 @@ def test_darwin_width():
 
 
 def test_ionchamber_fluxes():
-        ic1 = ionchamber_fluxes(gas='helium', volts=1.25, length=200.0,
-                              energy=10000.0, sensitivity=1.e-9)
+    ic1 = ionchamber_fluxes(gas='helium', volts=1.25, length=20.0,
+                            energy=15000.0, sensitivity=1.e-9)
 
-        assert_allclose(ic1.photo, 16110895.3, rtol=0.01)
-        assert_allclose(ic1.transmitted, 15316549138.8, rtol=0.01)
+    ic2 = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
+                            energy=15000.0, sensitivity=1.e-6)
 
-        ic2 = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=200.0,
-                                energy=10000.0, sensitivity=1.e-9)
+    ic3 = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
+                            length=20.0, energy=15000.0, sensitivity=1.e-6)
 
-        assert_allclose(ic2.photo, 13575282.2, rtol=0.01)
-        assert_allclose(ic2.incident, 23102328.0, rtol=0.01)
+    ic4 = ionchamber_fluxes(gas='Ar', volts=1.25, length=20.0,
+                            energy=15000.0, sensitivity=1.e-6)
 
-        ic3 = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
-                                length=200.0, energy=10000.0, sensitivity=1.e-9)
 
-        assert_allclose(ic3.photo, 14843088.8, rtol=0.01)
-        assert_allclose(ic3.incident, 41442270.9, rtol=0.01)
-        assert_allclose(ic3.transmitted, 25405858.6, rtol=0.01)
+    assert_allclose(ic1.transmitted/ic1.incident, 0.999, rtol=0.001)
+    assert_allclose(ic1.incident, 2.455e11, rtol=0.01)
+
+    assert_allclose(ic2.transmitted/ic2.incident, 0.9696, rtol=0.01)
+    assert_allclose(ic2.incident, 3.771e11, rtol=0.01)
+
+    assert_allclose(ic3.transmitted/ic3.incident, 0.992, rtol=0.01)
+    assert_allclose(ic3.incident, 8.182e11, rtol=0.01)
+
+    assert_allclose(ic4.transmitted/ic4.incident, 0.4928, rtol=0.01)
+    assert_allclose(ic4.incident, 1.381e10, rtol=0.01)

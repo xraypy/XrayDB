@@ -810,7 +810,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
 
     """return ion chamber and PIN diode fluxes for a gas, mixture of gases, or
     semiconductor material, ion chamber length (or diode thickness), X-ray energy,
-    recorded voltage and current amplifier sensitivity.
+    recorded voltage and current amplifier sensitivity.  See note for details.
 
     Args:
         gas (string or dict):  name or formula of fill gas (see note 1) ['nitrogen']
@@ -827,49 +827,14 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
     Returns:
         named tuple IonchamberFluxes with fields
 
-            `incident`    flux of beam incident on ion chamber in Hz,
+            `incident`    flux of beam incident on ion chamber in Hz
+
             `transmitted` flux of beam output of ion chamber in Hz
-            `photo`       flux absorbed by photo-electric effect in Hz,
-            `incoherent`  flux attenuated by incoherent scattering in Hz,
 
+            `photo`       flux absorbed by photo-electric effect in Hz
 
-    Notes:
-       1. The gas value can either be a string for the name of chemical
-          formula for the gas or diode material, or dictionary with keys
-          that are gas names or formulas and values that are the relative
-          fraction for mixes gases.  For diode materials, mixtures are not
-          supported.
+            `incoherent`  flux attenuated by incoherent scattering in Hz
 
-          The gas formula is used in two ways:
-             a) to get the photo- and total- absorption coefficient, and
-             b) to get the effective ionization potential for the material.
-
-          The effective ionization potentials are known for a handful of
-          gases and diodes (see `ionization_potential` function), and range
-          between 20 and 45 eV for gases, and around 3 eV for semiconductors.
-          For unknown gases the value of 32.0 eV will be used.
-
-       2. The `sensitivity` and `sensitivity_units` arguments have some overlap
-          to specify the sensitivity or gain of the current amplifier.
-          Generally, the units in `A/V`, but you can add a common SI prefix of
-
-          'p', 'pico', 'n', 'nano', (unicode 'u03bc'), 'u', 'micro', 'm', 'milli'
-
-          so that, for example
-             ionchamber_fluxes(..., sensitivity=1.e-6)
-          and
-             ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')
-
-          will both give a sensitivity of 1 microAmp / Volt .
-
-       3. The effect of Compton scattering on the ion chamber current can be approximated
-          in 3 ways with different values for `with_compton` (default=1):
-             >0  use Compton-shifted electron energy (best approximation)
-             =0  completely ignore the effect of Compton scattering on current
-             <0  use incident energy as Compton energy.
-
-          Using -1 should reproduce the calculation from Hephaestus reasonably well, but
-          using 1 is highly recommended.
 
     Examples:
 
@@ -893,6 +858,81 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
         Fluxes: In=6.83845e+11, Out=6.51188e+11, Transmitted=95.22%
 
+    Notes:
+       1. The gas value can either be a string for the name of chemical
+          formula for the gas or diode material, or dictionary with keys
+          that are gas names or formulas and values that are the relative
+          fraction for mixes gases.  For diode materials, mixtures are not
+          supported.
+
+          The gas formula is used both the contributions for mu and to get
+          get the weighted effective ionization potential for the material.
+
+          The effective ionization potentials are known for a handful of
+          gases and diodes (see `ionization_potential` function), and range
+          between 20 and 45 eV for gases, and around 3 eV for semiconductors.
+          For unknown gases the value of 32.0 eV will be used.
+
+       2. The `sensitivity` and `sensitivity_units` arguments have some overlap
+          to specify the sensitivity or gain of the current amplifier.
+          Generally, the units in `A/V`, but you can add a common SI prefix of
+          'p', 'pico', 'n', 'nano', (unicode 'u03bc'), 'u', 'micro', 'm', 'milli'
+          so that, `ionchamber_fluxes(..., sensitivity=1.e-6)` and
+          `ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')`
+          will both give a sensitivity of 1 microAmp / Volt .
+
+       3. The effect of Compton scattering on the ion chamber current can be approximated
+          in 3 ways with different values for `with_compton` (default=1):
+
+             >0:  use Compton-shifted electron energy (best approximation)
+
+             =0:  completely ignore the effect of Compton scattering on current
+
+             <0:  use incident energy as Compton energy.
+
+          Using -1 should reproduce the calculation from Hephaestus reasonably
+          well, but using 1 is highly recommended.
+
+       4. Ion Chamber Current calculation: the total attenuation in an ion
+          chamber ncludes photo, incoherent (Compton), and coherent (Rayleigh)
+          scattering contributions:
+
+            Flux_transmitted = Flux_in * exp(-t*mu_total)
+
+          The current in an Ion Chamber has a contribution from both the
+          photo-electric and incoherent (Compton) cross-section, but not
+          the coherent scattering. For an incident flux (in Hz) of Flux_in,
+          the fluxes of X-rays attenuated by the different processes are:
+
+             Flux_photo = Flux_in * [1 - exp(-t*mu_photo)]
+
+             Flux_incoh = Flux_in * [1 - exp(-t*mu_incoh)]
+
+             Flux_coh   = Flux_in * [1 - exp(-t*mu_coh)]
+
+             Flux_transmitted = Flux_in - Flux_total
+
+          For Flux_photo, all of the X-ray energy is converted to current:
+
+             IC_current_photo = Flux_photo * Energy * q_e / ion_pot
+
+          where q_e is the electron charge (1.602e-19 C), and ion_pot is the
+          effective ionization potential (see `ionization_potential`).
+
+          For Flux_incoh, the energy transferred to the electron is converted
+          to electron and ion current as:
+
+             IC_current_incoh = Flux_incoh * Energy_Compton * q_e / ion_pot
+
+          where:
+
+             Energy_Compton = Energy/(1+m_e*c^2/Energy)
+
+          is the approximate energy of the Compton-scattered electron.  This
+          estimate of the energy is simplification: the transferred energy will
+          be angle dependent, ranging from 0 to 2*Energy_Compton, with a
+          distribution that depends on Energy and polarization.
+
     """
     from .materials import material_mu
 
@@ -915,39 +955,6 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         if gname == 'O2': gname = 'oxygen'
         gas_total += frac
         gas_comps.append((gname, frac, ionpot))
-
-
-    # Notes on Total attenuation and Ion Chamber Current:
-    # the total attenuation includes photo, incoherent (Compton), and
-    # coherent (Rayleigh) scattering contributions:
-    #   Flux_transmitted = Flux_in * exp(-t*mu_total)
-
-    # The current in an Ion Chamber has a contribution from both the
-    # photo-electric and incoherent (Compton) cross-section, but not
-    # the coherent scattering. For an incident flux (in Hz) of Flux_in,
-    # the fluxes of X-rays attenuated by the different processes are
-    #    Flux_photo = Flux_in * [1 - exp(-t*mu_photo)]
-    #    Flux_incoh = Flux_in * [1 - exp(-t*mu_incoh)]
-    #    Flux_coh   = Flux_in * [1 - exp(-t*mu_coh)]
-    #    Flux_total = Flux_photo + Flux_incoh + Flux_coh
-    # The transmitted flux is
-    #    Flux_transmitted = Flux_in - Flux_total
-    #
-    # For Flux_photo, all of the X-ray energy is converted to current:
-    #    IC_current_photo = Flux_photo * Energy * 2 * q_e / ion_pot
-    # where q_e is the electron charge (1.602e-19 C), and ion_pot is the
-    # effective ionization potential (see `ionization_potential`).
-    #
-    # For the incoherenf flux, the energy transferred to the scattered
-    # electron is converted to electron and ion current as:
-    #    IC_current_incoh = Flux_incoh * Energy_Compton * 2 * q_e / ion_pot
-    # where
-    #    Energy_Compton = Energy/(1+m_e*c^2/Energy)
-    #
-    # is the (approximate) energy of the Compton-scattered electron.  This
-    # estimate of the energy is simplification: the transferred energy will
-    # be angle dependent, ranging from 0 to 2*Energy_Compton, with a
-    # distribution that depends on Energy and polarization.
 
     # energy of Compton-scattered electron: median energy, approximate
     # can turn off Compton energy with with_compton switch:
@@ -999,25 +1006,25 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
       A named tuple 'DarwinWidth' with the following fields
 
-        `theta`        float, nominal Bragg angle, in rad,
+        `theta`:        float, nominal Bragg angle, in rad,
 
-        `theta_offset` float, angular offset from Bragg angle, in rad,
+        `theta_offset`: float, angular offset from Bragg angle, in rad,
 
-        `theta_width`  float, estimated angular Darwin width, in rad,
+        `theta_width`:  float, estimated angular Darwin width, in rad,
 
-        `theta_fwhm`   float, estimated FWHM of angular intensity, in rad,
+        `theta_fwhm`:   float, estimated FWHM of angular intensity, in rad,
 
-        `energy_width` float, estimated angular Darwin width, in rad,
+        `energy_width`: float, estimated angular Darwin width, in rad,
 
-        `energy_fwhm`  float, estimated FWHM of energy intensity, in eV,
+        `energy_fwhm`:  float, estimated FWHM of energy intensity, in eV,
 
-        `zeta`         nd-array of Zeta parameter (delta_Lambda / Lambda),
+        `zeta`:         nd-array of Zeta parameter (delta_Lambda / Lambda),
 
-        `dtheta`       nd-array of angles away from Bragg angle, theta in rad,
+        `dtheta`:       nd-array of angles away from Bragg angle, theta in rad,
 
-        `denergy`      nd-array of energies away from Bragg energy, in eV,
+        `denergy`:      nd-array of energies away from Bragg energy, in eV,
 
-        `intensity`    nd-array of reflected intensity
+        `intensity`:    nd-array of reflected intensity
 
     Notes:
 
@@ -1026,8 +1033,8 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         J Als-Nielsen, and D. McMorrow.
 
      2. Only diamond structures (Si, Ge, diamond) are currently supported.
-        Default values of lattice constant `a` are in Angstroms:
-           5.4309 for Si, 5.6578, for 'Ge', and 3.567 for 'C'.
+        Default values of lattice constant `a` are in Angstroms: 5.4309 for Si,
+        5.6578, for 'Ge', and 3.567 for 'C'.
 
      3. The `theta_width` and `energy_width` values will closely match the
         width of the intensity profile that would = 1 when ignoring the

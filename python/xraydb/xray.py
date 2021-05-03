@@ -894,7 +894,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
           well, but using 1 is highly recommended.
 
        4. Ion Chamber Current calculation: the total attenuation in an ion
-          chamber ncludes photo, incoherent (Compton), and coherent (Rayleigh)
+          chamber includes photo, incoherent (Compton), and coherent (Rayleigh)
           scattering contributions:
 
             Flux_transmitted = Flux_in * exp(-t*mu_total)
@@ -929,8 +929,8 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
              Energy_Compton = Energy/(1+m_e*c^2/Energy)
 
           is the approximate energy of the Compton-scattered electron.  This
-          estimate of the energy is simplification: the transferred energy will
-          be angle dependent, ranging from 0 to 2*Energy_Compton, with a
+          estimate of the energy is a simplification: the transferred energy will
+          be angle-dependent, ranging from 0 to 2*Energy_Compton, with a
           distribution that depends on Energy and polarization.
 
     """

@@ -624,13 +624,13 @@ def test_ionchamber_fluxes():
 
 
     assert_allclose(ic1.transmitted/ic1.incident, 0.999, rtol=0.001)
-    assert_allclose(ic1.incident, 2.455e11, rtol=0.01)
+    assert_allclose(ic1.incident, 4.91084e11, rtol=0.01)
 
     assert_allclose(ic2.transmitted/ic2.incident, 0.9696, rtol=0.01)
-    assert_allclose(ic2.incident, 3.771e11, rtol=0.01)
+    assert_allclose(ic2.incident, 7.5417e11, rtol=0.01)
 
     assert_allclose(ic3.transmitted/ic3.incident, 0.992, rtol=0.01)
-    assert_allclose(ic3.incident, 8.182e11, rtol=0.01)
+    assert_allclose(ic3.incident, 1.636e12, rtol=0.01)
 
     assert_allclose(ic4.transmitted/ic4.incident, 0.4928, rtol=0.01)
-    assert_allclose(ic4.incident, 1.381e10, rtol=0.01)
+    assert_allclose(ic4.incident, 2.7615e10, rtol=0.01)

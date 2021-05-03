@@ -830,7 +830,7 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
             `incident`    flux of beam incident on ion chamber in Hz,
             `transmitted` flux of beam output of ion chamber in Hz
             `photo`       flux absorbed by photo-electric effect in Hz,
-            `incoh`       flux attenuated by incoherent scattering in Hz,
+            `incoherent`  flux attenuated by incoherent scattering in Hz,
 
 
     Notes:
@@ -878,22 +878,20 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
                                    energy=10000.0, sensitivity=1.e-9)
 
         >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
-        Fluxes: In=1.39815e+11, Out=1.39692e+11, Transmitted=99.91%
+        Fluxes: In=2.79631e+11, Out=2.79383e+11, Transmitted=99.91%
 
         >>> fl = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
                                    energy=10000.0, sensitivity=1.e-6)
 
         >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
-        Fluxes: In=1.60022e+11, Out=1.45232e+11, Transmitted=90.76%
+        Fluxes: In=3.20045e+11, Out=2.90464e+11, Transmitted=90.76%
 
-       >>> fl = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5},
+        >>> fl = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5},
                                   volts=1.25, length=20.0, energy=10000.0,
                                   sensitivity=1.e-6)
 
-       >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
-
-       Fluxes: In=3.41922e+11, Out=3.25594e+11, Transmitted=95.22%
-
+        >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
+        Fluxes: In=6.83845e+11, Out=6.51188e+11, Transmitted=95.22%
 
     """
     from .materials import material_mu
@@ -922,26 +920,23 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
     # Notes on Total attenuation and Ion Chamber Current:
     # the total attenuation includes photo, incoherent (Compton), and
     # coherent (Rayleigh) scattering contributions:
-    #   flux_out = flux_in * exp(-t*mu_total)
+    #   Flux_transmitted = Flux_in * exp(-t*mu_total)
 
-    # However, the current in an Ion Chamber has a contribution from
-    # both the photo-electric cross-section and the incoherent
-    # (Compton) cross-section, but not the coherent scattering.
-    # For an X-ray incident flux (in Hz) of FluxIn, the fluxes of X-rays
-    # attenuated by the different processes are
-    #    Flux_photo = FluxIn * [1 - exp(-t*mu_photo)]
-    #    Flux_incoh = FluxIn * [1 - exp(-t*mu_incoh)]
-    #    Flux_coh   = FluxIn * [1 - exp(-t*mu_coh)]
+    # The current in an Ion Chamber has a contribution from both the
+    # photo-electric and incoherent (Compton) cross-section, but not
+    # the coherent scattering. For an incident flux (in Hz) of Flux_in,
+    # the fluxes of X-rays attenuated by the different processes are
+    #    Flux_photo = Flux_in * [1 - exp(-t*mu_photo)]
+    #    Flux_incoh = Flux_in * [1 - exp(-t*mu_incoh)]
+    #    Flux_coh   = Flux_in * [1 - exp(-t*mu_coh)]
     #    Flux_total = Flux_photo + Flux_incoh + Flux_coh
-    # The transmitted flux is then
-    #    Flux_tranmitted = FluxIn - Flux_total
+    # The transmitted flux is
+    #    Flux_transmitted = Flux_in - Flux_total
     #
-    # For the photo-electric flux, all of the X-ray energy is
-    # converted to electron and ion current:
+    # For Flux_photo, all of the X-ray energy is converted to current:
     #    IC_current_photo = Flux_photo * Energy * 2 * q_e / ion_pot
     # where q_e is the electron charge (1.602e-19 C), and ion_pot is the
-    # effective ionization potential for the gas (20 to 40 eV) from
-    # `ionization_potential`.
+    # effective ionization potential (see `ionization_potential`).
     #
     # For the incoherenf flux, the energy transferred to the scattered
     # electron is converted to electron and ion current as:
@@ -954,30 +949,29 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
     # be angle dependent, ranging from 0 to 2*Energy_Compton, with a
     # distribution that depends on Energy and polarization.
 
-    # use weighted sums for mu and ionization potential
+    # energy of Compton-scattered electron: median energy, approximate
+    # can turn off Compton energy with with_compton switch:
+    energy_compton = 0      # no Compton contribution
+    if with_compton > 0:    # median Compton energy
+        energy_compton = energy/(1 + E_MASS/energy)
+    elif with_compton < 0:  # use incident X-ray energy: hephaestus
+        energy_compton = energy
+
+    # use weighted sums for mu values and ionization potential
     mu_photo, mu_incoh, mu_total, ion_pot =  0.0, 0.0, 0.0, 0.0
     for gas_name, gas_frac, gas_ion_pot in gas_comps:
         gasmu_photo = material_mu(gas_name, energy=energy, kind='photo')
         gasmu_total = material_mu(gas_name, energy=energy, kind='total')
         gasmu_incoh = material_mu(gas_name, energy=energy, kind='incoh')
 
-        mu_photo += gasmu_photo * gas_frac / gas_total
-        mu_total += gasmu_total * gas_frac / gas_total
-        mu_incoh += gasmu_incoh * gas_frac / gas_total
-        ion_pot  += gas_ion_pot * gas_frac / gas_total
+        mu_photo += gasmu_photo * gas_frac/gas_total
+        mu_total += gasmu_total * gas_frac/gas_total
+        mu_incoh += gasmu_incoh * gas_frac/gas_total
+        ion_pot  += gas_ion_pot * gas_frac/gas_total
 
-    scaled_current = volts * sensitivity * ion_pot/(2*QCHARGE)
-
-    # energy of Compton-scattered electron: median energy, approximate
-    energy_compton = 0
-    if with_compton > 0:
-        energy_compton = energy/(1 + E_MASS/energy)
-    elif with_compton < 0:
-        energy_compton = energy
-
-    flux_in = scaled_current/(energy*(1-np.exp(-length* mu_photo)) +
-                              energy_compton*(1-np.exp(-length* mu_incoh)))
-
+    absorbed_energy = (energy*(1-np.exp(-length* mu_photo)) +
+                       energy_compton*(1-np.exp(-length* mu_incoh)))
+    flux_in    = volts*sensitivity*ion_pot/(QCHARGE*absorbed_energy)
     flux_photo = flux_in * (1-np.exp(-length* mu_photo))
     flux_incoh = flux_in * (1-np.exp(-length* mu_incoh))
     flux_out   = flux_in * np.exp(-length*mu_total)

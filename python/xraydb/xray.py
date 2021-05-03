@@ -2,7 +2,7 @@ import sys
 from collections import namedtuple
 import numpy as np
 
-from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
+from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC, E_MASS,
                     QCHARGE, SI_PREFIXES, index_nearest)
 
 R0 = 1.e8 * R_ELECTRON_CM
@@ -10,9 +10,8 @@ R0 = 1.e8 * R_ELECTRON_CM
 from .xraydb import XrayDB,  XrayLine
 from .chemparser import chemparse
 
-fluxes = namedtuple('IonChamberFluxes', ('photo',
-                                         'incident',
-                                         'transmitted'))
+fluxes = namedtuple('IonChamberFluxes', ('incident', 'transmitted',
+                                         'photo', 'incoherent'))
 
 DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
                                          'theta_width', 'theta_fwhm',
@@ -807,7 +806,7 @@ def mirror_reflectivity(formula, theta, energy, density=None,
 
 def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
                       energy=10000.0, sensitivity=1.e-6,
-                      sensitivity_units='A/V'):
+                      sensitivity_units='A/V', with_compton=1):
 
     """return ion chamber and PIN diode fluxes for a gas, mixture of gases, or
     semiconductor material, ion chamber length (or diode thickness), X-ray energy,
@@ -821,15 +820,18 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         sensitivity (float): current amplifier sensitivity [1.e-6]
         sensitivity_units (string): units of current amplifier sensitivity
                                     (see note 2 for options) ['A/V']
+        with_compton (int): switch to control the contribution of Compton
+                            scattering (see note 3) [1]
+
 
     Returns:
         named tuple IonchamberFluxes with fields
 
-            `photo`       flux absorbed by photo-electric effect in Hz,
-
             `incident`    flux of beam incident on ion chamber in Hz,
-
             `transmitted` flux of beam output of ion chamber in Hz
+            `photo`       flux absorbed by photo-electric effect in Hz,
+            `incoh`       flux attenuated by incoherent scattering in Hz,
+
 
     Notes:
        1. The gas value can either be a string for the name of chemical
@@ -860,24 +862,38 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
 
           will both give a sensitivity of 1 microAmp / Volt .
 
+       3. The effect of Compton scattering on the ion chamber current can be approximated
+          in 3 ways with different values for `with_compton` (default=1):
+             >0  use Compton-shifted electron energy (best approximation)
+             =0  completely ignore the effect of Compton scattering on current
+             <0  use incident energy as Compton energy.
+
+          Using -1 should reproduce the calculation from Hephaestus reasonably well, but
+          using 1 is highly recommended.
+
     Examples:
 
         >>> from xraydb import ionchamber_fluxes
-        >>> fluxes = ionchamber_fluxes(gas='helium', volts=1.25, length=20.0,
-                                        energy=10000.0, sensitivity=1.e-9)
+        >>> fl = ionchamber_fluxes(gas='helium', volts=1.25, length=20.0,
+                                   energy=10000.0, sensitivity=1.e-9)
 
-        >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
-        Fluxes: In= 1.54454e+11 Hz, Out= 1.54317e+11 Hz
+        >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
+        Fluxes: In=1.39815e+11, Out=1.39692e+11, Transmitted=99.91%
 
-        >>> fluxes = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
-                                       energy=10000.0, sensitivity=1.e-9)
-        >>>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
-        Fluxes: In= 1.60143e+08 Hz, Out= 1.45341e+08 Hz
+        >>> fl = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
+                                   energy=10000.0, sensitivity=1.e-6)
 
-        >>> fluxes = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
-                                            length=20.0, energy=10000.0, sensitivity=1.e-9)
-        >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
-        Fluxes: In= 7.73069e+10 Hz, Out= 7.72312e+10 Hz
+        >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
+        Fluxes: In=1.60022e+11, Out=1.45232e+11, Transmitted=90.76%
+
+       >>> fl = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5},
+                                  volts=1.25, length=20.0, energy=10000.0,
+                                  sensitivity=1.e-6)
+
+       >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
+
+       Fluxes: In=3.41922e+11, Out=3.25594e+11, Transmitted=95.22%
+
 
     """
     from .materials import material_mu
@@ -903,27 +919,71 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         gas_comps.append((gname, frac, ionpot))
 
 
-    # note on Photo v Total attenuation:
-    # the current is from the photo-electric cross-section, so that
-    #   flux_photo = flux_in * [1 - exp(-t*mu_photo)]
-    # while total attenuation means
+    # Notes on Total attenuation and Ion Chamber Current:
+    # the total attenuation includes photo, incoherent (Compton), and
+    # coherent (Rayleigh) scattering contributions:
     #   flux_out = flux_in * exp(-t*mu_total)
 
+    # However, the current in an Ion Chamber has a contribution from
+    # both the photo-electric cross-section and the incoherent
+    # (Compton) cross-section, but not the coherent scattering.
+    # For an X-ray incident flux (in Hz) of FluxIn, the fluxes of X-rays
+    # attenuated by the different processes are
+    #    Flux_photo = FluxIn * [1 - exp(-t*mu_photo)]
+    #    Flux_incoh = FluxIn * [1 - exp(-t*mu_incoh)]
+    #    Flux_coh   = FluxIn * [1 - exp(-t*mu_coh)]
+    #    Flux_total = Flux_photo + Flux_incoh + Flux_coh
+    # The transmitted flux is then
+    #    Flux_tranmitted = FluxIn - Flux_total
+    #
+    # For the photo-electric flux, all of the X-ray energy is
+    # converted to electron and ion current:
+    #    IC_current_photo = Flux_photo * Energy * 2 * q_e / ion_pot
+    # where q_e is the electron charge (1.602e-19 C), and ion_pot is the
+    # effective ionization potential for the gas (20 to 40 eV) from
+    # `ionization_potential`.
+    #
+    # For the incoherenf flux, the energy transferred to the scattered
+    # electron is converted to electron and ion current as:
+    #    IC_current_incoh = Flux_incoh * Energy_Compton * 2 * q_e / ion_pot
+    # where
+    #    Energy_Compton = Energy/(1+m_e*c^2/Energy)
+    #
+    # is the (approximate) energy of the Compton-scattered electron.  This
+    # estimate of the energy is simplification: the transferred energy will
+    # be angle dependent, ranging from 0 to 2*Energy_Compton, with a
+    # distribution that depends on Energy and polarization.
+
     # use weighted sums for mu and ionization potential
-    mu_photo, mu_total, ion_pot =  0.0, 0.0, 0.0
+    mu_photo, mu_incoh, mu_total, ion_pot =  0.0, 0.0, 0.0, 0.0
     for gas_name, gas_frac, gas_ion_pot in gas_comps:
         gasmu_photo = material_mu(gas_name, energy=energy, kind='photo')
         gasmu_total = material_mu(gas_name, energy=energy, kind='total')
-        # gasmu_incoh = material_mu(gas_name, energy=energy, kind='incoh')
+        gasmu_incoh = material_mu(gas_name, energy=energy, kind='incoh')
 
         mu_photo += gasmu_photo * gas_frac / gas_total
         mu_total += gasmu_total * gas_frac / gas_total
+        mu_incoh += gasmu_incoh * gas_frac / gas_total
         ion_pot  += gas_ion_pot * gas_frac / gas_total
 
-    flux_photo = volts * sensitivity * ion_pot / (2 * QCHARGE * energy)
-    flux_in    = flux_photo / (1.0 - np.exp(-length*mu_photo))
+    scaled_current = volts * sensitivity * ion_pot/(2*QCHARGE)
+
+    # energy of Compton-scattered electron: median energy, approximate
+    energy_compton = 0
+    if with_compton > 0:
+        energy_compton = energy/(1 + E_MASS/energy)
+    elif with_compton < 0:
+        energy_compton = energy
+
+    flux_in = scaled_current/(energy*(1-np.exp(-length* mu_photo)) +
+                              energy_compton*(1-np.exp(-length* mu_incoh)))
+
+    flux_photo = flux_in * (1-np.exp(-length* mu_photo))
+    flux_incoh = flux_in * (1-np.exp(-length* mu_incoh))
     flux_out   = flux_in * np.exp(-length*mu_total)
-    return fluxes(photo=flux_photo, incident=flux_in, transmitted=flux_out)
+
+    return fluxes(incident=flux_in, transmitted=flux_out,
+                  photo=flux_photo, incoherent=flux_incoh)
 
 
 def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,

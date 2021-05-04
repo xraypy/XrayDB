@@ -329,12 +329,12 @@ more gases so as to better control the fraction of X-rays absorbed in a
 chamber of fixed length. This can be specified by passing in a dictionary
 of gas name and fractional density, as with::
 
-   >>> fluxes = ionchamber_fluxes(gas={'N2':0.75, 'Ar': 0.25}, volts=1.25,
-                                  energy=18000, length=10,
-                                  sensitivity=1, sensitivity_units='microA/V')
-   >>> f"{fluxes.incident:g}"
-   '1.70901e+11'
-
+   >>> fl = ionchamber_fluxes(gas={'Kr':0.5, 'Ar': 0.5}, volts=1.25,
+                              energy=18000, length=10,
+                              sensitivity=1, sensitivity_units='microA/V')
+   >>> print(f"Incident= {fl.incident:g} Hz, Transmitted flux= {fl.transmitted:g} Hz")
+   Incident= 1.43737e+10 Hz, Transmitted flux= 3.28986e+09 Hz
+   
 Finally, the pressure of the gas is sometimes adjusted to alter the
 fraction of the beam absorbed.  The calculations here all use the densities
 at STP, but changes in gas density will be exactly linear to changing the

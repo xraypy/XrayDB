@@ -2,17 +2,16 @@ import sys
 from collections import namedtuple
 import numpy as np
 
-from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
+from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC, E_MASS,
                     QCHARGE, SI_PREFIXES, index_nearest)
 
-R0 = 1.e8 * R_ELECTRON_CM 
+R0 = 1.e8 * R_ELECTRON_CM
 
 from .xraydb import XrayDB,  XrayLine
 from .chemparser import chemparse
 
-fluxes = namedtuple('IonChamberFluxes', ('photo',
-                                         'incident',
-                                         'transmitted'))
+fluxes = namedtuple('IonChamberFluxes', ('incident', 'transmitted',
+                                         'photo', 'incoherent'))
 
 DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
                                          'theta_width', 'theta_fwhm',
@@ -807,11 +806,11 @@ def mirror_reflectivity(formula, theta, energy, density=None,
 
 def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
                       energy=10000.0, sensitivity=1.e-6,
-                      sensitivity_units='A/V'):
+                      sensitivity_units='A/V', with_compton=1):
 
     """return ion chamber and PIN diode fluxes for a gas, mixture of gases, or
     semiconductor material, ion chamber length (or diode thickness), X-ray energy,
-    recorded voltage and current amplifier sensitivity.
+    recorded voltage and current amplifier sensitivity.  See note for details.
 
     Args:
         gas (string or dict):  name or formula of fill gas (see note 1) ['nitrogen']
@@ -821,15 +820,43 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         sensitivity (float): current amplifier sensitivity [1.e-6]
         sensitivity_units (string): units of current amplifier sensitivity
                                     (see note 2 for options) ['A/V']
+        with_compton (int): switch to control the contribution of Compton
+                            scattering (see note 3) [1]
+
 
     Returns:
         named tuple IonchamberFluxes with fields
 
-            `photo`       flux absorbed by photo-electric effect in Hz,
-
-            `incident`    flux of beam incident on ion chamber in Hz,
+            `incident`    flux of beam incident on ion chamber in Hz
 
             `transmitted` flux of beam output of ion chamber in Hz
+
+            `photo`       flux absorbed by photo-electric effect in Hz
+
+            `incoherent`  flux attenuated by incoherent scattering in Hz
+
+
+    Examples:
+
+        >>> from xraydb import ionchamber_fluxes
+        >>> fl = ionchamber_fluxes(gas='helium', volts=1.25, length=20.0,
+                                   energy=10000.0, sensitivity=1.e-9)
+
+        >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
+        Fluxes: In=2.79631e+11, Out=2.79383e+11, Transmitted=99.91%
+
+        >>> fl = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
+                                   energy=10000.0, sensitivity=1.e-6)
+
+        >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
+        Fluxes: In=3.20045e+11, Out=2.90464e+11, Transmitted=90.76%
+
+        >>> fl = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5},
+                                  volts=1.25, length=20.0, energy=10000.0,
+                                  sensitivity=1.e-6)
+
+        >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
+        Fluxes: In=6.83845e+11, Out=6.51188e+11, Transmitted=95.22%
 
     Notes:
        1. The gas value can either be a string for the name of chemical
@@ -838,9 +865,8 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
           fraction for mixes gases.  For diode materials, mixtures are not
           supported.
 
-          The gas formula is used in two ways:
-             a) to get the photo- and total- absorption coefficient, and
-             b) to get the effective ionization potential for the material.
+          The gas formula is used both the contributions for mu and to get
+          get the weighted effective ionization potential for the material.
 
           The effective ionization potentials are known for a handful of
           gases and diodes (see `ionization_potential` function), and range
@@ -850,34 +876,62 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
        2. The `sensitivity` and `sensitivity_units` arguments have some overlap
           to specify the sensitivity or gain of the current amplifier.
           Generally, the units in `A/V`, but you can add a common SI prefix of
-
           'p', 'pico', 'n', 'nano', (unicode 'u03bc'), 'u', 'micro', 'm', 'milli'
-
-          so that, for example
-             ionchamber_fluxes(..., sensitivity=1.e-6)
-          and
-             ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')
-
+          so that, `ionchamber_fluxes(..., sensitivity=1.e-6)` and
+          `ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')`
           will both give a sensitivity of 1 microAmp / Volt .
 
-    Examples:
+       3. The effect of Compton scattering on the ion chamber current can be approximated
+          in 3 ways with different values for `with_compton` (default=1):
 
-        >>> from xraydb import ionchamber_fluxes
-        >>> fluxes = ionchamber_fluxes(gas='helium', volts=1.25, length=20.0,
-                                        energy=10000.0, sensitivity=1.e-9)
+             >0:  use Compton-shifted electron energy (best approximation)
 
-        >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
-        Fluxes: In= 1.54454e+11 Hz, Out= 1.54317e+11 Hz
-                                       
-        >>> fluxes = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0,
-                                       energy=10000.0, sensitivity=1.e-9)
-        >>>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
-        Fluxes: In= 1.60143e+08 Hz, Out= 1.45341e+08 Hz
-        
-        >>> fluxes = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5}, volts=1.25,
-                                            length=20.0, energy=10000.0, sensitivity=1.e-9)
-        >>> print(f'Fluxes: In= {fluxes.incident:g} Hz, Out= {fluxes.transmitted:g} Hz')
-        Fluxes: In= 7.73069e+10 Hz, Out= 7.72312e+10 Hz
+             =0:  completely ignore the effect of Compton scattering on current
+
+             <0:  use incident energy as Compton energy.
+
+          Using -1 should reproduce the calculation from Hephaestus reasonably
+          well, but using 1 is highly recommended.
+
+       4. Ion Chamber Current calculation: the total attenuation in an ion
+          chamber includes photo, incoherent (Compton), and coherent (Rayleigh)
+          scattering contributions:
+
+            Flux_transmitted = Flux_in * exp(-t*mu_total)
+
+          The current in an Ion Chamber has a contribution from both the
+          photo-electric and incoherent (Compton) cross-section, but not
+          the coherent scattering. For an incident flux (in Hz) of Flux_in,
+          the fluxes of X-rays attenuated by the different processes are:
+
+             Flux_photo = Flux_in * [1 - exp(-t*mu_photo)]
+
+             Flux_incoh = Flux_in * [1 - exp(-t*mu_incoh)]
+
+             Flux_coh   = Flux_in * [1 - exp(-t*mu_coh)]
+
+             Flux_transmitted = Flux_in - Flux_total
+
+          For Flux_photo, all of the X-ray energy is converted to current:
+
+             IC_current_photo = Flux_photo * Energy * q_e / ion_pot
+
+          where q_e is the electron charge (1.602e-19 C), and ion_pot is the
+          effective ionization potential (see `ionization_potential`).
+
+          For Flux_incoh, the energy transferred to the electron is converted
+          to electron and ion current as:
+
+             IC_current_incoh = Flux_incoh * Energy_Compton * q_e / ion_pot
+
+          where:
+
+             Energy_Compton = Energy/(1+m_e*c^2/Energy)
+
+          is the approximate energy of the Compton-scattered electron.  This
+          estimate of the energy is a simplification: the transferred energy will
+          be angle-dependent, ranging from 0 to 2*Energy_Compton, with a
+          distribution that depends on Energy and polarization.
 
     """
     from .materials import material_mu
@@ -902,32 +956,40 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         gas_total += frac
         gas_comps.append((gname, frac, ionpot))
 
+    # energy of Compton-scattered electron: median energy, approximate
+    # can turn off Compton energy with with_compton switch:
+    energy_compton = 0      # no Compton contribution
+    if with_compton > 0:    # median Compton energy
+        energy_compton = energy/(1 + E_MASS/energy)
+    elif with_compton < 0:  # use incident X-ray energy: hephaestus
+        energy_compton = energy
 
-    # note on Photo v Total attenuation:
-    # the current is from the photo-electric cross-section, so that
-    #   flux_photo = flux_in * [1 - exp(-t*mu_photo)]
-    # while total attenuation means
-    #   flux_out = flux_in * exp(-t*mu_total)
+    # use weighted sums for mu values and ionization potential
+    mu_photo, mu_incoh, mu_total, ion_pot =  0.0, 0.0, 0.0, 0.0
+    for gas_name, gas_frac, gas_ion_pot in gas_comps:
+        gasmu_photo = material_mu(gas_name, energy=energy, kind='photo')
+        gasmu_total = material_mu(gas_name, energy=energy, kind='total')
+        gasmu_incoh = material_mu(gas_name, energy=energy, kind='incoh')
 
-    for gas, frac, ionpot in gas_comps:
-        mu_photo = material_mu(gas, energy=energy, kind='photo')
-        mu_total = material_mu(gas, energy=energy, kind='total')
+        mu_photo += gasmu_photo * gas_frac/gas_total
+        mu_total += gasmu_total * gas_frac/gas_total
+        mu_incoh += gasmu_incoh * gas_frac/gas_total
+        ion_pot  += gas_ion_pot * gas_frac/gas_total
 
-        flux_photo = volts * sensitivity * ionpot / (2 * QCHARGE * energy)
-        flux_photo *= (frac/gas_total)
-        flux_in    = flux_photo / (1.0 - np.exp(-length*mu_photo))
-        flux_out   = flux_in * np.exp(-length*mu_total)
+    absorbed_energy = (energy*(1-np.exp(-length* mu_photo)) +
+                       energy_compton*(1-np.exp(-length* mu_incoh)))
+    flux_in    = volts*sensitivity*ion_pot/(QCHARGE*absorbed_energy)
+    flux_photo = flux_in * (1-np.exp(-length* mu_photo))
+    flux_incoh = flux_in * (1-np.exp(-length* mu_incoh))
+    flux_out   = flux_in * np.exp(-length*mu_total)
 
-        fphoto += flux_photo
-        fin    += flux_in
-        fout   += flux_out
-
-    return fluxes(photo=fphoto, incident=fin,transmitted=fout)
+    return fluxes(incident=flux_in, transmitted=flux_out,
+                  photo=flux_photo, incoherent=flux_incoh)
 
 
 def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                  polarization='s', ignore_f2=False, ignore_f1=False, m=1):
-    
+
     """darwin width for a crystal reflection and energy
 
     Args:
@@ -939,30 +1001,30 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
       ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
       ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
       m (int):           order of reflection    [1]
-      
+
     Returns:
 
       A named tuple 'DarwinWidth' with the following fields
 
-        `theta`        float, nominal Bragg angle, in rad,
+        `theta`:        float, nominal Bragg angle, in rad,
 
-        `theta_offset` float, angular offset from Bragg angle, in rad,
+        `theta_offset`: float, angular offset from Bragg angle, in rad,
 
-        `theta_width`  float, estimated angular Darwin width, in rad,
+        `theta_width`:  float, estimated angular Darwin width, in rad,
 
-        `theta_fwhm`   float, estimated FWHM of angular intensity, in rad,
+        `theta_fwhm`:   float, estimated FWHM of angular intensity, in rad,
 
-        `energy_width` float, estimated angular Darwin width, in rad,
+        `energy_width`: float, estimated angular Darwin width, in rad,
 
-        `energy_fwhm`  float, estimated FWHM of energy intensity, in eV,
+        `energy_fwhm`:  float, estimated FWHM of energy intensity, in eV,
 
-        `zeta`         nd-array of Zeta parameter (delta_Lambda / Lambda),
+        `zeta`:         nd-array of Zeta parameter (delta_Lambda / Lambda),
 
-        `dtheta`       nd-array of angles away from Bragg angle, theta in rad,
+        `dtheta`:       nd-array of angles away from Bragg angle, theta in rad,
 
-        `denergy`      nd-array of energies away from Bragg energy, in eV,
+        `denergy`:      nd-array of energies away from Bragg energy, in eV,
 
-        `intensity`    nd-array of reflected intensity
+        `intensity`:    nd-array of reflected intensity
 
     Notes:
 
@@ -971,20 +1033,20 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         J Als-Nielsen, and D. McMorrow.
 
      2. Only diamond structures (Si, Ge, diamond) are currently supported.
-        Default values of lattice constant `a` are in Angstroms:
-           5.4309 for Si, 5.6578, for 'Ge', and 3.567 for 'C'.
-        
+        Default values of lattice constant `a` are in Angstroms: 5.4309 for Si,
+        5.6578, for 'Ge', and 3.567 for 'C'.
+
      3. The `theta_width` and `energy_width` values will closely match the
         width of the intensity profile that would = 1 when ignoring the
         effect of absorption.  These are the values commonly reported as
         'Darwin Width'.  The value reported for `theta_fwhm' and
         `energy_fwhm` are larger than this by sqrt(9/8) ~= 1.06.
-        
+
      4. Polarization can be 's', 'p', 'u',  or None. 's' means vertically
         deflecting crystal and a horizontally-polarized source, as for most
         synchrotron beamlines. 'p' is for a horizontally-deflecting crystal.
         'u' or None is for unpolarized light, as for most fluorescence/emission.
-        
+
     Examples:
         >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
         >>> dw.theta_width, dw.energy_width
@@ -998,7 +1060,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     if hklsum % 4 == 0 and (h_ % 2 == 0 and k_ % 2 == 0 and l_ % 2 == 0):
         eqr = 8
     elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
-        eqr =4*np.sqrt(2)  
+        eqr =4*np.sqrt(2)
     else:
         raise ValueError("hkl must sum to 4 or be all odd")
 
@@ -1015,9 +1077,9 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     theta  = np.arcsin(lambd/(2*dspace))
     q  = 0.5 / dspace
     f1 = f2 = 0
-    if not ignore_f1: 
+    if not ignore_f1:
         f1 = f1_chantler(crystal, energy)
-    if not ignore_f2:         
+    if not ignore_f2:
         f2 = f2_chantler(crystal, energy)
 
     gscale = 2 * (dspace)**2 * R0 / (m*a**3)
@@ -1026,7 +1088,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         gscale *= (1 + abs(np.cos(2*theta)))/2.0
     elif polarization.startswith('p'):
         gscale *= abs(np.cos(2*theta))
-        
+
     g0 = gscale * 8   * (f0(crystal, 0)[0] + f1 - 1j*f2)
     g  = gscale * eqr * (f0(crystal, q)[0] + f1 - 1j*f2)
 
@@ -1039,7 +1101,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     # as a check, the following formula from L Berman (and X0h doc)
     # will give identical results as theta_width. [sin(2x)= 2sin(x)*cos(x)]
     # dw_lb = 2*R0*lambd**2 * eqr*abs(f0(crystal, q)[0] + f1 - 1j*f2)/(m*np.pi*a**3* np.sin(2*theta))
-    
+
     #  hueristic zeta range and step sizes for crystals:
     sz =  zeta_offset
 
@@ -1055,12 +1117,12 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     r[_n] = (xc + np.sqrt(xc**2 -1))[_n]
 
     return DarwinWidth(theta=theta,
-                       theta_offset=theta_offset, 
+                       theta_offset=theta_offset,
                        theta_width=total*np.tan(theta),
                        theta_fwhm=fwhm*np.tan(theta),
                        energy_width=total*energy,
-                       energy_fwhm=fwhm*energy, 
-                       zeta=zeta,                       
+                       energy_fwhm=fwhm*energy,
+                       zeta=zeta,
                        dtheta=zeta*np.tan(theta),
                        denergy=-zeta*energy,
                        intensity=abs(r*r.conjugate()))

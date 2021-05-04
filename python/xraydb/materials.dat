@@ -34,7 +34,7 @@
   argon              | 0.001784   | gas, element        | Ar
   krypton            | 0.003749   | gas, element        | Kr
   xenon              | 0.005894   | gas, element        | Xe
-  air                | 0.001225   | gas                 | (N2)0.7808(O2)0.2095Ar9.34e-3(CO2)4.1e-3Ne18.18e-6He5.24e-6(CH4)1.7e-6Kr1.14e-6H0.5e-6Xe0.087e-6
+  air                | 0.001225   | gas                 | (N2)0.7808(O2)0.2095Ar9.34e-3(CO2)4.1e-4Ne1.82e-5He5.24e-6(CH4)1.8e-6Kr1.0e-6(H2)0.5e-6Xe9.e-8
   methane            | 0.000657   | gas                 | CH4
   carbon dioxide     | 0.001562   | gas                 | CO2
 

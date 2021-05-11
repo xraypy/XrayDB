@@ -249,7 +249,7 @@ def get_materials(force_read=False, categories=None):
         _materials = _read_materials_db()
     if categories is not None:
         if not type(categories) is list:
-            categories = list(categories)
+            categories = list([categories])
         filtered_materials = {
             k: v for k,v in _materials.items() if
             (set(v.categories) & set(categories))

@@ -247,7 +247,16 @@ def get_materials(force_read=False, categories=None):
 
     if force_read or _materials is None:
         _materials = _read_materials_db()
-    return _materials
+    if categories is not None:
+        if not type(categories) is list:
+            categories = list(categories)
+        filtered_materials = {
+            k: v for k,v in _materials.items() if
+            (set(v.categories) & set(categories))
+        }
+        return filtered_materials
+    else:    
+        return _materials
 
 
 def add_material(name, formula, density, categories=None):

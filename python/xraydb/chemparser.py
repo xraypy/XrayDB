@@ -100,8 +100,18 @@ class ChemFormulaParser(object):
         self.formula = formula
 
     def parse(self, formula=None):
-        if formula is not None:
-            self.formula = formula
+        if formula is None:
+            formula = self.formula
+        # handle numbers that start with '.' by inserting 0:
+        #   'Fe.7Mg.3O' -> 'Fe0.7Mg0.3O'
+        start, comps = 0, []
+        for dpoint, char in enumerate(formula):
+            if char=='.' and formula[dpoint-1] not in '0123456789':
+                comps.append(formula[start:dpoint]+'0')
+                start = dpoint
+        comps.append(formula[start:])
+        formula = ''.join(comps)
+
         self.tok = Tokenizer(formula)
         self.tok.gettoken()
         seq = self.parse_sequence()

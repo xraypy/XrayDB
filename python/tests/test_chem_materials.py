@@ -18,6 +18,7 @@ def test_chemparse():
                 'Mn(SO4)2(H2O)7':  {'H': 14.0, 'S': 2.0, 'Mn': 1, 'O': 15.0},
                 'Mg(SO4)2': {'Mg': 1, 'S': 2, 'O':8},
                 'Mg0.5Fe0.5' : {'Mg': 0.5, 'Fe': 0.5},
+                'Mg.3Fe.7' : {'Mg': 0.3, 'Fe': 0.7},
                 'CO': {'C': 1, 'O': 1} }
     for formula, cert in examples.items():
         ret = chemparse(formula)

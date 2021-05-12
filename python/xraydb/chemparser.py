@@ -43,6 +43,7 @@ for sym in ('Ac', 'Ag', 'Al', 'Am', 'Ar', 'As', 'At', 'Au', 'B', 'Ba', 'Be',
        'Tc', 'Te', 'Th', 'Ti', 'Tl', 'Tm', 'U', 'Unh', 'Unp', 'Unq', 'Uns',
        'V', 'W', 'Xe', 'Y', 'Yb', 'Zn', 'Zr'):
     ELEMENTS[sym]  = Element(sym)
+ELEMENTS['D']  = Element('H')
 
 class ElementSequence:
     def __init__(self, *seq):
@@ -110,7 +111,7 @@ class ChemFormulaParser(object):
                 comps.append(formula[start:dpoint]+'0')
                 start = dpoint
         comps.append(formula[start:])
-        formula = ''.join(comps)
+        formula = ''.join(comps).replace(' ', '')
 
         self.tok = Tokenizer(formula)
         self.tok.gettoken()

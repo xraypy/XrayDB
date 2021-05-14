@@ -1139,7 +1139,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                        intensity=abs(r*r.conjugate()))
 
 
-def transmission_sample(sample, energy, absorp_total=2.6, area=None, 
+def transmission_sample(sample, energy, absorp_total=2.6, area=1, 
                         density=None, frac_type='mass'):
     """Analyze transmission mode sample. Sample can be specified as a chemical
     formula (str or dict) or as mass fractions (dict). One mass fraction can 
@@ -1157,7 +1157,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=None,
         energy (float): X-ray energy (eV) at which transmission will be analyzed
         absorp_total (float): total absorption (mu_t*d) of the sample at the
                               specified energy
-        area (float)(optional): area (cm^2) of the sample
+        area (float)(optional): area (cm^2) of the sample. Default is 1 cm^2.
         density (float)(optional): density (g/cm^3) of the sample
         frac_type (str)(optional): can be `mass` or `molar`, if sample is dict, 
                                    this keyword specifies whether the indicated 

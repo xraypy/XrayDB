@@ -19,6 +19,17 @@ DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
                                          'zeta', 'dtheta', 'denergy',
                                          'intensity'))
 
+TransmissionSample = namedtuple('TransmissionSample', ('energy_eV',
+                                                       'absorp_total',
+                                                       'mass_fractions',
+                                                       'absorbance_steps',
+                                                       'area_cm2',
+                                                       'mass_total_mg',
+                                                       'mass_components_mg',
+                                                       'density',
+                                                       'thickness_mm',
+                                                       'absorption_length_um'))
+
 
 _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
                                  284.2, 409.9, 543.1, 696.7, 870.2, 1070.8,
@@ -1128,22 +1139,30 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                        intensity=abs(r*r.conjugate()))
 
 
-def analyze_transmission_sample_from_mass_fracs(mass_fracs, energy, 
-                                                absorp_total=2.6, area=None, 
-                                                density=None):
-    """Analyze transmission mode sample from mass fractions. Mass fractions
-    can be specified by element or compound. One mass fraction can have value 
-    -1 to indicate the unspecified portion of the mass fractions (i.e. so 
-    that sum is made to equal one).
+def transmission_sample(sample, energy, absorp_total=2.6, area=None, 
+                        density=None, frac_type='mass'):
+    """Analyze transmission mode sample. Sample can be specified as a chemical
+    formula (str or dict) or as mass fractions (dict). One mass fraction can 
+    have value -1 to indicate the unspecified portion of the mass fractions 
+    (i.e. so made to equal one).
+
+    Absorbance steps for each element are calculated. This is done by performing
+    a polynomial fit to the pre-edge absorption (from -200 to -50 eV of specified energy) 
+    and extrapolating that to the post-edge, then comparing against the actual 
+    computed post-edge absorption.
 
     Args:
-        mass_fracs (dict): elements/compounds and their mass fractions. one 
+        sample (str or dict): elements/compounds and their mass fractions. one 
                            entry can have value -1 to indicate unspecified portion
         energy (float): X-ray energy (eV) at which transmission will be analyzed
         absorp_total (float): total absorption (mu_t*d) of the sample at the
                               specified energy
         area (float)(optional): area (cm^2) of the sample
         density (float)(optional): density (g/cm^3) of the sample
+        frac_type (str)(optional): can be `mass` or `molar`, if sample is dict, 
+                                   this keyword specifies whether the indicated 
+                                   fractions are mass fractions or 
+                                   molar fractions (i.e. chemical formula)
 
     Returns:
         dictionary with fields
@@ -1171,138 +1190,116 @@ def analyze_transmission_sample_from_mass_fracs(mass_fracs, energy,
     Examples:
 
         5% Fe in Silica
-        >>> analyze_transmission_sample_from_mass_fracs(
-                mass_fracs={'Fe': 0.05, 'SiO2': -1},
+        >>> transmission_sample(
+                sample={'Fe': 0.05, 'SiO2': -1},
+                energy=xraydb.xray_edge('Fe', 'K').energy + 50,
+                area=1.33,
+                frac_type='mass',
+            )
+        
+        Output:
+            TransmissionSample(
+                energy_eV=7162.0,
+                absorp_total=2.6,
+                mass_fractions={
+                    'Fe': 0.05,
+                    'Si': 0.4440648769202603,
+                    'O': 0.5059351230797396},
+                absorbance_steps={
+                    'Fe': 0.6692395733146204,
+                    'Si': 1.297403071978392e-06,
+                    'O': 3.386553723091669e-07},
+                area_cm2=1.33,
+                mass_total_mg=51.05953690489308,
+                mass_components_mg={
+                    'Fe': 2.552976845244654,
+                    'Si': 22.673746971276834,
+                    'O': 25.832813088371587},
+                density=None,
+                thickness_mm=None,
+                absorption_length_um=None
+            )
+
+        >>> transmission_sample(
+                sample='Fe2O3',
                 energy=xraydb.xray_edge('Fe', 'K').energy + 50,
                 area=1.33
             )
+
+        Output:
+            TransmissionSample(
+                energy_eV=7162.0,
+                absorp_total=2.6,
+                mass_fractions={
+                    'Fe': 0.6994307614270416,
+                    'O': 0.3005692385729583},
+                absorbance_steps={
+                    'Fe': 2.2227981005407176,
+                    'O': 4.7769571901536886e-08},
+                area_cm2=1.33,
+                mass_total_mg=12.123291571370844,
+                mass_components_mg={
+                    'Fe': 8.479403054765946,
+                    'O': 3.643888516604898},
+                density=None,
+                thickness_mm=None,
+                absorption_length_um=None
+            )
+
+        >>> transmission_sample(
+                sample={'Fe': 2, 'O': 3},
+                energy=xraydb.xray_edge('Fe', 'K').energy + 50,
+                area=1.33,
+                frac_type='molar'
+            )
         
-        {'absorbance_steps': {'Fe': 0.6692395733146204,
-                            'O': 3.386553723091669e-07,
-                            'Si': 1.297403071978392e-06},
-        'absorp_total': 2.6,
-        'absorption_length(um)': None,
-        'area(cm^2)': 1.33,
-        'density(g/cc)': None,
-        'energy(eV)': 7162.0,
-        'mass_components(mg)': {'Fe': 2.552976845244654,
-                                'O': 25.832813088371587,
-                                'Si': 22.673746971276834},
-        'mass_fractions': {'Fe': 0.05,
-                            'O': 0.5059351230797396,
-                            'Si': 0.4440648769202603},
-        'mass_total(mg)': 51.05953690489308,
-        'thickness(mm)': None}
+        Output same as previous example.
     """
-    mass_fracs = _validate_mass_fracs(mass_fracs)
-    mu_tot = sum([mu_elam(k, energy) * v for k, v in mass_fracs.items()])
+    if type(sample) is str:
+        sample = formula_to_mass_fracs(sample)
+    if type(sample) is dict:
+        if frac_type == 'mass':
+            sample = _validate_mass_fracs(sample)
+        elif frac_type == 'molar':
+            sample = formula_to_mass_fracs(sample)
+        else:
+            raise RuntimeError('`frac_type` must be `mass` or `molar`')
+    mu_tot = sum([mu_elam(k, energy) * v for k, v in sample.items()])
     rho_d = absorp_total / mu_tot
 
     absorbance_steps = {}
     pre_edge = np.linspace(energy - 200, energy - 50, 100)
-    for el in mass_fracs.keys():
+    for el in sample.keys():
         coeffs = np.polyfit(pre_edge, mu_elam(el, pre_edge), 3)
         extrapolated = sum([c * energy ** (len(coeffs) - 1 - i) \
                             for i, c in enumerate(coeffs)])
         post_edge = mu_elam(el, energy)
-        absorbance_steps[el] = (post_edge - extrapolated) * mass_fracs[el] * rho_d
+        absorbance_steps[el] = (post_edge - extrapolated) * sample[el] * rho_d
 
-    results = {}
-    results['energy(eV)'] = energy
-    results['absorp_total'] = absorp_total
-    results['mass_fractions'] = mass_fracs
-    results['absorbance_steps'] = absorbance_steps
-
-    results['area(cm^2)'] = None
-    results['mass_total(mg)'] = None
-    results['mass_components(mg)'] = None
-    results['density(g/cc)'] = None
-    results['thickness(mm)'] = None
-    results['absorption_length(um)'] = None
+    mass_total = None
+    mass_components_mg = None
+    thickness_mm = None
+    absorption_length_um = None
 
     if area:
-        results['area(cm^2)'] = area
         mass_total = rho_d * area * 1000 # mg
-        results['mass_total(mg)'] = mass_total
-        results['mass_components(mg)'] = {k: v * mass_total for k, v in mass_fracs.items()}
+        mass_components_mg = {k: v * mass_total for k, v in sample.items()}
         if density:
-            results['density(g/cc)'] = density
-            results['thickness(mm)'] = mass_total / (area * 100) / density
-            results['absorption_length(um)'] = 1 / density / mu_tot * 1e4
+            thickness_mm = mass_total / (area * 100) / density
+            absorption_length_um = 1 / density / mu_tot * 1e4
 
-    return results
-
-
-def analyze_transmission_sample_from_formula(formula, energy, absorp_total=2.6, 
-                                    area=None, density=None):
-    """Analyze transmission mode sample from molecular formula.
-
-    Args:
-        formula (str or dict): chemical formula
-        energy (float): X-ray energy (eV) at which transmission will be analyzed
-        absorp_total (float): total absorption (mu_t*d) of the sample at the
-                              specified energy
-        area (float)(optional): area (cm^2) of the sample
-        density (float)(optional): density (g/cm^3) of the sample
-
-    Returns:
-        dictionary with fields
-
-            `energy(eV)`        incident energy
-
-            `absorp_total`      total absorption
-
-            `mass_fractions`    mass fractions of elements
-
-            `absorbance_steps`  absorbance steps of each element in the sample
-
-            `area (cm^2)`       area, if specified
-
-            `mass_total(mg)`    total mass of sample (if area specified)
-
-            `mass_components(mg)`   mass of each element (if area specified)
-
-            `density(g/cc)`     density, if specified
-
-            `thickness(mm)`     thickness of sample (if area AND density specified)
-
-            `absorption_length(um)` abs. length of sample (if area AND density specified)
-
-    Examples:
-
-        >>> analyze_transmission_sample_from_formula(
-                formula='Fe2O3',
-                energy=xraydb.xray_edge('Fe', 'K').energy + 50,
-                area=1.33
-            )
-        {'absorbance_steps': {'Fe': 2.2227981005407176, 'O': 4.7769571901536886e-08},
-        'absorp_total': 2.6,
-        'absorption_length(um)': None,
-        'area(cm^2)': 1.33,
-        'density(g/cc)': None,
-        'energy(eV)': 7162.0,
-        'mass_components(mg)': {'Fe': 8.479403054765946, 'O': 3.643888516604898},
-        'mass_fractions': {'Fe': 0.6994307614270416, 'O': 0.3005692385729583},
-        'mass_total(mg)': 12.123291571370844,
-        'thickness(mm)': None}
-
-        OR
-
-        >>> analyze_transmission_sample_from_formula(
-                formula={'Fe': 2, 'O': 3},
-                energy=xraydb.xray_edge('Fe', 'K').energy + 50,
-                area=1.33
-            )
-        Output same as previous example
-    """
-    mass_fracs = formula_to_mass_fracs(formula)
-    return analyze_transmission_sample_from_mass_fracs(
-                mass_fracs=mass_fracs,
-                energy=energy,
-                absorp_total=absorp_total,
-                area=area,
-                density=density,
-                )
+    return TransmissionSample(
+                            energy_eV=energy,
+                            absorp_total=absorp_total,
+                            mass_fractions=sample,
+                            absorbance_steps=absorbance_steps,
+                            area_cm2=area,
+                            mass_total_mg=mass_total,
+                            mass_components_mg=mass_components_mg,
+                            density=density,
+                            thickness_mm=thickness_mm,
+                            absorption_length_um=absorption_length_um
+                            )
 
 
 def formula_to_mass_fracs(formula):

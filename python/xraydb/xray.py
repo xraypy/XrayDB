@@ -19,6 +19,17 @@ DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
                                          'zeta', 'dtheta', 'denergy',
                                          'intensity'))
 
+TransmissionSample = namedtuple('TransmissionSample', ('energy_eV',
+                                                       'absorp_total',
+                                                       'mass_fractions',
+                                                       'absorbance_steps',
+                                                       'area_cm2',
+                                                       'mass_total_mg',
+                                                       'mass_components_mg',
+                                                       'density',
+                                                       'thickness_mm',
+                                                       'absorption_length_um'))
+
 
 _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
                                  284.2, 409.9, 543.1, 696.7, 870.2, 1070.8,
@@ -1126,3 +1137,254 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                        dtheta=zeta*np.tan(theta),
                        denergy=-zeta*energy,
                        intensity=abs(r*r.conjugate()))
+
+
+def transmission_sample(sample, energy, absorp_total=2.6, area=1, 
+                        density=None, frac_type='mass'):
+    """Analyze transmission mode sample. Sample can be specified as a chemical
+    formula (str or dict) or as mass fractions (dict). One mass fraction can 
+    have value -1 to indicate the unspecified portion of the mass fractions 
+    (i.e. so made to equal one).
+
+    Absorbance steps for each element are calculated. This is done by performing
+    a polynomial fit to the pre-edge absorption (from -200 to -50 eV of specified energy) 
+    and extrapolating that to the post-edge, then comparing against the actual 
+    computed post-edge absorption.
+
+    Args:
+        sample (str or dict): elements/compounds and their mass fractions. one 
+                           entry can have value -1 to indicate unspecified portion
+        energy (float): X-ray energy (eV) at which transmission will be analyzed
+        absorp_total (float): total absorption (mu_t*d) of the sample at the
+                              specified energy
+        area (float)(optional): area (cm^2) of the sample. Default is 1 cm^2.
+        density (float)(optional): density (g/cm^3) of the sample
+        frac_type (str)(optional): can be `mass` or `molar`, if sample is dict, 
+                                   this keyword specifies whether the indicated 
+                                   fractions are mass fractions or 
+                                   molar fractions (i.e. chemical formula)
+
+    Returns:
+        dictionary with fields
+
+            `energy(eV)`        incident energy
+
+            `absorp_total`      total absorption
+
+            `mass_fractions`    mass fractions of elements
+
+            `absorbance_steps`  absorbance steps of each element in the sample
+
+            `area (cm^2)`       area, if specified
+
+            `mass_total(mg)`    total mass of sample (if area specified)
+
+            `mass_components(mg)`   mass of each element (if area specified)
+
+            `density(g/cc)`     density, if specified
+
+            `thickness(mm)`     thickness of sample (if area AND density specified)
+
+            `absorption_length(um)` abs. length of sample (if area AND density specified)
+
+    Examples:
+
+        5% Fe in Silica
+        >>> transmission_sample(
+                sample={'Fe': 0.05, 'SiO2': -1},
+                energy=xraydb.xray_edge('Fe', 'K').energy + 50,
+                area=1.33,
+                frac_type='mass',
+            )
+        
+        Output:
+            TransmissionSample(
+                energy_eV=7162.0,
+                absorp_total=2.6,
+                mass_fractions={
+                    'Fe': 0.05,
+                    'Si': 0.4440648769202603,
+                    'O': 0.5059351230797396},
+                absorbance_steps={
+                    'Fe': 0.6692395733146204,
+                    'Si': 1.297403071978392e-06,
+                    'O': 3.386553723091669e-07},
+                area_cm2=1.33,
+                mass_total_mg=51.05953690489308,
+                mass_components_mg={
+                    'Fe': 2.552976845244654,
+                    'Si': 22.673746971276834,
+                    'O': 25.832813088371587},
+                density=None,
+                thickness_mm=None,
+                absorption_length_um=None
+            )
+
+        >>> transmission_sample(
+                sample='Fe2O3',
+                energy=xraydb.xray_edge('Fe', 'K').energy + 50,
+                area=1.33
+            )
+
+        Output:
+            TransmissionSample(
+                energy_eV=7162.0,
+                absorp_total=2.6,
+                mass_fractions={
+                    'Fe': 0.6994307614270416,
+                    'O': 0.3005692385729583},
+                absorbance_steps={
+                    'Fe': 2.2227981005407176,
+                    'O': 4.7769571901536886e-08},
+                area_cm2=1.33,
+                mass_total_mg=12.123291571370844,
+                mass_components_mg={
+                    'Fe': 8.479403054765946,
+                    'O': 3.643888516604898},
+                density=None,
+                thickness_mm=None,
+                absorption_length_um=None
+            )
+
+        >>> transmission_sample(
+                sample={'Fe': 2, 'O': 3},
+                energy=xraydb.xray_edge('Fe', 'K').energy + 50,
+                area=1.33,
+                frac_type='molar'
+            )
+        
+        Output same as previous example.
+    """
+    if type(sample) is str:
+        sample = formula_to_mass_fracs(sample)
+    if type(sample) is dict:
+        if frac_type == 'mass':
+            sample = _validate_mass_fracs(sample)
+        elif frac_type == 'molar':
+            sample = formula_to_mass_fracs(sample)
+        else:
+            raise RuntimeError('`frac_type` must be `mass` or `molar`')
+    mu_tot = sum([mu_elam(k, energy) * v for k, v in sample.items()])
+    rho_d = absorp_total / mu_tot
+
+    absorbance_steps = {}
+    pre_edge = np.linspace(energy - 200, energy - 50, 100)
+    for el in sample.keys():
+        coeffs = np.polyfit(pre_edge, mu_elam(el, pre_edge), 3)
+        extrapolated = sum([c * energy ** (len(coeffs) - 1 - i) \
+                            for i, c in enumerate(coeffs)])
+        post_edge = mu_elam(el, energy)
+        absorbance_steps[el] = (post_edge - extrapolated) * sample[el] * rho_d
+
+    mass_total = None
+    mass_components_mg = None
+    thickness_mm = None
+    absorption_length_um = None
+
+    if area:
+        mass_total = rho_d * area * 1000 # mg
+        mass_components_mg = {k: v * mass_total for k, v in sample.items()}
+        if density:
+            thickness_mm = mass_total / (area * 100) / density
+            absorption_length_um = 1 / density / mu_tot * 1e4
+
+    return TransmissionSample(
+                            energy_eV=energy,
+                            absorp_total=absorp_total,
+                            mass_fractions=sample,
+                            absorbance_steps=absorbance_steps,
+                            area_cm2=area,
+                            mass_total_mg=mass_total,
+                            mass_components_mg=mass_components_mg,
+                            density=density,
+                            thickness_mm=thickness_mm,
+                            absorption_length_um=absorption_length_um
+                            )
+
+
+def formula_to_mass_fracs(formula):
+    """Calculate mass fractions of elements from a given molecular formula.
+
+    Args:
+        formula (str or dict): chemical formula
+    
+    Returns:
+        dict with fields of each element and values of their mass fractions
+
+    Example:
+        >>> formula_to_mass_fracs('Fe2O3')
+        {'Fe': 0.6994307614270416, 'O': 0.3005692385729583}
+
+        >>> formula_to_mass_fracs({'Fe': 2, 'O': 3})
+        {'Fe': 0.6994307614270416, 'O': 0.3005692385729583}
+    """
+    if type(formula) is str:
+        simplified_formula = chemparse(formula)
+    elif type(formula) is dict:
+        simplified_formula = {}
+        for k, v in formula.items():
+            elements = chemparse(k) # handle case of compound formula, e.g. {'Mn':1, 'SiO2':3}
+            elements = {el : c * v for el, c in elements.items()}
+            for el, c in elements.items():
+                if el in simplified_formula:
+                    simplified_formula[el] += c
+                else:
+                    simplified_formula[el] = c
+    else:
+        raise ValueError('`formula` must have type `str` or `dict`')
+    mol_weight = sum([v * atomic_mass(k) for k, v in simplified_formula.items()])
+    mass_fracs = {k: v * atomic_mass(k) / mol_weight for k, v in simplified_formula.items()}
+    return mass_fracs
+
+
+def mass_fracs_to_formula(mass_fracs):
+    """Calculate molecular formula from a given  mass fractions of elements.
+
+    Args:
+        mass_fracs (dict): mass fractions of elements
+    
+    Returns:
+        dict with fields of each element and values of their coefficients
+
+    Example:
+        >>> mass_fracs_to_formula({'Fe': 0.7, 'SiO2': -1})
+        {
+            'Fe': 0.012534694242994, 
+            'Si': 0.004993092888171364, 
+            'O': 0.009986185776342726
+        }
+    """
+    mass_fracs = _validate_mass_fracs(mass_fracs)
+    masses = {}
+    for el, _ in mass_fracs.items():
+        parsed = chemparse(el)
+        masses[el] = sum([atomic_mass(el) * c for el, c in parsed.items()])
+
+    coeffs = {k: mass_fracs[k] / masses[k] for k in mass_fracs.keys()}
+
+    return coeffs
+
+
+def _validate_mass_fracs(mass_fracs):
+    """Validate mass fractions. Either verify they sum to one, or calculate
+    the remaining portion of a compound/element with value specified as -1.
+
+    Additionally, compounds specified in mass_fracs will be separated to the
+    individual elements.
+    """
+    if any([v == -1 for v in mass_fracs.values()]):
+        unknown = [k for k, v in mass_fracs.items() if v == -1]
+        assert len(unknown) == 1, 'Multiple unknown weight percentages'
+        mass_fracs[unknown[0]] = 1 - sum({k:v for k, v in mass_fracs.items() if k != unknown[0]}.values())
+    else:
+        compare = abs(sum([v for v in mass_fracs.values()]) - 1) < 1e-4
+        if not compare:
+            raise RuntimeError("Mass fractions do not add up to one.")
+    
+    simplified_mass_fracs = {}
+    for comp, frac in mass_fracs.items():
+        parsed = chemparse(comp)
+        parsed_sum = sum([atomic_mass(el) * c for el, c in parsed.items()])
+        for el, c in parsed.items():
+            simplified_mass_fracs[el] = atomic_mass(el) * c / parsed_sum * frac
+    return simplified_mass_fracs

@@ -25,7 +25,7 @@ from .xray import (atomic_number, atomic_symbol, atomic_mass,
                    incoherent_cross_section_elam, guess_edge,
                    xray_delta_beta, get_xraydb, darwin_width,
                    mirror_reflectivity, ionchamber_fluxes,
-                   ionization_potential)
+                   ionization_potential, transmission_sample)
 
 from ._version import get_versions
 __version__ = get_versions()['version']

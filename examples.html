@@ -4,15 +4,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Example Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Using XrayDB from Python" href="python.html" />
@@ -43,7 +44,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="example-calculations-of-x-ray-properties-of-materials">
+  <section id="example-calculations-of-x-ray-properties-of-materials">
 <span id="example-calcs"></span><h1>Example Calculations of X-ray properties of materials<a class="headerlink" href="#example-calculations-of-x-ray-properties-of-materials" title="Permalink to this headline">¶</a></h1>
 <p>Here, a few detailed examples of using the <cite>xraydb.sqlite</cite> to calculate the
 X-ray properties of materials are shown.  These all use the functions in
@@ -52,7 +53,7 @@ chapter, <a class="reference internal" href="python.html#python-api"><span class
 X-ray physics, but will not give a complete tutorial on the concepts here.
 For reference see <span id="id1">[<a class="reference internal" href="biblio.html#id2">Als-Nielsen and McMorrow (2011)</a>]</span> for example.  Some of
 these calculations are also available at  <a class="reference external" href="https://millenia.cars.aps.anl.gov/xraydb">XrayDB Web App (beta!)</a>.</p>
-<div class="section" id="x-ray-attenuation-by-elements">
+<section id="x-ray-attenuation-by-elements">
 <h2>X-ray attenuation by elements<a class="headerlink" href="#x-ray-attenuation-by-elements" title="Permalink to this headline">¶</a></h2>
 <p>The XrayDB database tabulates values of the X-ray mass attenuation
 coefficient, <span class="math notranslate nohighlight">\(\mu/\rho\)</span>, for each element.  In most of the X-ray
@@ -89,10 +90,12 @@ following script will plot <span class="math notranslate nohighlight">\(\mu/\rho
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id5">
+<figure class="align-center" id="id5">
 <span id="fig-mu-depth"></span><a class="reference external image-reference" href="_images/mu_elements.png"><img alt="_images/mu_elements.png" src="_images/mu_elements.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">X-ray mass attenuation coefficient for C, Cu, and Au.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">X-ray mass attenuation coefficient for C, Cu, and Au.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>As you can see in Figure from this figure, the attenuation drops very
 strongly with <span class="math notranslate nohighlight">\(E\)</span> – approximately as <span class="math notranslate nohighlight">\(E^3\)</span>. <span class="math notranslate nohighlight">\(\mu\)</span> also
 depends strongly with <em>Z</em>, though the sharp absorption edges make this more
@@ -134,10 +137,12 @@ different components of <span class="math notranslate nohighlight">\(\mu/\rho\)<
 </pre></div>
 </div>
 <p>which will generate the following plot:</p>
-<div class="figure align-center" id="id6">
+<figure class="align-center" id="id6">
 <span id="fig-mu-components-c"></span><a class="reference external image-reference" href="_images/mu_components_C.png"><img alt="_images/mu_components_C.png" src="_images/mu_components_C.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">X-ray scattering and attenuation factors for C.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">X-ray scattering and attenuation factors for C.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Note that above 20 keV, the photo-electric absorption and incoherent
 Compton contributions are about equal, and that the Compton scattering
 dominates above 50 keV.  As shown above, the photo-electric scattering will
@@ -145,15 +150,17 @@ be much higher for heavier elements. The Rayleigh and Compton scattering
 have a much weaker dependence on <em>Z</em>, so that the photo-electric process
 dominates to higher energies.  Replacing ‘C’ with ‘Fe’ in the script above
 will generate the following plot:</p>
-<div class="figure align-center" id="id7">
+<figure class="align-center" id="id7">
 <span id="fig-mu-components-fe"></span><a class="reference external image-reference" href="_images/mu_components_Fe.png"><img alt="_images/mu_components_Fe.png" src="_images/mu_components_Fe.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">X-ray scattering and attenuation factors for Fe.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">X-ray scattering and attenuation factors for Fe.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>which shows that the Compton scattering reaching about 0.1 to 0.25
 <span class="math notranslate nohighlight">\(\rm cm^2/gr\)</span> for Fe, about the same value as it was for C, while the
 photo-electric cross-section dominates past 100 keV.</p>
-</div>
-<div class="section" id="mu-calculations-for-materials">
+</section>
+<section id="mu-calculations-for-materials">
 <h2><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials<a class="headerlink" href="#mu-calculations-for-materials" title="Permalink to this headline">¶</a></h2>
 <p>While one can use the above values for <span class="math notranslate nohighlight">\(\mu/\rho\)</span> to calculate the
 attenuation of X-rays by multi-element materials, the <a class="reference internal" href="python.html#xraydb.material_mu" title="xraydb.material_mu"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu()</span></code></a>
@@ -192,10 +199,12 @@ X-ray energy:</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id8">
+<figure class="align-center" id="id8">
 <span id="fig-mu-water"></span><a class="reference external image-reference" href="_images/mu_water.png"><img alt="_images/mu_water.png" src="_images/mu_water.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">Fraction of X-rays absorbed and transmitted by water</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Fraction of X-rays absorbed and transmitted by water</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>replacing:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
 </pre></div>
@@ -205,10 +214,12 @@ X-ray energy:</p>
 </pre></div>
 </div>
 <p>would generate the following plot</p>
-<div class="figure align-center" id="id9">
+<figure class="align-center" id="id9">
 <span id="fig-mu-calcite"></span><a class="reference external image-reference" href="_images/mu_calcite.png"><img alt="_images/mu_calcite.png" src="_images/mu_calcite.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">Fraction of X-rays absorbed and transmitted by calcite</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Fraction of X-rays absorbed and transmitted by calcite</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>For many X-ray experiments, selecting the size of a material size so that
 its thickness is approximately 1 to 2 absorption length is convenient so
 that X-ray scattering and emission can be observed strongly, with neither
@@ -221,8 +232,8 @@ example, one can simply do:</p>
 <span class="go">CaCO3 1/e depth at 20keV = 0.648 mm</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">
+</section>
+<section id="x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">
 <h2>X-ray flux calculations for ionization chambers and photodiodes<a class="headerlink" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes" title="Permalink to this headline">¶</a></h2>
 <p>Gas-filled ionization chambers are widely used as X-ray detectors. They are
 simple to use, inexpensive, and can be highly linear in estimating the
@@ -419,8 +430,8 @@ of gas name and fractional density, as with:</p>
 fraction of the beam absorbed.  The calculations here all use the densities
 at STP, but changes in gas density will be exactly linear to changing the
 length of the ion chamber.</p>
-</div>
-<div class="section" id="x-ray-mirror-reflectivities">
+</section>
+<section id="x-ray-mirror-reflectivities">
 <h2>X-ray mirror reflectivities<a class="headerlink" href="#x-ray-mirror-reflectivities" title="Permalink to this headline">¶</a></h2>
 <p>At very shallow angles of incidence X-rays can be reflected by total
 external reflection from a material. The reflectivity can be very high
@@ -456,13 +467,15 @@ a few common mirror materials is given as</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id10">
+<figure class="align-center" id="id10">
 <span id="fig-mirrors"></span><a class="reference external image-reference" href="_images/mirrors.png"><img alt="_images/mirrors.png" src="_images/mirrors.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">X-ray mirror reflectivity at <span class="math notranslate nohighlight">\(\theta = 2\mathrm{mrad}\)</span> for
+<figcaption>
+<p><span class="caption-text">X-ray mirror reflectivity at <span class="math notranslate nohighlight">\(\theta = 2\mathrm{mrad}\)</span> for
 selected mirror surfaces and coatings used for mirrors.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="darwin-widths-of-monochromator-crystals">
+</figcaption>
+</figure>
+</section>
+<section id="darwin-widths-of-monochromator-crystals">
 <h2>Darwin widths of monochromator crystals<a class="headerlink" href="#darwin-widths-of-monochromator-crystals" title="Permalink to this headline">¶</a></h2>
 <p>Bragg’s law describes X-ray diffraction from crystals as</p>
 <div class="math notranslate nohighlight">
@@ -568,14 +581,16 @@ widths and plotting the intensity profile or “rocking curve” is</p>
 </pre></div>
 </div>
 <p>and generates a plot of</p>
-<div class="figure align-center" id="id11">
+<figure class="align-center" id="id11">
 <span id="fig-darwin"></span><a class="reference external image-reference" href="_images/darwin_widths.png"><img alt="_images/darwin_widths.png" src="_images/darwin_widths.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">X-ray monochromator diffracted intensities around the Si(111)
+<figcaption>
+<p><span class="caption-text">X-ray monochromator diffracted intensities around the Si(111)
 reflection. Here, <span class="math notranslate nohighlight">\(i\)</span> represents the intensity of a single
 reflection, and <span class="math notranslate nohighlight">\(i^2\)</span> the intensity from 2 bounces, as for a
 double-crystal monochromator.  The intensity and angular offset of the
 third harmonic is also shown.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
-</div>
+</figcaption>
+</figure>
 <p>Note that the values reported for <cite>theta_fwhm</cite> and <cite>energy_fwhm</cite> will be
 about 6% larger than the reported values for <cite>theta_width</cite> and
 <cite>energy_width</cite>.  The <cite>width</cite> values closely follow the region of the curve
@@ -583,8 +598,8 @@ where the reflectivity ignoring absorption would be 1 - the flat top of the
 curve.  Since a double-crystal monochromator will suppress the tails of the
 reflectivity, this smaller value is the one typically reported as “the
 Darwin width”, though some sources will report this smaller value as “FWHM”.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -653,8 +668,8 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2021-May-03.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Last updated on 2021-May-25.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>

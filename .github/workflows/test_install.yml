@@ -1,0 +1,41 @@
+ 
+name: install xraydb with conda and run test suite
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Add conda to system path
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        echo $CONDA/bin >> $GITHUB_PATH
+    - name: Install conda and dependencies
+      run: |
+        conda install numpy scipy sqlalchemy matplotlib pip pytest pytest-cov codecov coverage
+        conda info
+        conda list
+    - name: Install python library, run tests
+      run: |
+        cd python
+        python setup.py install
+        cd tests
+        coverage run --source=xraydb -m pytest
+        coverage report -m
+        bash <(curl -s https://codecov.io/bash)

@@ -800,10 +800,9 @@ def mirror_reflectivity(formula, theta, energy, density=None,
 
     # kiz is k in air/vacuum,  with n = 1.
     # ktz is k in mirror material, with n < 1.
-    # Note: kiz and ktz should have a factor of (2*pi/lambda)
-    # but this will cancel in the calculation of r_amp, so we drop it here.
-    kiz = np.sin(theta)
-    ktz = np.sqrt(n**2 - np.cos(theta)**2)
+    qf  = 2*np.pi * energy/PLANCK_HC
+    kiz = qf * np.sin(theta)
+    ktz = qf * np.sqrt(n**2 - np.cos(theta)**2)
 
     # polarization correction will be tiny for small angles
     if polarization == 'p':

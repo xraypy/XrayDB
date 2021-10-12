@@ -1166,7 +1166,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
     Returns:
         dictionary with fields
 
-            `energy(eV)`        incident energy
+            `energy(eV)`        incident energy; recommended to use edge energy + 50 eV
 
             `absorp_total`      total absorption
 
@@ -1267,7 +1267,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
     rho_d = absorp_total / mu_tot
 
     absorbance_steps = {}
-    pre_edge = np.linspace(energy - 200, energy - 50, 100)
+    pre_edge = np.linspace(energy - 200, energy - 60, 100)
     for el in sample.keys():
         coeffs = np.polyfit(pre_edge, mu_elam(el, pre_edge), 3)
         extrapolated = sum([c * energy ** (len(coeffs) - 1 - i) \

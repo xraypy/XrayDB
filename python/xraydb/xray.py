@@ -1146,14 +1146,16 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
     (i.e. so made to equal one).
 
     Absorbance steps for each element are calculated. This is done by performing
-    a polynomial fit to the pre-edge absorption (from -200 to -50 eV of specified energy) 
+    a polynomial fit to the pre-edge absorption (from -200 to -60 eV of specified energy) 
     and extrapolating that to the post-edge, then comparing against the actual 
-    computed post-edge absorption.
+    computed post-edge absorption. Thus it is recommended to use an input energy
+    that is the desired edge energy + 50 eV.
 
     Args:
         sample (str or dict): elements/compounds and their mass fractions. one 
                            entry can have value -1 to indicate unspecified portion
-        energy (float): X-ray energy (eV) at which transmission will be analyzed
+        energy (float): X-ray energy (eV) at which transmission will be analyzed.
+                        Recommended to use edge energy + 50 eV.
         absorp_total (float): total absorption (mu_t*d) of the sample at the
                               specified energy
         area (float)(optional): area (cm^2) of the sample. Default is 1 cm^2.
@@ -1267,7 +1269,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
     rho_d = absorp_total / mu_tot
 
     absorbance_steps = {}
-    pre_edge = np.linspace(energy - 200, energy - 50, 100)
+    pre_edge = np.linspace(energy - 200, energy - 60, 100)
     for el in sample.keys():
         coeffs = np.polyfit(pre_edge, mu_elam(el, pre_edge), 3)
         extrapolated = sum([c * energy ** (len(coeffs) - 1 - i) \

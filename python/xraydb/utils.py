@@ -24,7 +24,7 @@ PLANCK_HC = 1.e10 * consts.Planck * consts.c / QCHARGE
 E_MASS = consts.electron_mass * consts.c**2 / QCHARGE
 
 # classical electron radius in cm
-R_ELECTRON_CM = 100.0 * consts.codata.physical_constants['classical electron radius'][0]
+R_ELECTRON_CM = 100.0 * consts.physical_constants['classical electron radius'][0]
 
 
 SI_PREFIXES = {'f': 1.e-15, 'femto': 1.e-15,

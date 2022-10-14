@@ -27,7 +27,7 @@ __version__ = '1.4'
 
 def make_engine(dbname):
     "create engine for sqlite connection"
-    return create_engine('sqlite:///%s' % (dbname),
+    return create_engine('sqlite:///%s' % (dbname), future=True,
                          poolclass=SingletonThreadPool,
                          connect_args={'check_same_thread': False})
 
@@ -51,8 +51,8 @@ def isxrayDB(dbname):
     result = False
     try:
         engine = make_engine(dbname)
-        meta = MetaData(engine)
-        meta.reflect()
+        meta = MetaData() #
+        meta.reflect(engine)
         result = all([t in meta.tables for t in _tables])
     except:
         pass
@@ -83,7 +83,7 @@ class XrayDB():
         if not isxrayDB(dbname):
             raise ValueError("'%s' is not a valid X-ray Database file!" % dbname)
 
-        self.dbname = dbname
+        self.dbname = os.path.abspath(dbname)
         self.engine = make_engine(dbname)
         self.conn = self.engine.connect()
         kwargs = {}
@@ -93,16 +93,18 @@ class XrayDB():
             def readonly_flush(*args, **kwargs):
                 return
 
-            self.session = sessionmaker(bind=self.engine, **kwargs)()
+            self.session = sessionmaker(self.engine, **kwargs)()
             self.session.flush = readonly_flush
         else:
             self.session = sessionmaker(bind=self.engine, **kwargs)()
 
-        self.metadata = MetaData(self.engine)
-        self.metadata.reflect()
+        self.metadata = MetaData()
+        self.metadata.reflect(self.engine)
         self.tables = self.metadata.tables
-        elems = self.tables['elements'].select().execute()
-        self.atomic_symbols = [e.element for e in elems.fetchall()]
+
+        q = self.tables['elements'].select()
+        elems = self.session.execute(q).fetchall()
+        self.atomic_symbols = [e.element for e in elems]
 
     def close(self):
         "close session"
@@ -125,7 +127,8 @@ class XrayDB():
             string: version information
         """
         out = []
-        rows = self.tables['Version'].select().execute().fetchall()
+        q = self.tables['Version'].select()
+        rows = self.session.execute(q).fetchall()
         if not with_history:
             rows = rows[-1:]
         if long or with_history:
@@ -596,7 +599,7 @@ class XrayDB():
 
         """
         version_qy = self.tables['Version'].select().order_by('date')
-        version_id = version_qy.execute().fetchall()[-1].id
+        version_id = self.session.execute(version_qy).fetchall()[-1].id
 
         ctab = self.tables['corelevel_widths']
         if version_id < 4 or use_keski:

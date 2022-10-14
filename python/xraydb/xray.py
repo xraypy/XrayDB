@@ -673,7 +673,8 @@ def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
         if ename not in _edge_energies:
             energies = [-1000]*150
             maxz = 0
-            for row in xdb.tables['xray_levels'].select().execute().fetchall():
+            xquery = xdb.tables['xray_levels'].select()
+            for row in xdb.session.execute(xquery).fetchall():
                 ir, elem, edgename, en, eyield, xjump = row
                 iz = xdb.atomic_number(elem)
                 maxz = max(iz, maxz)
@@ -1138,21 +1139,21 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                        intensity=abs(r*r.conjugate()))
 
 
-def transmission_sample(sample, energy, absorp_total=2.6, area=1, 
+def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                         density=None, frac_type='mass'):
     """Analyze transmission mode sample. Sample can be specified as a chemical
-    formula (str or dict) or as mass fractions (dict). One mass fraction can 
-    have value -1 to indicate the unspecified portion of the mass fractions 
+    formula (str or dict) or as mass fractions (dict). One mass fraction can
+    have value -1 to indicate the unspecified portion of the mass fractions
     (i.e. so made to equal one).
 
     Absorbance steps for each element are calculated. This is done by performing
-    a polynomial fit to the pre-edge absorption (from -200 to -60 eV of specified energy) 
-    and extrapolating that to the post-edge, then comparing against the actual 
+    a polynomial fit to the pre-edge absorption (from -200 to -60 eV of specified energy)
+    and extrapolating that to the post-edge, then comparing against the actual
     computed post-edge absorption. Thus it is recommended to use an input energy
     that is the desired edge energy + 50 eV.
 
     Args:
-        sample (str or dict): elements/compounds and their mass fractions. one 
+        sample (str or dict): elements/compounds and their mass fractions. one
                            entry can have value -1 to indicate unspecified portion
         energy (float): X-ray energy (eV) at which transmission will be analyzed.
                         Recommended to use edge energy + 50 eV.
@@ -1160,9 +1161,9 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                               specified energy
         area (float)(optional): area (cm^2) of the sample. Default is 1 cm^2.
         density (float)(optional): density (g/cm^3) of the sample
-        frac_type (str)(optional): can be `mass` or `molar`, if sample is dict, 
-                                   this keyword specifies whether the indicated 
-                                   fractions are mass fractions or 
+        frac_type (str)(optional): can be `mass` or `molar`, if sample is dict,
+                                   this keyword specifies whether the indicated
+                                   fractions are mass fractions or
                                    molar fractions (i.e. chemical formula)
 
     Returns:
@@ -1197,7 +1198,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                 area=1.33,
                 frac_type='mass',
             )
-        
+
         Output:
             TransmissionSample(
                 energy_eV=7162.0,
@@ -1253,7 +1254,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                 area=1.33,
                 frac_type='molar'
             )
-        
+
         Output same as previous example.
     """
     if type(sample) is str:
@@ -1308,7 +1309,7 @@ def formula_to_mass_fracs(formula):
 
     Args:
         formula (str or dict): chemical formula
-    
+
     Returns:
         dict with fields of each element and values of their mass fractions
 
@@ -1343,15 +1344,15 @@ def mass_fracs_to_formula(mass_fracs):
 
     Args:
         mass_fracs (dict): mass fractions of elements
-    
+
     Returns:
         dict with fields of each element and values of their coefficients
 
     Example:
         >>> mass_fracs_to_formula({'Fe': 0.7, 'SiO2': -1})
         {
-            'Fe': 0.012534694242994, 
-            'Si': 0.004993092888171364, 
+            'Fe': 0.012534694242994,
+            'Si': 0.004993092888171364,
             'O': 0.009986185776342726
         }
     """
@@ -1381,7 +1382,7 @@ def _validate_mass_fracs(mass_fracs):
         compare = abs(sum([v for v in mass_fracs.values()]) - 1) < 1e-4
         if not compare:
             raise RuntimeError("Mass fractions do not add up to one.")
-    
+
     simplified_mass_fracs = {}
     for comp, frac in mass_fracs.items():
         parsed = chemparse(comp)

@@ -987,12 +987,34 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0,
         mu_incoh += gasmu_incoh * gas_frac/gas_total
         ion_pot  += gas_ion_pot * gas_frac/gas_total
 
-    absorbed_energy = (energy*(1-np.exp(-length* mu_photo)) +
-                       energy_compton*(1-np.exp(-length* mu_incoh)))
+    atten_total = 1.0 - np.exp(-length* mu_total)
+    atten_photo = atten_total*mu_photo/mu_total
+    atten_incoh = atten_total*mu_incoh/mu_total
+    atten_coh   = atten_total - atten_photo - atten_incoh
+
+    absorbed_energy = energy*atten_photo + energy_compton*atten_incoh
+
     flux_in    = volts*sensitivity*ion_pot/(QCHARGE*absorbed_energy)
-    flux_photo = flux_in * (1-np.exp(-length* mu_photo))
-    flux_incoh = flux_in * (1-np.exp(-length* mu_incoh))
-    flux_out   = flux_in * np.exp(-length*mu_total)
+    flux_photo = flux_in * atten_photo
+    flux_incoh = flux_in * atten_incoh
+    flux_out   = flux_in * (1-atten_total)
+    flux_coh   = flux_in * atten_coh
+
+    if False: # documenting old, incorrect formula before deleting:
+        ab_old = (energy*(1-np.exp(-length* mu_photo)) +
+                  energy_compton*(1-np.exp(-length* mu_incoh)))
+
+        fold_in    = volts*sensitivity*ion_pot/(QCHARGE*ab_old)
+        fold_photo = fold_in * (1-np.exp(-length* mu_photo))
+        fold_incoh = fold_in * (1-np.exp(-length* mu_incoh))
+        fold_out   = fold_in * np.exp(-length*mu_total)
+        fold_coh   = fold_in - fold_photo - fold_incoh - fold_out
+
+        # print(f"Flux In   : {flux_in:.3e} was {fold_in:.3e}")
+        # print(f"Flux Out  : {flux_out:.3e} was {fold_out:.3e}")
+        # print(f"Flux Photo: {flux_photo:.3e} was {fold_photo:.3e}")
+        # print(f"Flux Incoh: {flux_incoh:.3e} was {fold_incoh:.3e}")
+        # print(f"Flux Coher: {flux_coh:.3e} was {fold_coh:.3e}")
 
     return fluxes(incident=flux_in, transmitted=flux_out,
                   photo=flux_photo, incoherent=flux_incoh)

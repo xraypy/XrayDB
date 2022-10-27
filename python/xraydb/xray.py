@@ -1401,7 +1401,7 @@ def _validate_mass_fracs(mass_fracs):
         assert len(unknown) == 1, 'Multiple unknown weight percentages'
         mass_fracs[unknown[0]] = 1 - sum({k:v for k, v in mass_fracs.items() if k != unknown[0]}.values())
     else:
-        compare = abs(sum([v for v in mass_fracs.values()]) - 1) < 1e-4
+        compare = abs(sum(mass_fracs.values()) - 1) < 1e-4
         if not compare:
             raise RuntimeError("Mass fractions do not add up to one.")
 
@@ -1410,5 +1410,9 @@ def _validate_mass_fracs(mass_fracs):
         parsed = chemparse(comp)
         parsed_sum = sum([atomic_mass(el) * c for el, c in parsed.items()])
         for el, c in parsed.items():
-            simplified_mass_fracs[el] = atomic_mass(el) * c / parsed_sum * frac
+            if el not in simplified_mass_fracs:
+                simplified_mass_fracs[el] = atomic_mass(el) * c / parsed_sum * frac
+            else:
+                simplified_mass_fracs[el] += atomic_mass(el) * c / parsed_sum * frac
+    assert abs(sum(simplified_mass_fracs.values()) - 1) < 1e-4, "Validation failed, calculated mass fractions do not add up to one."
     return simplified_mass_fracs

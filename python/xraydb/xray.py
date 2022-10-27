@@ -1414,12 +1414,13 @@ def _validate_mass_fracs(mass_fracs):
 
     simplified_mass_fracs = {}
     for comp, frac in mass_fracs.items():
-        parsed = chemparse(comp)
-        parsed_sum = sum([atomic_mass(el) * c for el, c in parsed.items()])
-        for el, c in parsed.items():
+        elements = chemparse(comp)
+        element_masses = {el: atomic_mass(el) * c for el, c in elements.items()}
+        for el, c in elements.items():
+            contribution = element_masses[el] / sum(element_masses.values()) * frac
             if el not in simplified_mass_fracs:
-                simplified_mass_fracs[el] = atomic_mass(el) * c / parsed_sum * frac
+                simplified_mass_fracs[el] = contribution
             else:
-                simplified_mass_fracs[el] += atomic_mass(el) * c / parsed_sum * frac
+                simplified_mass_fracs[el] += contribution
     assert abs(sum(simplified_mass_fracs.values()) - 1) < 1e-4, "Validation failed, calculated mass fractions do not add up to one."
     return simplified_mass_fracs

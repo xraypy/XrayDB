@@ -1361,8 +1361,9 @@ def formula_to_mass_fracs(formula):
     return mass_fracs
 
 
-def mass_fracs_to_formula(mass_fracs):
-    """Calculate molecular formula from a given  mass fractions of elements.
+def mass_fracs_to_molar_fracs(mass_fracs):
+    """Calculate molar fractions from a given mass fractions of elements.
+    Result is normalized to one.
 
     Args:
         mass_fracs (dict): mass fractions of elements
@@ -1371,22 +1372,18 @@ def mass_fracs_to_formula(mass_fracs):
         dict with fields of each element and values of their coefficients
 
     Example:
-        >>> mass_fracs_to_formula({'Fe': 0.7, 'SiO2': -1})
+        >>> mass_fracs_to_molar_fracs({'Fe': 0.7, 'SiO2': -1})
         {
-            'Fe': 0.012534694242994,
-            'Si': 0.004993092888171364,
-            'O': 0.009986185776342726
+            'Fe': 0.4555755828186302,
+            'Si': 0.18147480572712324,
+            'O': 0.3629496114542464
         }
     """
     mass_fracs = _validate_mass_fracs(mass_fracs)
-    masses = {}
-    for el, _ in mass_fracs.items():
-        parsed = chemparse(el)
-        masses[el] = sum([atomic_mass(el) * c for el, c in parsed.items()])
-
-    coeffs = {k: mass_fracs[k] / masses[k] for k in mass_fracs.keys()}
-
-    return coeffs
+    molar_fracs = {el: fr / atomic_mass(el) for el, fr in mass_fracs.items()}
+    total = sum(molar_fracs.values())
+    molar_fracs = {el: fr / total for el, fr in molar_fracs.items()}
+    return molar_fracs
 
 
 def _validate_mass_fracs(mass_fracs):

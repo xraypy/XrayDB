@@ -22,6 +22,7 @@ DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
 TransmissionSample = namedtuple('TransmissionSample', ('energy_eV',
                                                        'absorp_total',
                                                        'mass_fractions',
+                                                       'molar_fractions',
                                                        'absorbance_steps',
                                                        'area_cm2',
                                                        'mass_total_mg',
@@ -1197,6 +1198,8 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
 
             `mass_fractions`    mass fractions of elements
 
+            `molar_fractions`   molar fractions of elements
+
             `absorbance_steps`  absorbance steps of each element in the sample
 
             `area (cm^2)`       area, if specified
@@ -1229,10 +1232,14 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                     'Fe': 0.05,
                     'Si': 0.4440648769202603,
                     'O': 0.5059351230797396},
+                molar_fractions={
+                    'Fe': 0.018525564495838743,
+                    'Si': 0.3271581451680538,
+                    'O': 0.6543162903361075},
                 absorbance_steps={
-                    'Fe': 0.6692395733146204,
-                    'Si': 1.297403071978392e-06,
-                    'O': 3.386553723091669e-07},
+                    'Fe': 0.6692395963328747,
+                    'Si': 1.6477111496690233e-06,
+                    'O': 4.3017044962086656e-07},
                 area_cm2=1.33,
                 mass_total_mg=51.05953690489308,
                 mass_components_mg={
@@ -1241,8 +1248,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                     'O': 25.832813088371587},
                 density=None,
                 thickness_mm=None,
-                absorption_length_um=None
-            )
+                absorption_length_um=None)
 
         >>> transmission_sample(
                 sample='Fe2O3',
@@ -1257,9 +1263,12 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                 mass_fractions={
                     'Fe': 0.6994307614270416,
                     'O': 0.3005692385729583},
+                molar_fractions={
+                    'Fe': 0.4,
+                    'O': 0.6},
                 absorbance_steps={
-                    'Fe': 2.2227981005407176,
-                    'O': 4.7769571901536886e-08},
+                    'Fe': 2.2227981769930585,
+                    'O': 6.067837661326302e-08},
                 area_cm2=1.33,
                 mass_total_mg=12.123291571370844,
                 mass_components_mg={
@@ -1316,6 +1325,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                             energy_eV=energy,
                             absorp_total=absorp_total,
                             mass_fractions=sample,
+                            molar_fractions=mass_fracs_to_molar_fracs(sample),
                             absorbance_steps=absorbance_steps,
                             area_cm2=area,
                             mass_total_mg=mass_total,

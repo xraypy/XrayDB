@@ -1,8 +1,5 @@
 
-[![Travis CI](https://travis-ci.org/xraypy/XrayDB.png)](https://travis-ci.org/xraypy/XrayDB)
-[![CodeCov](https://codecov.io/gh/xraypy/XrayDB/branch/master/graph/badge.svg)](https://codecov.io/gh/xraypy/XrayDB/tree/master/python/xraydb)
-
-
+[![DOI](https://zenodo.org/badge/205441660.svg)](https://zenodo.org/badge/latestdoi/205441660)
 
 
 ## XrayDB

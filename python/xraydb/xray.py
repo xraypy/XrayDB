@@ -22,6 +22,7 @@ DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
 TransmissionSample = namedtuple('TransmissionSample', ('energy_eV',
                                                        'absorp_total',
                                                        'mass_fractions',
+                                                       'molar_fractions',
                                                        'absorbance_steps',
                                                        'area_cm2',
                                                        'mass_total_mg',
@@ -1197,6 +1198,8 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
 
             `mass_fractions`    mass fractions of elements
 
+            `molar_fractions`   molar fractions of elements
+
             `absorbance_steps`  absorbance steps of each element in the sample
 
             `area (cm^2)`       area, if specified
@@ -1229,10 +1232,14 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                     'Fe': 0.05,
                     'Si': 0.4440648769202603,
                     'O': 0.5059351230797396},
+                molar_fractions={
+                    'Fe': 0.018525564495838743,
+                    'Si': 0.3271581451680538,
+                    'O': 0.6543162903361075},
                 absorbance_steps={
-                    'Fe': 0.6692395733146204,
-                    'Si': 1.297403071978392e-06,
-                    'O': 3.386553723091669e-07},
+                    'Fe': 0.6692395963328747,
+                    'Si': 1.6477111496690233e-06,
+                    'O': 4.3017044962086656e-07},
                 area_cm2=1.33,
                 mass_total_mg=51.05953690489308,
                 mass_components_mg={
@@ -1241,8 +1248,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                     'O': 25.832813088371587},
                 density=None,
                 thickness_mm=None,
-                absorption_length_um=None
-            )
+                absorption_length_um=None)
 
         >>> transmission_sample(
                 sample='Fe2O3',
@@ -1257,9 +1263,12 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                 mass_fractions={
                     'Fe': 0.6994307614270416,
                     'O': 0.3005692385729583},
+                molar_fractions={
+                    'Fe': 0.4,
+                    'O': 0.6},
                 absorbance_steps={
-                    'Fe': 2.2227981005407176,
-                    'O': 4.7769571901536886e-08},
+                    'Fe': 2.2227981769930585,
+                    'O': 6.067837661326302e-08},
                 area_cm2=1.33,
                 mass_total_mg=12.123291571370844,
                 mass_components_mg={
@@ -1316,6 +1325,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
                             energy_eV=energy,
                             absorp_total=absorp_total,
                             mass_fractions=sample,
+                            molar_fractions=mass_fracs_to_molar_fracs(sample),
                             absorbance_steps=absorbance_steps,
                             area_cm2=area,
                             mass_total_mg=mass_total,
@@ -1361,8 +1371,9 @@ def formula_to_mass_fracs(formula):
     return mass_fracs
 
 
-def mass_fracs_to_formula(mass_fracs):
-    """Calculate molecular formula from a given  mass fractions of elements.
+def mass_fracs_to_molar_fracs(mass_fracs):
+    """Calculate molar fractions from a given mass fractions of elements.
+    Result is normalized to one.
 
     Args:
         mass_fracs (dict): mass fractions of elements
@@ -1371,22 +1382,18 @@ def mass_fracs_to_formula(mass_fracs):
         dict with fields of each element and values of their coefficients
 
     Example:
-        >>> mass_fracs_to_formula({'Fe': 0.7, 'SiO2': -1})
+        >>> mass_fracs_to_molar_fracs({'Fe': 0.7, 'SiO2': -1})
         {
-            'Fe': 0.012534694242994,
-            'Si': 0.004993092888171364,
-            'O': 0.009986185776342726
+            'Fe': 0.4555755828186302,
+            'Si': 0.18147480572712324,
+            'O': 0.3629496114542464
         }
     """
     mass_fracs = _validate_mass_fracs(mass_fracs)
-    masses = {}
-    for el, _ in mass_fracs.items():
-        parsed = chemparse(el)
-        masses[el] = sum([atomic_mass(el) * c for el, c in parsed.items()])
-
-    coeffs = {k: mass_fracs[k] / masses[k] for k in mass_fracs.keys()}
-
-    return coeffs
+    molar_fracs = {el: fr / atomic_mass(el) for el, fr in mass_fracs.items()}
+    total = sum(molar_fracs.values())
+    molar_fracs = {el: fr / total for el, fr in molar_fracs.items()}
+    return molar_fracs
 
 
 def _validate_mass_fracs(mass_fracs):
@@ -1401,14 +1408,19 @@ def _validate_mass_fracs(mass_fracs):
         assert len(unknown) == 1, 'Multiple unknown weight percentages'
         mass_fracs[unknown[0]] = 1 - sum({k:v for k, v in mass_fracs.items() if k != unknown[0]}.values())
     else:
-        compare = abs(sum([v for v in mass_fracs.values()]) - 1) < 1e-4
+        compare = abs(sum(mass_fracs.values()) - 1) < 1e-4
         if not compare:
             raise RuntimeError("Mass fractions do not add up to one.")
 
     simplified_mass_fracs = {}
     for comp, frac in mass_fracs.items():
-        parsed = chemparse(comp)
-        parsed_sum = sum([atomic_mass(el) * c for el, c in parsed.items()])
-        for el, c in parsed.items():
-            simplified_mass_fracs[el] = atomic_mass(el) * c / parsed_sum * frac
+        elements = chemparse(comp)
+        element_masses = {el: atomic_mass(el) * c for el, c in elements.items()}
+        for el, c in elements.items():
+            contribution = element_masses[el] / sum(element_masses.values()) * frac
+            if el not in simplified_mass_fracs:
+                simplified_mass_fracs[el] = contribution
+            else:
+                simplified_mass_fracs[el] += contribution
+    assert abs(sum(simplified_mass_fracs.values()) - 1) < 1e-4, "Validation failed, calculated mass fractions do not add up to one."
     return simplified_mass_fracs

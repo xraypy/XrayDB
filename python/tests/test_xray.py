@@ -17,7 +17,9 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     ionchamber_fluxes, XrayDB)
 
 
-from xraydb.xray import chantler_data
+from xraydb.xray import (chantler_data, formula_to_mass_fracs, 
+                         _validate_mass_fracs, mass_fracs_to_molar_fracs,
+                         transmission_sample)
 
 def test_atomic_data():
     assert atomic_number('zn') == 30
@@ -634,3 +636,72 @@ def test_ionchamber_fluxes():
 
     assert_allclose(ic4.transmitted/ic4.incident, 0.4928, rtol=0.01)
     assert_allclose(ic4.incident, 2.7615e10, rtol=0.01)
+
+
+def test_formula_to_mass_fracs():
+    mf1 = formula_to_mass_fracs('Fe2O3')
+    desired1 = {'Fe': 0.69943, 'O': 0.30056}
+    assert_allclose(mf1['Fe'], desired1['Fe'], rtol=0.001)
+    assert_allclose(mf1['O'], desired1['O'], rtol=0.001)
+    assert_allclose(sum(mf1.values()), 1.0, rtol=0.001)
+    
+    mf2 = formula_to_mass_fracs({'Fe2O3':1, 'FeO':2})
+    desired2 = {'Fe': 0.7363, 'O': 0.2637}
+    assert_allclose(mf2['Fe'], desired2['Fe'], rtol=0.001)
+    assert_allclose(mf2['O'], desired2['O'], rtol=0.001)
+    assert_allclose(sum(mf2.values()), 1.0, rtol=0.001)
+
+
+def test_validate_mass_fracs():
+    mf = _validate_mass_fracs({'Fe2O3': 0.75, 'FeO': 0.25})
+    desired = {'Fe': 0.7189, 'O': 0.2811}
+    assert_allclose(mf['Fe'], desired['Fe'], rtol=0.001)
+    assert_allclose(mf['O'], desired['O'], rtol=0.001)
+    assert_allclose(sum(mf.values()), 1.0, rtol=0.001)
+
+
+def test_mass_fracs_to_molar_fracs():
+    """Circular test for consistency formula->mass fracs
+    and vice versa."""
+    formula = {'Fe':1, 'FeO': 3}
+    mass_fracs = formula_to_mass_fracs(formula)
+    molar_fracs = mass_fracs_to_molar_fracs(mass_fracs)
+    assert_allclose(molar_fracs['Fe'], 4 / 7, rtol=0.001)
+    assert_allclose(molar_fracs['O'], 3 / 7, rtol=0.001)
+
+
+def test_transmission_sample():
+    # Validate against Hephaestus result, see PR #16
+    result1 = transmission_sample(
+                    sample='Fe2O3',
+                    energy=7162,
+                    absorp_total=1,
+                    area=1,
+                    density=5.24
+                )
+    assert_allclose(result1.mass_total_mg, 3.506, rtol=0.001)
+    assert_allclose(result1.absorption_length_um, 6.7, rtol=0.01)
+
+    # Validate against Hephaestus result, see PR #16
+    result2 = transmission_sample(
+                    sample='Cu',
+                    energy=9029,
+                    absorp_total=1,
+                    area=1,
+                    density=8.94
+                )
+    assert_allclose(result2.mass_total_mg, 3.640, rtol=0.001)
+    assert_allclose(result2.absorption_length_um, 4.1, rtol=0.01)
+
+    # Validate against XAFSmass result, see PR #16
+    result3 = transmission_sample(
+                    sample={'Fe': 0.05, 'SiO2': -1},
+                    energy=7162,
+                    absorp_total=2.6,
+                    area=1.33,
+                    density=2.65
+                )
+    assert_allclose(result3.mass_components_mg['Fe'], 2.58, rtol=0.03)
+    assert_allclose(result3.absorbance_steps['Fe'], 0.706, rtol=0.06)
+    assert_allclose(result3.mass_total_mg, 51.7, rtol=0.02)
+    assert_allclose(result3.thickness_mm, 0.1466, rtol=0.02)

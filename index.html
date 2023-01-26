@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>X-ray DB: X-ray Reference Data in SQLite &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,7 +12,9 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,31 +43,31 @@
           <div class="body" role="main">
             
   <section id="x-ray-db-x-ray-reference-data-in-sqlite">
-<h1>X-ray DB: X-ray Reference Data in SQLite<a class="headerlink" href="#x-ray-db-x-ray-reference-data-in-sqlite" title="Permalink to this headline">¶</a></h1>
+<h1>X-ray DB: X-ray Reference Data in SQLite<a class="headerlink" href="#x-ray-db-x-ray-reference-data-in-sqlite" title="Permalink to this heading">¶</a></h1>
 <p>XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, <code class="docutils literal notranslate"><span class="pre">xraydb.sqlite</span></code>.  This
-file can be used directly with SQLite <span id="id1">[<a class="reference internal" href="biblio.html#id10">Hipp (2012)</a>]</span> using standard SQL, or
+file can be used directly with SQLite <span id="id1">[<a class="reference internal" href="biblio.html#id10" title="D. R. Hipp. Sqlite. 2012. URL: https://www.sqlite.org.">Hipp (2012)</a>]</span> using standard SQL, or
 from the many programming language that support SQLite.  Some of the
 components of the database hold arrays of numbers which are stored in the
 database as JSON-encoded strings, and will need to be unpacked to be used.
 A Python module providing such an interface is provided here.</p>
 <p>The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and
-absorption cross sections from <span id="id2">[<a class="reference internal" href="biblio.html#id4">Elam, Ravel, and Sieber (2002)</a>]</span>, who assembled
+absorption cross sections from <span id="id2">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span>, who assembled
 data from a several sources.  More data has been added from other sources.
 Energy widths of core holes for excited electronic levels from
-<span id="id3">[<a class="reference internal" href="biblio.html#id5">Keski-Rahkonen and Krause (1974)</a>]</span> and <span id="id4">[<a class="reference internal" href="biblio.html#id6">Krause and Oliver (1979)</a>]</span>.  Elastic X-ray scattering
-data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <span id="id5">[<a class="reference internal" href="biblio.html#id7">Waasmaier and Kirfel (1995)</a>]</span>.  Resonant
+<span id="id3">[<a class="reference internal" href="biblio.html#id5" title="O. Keski-Rahkonen and M. O. Krause. Total and partial atomic-level widths. Atomic Data and Nuclear Data Tables, 14(2):139–146, 1974. URL: https://dx.doi.org/10.1016/S0092-640X(74)80020-3.">Keski-Rahkonen and Krause (1974)</a>]</span> and <span id="id4">[<a class="reference internal" href="biblio.html#id6" title="M. O. Krause and J. H. Oliver. Natural widths of atomic k and l levels, ka x-ray lines and several kll auger lines. Journal of Physical and Chemical Reference Data, 8:329, 1979. URL: https://dx.doi.org/10.1063/1.555595.">Krause and Oliver (1979)</a>]</span>.  Elastic X-ray scattering
+data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <span id="id5">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>.  Resonant
 scattering cross sections <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> and absorption
-cross sections from <span id="id6">[<a class="reference internal" href="biblio.html#id8">Chantler (2000)</a>]</span> as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a> (but on
-a finer energy grid, data from <span id="id7">[<a class="reference internal" href="biblio.html#id9">Chantler (2016)</a>]</span>) are also included.</p>
+cross sections from <span id="id6">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span> as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a> (but on
+a finer energy grid, data from <span id="id7">[<a class="reference internal" href="biblio.html#id9" title="C. T. Chantler. FFAST Data on a finer energy grid: Personal Communication. 2016.">Chantler (2016)</a>]</span>) are also included.</p>
 <p>The values here use units that are SI and commonly used in X-ray work.
 Cross sections are in cm^2/gr, and energies are in eV.  Energy-dependent
 data for cross-sections are typically most reliable between about 250 eV to
 about 250,000 eV.  Elements from Z=1 to 92 are supported, with some data
 are included for elements between Z=93 and Z=98.</p>
 <p>The current version of the XrayDB is <strong>8.1</strong>, and the version of the Python
-module is 4.4.7.   See Also:</p>
+module is 4.5.0.   See Also:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><a class="reference external" href="https://millenia.cars.aps.anl.gov/xraydb">XrayDB Web App (CARS, U Chicago)</a> and <a class="reference external" href="https://xraydb.xrayabsorption.org/">XrayDB Web App
@@ -78,7 +80,7 @@ factors, mirror reflectivity, and more.</p></li>
 </ul>
 </div></blockquote>
 <section id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
@@ -97,14 +99,64 @@ factors, mirror reflectivity, and more.</p></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Using XrayDB from Python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="python.html#module-xraydb">The Python xraydb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#atomic-properties">Atomic Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#elastic-scattering-factors">Elastic Scattering Factors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-edges">X-ray Edges</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-emission-lines">X-ray Emission Lines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#absorption-and-scattering-cross-sections">Absorption and Scattering Cross-sections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#chemical-and-materials-database">Chemical and Materials database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-properties-of-materials">X-ray properties of materials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#module-xraydb">The Python xraydb module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.get_xraydb"><code class="docutils literal notranslate"><span class="pre">get_xraydb()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#atomic-properties">Atomic Properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_number"><code class="docutils literal notranslate"><span class="pre">atomic_number()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_symbol"><code class="docutils literal notranslate"><span class="pre">atomic_symbol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_mass"><code class="docutils literal notranslate"><span class="pre">atomic_mass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_density"><code class="docutils literal notranslate"><span class="pre">atomic_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#elastic-scattering-factors">Elastic Scattering Factors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.f0"><code class="docutils literal notranslate"><span class="pre">f0()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.f0_ions"><code class="docutils literal notranslate"><span class="pre">f0_ions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-edges">X-ray Edges</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.xray_edge"><code class="docutils literal notranslate"><span class="pre">xray_edge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.xray_edges"><code class="docutils literal notranslate"><span class="pre">xray_edges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.core_width"><code class="docutils literal notranslate"><span class="pre">core_width()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.guess_edge"><code class="docutils literal notranslate"><span class="pre">guess_edge()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-emission-lines">X-ray Emission Lines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.xray_lines"><code class="docutils literal notranslate"><span class="pre">xray_lines()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.fluor_yield"><code class="docutils literal notranslate"><span class="pre">fluor_yield()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.ck_probability"><code class="docutils literal notranslate"><span class="pre">ck_probability()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#absorption-and-scattering-cross-sections">Absorption and Scattering Cross-sections</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.mu_elam"><code class="docutils literal notranslate"><span class="pre">mu_elam()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.coherent_cross_section_elam"><code class="docutils literal notranslate"><span class="pre">coherent_cross_section_elam()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.incoherent_cross_section_elam"><code class="docutils literal notranslate"><span class="pre">incoherent_cross_section_elam()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.chantler_energies"><code class="docutils literal notranslate"><span class="pre">chantler_energies()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.f1_chantler"><code class="docutils literal notranslate"><span class="pre">f1_chantler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.f2_chantler"><code class="docutils literal notranslate"><span class="pre">f2_chantler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.mu_chantler"><code class="docutils literal notranslate"><span class="pre">mu_chantler()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#chemical-and-materials-database">Chemical and Materials database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.chemparse"><code class="docutils literal notranslate"><span class="pre">chemparse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.validate_formula"><code class="docutils literal notranslate"><span class="pre">validate_formula()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.get_materials"><code class="docutils literal notranslate"><span class="pre">get_materials()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.find_material"><code class="docutils literal notranslate"><span class="pre">find_material()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.get_material"><code class="docutils literal notranslate"><span class="pre">get_material()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.add_material"><code class="docutils literal notranslate"><span class="pre">add_material()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html#x-ray-properties-of-materials">X-ray properties of materials</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.material_mu"><code class="docutils literal notranslate"><span class="pre">material_mu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.material_mu_components"><code class="docutils literal notranslate"><span class="pre">material_mu_components()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.xray_delta_beta"><code class="docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.darwin_width"><code class="docutils literal notranslate"><span class="pre">darwin_width()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.mirror_reflectivity"><code class="docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.ionization_potential"><code class="docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.ionchamber_fluxes"><code class="docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of Atomic and X-ray Data</a><ul>
@@ -143,17 +195,21 @@ factors, mirror reflectivity, and more.</p></li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">X-ray DB: X-ray Reference Data in SQLite</a><ul>
 <li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 </ul>
 </li>
 </ul>
 
-  <h4>Next topic</h4>
-  <p class="topless"><a href="installation.html"
-                        title="next chapter">Installation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="installation.html"
+                          title="next chapter">Installation</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -165,12 +221,12 @@ factors, mirror reflectivity, and more.</p></li>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -193,8 +249,8 @@ factors, mirror reflectivity, and more.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2021-May-25.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Last updated on 2023-January-26.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

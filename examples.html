@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Example Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,7 +12,9 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -45,16 +47,16 @@
           <div class="body" role="main">
             
   <section id="example-calculations-of-x-ray-properties-of-materials">
-<span id="example-calcs"></span><h1>Example Calculations of X-ray properties of materials<a class="headerlink" href="#example-calculations-of-x-ray-properties-of-materials" title="Permalink to this headline">¶</a></h1>
+<span id="example-calcs"></span><h1>Example Calculations of X-ray properties of materials<a class="headerlink" href="#example-calculations-of-x-ray-properties-of-materials" title="Permalink to this heading">¶</a></h1>
 <p>Here, a few detailed examples of using the <cite>xraydb.sqlite</cite> to calculate the
 X-ray properties of materials are shown.  These all use the functions in
 the python <cite>xraydb</cite> module, which is describe in more detail in the next
 chapter, <a class="reference internal" href="python.html#python-api"><span class="std std-ref">Using XrayDB from Python</span></a>.  The examples will explore some aspects of
 X-ray physics, but will not give a complete tutorial on the concepts here.
-For reference see <span id="id1">[<a class="reference internal" href="biblio.html#id2">Als-Nielsen and McMorrow (2011)</a>]</span> for example.  Some of
+For reference see <span id="id1">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span> for example.  Some of
 these calculations are also available at  <a class="reference external" href="https://millenia.cars.aps.anl.gov/xraydb">XrayDB Web App (beta!)</a>.</p>
 <section id="x-ray-attenuation-by-elements">
-<h2>X-ray attenuation by elements<a class="headerlink" href="#x-ray-attenuation-by-elements" title="Permalink to this headline">¶</a></h2>
+<h2>X-ray attenuation by elements<a class="headerlink" href="#x-ray-attenuation-by-elements" title="Permalink to this heading">¶</a></h2>
 <p>The XrayDB database tabulates values of the X-ray mass attenuation
 coefficient, <span class="math notranslate nohighlight">\(\mu/\rho\)</span>, for each element.  In most of the X-ray
 regime used in materials characterization (say, up to 150 keV), the
@@ -161,7 +163,7 @@ will generate the following plot:</p>
 photo-electric cross-section dominates past 100 keV.</p>
 </section>
 <section id="mu-calculations-for-materials">
-<h2><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials<a class="headerlink" href="#mu-calculations-for-materials" title="Permalink to this headline">¶</a></h2>
+<h2><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials<a class="headerlink" href="#mu-calculations-for-materials" title="Permalink to this heading">¶</a></h2>
 <p>While one can use the above values for <span class="math notranslate nohighlight">\(\mu/\rho\)</span> to calculate the
 attenuation of X-rays by multi-element materials, the <a class="reference internal" href="python.html#xraydb.material_mu" title="xraydb.material_mu"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu()</span></code></a>
 function is available to do the more convenient calculation of the X-ray
@@ -234,7 +236,7 @@ example, one can simply do:</p>
 </div>
 </section>
 <section id="x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">
-<h2>X-ray flux calculations for ionization chambers and photodiodes<a class="headerlink" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes" title="Permalink to this headline">¶</a></h2>
+<h2>X-ray flux calculations for ionization chambers and photodiodes<a class="headerlink" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes" title="Permalink to this heading">¶</a></h2>
 <p>Gas-filled ionization chambers are widely used as X-ray detectors. They are
 simple to use, inexpensive, and can be highly linear in estimating the
 photon flux over many orders of magnitude.  X-rays entering a chamber
@@ -278,20 +280,16 @@ of fluxes from ion chamber currents.</p>
 involves several steps. The energy from a single X-ray-generated
 electron is converted into a number of electron-ion pairs given by the
 <em>effective ionization potential</em> of the gas.  These are reasonably
-well-known values (see <span id="id2">[<a class="reference internal" href="biblio.html#id3">Knoll (2010)</a>]</span>) that are all between 20 and 40
+well-known values (see <span id="id2">[<a class="reference internal" href="biblio.html#id3" title="G. .F. Knoll. Radiation Detection and Measurement, 4th Edition. John Wiley &amp; Sons, 2010. URL: https://dx.doi.org/10.1002/9780470131480.">Knoll (2010)</a>]</span>) that are all between 20 and 40
 eV, given in the <a class="reference internal" href="#xray-ionpot-table"><span class="std std-ref">Table of Effective Ionization Potentials</span></a>.</p>
 <blockquote id="xray-ionpot-table">
 <span id="index-0"></span><div><p>Table of Effective Ionization Potentials. Many of these are taken from
-<span id="id3">[<a class="reference internal" href="biblio.html#id3">Knoll (2010)</a>]</span>, while others appear to come from International Commission
+<span id="id3">[<a class="reference internal" href="biblio.html#id3" title="G. .F. Knoll. Radiation Detection and Measurement, 4th Edition. John Wiley &amp; Sons, 2010. URL: https://dx.doi.org/10.1002/9780470131480.">Knoll (2010)</a>]</span>, while others appear to come from International Commission
 on Radiation Units &amp; Measurement, Report 31, 1979.  The names given are
 those supported by the functions <a class="reference internal" href="python.html#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a> and
 <a class="reference internal" href="python.html#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a>.</p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 58%" />
-<col style="width: 42%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>gas/materia name(s)</p></th>
 <th class="head"><p>potential (eV)</p></th>
@@ -432,7 +430,7 @@ at STP, but changes in gas density will be exactly linear to changing the
 length of the ion chamber.</p>
 </section>
 <section id="x-ray-mirror-reflectivities">
-<h2>X-ray mirror reflectivities<a class="headerlink" href="#x-ray-mirror-reflectivities" title="Permalink to this headline">¶</a></h2>
+<h2>X-ray mirror reflectivities<a class="headerlink" href="#x-ray-mirror-reflectivities" title="Permalink to this heading">¶</a></h2>
 <p>At very shallow angles of incidence X-rays can be reflected by total
 external reflection from a material. The reflectivity can be very high
 at relatively low energies and shallow angles, but drops off dramatically
@@ -476,7 +474,7 @@ selected mirror surfaces and coatings used for mirrors.</span><a class="headerli
 </figure>
 </section>
 <section id="darwin-widths-of-monochromator-crystals">
-<h2>Darwin widths of monochromator crystals<a class="headerlink" href="#darwin-widths-of-monochromator-crystals" title="Permalink to this headline">¶</a></h2>
+<h2>Darwin widths of monochromator crystals<a class="headerlink" href="#darwin-widths-of-monochromator-crystals" title="Permalink to this heading">¶</a></h2>
 <p>Bragg’s law describes X-ray diffraction from crystals as</p>
 <div class="math notranslate nohighlight">
 \[m \lambda = 2 d \sin(\theta)\]</div>
@@ -498,7 +496,7 @@ anomalous scattering (as calculated with <a class="reference internal" href="pyt
 shape.</p>
 <p>All of these effects are included in the <a class="reference internal" href="python.html#xraydb.darwin_width" title="xraydb.darwin_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">darwin_width()</span></code></a> function,
 which follows very closely the description from chapter 6.4 in
-<span id="id4">[<a class="reference internal" href="biblio.html#id2">Als-Nielsen and McMorrow (2011)</a>]</span>.  The function takes inputs of</p>
+<span id="id4">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.  The function takes inputs of</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><cite>energy</cite>: the X-ray energy, in eV.</p></li>
@@ -608,8 +606,9 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Example Calculations of X-ray properties of materials</a><ul>
 <li><a class="reference internal" href="#x-ray-attenuation-by-elements">X-ray attenuation by elements</a></li>
 <li><a class="reference internal" href="#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
@@ -620,12 +619,17 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="periodictable.html"
-                        title="previous chapter">X-ray Periodic Table of the Elements</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="python.html"
-                        title="next chapter">Using XrayDB from Python</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="periodictable.html"
+                          title="previous chapter">X-ray Periodic Table of the Elements</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="python.html"
+                          title="next chapter">Using XrayDB from Python</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -637,12 +641,12 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -668,8 +672,8 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2021-May-25.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Last updated on 2023-January-26.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

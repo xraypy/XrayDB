@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Overview of Atomic and X-ray Data &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,7 +12,9 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -45,25 +47,25 @@
           <div class="body" role="main">
             
   <section id="overview-of-atomic-and-x-ray-data">
-<h1>Overview of Atomic and X-ray Data<a class="headerlink" href="#overview-of-atomic-and-x-ray-data" title="Permalink to this headline">¶</a></h1>
+<h1>Overview of Atomic and X-ray Data<a class="headerlink" href="#overview-of-atomic-and-x-ray-data" title="Permalink to this heading">¶</a></h1>
 <p>The data provided in XrayDB includes Atomic data and characteristic
 energies and cross sections for the interaction of X-rays with elements.  A
 few definitions and conventions necessary for using this data are discussed
 here.</p>
 <section id="elements">
-<h2>Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h2>
+<h2>Elements<a class="headerlink" href="#elements" title="Permalink to this heading">¶</a></h2>
 <p>Most of the data resources are accessed by an elements <em>Atomic Symbol</em>.
 For the Python module, most methods will take <cite>element</cite> as the first
 argument, and this can either be the integer atomic number or the string
 for the atomic symbol.</p>
 </section>
 <section id="physical-units">
-<h2>Physical Units<a class="headerlink" href="#physical-units" title="Permalink to this headline">¶</a></h2>
+<h2>Physical Units<a class="headerlink" href="#physical-units" title="Permalink to this heading">¶</a></h2>
 <p>Elemental densities are given in gr/cm^3, and molar masses are given in
 AMU. Unless otherwise stated, all energies are in units of eV.</p>
 </section>
 <section id="x-ray-edges">
-<h2>X-ray Edges<a class="headerlink" href="#x-ray-edges" title="Permalink to this headline">¶</a></h2>
+<h2>X-ray Edges<a class="headerlink" href="#x-ray-edges" title="Permalink to this heading">¶</a></h2>
 <p>Several resources (database tables, python methods) take either an <code class="docutils literal notranslate"><span class="pre">edge</span></code>
 or a <code class="docutils literal notranslate"><span class="pre">level</span></code> argument to signify a core electronic level.  These are
 strings and must be one of the levels listed in the <a class="reference internal" href="#xraydb-edge-table"><span class="std std-ref">Table of X-ray
@@ -73,12 +75,6 @@ edge names</span></a>.</p>
 IUPAC symbols for the core electronic levels.</p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 40%" />
-<col style="width: 10%" />
-<col style="width: 40%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>electronic level</p></th>
@@ -148,7 +144,7 @@ IUPAC symbols for the core electronic levels.</p>
 </div></blockquote>
 </section>
 <section id="x-ray-lines">
-<h2>X-ray Lines<a class="headerlink" href="#x-ray-lines" title="Permalink to this headline">¶</a></h2>
+<h2>X-ray Lines<a class="headerlink" href="#x-ray-lines" title="Permalink to this heading">¶</a></h2>
 <p>Many resources (database tables or methods) take emission line arguments.
 These are all strings and follow the latinized version of the Siegbahn
 notation as indicated in the <a class="reference internal" href="#xraydb-lines-table"><span class="std std-ref">Table of X-ray emission line names</span></a>.</p>
@@ -157,14 +153,6 @@ notation as indicated in the <a class="reference internal" href="#xraydb-lines-t
 <div><p>Table of X-ray emission line names and the corresponding Siegbahn and IUPAC notations</p>
 </div></blockquote>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 11%" />
-<col style="width: 30%" />
-<col style="width: 8%" />
-<col style="width: 13%" />
-<col style="width: 30%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>IUPAC</p></th>
@@ -271,10 +259,10 @@ notation as indicated in the <a class="reference internal" href="#xraydb-lines-t
 </div></blockquote>
 </section>
 <section id="cross-sections">
-<h2>Cross Sections<a class="headerlink" href="#cross-sections" title="Permalink to this headline">¶</a></h2>
-<p>The photo-absorption and scattering cross sections from <span id="id1">[<a class="reference internal" href="biblio.html#id4">Elam, Ravel, and Sieber (2002)</a>]</span>
-and <span id="id2">[<a class="reference internal" href="biblio.html#id8">Chantler (2000)</a>]</span> are in cm^2/gr.</p>
-<p>The data from <span id="id3">[<a class="reference internal" href="biblio.html#id4">Elam, Ravel, and Sieber (2002)</a>]</span> is held as logarithms of energy, cross
+<h2>Cross Sections<a class="headerlink" href="#cross-sections" title="Permalink to this heading">¶</a></h2>
+<p>The photo-absorption and scattering cross sections from <span id="id1">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span>
+and <span id="id2">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span> are in cm^2/gr.</p>
+<p>The data from <span id="id3">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span> is held as logarithms of energy, cross
 section, and logarithm of the 2nd derivative of cross section that allows
 for cubic spline interpolation in log-log space.</p>
 </section>
@@ -287,8 +275,9 @@ for cubic spline interpolation in log-log space.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Overview of Atomic and X-ray Data</a><ul>
 <li><a class="reference internal" href="#elements">Elements</a></li>
 <li><a class="reference internal" href="#physical-units">Physical Units</a></li>
@@ -299,12 +288,17 @@ for cubic spline interpolation in log-log space.</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="python.html"
-                        title="previous chapter">Using XrayDB from Python</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="dbschema.html"
-                        title="next chapter">Using the XrayDB  xraydb.sqlite</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="python.html"
+                          title="previous chapter">Using XrayDB from Python</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="dbschema.html"
+                          title="next chapter">Using the XrayDB  xraydb.sqlite</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -316,12 +310,12 @@ for cubic spline interpolation in log-log space.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -347,8 +341,8 @@ for cubic spline interpolation in log-log space.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2021-May-25.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Last updated on 2023-January-26.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

@@ -18,7 +18,8 @@ author = 'Matthew Newville'
 copyright = 'Public Domain'
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.mathjax',
-              'sphinx.ext.extlinks', 'sphinxcontrib.napoleon',
+              'sphinx.ext.extlinks',
+              'sphinx.ext.napoleon',
               'sphinxcontrib.bibtex' ]
 
 todo_include_todos = True

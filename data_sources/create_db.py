@@ -79,6 +79,41 @@ def add_ionization_potentials(dest):
     conn.commit()
     c.close()
 
+def add_compton_energies(dest):
+    """add energies for Compton scattering as a function on incident X-ray energy:
+    Energy                : energy of incident X-ray
+    Compton_xray_90deg    : energy of X-ray scattered at theta=90
+    Compton_xray_mean     : mean energy of Compton-scattered X-ray
+    Compton_electron_mean : mean energy of Compton-scattered electron
+    """
+    source = 'Compton_energies.txt'
+    if not os.path.isfile(source):
+        raise IOError('File "%s" does not exist' % source)
+
+    conn = sqlite3.connect(dest)
+    c = conn.cursor()
+    c.execute('create table compton_energies (incident text, xray_90deg text, xray_mean text, electron_mean text)')
+    e, cx90, cxmean, cemean = [], [], [], []
+    with io.open(source, encoding='ascii') as f:
+        for line in f.readlines():
+            if line.startswith('#'):
+                continue
+
+            line = line[:-1].strip()
+            if len(line)  > 2:
+                words = line.split()
+                e.append(float(words[0]))
+                cx90.append(float(words[1]))
+                cxmean.append(float(words[2]))
+                cemean.append(float(words[3]))
+
+    c.execute('insert into compton_energies values (?,?,?,?)', (json.dumps(e),
+                                                                json.dumps(cx90),
+                                                                json.dumps(cxmean),
+                                                                json.dumps(cemean)))
+    conn.commit()
+    c.close()
+
 def add_corehole_data(dest, append=True):
     """add core-widths from Keski-Rahkonen and Krause. Data from
     Atomic Data and Nuclear Data Tables, Vol 14, Number 2, 1974 and
@@ -907,6 +942,7 @@ if __name__ == '__main__':
     add_Waasmaier(dest, append=True)
     add_elementaldata(dest)
     add_ionization_potentials(dest)
+    add_compton_energies(dest)
     add_corehole_data(dest, append=True)
     add_Chantler(dest, table='Chantler',        subdir='fine',   append=True)
     add_Version(dest)

@@ -92,7 +92,7 @@ def add_compton_energies(dest):
 
     conn = sqlite3.connect(dest)
     c = conn.cursor()
-    c.execute('create table compton_energies (incident text, xray_90deg text, xray_mean text, electron_mean text)')
+    c.execute('create table Compton_energies (incident text, xray_90deg text, xray_mean text, electron_mean text)')
     e, cx90, cxmean, cemean = [], [], [], []
     with io.open(source, encoding='ascii') as f:
         for line in f.readlines():

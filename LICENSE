@@ -1,14 +1,48 @@
 Public Domain
 
-To the extent possible, the data, code, and documentation here are placed in
-the public domain.  No claim of copyright is made by the authors and no
-restrictions of any kind placed on the use of the work here.
+The original sources of the data included here are mostly based on published
+works with the clear intent of providing data to the general public.  Some of
+the datasets here do not have clear statements of copyright or license, but
+have been freely available for many years. The work here is a compilation and
+reformatting of those datasets.
 
-The original sources of the data are mostly based on published works with
-the clear intent of providing data to the general public.  Some of the
-datasets have may not have clear statements of copyright or license, but
-have been freely available for many years. The work here is a compilation
-and reformatting of those datasets.
+To the extent possible, and unless otherwise stated, the database files, data
+sources, and documentation files here are placed in the public domain, using
+the Creative Commons 1.0 Universal (CC0 1.0) Public Domain Dedication below.
 
-If you use these resources and wish to cite the original data source, please
-see the documentation for more details.
+In particular, the files named "xraydb.sqlite", "xraydb.schema", and all files
+in the following folders and subfolders:
+  data_sources/
+  poster/
+  doc/
+
+are all placed in the "Public Domain" using the CC0 1.0 dedication.
+
+The files in the folder 'python/xraydb' are copyrighted by the lead authors and
+copyrighted using an MIT License, which allows for distribution and re-use of
+the source code with the only restriction being to not remove the notice of
+copyright.  Each of these files will have an explicit notice of copyright and
+license for use.  For files that do not explicitly carry a notice copyrighted,
+no claim of copyright is made and the CC0 1.0 dedication applies.
+
+The Creative Commons 1.0 Universal (CC0 1.0) Public Domain Dedication
+(https://creativecommons.org/publicdomain/zero/1.0/):
+
+   The person who associated a work with this deed has dedicated the work to
+   the public domain by waiving all of his or her rights to the work worldwide
+   under copyright law, including all related and neighboring rights, to the
+   extent allowed by law.
+
+   You can copy, modify, distribute and perform the work, even for commercial
+   purposes, all without asking permission. See Other Information below.
+
+   In no way are the patent or trademark rights of any person affected by CC0,
+   nor are the rights that other persons may have in the work or in how the
+   work is used, such as publicity or privacy rights.
+
+   Unless expressly stated otherwise, the person who associated a work with
+   this deed makes no warranties about the work, and disclaims liability for
+   all uses of the work, to the fullest extent permitted by applicable law.
+
+   When using or citing the work, you should not imply endorsement by the
+   author or the affirmer.

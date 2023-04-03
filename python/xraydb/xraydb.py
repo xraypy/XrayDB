@@ -22,8 +22,9 @@ XrayEdge = namedtuple('XrayEdge', ('energy', 'fyield', 'jump_ratio'))
 XrayLine = namedtuple('XrayLine', ('energy', 'intensity', 'initial_level',
                                    'final_level'))
 ElementData = namedtuple('ElementData', ('Z', 'symbol', 'mass', 'density'))
+ComptonEnergies = namedtuple('ComptonEnergies', ('incident', 'xray_90deg', 'xray_mean', 'electron_mean'))
 
-__version__ = '1.4'
+__version__ = '1.5'
 
 def make_engine(dbname):
     "create engine for sqlite connection"
@@ -46,8 +47,8 @@ def isxrayDB(dbname):
         'Chantler', 'Waasmaier', and 'KeskiRahkonen_Krause'
     """
     _tables = ('Chantler', 'Waasmaier', 'Coster_Kronig',
-               'KeskiRahkonen_Krause', 'xray_levels',
-               'elements', 'photoabsorption', 'scattering')
+               'KeskiRahkonen_Krause', 'xray_levels', 'elements',
+               'photoabsorption', 'scattering')
     result = False
     try:
         engine = make_engine(dbname)
@@ -82,7 +83,7 @@ class XrayDB():
 
         if not isxrayDB(dbname):
             raise ValueError("'%s' is not a valid X-ray Database file!" % dbname)
-
+        self._cache = {}
         self.dbname = os.path.abspath(dbname)
         self.engine = make_engine(dbname)
         self.conn = self.engine.connect()
@@ -102,8 +103,7 @@ class XrayDB():
         self.metadata.reflect(self.engine)
         self.tables = self.metadata.tables
 
-        q = self.tables['elements'].select()
-        elems = self.session.execute(q).fetchall()
+        elems = self.get_cache('elements')
         self.atomic_symbols = [e.element for e in elems]
 
     def close(self):
@@ -114,6 +114,35 @@ class XrayDB():
     def query(self, *args, **kws):
         "generic query"
         return self.session.query(*args, **kws)
+
+    def get_cache(self, tablename, column=None, value=None):
+        """for some tables, we will just cache all the data"""
+        if column is None:
+            if tablename in self._cache:
+                rows = self._cache[tablename]
+            else:
+                q = self.tables[tablename].select()
+                rows = self.session.execute(q).fetchall()
+                self._cache[tablename] = rows
+                # print("cached ", tablename)
+        else:
+            if tablename in self._cache:
+                data = self._cache[tablename]
+            else:
+                data = self._cache[tablename] = {}
+
+            key = f"{column:s}_{repr(value)}"
+            if key not in data:
+                tab = self.tables[tablename]
+                col = getattr(tab.c, column, None)
+                if col is None:
+                    raise ValueError(f"now column {column} for table {tablename}")
+                data[key] = self.query(tab).filter(col==value).all()
+                # print("cached ", tablename, key)
+            if key in data:
+                rows = data[key]
+        return rows
+
 
     def get_version(self, long=False, with_history=False):
         """
@@ -127,8 +156,7 @@ class XrayDB():
             string: version information
         """
         out = []
-        q = self.tables['Version'].select()
-        rows = self.session.execute(q).fetchall()
+        rows = self.get_cache('Version')
         if not with_history:
             rows = rows[-1:]
         if long or with_history:
@@ -167,12 +195,10 @@ class XrayDB():
         References:
             Waasmaier and Kirfel
         """
-        wtab = self.tables['Waasmaier']
-        rows = self.query(wtab)
+        rows = self.get_cache('Waasmaier')
         if element is not None:
-            elem = self.symbol(element)
-            rows = rows.filter(wtab.c.element == elem)
-        return [str(r.ion) for r in rows.all()]
+            rows = [r for r in rows if r.element==element]
+        return [str(r.ion) for r in rows]
 
     def f0(self, ion, q):
         """
@@ -204,13 +230,17 @@ class XrayDB():
         References:
             Waasmaier and Kirfel
         """
-        wtab = self.tables['Waasmaier']
+        f0_rows = self.get_cache('Waasmaier')
+        row = [None]
         if isinstance(ion, int):
-            row = self.query(wtab).filter(wtab.c.atomic_number == ion).all()[0]
-        elif ion not in self.f0_ions():
-            raise ValueError('No ion {:s} from Waasmaier table'.format(repr(ion)))
+            rows = [r for r in f0_rows if ion == r.atomic_number]
+            if len(rows) == 0:
+                raise ValueError(f'No ion {ion} from Waasmaier table')
         else:
-            row = self.query(wtab).filter(wtab.c.ion == ion.title()).all()[0]
+            rows = [r for r in f0_rows if ion.title() == r.ion]
+            if len(rows) == 0:
+                raise ValueError(f'No ion {ion} from Waasmaier table')
+        row = rows[0]
         q = as_ndarray(q)
         f0 = row.offset
         for s, e in zip(json.loads(row.scale), json.loads(row.exponents)):
@@ -229,12 +259,11 @@ class XrayDB():
         Notes:
            this function is meant for internal use.
         """
-        ctab = self.tables['Chantler']
         elem = self.symbol(element)
-        row = self.query(ctab).filter(ctab.c.element == elem).one()
-
         energy = as_ndarray(energy)
         emin, emax = min(energy), max(energy)
+
+        row = self.get_cache('Chantler', column='element', value=elem)[0]
 
         te = np.array(json.loads(row.energy))
         nemin = max(0, -3 + max(np.where(te <= emin)[0]))
@@ -349,17 +378,33 @@ class XrayDB():
             col = 'mu_incoh'
         return self._from_chantler(element, energy, column=col)
 
+    def compton_energies(self, incident_energy):
+        """
+        return tuple of Compton energies for an incident energy
+        """
+        row = self.get_cache('Compton_energies')[0]
+        _en   = json.loads(row.incident)
+        _xe90 = json.loads(row.xray_90deg)
+        _xave = json.loads(row.xray_mean)
+        _eave = json.loads(row.electron_mean)
+
+        xray_90deg = np.interp(incident_energy, _en, _xe90)
+        xray_mean = np.interp(incident_energy, _en, _xave)
+        electron_mean = np.interp(incident_energy, _en, _eave)
+
+        return ComptonEnergies(incident_energy, xray_90deg, xray_mean, electron_mean)
+
     def _elem_data(self, element):
         "return data from elements table: internal use"
-        etab = self.tables['elements']
-        row = self.query(etab)
+
+        rows = self.get_cache('elements')
         if isinstance(element, int):
-            row = row.filter(etab.c.atomic_number == element).one()
+            row = [r for r in rows if r.atomic_number == element][0]
         else:
             elem = element.title()
             if not elem in self.atomic_symbols:
                 raise ValueError("unknown element '%s'" % repr(elem))
-            row = row.filter(etab.c.element == elem).one()
+            row = [r for r in rows if r.element == elem][0]
         return ElementData(int(row.atomic_number),
                            row.element.title(),
                            row.molar_mass, row.density)
@@ -638,11 +683,9 @@ class XrayDB():
         if kind not in ('coh', 'incoh', 'photo'):
             raise ValueError('unknown cross section kind=%s' % kind)
 
-        stab = self.tables['scattering']
-        if kind == 'photo':
-            stab = self. tables['photoabsorption']
+        tablename = 'photoabsorption' if kind == 'photo' else 'scattering'
 
-        row = self.query(stab).filter(stab.c.element == elem).all()[0]
+        row = self.get_cache(tablename, column='element', value=elem)[0]
 
         tab_lne = np.array(json.loads(row.log_energy))
         if kind.startswith('coh'):

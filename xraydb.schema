@@ -1,5 +1,3 @@
-CREATE TABLE elements (atomic_number integer primary key,
-        element text, molar_mass real, density real);
 CREATE TABLE xray_levels (id integer primary key, element text,
         iupac_symbol text, absorption_edge real, fluorescence_yield real,
         jump_ratio real);
@@ -19,6 +17,10 @@ CREATE TABLE scattering (id integer primary key, element text,
 CREATE TABLE Waasmaier (id integer primary key,
         atomic_number integer, element text, ion text,
         offset real, scale text, exponents text);
+CREATE TABLE elements (atomic_number integer primary key,
+        element text, molar_mass real, density real);
+CREATE TABLE ionization_potentials (gas text,  potential real);
+CREATE TABLE Compton_energies (incident text, xray_90deg text, xray_mean text, electron_mean text);
 CREATE TABLE KeskiRahkonen_Krause (id integer primary key,
         atomic_number integer, element text, edge text, width float);
 CREATE TABLE Krause_Oliver (id integer primary key,

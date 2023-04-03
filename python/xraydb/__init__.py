@@ -2,13 +2,14 @@
 
    X-ray Reference Data for the Elements
 
-   last update: 30-August-2019
+   last update: 2-April-2023
    License: Public Domain
    Author:  Matthew Newville <newville@cars.uchicago.edu>
             Center for Advanced Radiation Sources,
             The University of Chicago
 """
 
+from .version import version as __version__
 
 from .xraydb import XrayDB
 
@@ -26,7 +27,3 @@ from .xray import (atomic_number, atomic_symbol, atomic_mass,
                    xray_delta_beta, get_xraydb, darwin_width,
                    mirror_reflectivity, ionchamber_fluxes,
                    ionization_potential, transmission_sample)
-
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions

@@ -46,14 +46,14 @@ def add_elementaldata(dest):
     conn = sqlite3.connect(dest)
     c = conn.cursor()
     c.execute('''create table elements (atomic_number integer primary key,
-        element text, molar_mass real, density real)
+        element text, name text, molar_mass real, density real)
         ''')
     with io.open(source, encoding='ascii') as f:
         for line in f.readlines():
             if line.startswith('#'):
                 continue
-            num, sym, mw, rho = line[:-1].split()
-            c.execute('insert into elements values (?,?,?,?)', (num, sym, mw, rho))
+            num, sym, name, mw, rho = line[:-1].split()
+            c.execute('insert into elements values (?,?,?,?,?)', (num, sym, name, mw, rho))
     conn.commit()
     c.close()
 

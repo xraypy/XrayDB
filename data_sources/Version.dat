@@ -10,3 +10,4 @@
   8.0  // 2020-08-13 10:25:00 // Fix repeated energy for Mo in fine Chantler data
   8.1  // 2020-08-21 12:30:00 // Add ionization potentials for Si/Ge PIN diodes
   9.0  // 2023-03-31 20:30:00 // Add Compton table for mean X-ray and electron energies, X-ray energy scattered at 90 deg
+  9.1  // 2023-08-02 13:20:00 // Add element names to element table, include elements to Z=118

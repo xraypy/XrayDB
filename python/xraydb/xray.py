@@ -832,7 +832,6 @@ def mirror_reflectivity(formula, theta, energy, density=None,
 def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
                       sensitivity=1.e-6, sensitivity_units='A/V',
                       with_compton=True, both_carriers=True):
-
     """return ion chamber and PIN diode fluxes for a gas, mixture of gases, or
     semiconductor material, ion chamber length (or diode thickness), X-ray energy,
     recorded voltage and current amplifier sensitivity.  See note for details.
@@ -898,8 +897,8 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
           units are in `A/V`, but you can add a common SI prefix of 'p', 'pico',
           'n', 'nano', (unicode 'u03bc'), 'u', 'micro', 'm', 'milli' so that,
           `ionchamber_fluxes(..., sensitivity=1.e-6)` and
-         `ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')`
-          will both give a sensitivity of 1 microAmp / Volt .
+          `ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')`
+          will both give a sensitivity of 1 microAmp / Volt.
 
        3. The effect of Compton scattering on the ion chamber current can be
           approximated using the mean energy of the Compton-scattered electron.
@@ -911,7 +910,6 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
           the number of carries below, `N_carriers` is 2.  To consider the
           current from 1 carrier, for example if using a Frisch grid, use
           `both_carries=False`, which will set `N_carriers` to 1.
-
     """
     from .materials import material_mu
 

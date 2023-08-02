@@ -22,19 +22,19 @@ note = """# this will calculate the following energies related to Compton scatte
 
 # r_e ~ 2.8 fm     : classical electron radius
 # mc2 ~ 511000 eV  : electron mass energy
-r_e = physical_constants['classical electron radius'][0]*1.e6
+r_e = physical_constants['classical electron radius'][0]
 mc2 = physical_constants['electron mass energy equivalent in MeV'][0]*1.e6
 
 def KleinNishina(theta, energy):
     "Klein-Nishina distribution"
-    gamma =  energy / mc2
-    cfact = 1.0/(1 + gamma*(1 - np.cos(theta)))
+    eta =  energy / mc2
+    cfact = 1.0/(1 + eta*(1 - np.cos(theta)))
     return (r_e*cfact)**2 * (cfact + 1.0/cfact - np.sin(theta)**2)
 
 def ElectronEnergyKleinNishina(theta, energy):
     "Compton_electron energy * Klein-Nishina distribution"
-    gamma =  energy / mc2
-    cfact = 1.0/(1 + gamma*(1 - np.cos(theta)))
+    eta =  energy / mc2
+    cfact = 1.0/(1 + eta*(1 - np.cos(theta)))
     return energy*(1-cfact) * (r_e*cfact)**2 * (cfact + 1.0/cfact - np.sin(theta)**2)
 
 theta = np.arange(0, 1, 0.0001)*np.pi

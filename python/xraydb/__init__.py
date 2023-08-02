@@ -18,7 +18,7 @@ from .chemparser import chemparse, validate_formula
 from .materials import (material_mu, material_mu_components, get_materials,
                         get_material, find_material, add_material)
 
-from .xray import (atomic_number, atomic_symbol, atomic_mass,
+from .xray import (atomic_number, atomic_symbol, atomic_name, atomic_mass,
                    atomic_density, xray_edges, xray_edge, xray_lines,
                    xray_line, fluor_yield, ck_probability, core_width, f0,
                    f0_ions, chantler_energies, f1_chantler, f2_chantler,

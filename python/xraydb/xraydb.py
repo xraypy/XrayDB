@@ -21,7 +21,7 @@ from .utils import elam_spline, as_ndarray
 XrayEdge = namedtuple('XrayEdge', ('energy', 'fyield', 'jump_ratio'))
 XrayLine = namedtuple('XrayLine', ('energy', 'intensity', 'initial_level',
                                    'final_level'))
-ElementData = namedtuple('ElementData', ('Z', 'symbol', 'mass', 'density'))
+ElementData = namedtuple('ElementData', ('Z', 'symbol', 'name', 'mass', 'density'))
 ComptonEnergies = namedtuple('ComptonEnergies', ('incident', 'xray_90deg', 'xray_mean', 'electron_mean'))
 
 __version__ = '1.5'
@@ -104,7 +104,8 @@ class XrayDB():
         self.tables = self.metadata.tables
 
         elems = self.get_cache('elements')
-        self.atomic_symbols = [e.element for e in elems]
+        self.__atomic_symbols = [e.element for e in elems]
+        self.__atomic_names = [e.name for e in elems]
 
     def close(self):
         "close session"
@@ -401,12 +402,14 @@ class XrayDB():
         if isinstance(element, int):
             row = [r for r in rows if r.atomic_number == element][0]
         else:
-            elem = element.title()
-            if not elem in self.atomic_symbols:
-                raise ValueError("unknown element '%s'" % repr(elem))
-            row = [r for r in rows if r.element == elem][0]
+            if element.title() in self.__atomic_symbols:
+                row = [r for r in rows if r.element == element.title()][0]
+            elif element.lower() in self.__atomic_names:
+                row = [r for r in rows if r.name == element.lower()][0]
+            else:
+                raise ValueError("unknown element '%s'" % repr(element))
         return ElementData(int(row.atomic_number),
-                           row.element.title(),
+                           row.element.title(), row.name,
                            row.molar_mass, row.density)
 
     def atomic_number(self, element):
@@ -432,6 +435,18 @@ class XrayDB():
             string: element symbol
         """
         return self._elem_data(element).symbol
+
+    def atomic_name(self, element):
+        """
+        return element's name (English)
+
+        Parameters:
+            element (string or int): atomic number or symbol
+
+        Returns:
+            string: element name
+        """
+        return self._elem_data(element).name
 
     def molar_mass(self, element):
         """

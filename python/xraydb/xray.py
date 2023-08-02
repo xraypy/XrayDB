@@ -372,6 +372,19 @@ def atomic_symbol(z):
     return xdb._elem_data(z).symbol
 
 
+def atomic_name(z):
+    """atomic name for atomic number
+
+    Args:
+        z (int):  atomic number
+
+    Returns:
+        atomic name (English)
+    """
+    xdb = get_xraydb()
+    return xdb._elem_data(z).name
+
+
 def atomic_mass(element):
     """molar mass for an element
 

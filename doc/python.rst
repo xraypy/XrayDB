@@ -78,6 +78,7 @@ using it:
       :func:`atomic_number`                   atomic number from symbol
       :func:`atomic_symbol`                   atomic symbol from number
       :func:`atomic_mass`                     atomic mass
+      :func:`atomic_name`                     atomic name (English)
       :func:`atomic_density`                  density of pure element
       :func:`f0`                              elastic scattering factor (:cite:`Waasmaier_Kirfel`)
       :func:`f0_ions`                         list of valid "ions" for :func:`f0`  (:cite:`Waasmaier_Kirfel`)
@@ -121,6 +122,8 @@ Atomic Properties
 .. autofunction:: atomic_symbol
 
 .. autofunction:: atomic_mass
+
+.. autofunction:: atomic_name
 
 .. autofunction:: atomic_density
 

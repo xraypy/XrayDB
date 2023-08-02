@@ -866,49 +866,51 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
     Examples:
 
         >>> from xraydb import ionchamber_fluxes
-        >>> fl = ionchamber_fluxes(gas='nitrogen', volts=1.25, length=20.0, energy=10e3, sensitivity=1.e-6)
+        >>> fl = ionchamber_fluxes(gas='nitrogen', volts=1.25,
+                                   length=20.0, energy=10e3, sensitivity=1.e-6)
 
         >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
         Fluxes: In=3.20045e+11, Out=2.90464e+11, Transmitted=90.76%
 
         >>> fl = ionchamber_fluxes(gas={'nitrogen':0.5, 'helium': 0.5},
-                                  volts=1.25, length=20.0, energy=10000.0,
-                                  sensitivity=1.e-6)
+                                   volts=1.25, length=20.0, energy=10000.0,
+                                   sensitivity=1.e-6)
 
         >>> print(f"Fluxes: In={fl.incident:g}, Out={fl.transmitted:g}, Transmitted={100*fl.transmitted/fl.incident:.2f}%")
         Fluxes: In=6.83845e+11, Out=6.51188e+11, Transmitted=95.22%
 
     Notes:
-       1. The gas value can either be a string for the name of chemical
-          formula for the gas or diode material, or dictionary with keys
-          that are gas names or formulas and values that are the relative
-          fraction for mixes gases.  For diode materials, mixtures are not
-          supported.
+       1. The gas value can either be a string for the name of chemical formula
+          for the gas or diode material, or dictionary with keys that are gas
+          names or formulas and values that are the relative fraction for mixes
+          gases.  For diode materials, mixtures are not supported.
 
-          The gas formula is used both the contributions for mu and to get
-          get the weighted effective ionization potential for the material.
+          The gas formula is used both the contributions for mu and to get the
+          weighted effective ionization potential for the material.
 
-          The effective ionization potentials are known for a handful of
-          gases and diodes (see `ionization_potential` function), and range
-          between 20 and 45 eV for gases, and around 3 eV for semiconductors.
-          For unknown gases the value of 32.0 eV will be used.
+          The effective ionization potentials are known for a handful of gases
+          and diodes (see `ionization_potential` function), and range between
+          20 and 45 eV for gases, and around 3 eV for semiconductors. For
+          unknown gases the value of 32.0 eV will be used.
 
        2. The `sensitivity` and `sensitivity_units` arguments have some overlap
-          to specify the sensitivity or gain of the current amplifier.
-          Generally, the units in `A/V`, but you can add a common SI prefix of
-          'p', 'pico', 'n', 'nano', (unicode 'u03bc'), 'u', 'micro', 'm', 'milli'
-          so that, `ionchamber_fluxes(..., sensitivity=1.e-6)` and
-          `ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')`
+          to specify the sensitivity of the current amplifier. Generally, the
+          units are in `A/V`, but you can add a common SI prefix of 'p', 'pico',
+          'n', 'nano', (unicode 'u03bc'), 'u', 'micro', 'm', 'milli' so that,
+          `ionchamber_fluxes(..., sensitivity=1.e-6)` and
+         `ionchamber_fluxes(..., sensitivity=1, sensitivity_units='uA/V')`
           will both give a sensitivity of 1 microAmp / Volt .
 
-       3. The effect of Compton scattering on the ion chamber current can be approximated
-          usint the mean energy of the Compton-scattered electron.  Set `with_compton=False`
-          to turn this correction off.
+       3. The effect of Compton scattering on the ion chamber current can be
+          approximated using the mean energy of the Compton-scattered electron.
+          See the documentation for more details. Set `with_compton=False` to
+          turn off this correction.
 
-       4. The effective ionization potential generates an electron and ions pair, and normally
-          both carriers will contribute to the current.  Thus, the number of carries below,
-          `N_carriers` is 2.  To consider the current from 1 carrier, for example if using a
-          Frisch grid, use `both_carries=False`, which will set `N_carriers` to 1.
+       4. The effective ionization potential generates an electron and ions
+          pair, and normally both carriers will contribute to the current. Thus,
+          the number of carries below, `N_carriers` is 2.  To consider the
+          current from 1 carrier, for example if using a Frisch grid, use
+          `both_carries=False`, which will set `N_carriers` to 1.
 
     """
     from .materials import material_mu

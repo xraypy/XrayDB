@@ -2,7 +2,7 @@
 
    X-ray Reference Data for the Elements
 
-   last update: 2-April-2023
+   last update: 2-August-2023
    License: Public Domain
    Author:  Matthew Newville <newville@cars.uchicago.edu>
             Center for Advanced Radiation Sources,

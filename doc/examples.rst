@@ -319,9 +319,9 @@ can be separated into the various source of attenuation as
    :nowrap:
 
    \begin{eqnarray*}
-      & I_{\rm photo} & =  I_{\rm atten} \, \mu_{\rm photo} &/ \mu_{\rm total} \\
-      & I_{\rm incoh} & =  I_{\rm atten} \, \mu_{\rm incoh} &/ \mu_{\rm total} \\
-      & I_{\rm coh}   & =  I_{\rm atten} \, \mu_{\rm coh}   &/ \mu_{\rm total} \\
+      & I_{\rm photo} & =  I_{\rm atten} \, \mu_{\rm photo} / \mu_{\rm total} \\
+      & I_{\rm incoh} & =  I_{\rm atten} \, \mu_{\rm incoh} / \mu_{\rm total} \\
+      & I_{\rm coh}   & =  I_{\rm atten} \, \mu_{\rm coh}   / \mu_{\rm total} \\
    \end{eqnarray*}
 
 The photo-electric effect converts all of the X-ray energy into a current of

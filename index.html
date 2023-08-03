@@ -1,18 +1,14 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>X-ray DB: X-ray Reference Data in SQLite &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -66,8 +62,8 @@ Cross sections are in cm^2/gr, and energies are in eV.  Energy-dependent
 data for cross-sections are typically most reliable between about 250 eV to
 about 250,000 eV.  Elements from Z=1 to 92 are supported, with some data
 are included for elements between Z=93 and Z=98.</p>
-<p>The current version of the XrayDB is <strong>8.1</strong>, and the version of the Python
-module is 4.5.0.   See Also:</p>
+<p>The current version of the XrayDB is <strong>9.1</strong>, and the version of the Python
+module is 4.5.1.   See Also:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><a class="reference external" href="https://millenia.cars.aps.anl.gov/xraydb">XrayDB Web App (CARS, U Chicago)</a> and <a class="reference external" href="https://xraydb.xrayabsorption.org/">XrayDB Web App
@@ -93,7 +89,12 @@ factors, mirror reflectivity, and more.</p></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Example Calculations of X-ray properties of materials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-attenuation-by-elements">X-ray attenuation by elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">X-ray flux calculations for ionization chambers and photodiodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">X-ray flux calculations for ionization chambers and photodiodes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#effective-ionization-potentials-of-gases-and-semiconductors">Effective Ionization Potentials of gases and semiconductors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#ion-chamber-flux-calculations">Ion Chamber Flux calculations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#ionchamber-fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-mirror-reflectivities">X-ray mirror reflectivities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#darwin-widths-of-monochromator-crystals">Darwin widths of monochromator crystals</a></li>
 </ul>
@@ -107,6 +108,7 @@ factors, mirror reflectivity, and more.</p></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_number"><code class="docutils literal notranslate"><span class="pre">atomic_number()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_symbol"><code class="docutils literal notranslate"><span class="pre">atomic_symbol()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_mass"><code class="docutils literal notranslate"><span class="pre">atomic_mass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_name"><code class="docutils literal notranslate"><span class="pre">atomic_name()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.atomic_density"><code class="docutils literal notranslate"><span class="pre">atomic_density()</span></code></a></li>
 </ul>
 </li>
@@ -179,6 +181,7 @@ factors, mirror reflectivity, and more.</p></li>
 <li class="toctree-l2"><a class="reference internal" href="dbschema.html#waasmaier-table">Waasmaier Table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dbschema.html#keskirahkonen-krause-table">KeskiRahkonen_Krause Table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dbschema.html#krause-oliver-table">Krause_Oliver Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbschema.html#compton-energies-table">Compton Energies  Table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dbschema.html#chantler-table">Chantler Table</a></li>
 </ul>
 </li>
@@ -249,8 +252,8 @@ factors, mirror reflectivity, and more.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2023-January-26.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+      Last updated on 2023-August-03.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
     </div>
   </body>
 </html>

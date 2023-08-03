@@ -10,8 +10,8 @@ Linux) can be as simple as::
    system~> sqlite3 xraydb.sqlite
    sqlite> .headers on
    sqlite> select * from elements where atomic_number=47;
-   atomic_number|element|molar_mass|density
-   47|Ag|107.868|10.48
+   atomic_number|element|name|molar_mass|density
+   47|Ag|silver|107.868|10.48
 
 
 That is, you can retrieve the data using standard SQL queries built-in to
@@ -33,6 +33,7 @@ looks like this::
                    notes text);
     Table elements (atomic_number integer primary key,
                     element text,
+                    name text,
                     molar_mass real,
                     density real);
     Table xray_levels (id integer primary key,
@@ -159,6 +160,8 @@ represents an element.
     |  atomic_number       | integer      | Atomic Number, Z                      |
     +----------------------+--------------+---------------------------------------+
     |  element             | text         | Atomic symbol                         |
+    +----------------------+--------------+---------------------------------------+
+    |  name                | text         | English name of element               |
     +----------------------+--------------+---------------------------------------+
     |  molar_mass          |  float       | Atomic mass in AMU                    |
     +----------------------+--------------+---------------------------------------+
@@ -422,6 +425,34 @@ energy level for an element.
     +-------------------------------+--------------+---------------------------------------+
     | width                         |  float       | width of level (eV)                   |
     +-------------------------------+--------------+---------------------------------------+
+
+
+Compton Energies  Table
+------------------------------
+
+The `Compton_energies` table holds data for median (90 deg scattering) and mean
+values of the energies of Compton scattered X-rays, and the mean values of the
+Compton-scattered electrons as a function of incident X-ray energy.  There is
+only 1 row in this table, with all columns being json-encoded arrays of floats.
+These values should be finely-speced enough for linear interpolation
+
+
+.. index:: DB Table of Compton Energies
+.. _db_compton_table:
+
+   DB Table of Compton-scattered energies.
+
+    +---------------------------+--------------+---------------------------------------+
+    |  Column                   |  Type        | Description                           |
+    +===========================+==============+=======================================+
+    |  incident                 | json_array   | Incident X-ray energies (eV)          |
+    +---------------------------+--------------+---------------------------------------+
+    |  xray_90deg               | json_array   | Median scattered X-ray energies (eV)  |
+    +---------------------------+--------------+---------------------------------------+
+    |  xray_mean                | json_array   | Mean scattered X-ray energies (eV)    |
+    +---------------------------+--------------+---------------------------------------+
+    |  electron_mean            | json_array   | Mean scattered electron energies (eV) |
+    +---------------------------+--------------+---------------------------------------+
 
 
 

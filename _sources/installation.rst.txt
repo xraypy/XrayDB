@@ -15,10 +15,6 @@ If you want to use XrayDB from Python, install the XrayDB Python module
 
    pip install xraydb
 
-If you are using Anaconda Python, you can also install with::
-
-   conda install -c gsecars xraydb
-
 Depending on your system and Python installation, you may need
 administrative privileges to install any python library.  For many linux
 and Mac OS X systems, you may need to use `sudo`.

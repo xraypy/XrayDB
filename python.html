@@ -1,18 +1,14 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Using XrayDB from Python &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -56,7 +52,7 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.5.0, corresponding to
+<p>The current version of the Python module is 4.5.1, corresponding to
 version 6 of <cite>xraydb.sqlite</cite>.</p>
 <section id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Permalink to this heading">¶</a></h2>
@@ -126,91 +122,94 @@ the data comes from <span id="id1">[<a class="reference internal" href="biblio.h
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.atomic_mass" title="xraydb.atomic_mass"><code class="xref py py-func docutils literal notranslate"><span class="pre">atomic_mass()</span></code></a></p></td>
 <td><p>atomic mass</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.atomic_density" title="xraydb.atomic_density"><code class="xref py py-func docutils literal notranslate"><span class="pre">atomic_density()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.atomic_name" title="xraydb.atomic_name"><code class="xref py py-func docutils literal notranslate"><span class="pre">atomic_name()</span></code></a></p></td>
+<td><p>atomic name (English)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.atomic_density" title="xraydb.atomic_density"><code class="xref py py-func docutils literal notranslate"><span class="pre">atomic_density()</span></code></a></p></td>
 <td><p>density of pure element</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a></p></td>
 <td><p>elastic scattering factor (<span id="id2">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f0_ions" title="xraydb.f0_ions"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0_ions()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f0_ions" title="xraydb.f0_ions"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0_ions()</span></code></a></p></td>
 <td><p>list of valid “ions” for <a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a>  (<span id="id3">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.xray_edge" title="xraydb.xray_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_edge()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_edge" title="xraydb.xray_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_edge()</span></code></a></p></td>
 <td><p>xray edge data for a particular element and edge</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_edges" title="xraydb.xray_edges"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_edges()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.xray_edges" title="xraydb.xray_edges"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_edges()</span></code></a></p></td>
 <td><p>dictionary of all X-ray edges data for an element</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.xray_lines" title="xraydb.xray_lines"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_lines()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_lines" title="xraydb.xray_lines"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_lines()</span></code></a></p></td>
 <td><p>dictionary of all X-ray emission line data for an element</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.fluor_yield" title="xraydb.fluor_yield"><code class="xref py py-func docutils literal notranslate"><span class="pre">fluor_yield()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.fluor_yield" title="xraydb.fluor_yield"><code class="xref py py-func docutils literal notranslate"><span class="pre">fluor_yield()</span></code></a></p></td>
 <td><p>fluorescent yield for an X-ray emission line</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.ck_probability" title="xraydb.ck_probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">ck_probability()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.ck_probability" title="xraydb.ck_probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">ck_probability()</span></code></a></p></td>
 <td><p>Coster-Kronig transition probability between two atomic levels</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.mu_elam" title="xraydb.mu_elam"><code class="xref py py-func docutils literal notranslate"><span class="pre">mu_elam()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.mu_elam" title="xraydb.mu_elam"><code class="xref py py-func docutils literal notranslate"><span class="pre">mu_elam()</span></code></a></p></td>
 <td><p>absorption cross-section, photo-electric or total for an element</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.coherent_cross_section_elam" title="xraydb.coherent_cross_section_elam"><code class="xref py py-func docutils literal notranslate"><span class="pre">coherent_cross_section_elam()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.coherent_cross_section_elam" title="xraydb.coherent_cross_section_elam"><code class="xref py py-func docutils literal notranslate"><span class="pre">coherent_cross_section_elam()</span></code></a></p></td>
 <td><p>coherent scattering cross-section for an element</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.incoherent_cross_section_elam" title="xraydb.incoherent_cross_section_elam"><code class="xref py py-func docutils literal notranslate"><span class="pre">incoherent_cross_section_elam()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.incoherent_cross_section_elam" title="xraydb.incoherent_cross_section_elam"><code class="xref py py-func docutils literal notranslate"><span class="pre">incoherent_cross_section_elam()</span></code></a></p></td>
 <td><p>incoherent scattering cross-section for an element</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.chantler_energies" title="xraydb.chantler_energies"><code class="xref py py-func docutils literal notranslate"><span class="pre">chantler_energies()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.chantler_energies" title="xraydb.chantler_energies"><code class="xref py py-func docutils literal notranslate"><span class="pre">chantler_energies()</span></code></a></p></td>
 <td><p>energies of tabulation for Chantler data (<span id="id4">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f1_chantler" title="xraydb.f1_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f1_chantler()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f1_chantler" title="xraydb.f1_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f1_chantler()</span></code></a></p></td>
 <td><p><span class="math notranslate nohighlight">\(f'(E)\)</span> anomalous scattering factor (<span id="id5">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f2_chantler" title="xraydb.f2_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f2_chantler()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f2_chantler" title="xraydb.f2_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f2_chantler()</span></code></a></p></td>
 <td><p><span class="math notranslate nohighlight">\(f&quot;(E)\)</span> anomalous scattering factor (<span id="id6">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.mu_chantler" title="xraydb.mu_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">mu_chantler()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.mu_chantler" title="xraydb.mu_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">mu_chantler()</span></code></a></p></td>
 <td><p>absorption cross-section (<span id="id7">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.guess_edge" title="xraydb.guess_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">guess_edge()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.guess_edge" title="xraydb.guess_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">guess_edge()</span></code></a></p></td>
 <td><p>guess element and edge from energy of absorption edge</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.chemparse" title="xraydb.chemparse"><code class="xref py py-func docutils literal notranslate"><span class="pre">chemparse()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.chemparse" title="xraydb.chemparse"><code class="xref py py-func docutils literal notranslate"><span class="pre">chemparse()</span></code></a></p></td>
 <td><p>parse a chemical formula to atomic abundances</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.validate_formula" title="xraydb.validate_formula"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate_formula()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.validate_formula" title="xraydb.validate_formula"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate_formula()</span></code></a></p></td>
 <td><p>test whether a chemical formula can be parsed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.get_materials" title="xraydb.get_materials"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_materials()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.get_materials" title="xraydb.get_materials"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_materials()</span></code></a></p></td>
 <td><p>get a dictionary of known materials {name:(formula, density)}</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.get_material" title="xraydb.get_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_material()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.get_material" title="xraydb.get_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_material()</span></code></a></p></td>
 <td><p>get a (formula, density) tuple for a material in the materials database</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.find_material" title="xraydb.find_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_material()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.find_material" title="xraydb.find_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_material()</span></code></a></p></td>
 <td><p>get a material instance for a material in the materials database</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.add_material" title="xraydb.add_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_material()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.add_material" title="xraydb.add_material"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_material()</span></code></a></p></td>
 <td><p>add a material to local materials database</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.material_mu" title="xraydb.material_mu"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.material_mu" title="xraydb.material_mu"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu()</span></code></a></p></td>
 <td><p>absorption cross-section for a material at X-ray energies</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.material_mu_components" title="xraydb.material_mu_components"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu_components()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.material_mu_components" title="xraydb.material_mu_components"><code class="xref py py-func docutils literal notranslate"><span class="pre">material_mu_components()</span></code></a></p></td>
 <td><p>dictionary of elemental components of <cite>mu</cite> for material</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_delta_beta" title="xraydb.xray_delta_beta"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.xray_delta_beta" title="xraydb.xray_delta_beta"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></p></td>
 <td><p>anomalous index of refraction for material and energy</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.darwin_width" title="xraydb.darwin_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">darwin_width()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.darwin_width" title="xraydb.darwin_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">darwin_width()</span></code></a></p></td>
 <td><p>Darwin widths for monochromator crystals</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.mirror_reflectivity" title="xraydb.mirror_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.mirror_reflectivity" title="xraydb.mirror_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></p></td>
 <td><p>X-ray reflectivities for mirror materials (thick slab limit)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></p></td>
 <td><p>effective ionization potential for a gas, as for ion chambers</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></p></td>
 <td><p>calculate fluxes from ion chamber voltages, gases, and sensitivities</p></td>
 </tr>
 </tbody>
@@ -274,6 +273,20 @@ the data comes from <span id="id1">[<a class="reference internal" href="biblio.h
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>atomic mass, in AMU</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xraydb.atomic_name">
+<span class="sig-name descname"><span class="pre">atomic_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.atomic_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>atomic name for atomic number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>z</strong> (<em>int</em>) – atomic number</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>atomic name (English)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -782,7 +795,7 @@ to those that match category names</p></li>
 <span class="go">polyimide C22H10N2O5 1.42</span>
 <span class="go">nitrogen N 0.00125</span>
 <span class="go">argon Ar 0.001784</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1119,7 +1132,7 @@ from ICRU Report 31, 1979.  Supported gas names and effective potentials:</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="xraydb.ionchamber_fluxes">
-<span class="sig-name descname"><span class="pre">ionchamber_fluxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nitrogen'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'A/V'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_compton</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.ionchamber_fluxes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ionchamber_fluxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nitrogen'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'A/V'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_compton</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">both_carriers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.ionchamber_fluxes" title="Permalink to this definition">¶</a></dt>
 <dd><p>return ion chamber and PIN diode fluxes for a gas, mixture of gases, or
 semiconductor material, ion chamber length (or diode thickness), X-ray energy,
 recorded voltage and current amplifier sensitivity.  See note for details.</p>
@@ -1133,8 +1146,10 @@ recorded voltage and current amplifier sensitivity.  See note for details.</p>
 <li><p><strong>sensitivity</strong> (<em>float</em>) – current amplifier sensitivity [1.e-6]</p></li>
 <li><p><strong>sensitivity_units</strong> (<em>string</em>) – units of current amplifier sensitivity
 (see note 2 for options) [‘A/V’]</p></li>
-<li><p><strong>with_compton</strong> (<em>int</em>) – switch to control the contribution of Compton
-scattering (see note 3) [1]</p></li>
+<li><p><strong>with_compton</strong> (<em>bool</em>) – switch to control the contribution of Compton
+scattering (see note 3) [True]</p></li>
+<li><p><strong>both_carriers</strong> (<em>bool</em>) – switch to control whether to count both electron
+and ion current (see note 4) [True]</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1150,16 +1165,8 @@ scattering (see note 3) [1]</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">ionchamber_fluxes</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;helium&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span>
-<span class="go">                           energy=10000.0, sensitivity=1.e-9)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fluxes: In=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Out=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Transmitted=</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="o">/</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
-<span class="go">Fluxes: In=2.79631e+11, Out=2.79383e+11, Transmitted=99.91%</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span>
-<span class="go">                           energy=10000.0, sensitivity=1.e-6)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
+<span class="go">                           length=20.0, energy=10e3, sensitivity=1.e-6)</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fluxes: In=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Out=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Transmitted=</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="o">/</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
@@ -1167,8 +1174,8 @@ scattering (see note 3) [1]</p></li>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;helium&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-<span class="go">                          volts=1.25, length=20.0, energy=10000.0,</span>
-<span class="go">                          sensitivity=1.e-6)</span>
+<span class="go">                           volts=1.25, length=20.0, energy=10000.0,</span>
+<span class="go">                           sensitivity=1.e-6)</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fluxes: In=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Out=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Transmitted=</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="o">/</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
@@ -1177,71 +1184,33 @@ scattering (see note 3) [1]</p></li>
 </div>
 <p class="rubric">Notes</p>
 <ol class="arabic">
-<li><p>The gas value can either be a string for the name of chemical
-formula for the gas or diode material, or dictionary with keys
-that are gas names or formulas and values that are the relative
-fraction for mixes gases.  For diode materials, mixtures are not
-supported.</p>
-<p>The gas formula is used both the contributions for mu and to get
-get the weighted effective ionization potential for the material.</p>
-<p>The effective ionization potentials are known for a handful of
-gases and diodes (see <cite>ionization_potential</cite> function), and range
-between 20 and 45 eV for gases, and around 3 eV for semiconductors.
-For unknown gases the value of 32.0 eV will be used.</p>
+<li><p>The gas value can either be a string for the name of chemical formula
+for the gas or diode material, or dictionary with keys that are gas
+names or formulas and values that are the relative fraction for mixes
+gases.  For diode materials, mixtures are not supported.</p>
+<p>The gas formula is used both the contributions for mu and to get the
+weighted effective ionization potential for the material.</p>
+<p>The effective ionization potentials are known for a handful of gases
+and diodes (see <cite>ionization_potential</cite> function), and range between
+20 and 45 eV for gases, and around 3 eV for semiconductors. For
+unknown gases the value of 32.0 eV will be used.</p>
 </li>
 <li><p>The <cite>sensitivity</cite> and <cite>sensitivity_units</cite> arguments have some overlap
-to specify the sensitivity or gain of the current amplifier.
-Generally, the units in <cite>A/V</cite>, but you can add a common SI prefix of
-‘p’, ‘pico’, ‘n’, ‘nano’, (unicode ‘u03bc’), ‘u’, ‘micro’, ‘m’, ‘milli’
-so that, <cite>ionchamber_fluxes(…, sensitivity=1.e-6)</cite> and
+to specify the sensitivity of the current amplifier. Generally, the
+units are in <cite>A/V</cite>, but you can add a common SI prefix of ‘p’, ‘pico’,
+‘n’, ‘nano’, (unicode ‘u03bc’), ‘u’, ‘micro’, ‘m’, ‘milli’ so that,
+<cite>ionchamber_fluxes(…, sensitivity=1.e-6)</cite> and
 <cite>ionchamber_fluxes(…, sensitivity=1, sensitivity_units=’uA/V’)</cite>
-will both give a sensitivity of 1 microAmp / Volt .</p></li>
-<li><p>The effect of Compton scattering on the ion chamber current can be approximated
-in 3 ways with different values for <cite>with_compton</cite> (default=1):</p>
-<blockquote>
-<div><p>&gt;0:  use Compton-shifted electron energy (best approximation)</p>
-<p>=0:  completely ignore the effect of Compton scattering on current</p>
-<p>&lt;0:  use incident energy as Compton energy.</p>
-</div></blockquote>
-<p>Using -1 should reproduce the calculation from Hephaestus reasonably
-well, but using 1 is highly recommended.</p>
-</li>
-<li><p>Ion Chamber Current calculation: the total attenuation in an ion
-chamber includes photo, incoherent (Compton), and coherent (Rayleigh)
-scattering contributions:</p>
-<blockquote>
-<div><p>Flux_transmitted = Flux_in * exp(-t*mu_total)</p>
-</div></blockquote>
-<p>The current in an Ion Chamber has a contribution from both the
-photo-electric and incoherent (Compton) cross-section, but not
-the coherent scattering. For an incident flux (in Hz) of Flux_in,
-the fluxes of X-rays attenuated by the different processes are:</p>
-<blockquote>
-<div><p>Flux_photo = Flux_in * [1 - exp(-t*mu_photo)]</p>
-<p>Flux_incoh = Flux_in * [1 - exp(-t*mu_incoh)]</p>
-<p>Flux_coh   = Flux_in * [1 - exp(-t*mu_coh)]</p>
-<p>Flux_transmitted = Flux_in - Flux_total</p>
-</div></blockquote>
-<p>For Flux_photo, all of the X-ray energy is converted to current:</p>
-<blockquote>
-<div><p>IC_current_photo = Flux_photo * Energy * q_e / ion_pot</p>
-</div></blockquote>
-<p>where q_e is the electron charge (1.602e-19 C), and ion_pot is the
-effective ionization potential (see <cite>ionization_potential</cite>).</p>
-<p>For Flux_incoh, the energy transferred to the electron is converted
-to electron and ion current as:</p>
-<blockquote>
-<div><p>IC_current_incoh = Flux_incoh * Energy_Compton * q_e / ion_pot</p>
-</div></blockquote>
-<p>where:</p>
-<blockquote>
-<div><p>Energy_Compton = Energy/(1+m_e*c^2/Energy)</p>
-</div></blockquote>
-<p>is the approximate energy of the Compton-scattered electron.  This
-estimate of the energy is a simplification: the transferred energy will
-be angle-dependent, ranging from 0 to 2*Energy_Compton, with a
-distribution that depends on Energy and polarization.</p>
-</li>
+will both give a sensitivity of 1 microAmp / Volt.</p></li>
+<li><p>The effect of Compton scattering on the ion chamber current can be
+approximated using the mean energy of the Compton-scattered electron.
+See the documentation for more details. Set <cite>with_compton=False</cite> to
+turn off this correction.</p></li>
+<li><p>The effective ionization potential generates an electron and ions
+pair, and normally both carriers will contribute to the current. Thus,
+the number of carries below, <cite>N_carriers</cite> is 2.  To consider the
+current from 1 carrier, for example if using a Frisch grid, use
+<cite>both_carries=False</cite>, which will set <cite>N_carriers</cite> to 1.</p></li>
 </ol>
 </dd></dl>
 
@@ -1267,6 +1236,7 @@ distribution that depends on Energy and polarization.</p>
 <li><a class="reference internal" href="#xraydb.atomic_number"><code class="docutils literal notranslate"><span class="pre">atomic_number()</span></code></a></li>
 <li><a class="reference internal" href="#xraydb.atomic_symbol"><code class="docutils literal notranslate"><span class="pre">atomic_symbol()</span></code></a></li>
 <li><a class="reference internal" href="#xraydb.atomic_mass"><code class="docutils literal notranslate"><span class="pre">atomic_mass()</span></code></a></li>
+<li><a class="reference internal" href="#xraydb.atomic_name"><code class="docutils literal notranslate"><span class="pre">atomic_name()</span></code></a></li>
 <li><a class="reference internal" href="#xraydb.atomic_density"><code class="docutils literal notranslate"><span class="pre">atomic_density()</span></code></a></li>
 </ul>
 </li>
@@ -1374,8 +1344,8 @@ distribution that depends on Energy and polarization.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Public Domain.
-      Last updated on 2023-January-26.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+      Last updated on 2023-August-03.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
     </div>
   </body>
 </html>

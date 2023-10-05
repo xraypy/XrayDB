@@ -297,8 +297,8 @@ enough to prevent any recombination of charged particles.
 For a given gas at an incident X-ray energy :math:`E`, we calculate the total,
 photo-electric, incoherent (Compton), and coherent (Rayleigh) values of
 :math:`\mu`.  If more than one gas is used, the weighted sum is calculated, so
-that we have :math:`mu_{\rm total}`, :math:`mu_{\rm photo}`, :math:`mu_{\rm
-incoh}`, and :math:`mu_{\rm coh}` for the gas in the chamber (or diode
+that we have :math:`\mu_{\rm total}`, :math:`\mu_{\rm photo}`, :math:`\mu_{\rm
+incoh}`, and :math:`\mu_{\rm coh}` for the gas in the chamber (or diode
 material).
 
 The flux transmitted out of the chamber is

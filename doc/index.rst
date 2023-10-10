@@ -15,7 +15,8 @@ file can be used directly with SQLite :cite:`sqlite` using standard SQL, or
 from the many programming language that support SQLite.  Some of the
 components of the database hold arrays of numbers which are stored in the
 database as JSON-encoded strings, and will need to be unpacked to be used.
-A Python module providing such an interface is provided here.
+
+A Python module providing an interface to this database is also provided here.
 
 The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and
@@ -34,13 +35,14 @@ data for cross-sections are typically most reliable between about 250 eV to
 about 250,000 eV.  Elements from Z=1 to 92 are supported, with some data
 are included for elements between Z=93 and Z=98.
 
-The current version of the XrayDB is **9.1**, and the version of the Python
+The current version of the XrayDB database is **9.1**, and the version of the Python
 module is |release|.   See Also:
 
-   * `XrayDB Web App (CARS, U Chicago)`_ and `XrayDB Web App
-     (xrayabsorption.org)`_ are interactive web applications to browse the
-     data in this database and make plots of X-ray attenuation, scattering
-     factors, mirror reflectivity, and more.
+   * `XrayDB Web App (xrayabsorption.org)`_ is an interactive web applications
+     to browse the data in this database and make plots of X-ray attenuation,
+     scattering factors, mirror reflectivity, and more.  For each sort of data
+     retrieved, data tables and the python code to generate that data are also
+     available.
 
    * Printable Poster-sized :ref:`periodic_tables`.
 

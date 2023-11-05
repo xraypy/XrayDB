@@ -434,7 +434,7 @@ The `Compton_energies` table holds data for median (90 deg scattering) and mean
 values of the energies of Compton scattered X-rays, and the mean values of the
 Compton-scattered electrons as a function of incident X-ray energy.  There is
 only 1 row in this table, with all columns being json-encoded arrays of floats.
-These values should be finely-speced enough for linear interpolation
+These values should be finely-spaced enough for linear interpolation
 
 
 .. index:: DB Table of Compton Energies

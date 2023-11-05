@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Using the XrayDB xraydb.sqlite &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <script src="_static/documentation_options.js?v=cd7592eb"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -43,7 +43,7 @@
           <div class="body" role="main">
             
   <section id="using-the-xraydb-xraydb-sqlite">
-<h1>Using the XrayDB  xraydb.sqlite<a class="headerlink" href="#using-the-xraydb-xraydb-sqlite" title="Permalink to this heading">¶</a></h1>
+<h1>Using the XrayDB  xraydb.sqlite<a class="headerlink" href="#using-the-xraydb-xraydb-sqlite" title="Link to this heading">¶</a></h1>
 <p>All the data for the X-ray database is held in the SQLite3 file
 <code class="docutils literal notranslate"><span class="pre">xraydb.sqlite</span></code>.  To use with SQLite, this file is all you need.  While
 many programs and languages can access SQLite files, basic
@@ -61,7 +61,7 @@ SQLite.  Of course, the expectation is that you’d want to use this database
 within a programming environment.  Currently, wrappers exist only for
 Python.</p>
 <section id="overall-database-schema">
-<h2>Overall Database Schema<a class="headerlink" href="#overall-database-schema" title="Permalink to this heading">¶</a></h2>
+<h2>Overall Database Schema<a class="headerlink" href="#overall-database-schema" title="Link to this heading">¶</a></h2>
 <p>The schema for the SQLite3 database describes where data is held in the
 database, and how to access it.  The schema for the current version (4)
 looks like this:</p>
@@ -152,7 +152,7 @@ data are stored in the database as text of JSON-encoded arrays.</p>
 </div>
 </section>
 <section id="version-table">
-<span id="db-version-sect"></span><h2>Version Table<a class="headerlink" href="#version-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-version-sect"></span><h2>Version Table<a class="headerlink" href="#version-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Version</cite> table holds data about the revisions to the database file
 itself.  Each row represents a single revision.</p>
 <blockquote id="db-version-table">
@@ -188,7 +188,7 @@ itself.  Each row represents a single revision.</p>
 </div></blockquote>
 </section>
 <section id="elements-table">
-<span id="db-elements-sect"></span><h2>Elements Table<a class="headerlink" href="#elements-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-elements-sect"></span><h2>Elements Table<a class="headerlink" href="#elements-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>elements</cite> table holds basic data about each element.  Each row
 represents an element.</p>
 <blockquote id="db-elements-table">
@@ -228,7 +228,7 @@ represents an element.</p>
 </div></blockquote>
 </section>
 <section id="xray-levels-table">
-<span id="db-xray-levels-sect"></span><h2>Xray_Levels Table<a class="headerlink" href="#xray-levels-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-xray-levels-sect"></span><h2>Xray_Levels Table<a class="headerlink" href="#xray-levels-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>xray_levels</cite> table holds data for electronic levels of atoms.  Each row
 represents a core electronic level.</p>
 <blockquote id="db-xray-levels-table">
@@ -277,7 +277,7 @@ the absorption edge to that 1 eV below the absorption edge.  See
 </div></blockquote>
 </section>
 <section id="xray-transitions-table">
-<span id="db-xray-trans-sect"></span><h2>Xray_Transitions Table<a class="headerlink" href="#xray-transitions-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-xray-trans-sect"></span><h2>Xray_Transitions Table<a class="headerlink" href="#xray-transitions-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>xray_transitions</cite> table holds data for transitions between electronic levels
 of atoms.  Each row represents a transition between two levels.</p>
 <blockquote id="db-xray-trans-table">
@@ -332,7 +332,7 @@ intensity of the transition for a given <cite>initial level</cite>.</p>
 </div></blockquote>
 </section>
 <section id="photoabsorption-table">
-<span id="db-photoabsorption-sect"></span><h2>Photoabsorption Table<a class="headerlink" href="#photoabsorption-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-photoabsorption-sect"></span><h2>Photoabsorption Table<a class="headerlink" href="#photoabsorption-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>photoabsorption</cite> table holds data for the photo-electric absorption
 cross sections in cm^2/gr.  Each row represents an element.</p>
 <blockquote id="db-photoabsorption-table">
@@ -374,7 +374,7 @@ derivative useful for spline interpolation).</p>
 </div></blockquote>
 </section>
 <section id="scattering-table">
-<span id="db-scattering-sect"></span><h2>Scattering Table<a class="headerlink" href="#scattering-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-scattering-sect"></span><h2>Scattering Table<a class="headerlink" href="#scattering-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>scattering</cite> table holds data for the coherent and incoherent X-ray scattering
 cross sections, in cm^2/gr.  Each row represents an element.</p>
 <blockquote id="db-scattering-table">
@@ -424,7 +424,7 @@ arrays are held for logs of energy, cross section, and cross section spline
 </div></blockquote>
 </section>
 <section id="coster-kronig-table">
-<span id="db-costerkronig-sect"></span><h2>Coster_Kronig Table<a class="headerlink" href="#coster-kronig-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-costerkronig-sect"></span><h2>Coster_Kronig Table<a class="headerlink" href="#coster-kronig-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Coster_Kronig</cite> table holds data for energy levels, partial and total
 transition probabilities for the Coster-Kronig transitions (Auger processes
 in which the empty core level is filled from an electron in a higher level
@@ -472,7 +472,7 @@ Each row represents a transition.</p>
 </div></blockquote>
 </section>
 <section id="waasmaier-table">
-<span id="db-waasmaier-sect"></span><h2>Waasmaier Table<a class="headerlink" href="#waasmaier-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-waasmaier-sect"></span><h2>Waasmaier Table<a class="headerlink" href="#waasmaier-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Waasmaier</cite> table holds data for calculating elastic X-ray scattering
 factors <span class="math notranslate nohighlight">\(f_0(k)\)</span>, from <span id="id1">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>.  The scattering
 factor is unitless, and <span class="math notranslate nohighlight">\(k=\sin(\theta)/\lambda\)</span> where <span class="math notranslate nohighlight">\(\theta\)</span>
@@ -524,7 +524,7 @@ represents an ion.</p>
 </div></blockquote>
 </section>
 <section id="keskirahkonen-krause-table">
-<span id="db-keski-sect"></span><h2>KeskiRahkonen_Krause Table<a class="headerlink" href="#keskirahkonen-krause-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-keski-sect"></span><h2>KeskiRahkonen_Krause Table<a class="headerlink" href="#keskirahkonen-krause-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>KeskiRahkonen_Krause</cite> table holds data for energy widths of the core electronic
 levels from <span id="id2">[<a class="reference internal" href="biblio.html#id5" title="O. Keski-Rahkonen and M. O. Krause. Total and partial atomic-level widths. Atomic Data and Nuclear Data Tables, 14(2):139–146, 1974. URL: https://dx.doi.org/10.1016/S0092-640X(74)80020-3.">Keski-Rahkonen and Krause (1974)</a>]</span>.  Values are in eV, and each row represents an
 energy level for an element.</p>
@@ -565,7 +565,7 @@ energy level for an element.</p>
 </div></blockquote>
 </section>
 <section id="krause-oliver-table">
-<h2>Krause_Oliver Table<a class="headerlink" href="#krause-oliver-table" title="Permalink to this heading">¶</a></h2>
+<h2>Krause_Oliver Table<a class="headerlink" href="#krause-oliver-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Krause_Oliver</cite> table holds data for energy widths of the core electronic
 levels from <span id="id3">[<a class="reference internal" href="biblio.html#id6" title="M. O. Krause and J. H. Oliver. Natural widths of atomic k and l levels, ka x-ray lines and several kll auger lines. Journal of Physical and Chemical Reference Data, 8:329, 1979. URL: https://dx.doi.org/10.1063/1.555595.">Krause and Oliver (1979)</a>]</span>.  Values are in eV, and each row represents an
 energy level for an element.</p>
@@ -606,12 +606,12 @@ energy level for an element.</p>
 </div></blockquote>
 </section>
 <section id="compton-energies-table">
-<h2>Compton Energies  Table<a class="headerlink" href="#compton-energies-table" title="Permalink to this heading">¶</a></h2>
+<h2>Compton Energies  Table<a class="headerlink" href="#compton-energies-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Compton_energies</cite> table holds data for median (90 deg scattering) and mean
 values of the energies of Compton scattered X-rays, and the mean values of the
 Compton-scattered electrons as a function of incident X-ray energy.  There is
 only 1 row in this table, with all columns being json-encoded arrays of floats.
-These values should be finely-speced enough for linear interpolation</p>
+These values should be finely-spaced enough for linear interpolation</p>
 <blockquote id="db-compton-table">
 <span id="index-10"></span><div><p>DB Table of Compton-scattered energies.</p>
 <blockquote>
@@ -645,7 +645,7 @@ These values should be finely-speced enough for linear interpolation</p>
 </div></blockquote>
 </section>
 <section id="chantler-table">
-<span id="db-chantler-sect"></span><h2>Chantler Table<a class="headerlink" href="#chantler-table" title="Permalink to this heading">¶</a></h2>
+<span id="db-chantler-sect"></span><h2>Chantler Table<a class="headerlink" href="#chantler-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Chantler</cite> table holds data for resonant X-ray scattering factors
 <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> as well as photo-electric absorption,
 coherent, and incoherent scattering factors from <span id="id4">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>.  As
@@ -801,9 +801,9 @@ in cm^2/gr. Each row represents an element.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright Public Domain.
-      Last updated on 2023-August-03.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.1.
+    &#169; Copyright Public Domain.
+      Last updated on 2023-November-05.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,4 +1,3 @@
-
 .. _periodic_tables:
 
 X-ray Periodic Table of the Elements
@@ -19,7 +18,7 @@ X-ray Periodic Table of the Elements
 .. _Henry Moseley:      https://en.wikipedia.org/wiki/Henry_Moseley
 
 
-XrayDB has been used to generate X-ray Periodic Tables of the Elements.
+XrayDB has been used to generate X-ray Periodic Tables of the Elements.  This uses
 
 There is a choice of two sizes, and a choice of an image of one of four
 prominent scientists associated with the Periodic Table and X-ray
@@ -43,7 +42,7 @@ Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 
     | `Henry Moseley`_     | `Moseley (Large)`_     | `Moseley (Medium)`_    |
     +----------------------+------------------------+------------------------+
 
-In general, these table look like this:
+These periodic tables will look like this:
 
 .. image:: _images/xray_table.png
    :width: 75%

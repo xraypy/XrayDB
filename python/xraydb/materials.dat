@@ -65,6 +65,8 @@
   teflon             | 2.2        | polymer             | C2 F4
   parylene-c         | 1.29       | polymer             | C8 H7 Cl
   parylene-n         | 1.11       | polymer             | C8 H8
+  peek               | 1.32       | polymer             | C19H14O3
+
   boron nitride      | 2.1        | ceramic             | BN
   cubic boron nitride| 3.45       | ceramic             | BN
   silicon nitride    | 3.17       | ceramic             | Si3 N4
@@ -80,7 +82,7 @@
   salt               | 2.165      | mineral             | NaCl
   silica             | 2.2        | ceramic, mineral    | SiO2
   quartz             | 2.65       | ceramic, mineral    | SiO2
-  cristobalite	     | 2.27       | mineral             | SiO2
+  cristobalite       | 2.27       | mineral             | SiO2
   rutile             | 4.23       | mineral             | TiO2
   magnesium dioxide  | 3.6        | mineral             | MgO
   galena             | 7.60       | mineral             | PbS

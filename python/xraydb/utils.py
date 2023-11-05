@@ -38,67 +38,6 @@ def index_nearest(array, value):
     """
     return np.abs(array-value).argmin()
 
-def unixpath(path):
-    return path.replace('\\', '/')
-
-def winpath(path):
-    "ensure path uses windows delimiters"
-    if path.startswith('//'): d = d[1:]
-    path = path.replace('/','\\')
-    return path
-
-# uname = 'win', 'linux', or 'darwin'
-uname = sys.platform.lower()
-nativepath = unixpath
-
-if os.name == 'nt':
-    uname = 'win'
-    nativepath = winpath
-if uname.startswith('linux'):
-    uname = 'linux'
-
-def get_homedir():
-    "determine home directory"
-    homedir = None
-    def check(meth, s):
-        "check that os.path.expanduser / expandvars gives a useful result"
-        try:
-            if meth(s) not in (None, s):
-                return meth(s)
-        except:
-            pass
-        return None
-
-    # for Unixes, allow for sudo case
-    susername = os.environ.get("SUDO_USER", None)
-    if HAS_PWD and susername is not None and homedir is None:
-        homedir = pwd.getpwnam(susername).pw_dir
-
-    # try expanding '~' -- should work on most Unixes
-    if homedir is None:
-        homedir = check(os.path.expanduser, '~')
-
-    # try the common environmental variables
-    if homedir is  None:
-        for var in ('$HOME', '$HOMEPATH', '$USERPROFILE', '$ALLUSERSPROFILE'):
-            homedir = check(os.path.expandvars, var)
-            if homedir is not None:
-                break
-
-    # For Windows, ask for parent of Roaming 'Application Data' directory
-    if homedir is None and os.name == 'nt':
-        try:
-            from win32com.shell import shellcon, shell
-            homedir = shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0)
-        except ImportError:
-            pass
-
-    # finally, use current folder
-    if homedir is None:
-        homedir = os.path.abspath('.')
-    return nativepath(homedir)
-
-
 def as_ndarray(obj):
     """make sure a float, int, list of floats or ints,
     or tuple of floats or ints, acts as a numpy array

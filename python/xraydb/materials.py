@@ -1,23 +1,40 @@
 import os
 import numpy as np
 from collections import namedtuple
+import platformdirs
+
 from .chemparser import chemparse
 from .xray import mu_elam, atomic_mass
-from .utils import get_homedir
 
 _materials = None
 
 Material = namedtuple('Material', ('formula', 'density', 'name', 'categories'))
 
-def get_user_materialsfile():
-    """return name for user-specific materials.dat file
-    With $HOME being the users home directory, this will be
-    $HOME/.config/xraydb/materials.dat
+def get_user_materialsfile(create_folder=False):
+    """return file name for user-specific materials.dat file
+
+    Args:
+        create_folder (bool): whether to ensure the configuration folder exists [False]
+
+    Notes:
+      The location will depend on operating system, being
+
+        Linux:   $HOME/.config/xraydb/materials.dat
+        MacOS:   $HOME//Library/Application Support/xraydb/materials.dat
+        Windows: $HOME/AppData/Local/xraydb/xraydb/materials.dat
+
+      (or replacing 'Local' with 'Roaming' if using a Roaming Profile) where
+      $HOME is the home folder of the user, found as os.path.expanduser('~').
     """
-    return os.path.join(get_homedir(), '.config', 'xraydb', 'materials.dat')
+    conf_dir = platformdirs.user_config_dir('xraydb')
+    if create_folder and not os.path.exists(conf_dir):
+        os.makedirs(conf_dir)
+    return os.path.join(conf_dir, 'materials.dat')
 
 def _read_materials_db():
-    """return _materials dictionary, creating it if needed"""
+    """
+    return _materials dictionary, creating it if needed
+    """
     global _materials
     if _materials is None:
         # initialize materials table
@@ -30,24 +47,12 @@ def _read_materials_db():
                 line = line.strip()
                 if len(line) > 2 and not line.startswith('#'):
                     words = [i.strip() for i in line.split('|')]
-                    name = words[0].lower()
                     formula = None
-                    if len(words) == 3: # older style
-                        # "name | formula | density"  or  "name | density | formula"
-                        iformula = 1
-                        try:
-                            density = float(words[2])
-                        except ValueError:
-                            density = float(words[1])
-                            iformula = 2
-                        formula = words[iformula]
-                        categories = []
-                    elif len(words) == 4: # newer style, with categories
+                    if len(words) == 4: # valid material line
+                        name = words[0].lower()
                         density = float(words[1])
                         categories = [w.strip() for w in words[2].split(',')]
-                        formula = words[3]
-                    if formula is not None:
-                        formula = formula.replace(' ', '')
+                        formula = words[3].replace(' ', '')
                         _materials[name] = Material(formula, density, name, categories)
 
         # first, read from standard list
@@ -255,7 +260,7 @@ def get_materials(force_read=False, categories=None):
             (set(v.categories) & set(categories))
         }
         return filtered_materials
-    else:    
+    else:
         return _materials
 
 
@@ -272,8 +277,9 @@ def add_material(name, formula, density, categories=None):
         None
 
     Notes:
-        the data will be saved to $HOME/.config/xraydb/materials.dat
-        in the users home directory, and will be useful in subsequent sessions.
+        the data will be saved to the file 'xraydb/materials.dat' in the users
+        configuration folder, and will be useful in subsequent sessions.
+
 
     Examples:
         >>> xraydb.add_material('becopper', 'Cu0.98e0.02', 8.3, categories=['metal'])
@@ -288,24 +294,17 @@ def add_material(name, formula, density, categories=None):
         categories = []
     _materials[name.lower()] = Material(formula, float(density), name, categories)
 
-    fname = get_user_materialsfile()
+    text = ['# user-specific database of materials',
+            '# name  |  density |  categories | formula']
 
+
+    fname = get_user_materialsfile(create_folder=True)
     if os.path.exists(fname):
-        fh = open(fname, 'r')
-        text = fh.readlines()
-        fh.close()
-    else:
-        parent, _ = os.path.split(fname)
-        if not os.path.exists(parent):
-            try:
-                os.makedirs(parent)
-            except FileExistsError:
-                pass
-        text = ['# user-specific database of materials\n',
-                '# name  |  density |  categories | formulan']
+        with open(fname, 'r') as fh:
+            text = [s[:-1] for s in fh.readlines()]
 
-    catstring = ', '.join(categories)
-    text.append(" %s | %g  | %s | %s\n" % (name, density, catstring, formula))
-
+    # catstring = ', '.join(categories)
+    text.append(f" {name:s} | {density:.6g} | {', '.join(categories):s} | {formula:s}")
+    text.append('')
     with open(fname, 'w') as fh:
-        fh.write(''.join(text))
+        fh.write('\n'.join(text))

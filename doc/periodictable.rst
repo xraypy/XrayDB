@@ -1,4 +1,3 @@
-
 .. _periodic_tables:
 
 X-ray Periodic Table of the Elements
@@ -43,7 +42,7 @@ Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 
     | `Henry Moseley`_     | `Moseley (Large)`_     | `Moseley (Medium)`_    |
     +----------------------+------------------------+------------------------+
 
-In general, these table look like this:
+These periodic tables will look like this:
 
 .. image:: _images/xray_table.png
    :width: 75%

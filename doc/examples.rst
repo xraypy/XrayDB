@@ -3,18 +3,20 @@
 Example Calculations of X-ray properties of materials
 =========================================================
 
-.. _XrayDB Web App (beta!):  https://millenia.cars.aps.anl.gov/xraydb
+.. _XrayDB Web App (xrayabsorption.org):  https://xraydb.xrayabsorption.org/
 
 .. module:: xraydb
    :noindex:
 
-Here, a few detailed examples of using the `xraydb.sqlite` to calculate the
-X-ray properties of materials are shown.  These all use the functions in
-the python `xraydb` module, which is describe in more detail in the next
-chapter, :ref:`python_api`.  The examples will explore some aspects of
-X-ray physics, but will not give a complete tutorial on the concepts here.
-For reference see :cite:`AlsNielson_McMorrow2011` for example.  Some of
-these calculations are also available at  `XrayDB Web App (beta!)`_.
+A few detailed examples of using the `xraydb.sqlite` to calculate the X-ray
+properties of materials are presented here.  These all use the functions in the
+python `xraydb` module, which is describe in more detail in the next chapter,
+:ref:`python_api`.  The examples will explore some aspects of X-ray physics,
+but will not give a complete tutorial on the concepts here.  For a good
+reference on X-ray physics, see :cite:`AlsNielson_McMorrow2011`.
+
+Many of these calculations are also available at `XrayDB Web App (xrayabsorption.org)`_.
+
 
 
 X-ray attenuation by elements
@@ -297,9 +299,9 @@ enough to prevent any recombination of charged particles.
 For a given gas at an incident X-ray energy :math:`E`, we calculate the total,
 photo-electric, incoherent (Compton), and coherent (Rayleigh) values of
 :math:`\mu`.  If more than one gas is used, the weighted sum is calculated, so
-that we have :math:`\mu_{\rm total}`, :math:`\mu_{\rm photo}`, :math:`\mu_{\rm
-incoh}`, and :math:`\mu_{\rm coh}` for the gas in the chamber (or diode
-material).
+that we have :math:`\mu_{\rm total}`, :math:`\mu_{\rm photo}`,
+:math:`\mu_{\rm incoh}`, and :math:`\mu_{\rm coh}` for the gas in the
+chamber or diode material.
 
 The flux transmitted out of the chamber is
 

@@ -15,8 +15,8 @@ To install the XrayDB Python module (which includes the sqlite database), use::
    pip install xraydb
 
 Depending on your system and Python installation, you may need
-administrative privileges to install any python library.  For many linux
-and Mac OS X systems, you may need to use `sudo`.
+administrative privileges or to use `sudo` to install to a system-installed
+Python environment.
 
 .. Note:: The Python module supports Python 3.8 and above.
 

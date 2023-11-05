@@ -6,12 +6,6 @@ import numpy as np
 from scipy.interpolate import UnivariateSpline
 import scipy.constants as consts
 
-HAS_PWD = True
-try:
-    import pwd
-except ImportError:
-    HAS_PWD = False
-
 # atoms/mol =  6.0221413e23  atoms/mol
 AVOGADRO = consts.Avogadro
 

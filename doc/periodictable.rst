@@ -18,7 +18,7 @@ X-ray Periodic Table of the Elements
 .. _Henry Moseley:      https://en.wikipedia.org/wiki/Henry_Moseley
 
 
-XrayDB has been used to generate X-ray Periodic Tables of the Elements.
+XrayDB has been used to generate X-ray Periodic Tables of the Elements.  This uses
 
 There is a choice of two sizes, and a choice of an image of one of four
 prominent scientists associated with the Periodic Table and X-ray

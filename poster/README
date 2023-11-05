@@ -12,17 +12,19 @@ Building the Xray Periodic Table
 To generate the PDF, use:
    make
 
-To generate without GSECARS QR code, use
+To generate without the QR code pointing to GSECARS, use:
 
    cp ptable_no_gse.tex ptable.tex
    make
 
 This assumes two things:
-   a) latex and a reasonably modern version of the TikZ package are installed.
-   b) that either the atomic data has been or python, and the xraydb module
-      are installed.   This holds the data from Elam, et al.  The gen_atoms.py
-      script uses this to extract the data and write out latex paragraphs
-      for each element into the file atoms.tex.
+   a) latex and a reasonably modern version of the
+      TikZ package are installed.
+   b) that either the atomic data has been generated into atoms.tex
+      or that Python, and the xraydb module are installed, so that
+      the gen_atoms.py script can be run to extract the data from
+      the datatbase and write out latex paragraphs for each element
+      into the file atoms.tex with:
 
           python gen_atoms.py > atoms.tex
 

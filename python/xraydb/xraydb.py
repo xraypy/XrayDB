@@ -14,9 +14,7 @@ from scipy.interpolate import UnivariateSpline
 from packaging.version import parse as version_parse
 
 import sqlalchemy
-# from sqlalchemy import MetaData, create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import SingletonThreadPool
 
 from .utils import elam_spline, as_ndarray
 
@@ -30,20 +28,7 @@ __version__ = '1.5'
 
 def make_engine(dbname):
     "create engine for sqlite connection, perhaps trying a few sqlachemy variants"
-    url = f'sqlite:///{dbname}'
-    create_kws = {}
-    sql_vers = version_parse(sqlalchemy.__version__)
-    if sql_vers.major == 1 and sql_vers.minor == 4:
-        create_kws['future'] = True
-
-    try:
-        engine = sqlalchemy.create_engine(url, **create_kws)
-    except:
-        create_kws['poolclass'] = SingletonThreadPool
-        create_kws['connect_args'] = {'check_same_thread': False}
-        engine = sqlalchemy.create_engine(url, **create_kws)
-    return engine
-
+    return sqlalchemy.create_engine(f'sqlite:///{dbname}')
 
 def isxrayDB(dbname):
     """whether a file is a valid XrayDB database
@@ -65,7 +50,7 @@ def isxrayDB(dbname):
     result = False
     try:
         engine = make_engine(dbname)
-        meta = sqlalchemy.MetaData() #
+        meta = sqlalchemy.MetaData()
         meta.reflect(engine)
         result = all([t in meta.tables for t in _tables])
     except:

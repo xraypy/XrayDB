@@ -16,9 +16,10 @@ X-ray Periodic Table of the Elements
 .. _Marie Curie:        https://en.wikipedia.org/wiki/Marie_Curie
 .. _Dmitri Mendeleev:   https://en.wikipedia.org/wiki/Dmitri_Mendeleev
 .. _Henry Moseley:      https://en.wikipedia.org/wiki/Henry_Moseley
+.. _poster folder:      https://github.com/xraypy/XrayDB/tree/master/poster
 
-
-XrayDB has been used to generate X-ray Periodic Tables of the Elements.  This uses
+XrayDB has been used to generate X-ray Periodic Tables of the Elements.  These
+are built using latex and the Python code and Makefile in `poster folder`_.
 
 There is a choice of two sizes, and a choice of an image of one of four
 prominent scientists associated with the Periodic Table and X-ray

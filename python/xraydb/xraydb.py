@@ -17,6 +17,7 @@ import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
 from .utils import elam_spline, as_ndarray
+from .version import __version__
 
 XrayEdge = namedtuple('XrayEdge', ('energy', 'fyield', 'jump_ratio'))
 XrayLine = namedtuple('XrayLine', ('energy', 'intensity', 'initial_level',
@@ -24,7 +25,7 @@ XrayLine = namedtuple('XrayLine', ('energy', 'intensity', 'initial_level',
 ElementData = namedtuple('ElementData', ('Z', 'symbol', 'name', 'mass', 'density'))
 ComptonEnergies = namedtuple('ComptonEnergies', ('incident', 'xray_90deg', 'xray_mean', 'electron_mean'))
 
-__version__ = '1.5'
+
 
 def make_engine(dbname):
     "create engine for sqlite connection, perhaps trying a few sqlachemy variants"

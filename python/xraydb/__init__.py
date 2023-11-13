@@ -9,7 +9,7 @@
             The University of Chicago
 """
 
-from .version import version as __version__
+from .version import __version__
 
 from .xraydb import XrayDB
 

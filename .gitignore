@@ -4,7 +4,6 @@ __pycache__/
 doc/_build
 
 python/dist/
-python/xraydb/version.py
 python/*.egg-info/
 python/build
 python/tests/.coverage

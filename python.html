@@ -412,13 +412,15 @@ and values containing an XrayEdge namedtuple containing
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>core width or list of core widths</p>
+<dd class="field-even"><p>a dict of <code class="docutils literal notranslate"><span class="pre">{edge:</span> <span class="pre">core_hole_width}</span></code> if the edge is not specified
+or a float with the core hole width for a specified edge.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
 <ol class="arabic simple">
-<li><p>if edge is None, values are return for all edges</p></li>
+<li><p>if edge is None, a dict of core hole widths for all edges is returned</p></li>
 <li><p>Data from Krause and Oliver (1979) and  Keski-Rahkonen and Krause (1974)</p></li>
+<li><p>Values are in eV</p></li>
 </ol>
 </dd></dl>
 

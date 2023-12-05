@@ -667,11 +667,10 @@ class XrayDB():
         rows = self.query(ctab).filter(ctab.c.element == self.symbol(element))
         if edge is not None:
             rows = rows.filter(ctab.c.edge == edge.title())
-        result = rows.all()
-        if len(result) == 1:
-            result = result[0].width
-        else:
-            result = [(r.edge, r.width) for r in result]
+
+        result = [(r.edge, r.width) for r in rows.all()]
+        if edge is not None and edge in result:
+            result = result[edge]
         return result
 
 

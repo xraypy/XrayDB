@@ -609,12 +609,13 @@ def core_width(element, edge=None):
         edge (None or str):  edge to consider
 
     Returns:
-        core width or list of core widths
+        a dict of ``{edge: core_hole_width}`` if the edge is not specified
+        or a float with the core hole width for a specified edge.
 
     Notes:
-       1. if edge is None, values are return for all edges
+       1. if edge is None, a dict of core hole widths for all edges is returned
        2. Data from Krause and Oliver (1979) and  Keski-Rahkonen and Krause (1974)
-
+       3. Values are in eV
     """
     xdb = get_xraydb()
     return xdb.corehole_width(element, edge=edge)

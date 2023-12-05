@@ -646,8 +646,8 @@ class XrayDB():
             use_keski (bool) : force use of KeskiRahkonen and Krause table for all data.
 
         Returns:
-            either a dict of {edge: corehole_width} if the edge is not specified
-            or a float with the corehole width if the edge is specied
+            a dict of ``{edge: core_hole_width}`` if the edge is not specified
+            or a float with the core hole width for a specified edge.
 
         Notes:
             Uses Krause and Oliver where data is available (K, L lines Z > 10)

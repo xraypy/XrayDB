@@ -646,11 +646,13 @@ class XrayDB():
             use_keski (bool) : force use of KeskiRahkonen and Krause table for all data.
 
         Returns:
-            float: corehole width in eV.
+            either a dict of {edge: corehole_width} if the edge is not specified
+            or a float with the corehole width if the edge is specied
 
         Notes:
             Uses Krause and Oliver where data is available (K, L lines Z > 10)
             Uses Keski-Rahkonen and Krause otherwise
+            Values are in eV.
 
         References:
             Krause and Oliver, 1979
@@ -668,8 +670,8 @@ class XrayDB():
         if edge is not None:
             rows = rows.filter(ctab.c.edge == edge.title())
 
-        result = [(r.edge, r.width) for r in rows.all()]
-        if edge is not None and edge in result:
+        result = {r.edge: r.width for r in rows.all()}
+        if edge is not None:
             result = result[edge]
         return result
 

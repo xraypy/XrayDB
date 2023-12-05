@@ -18,7 +18,7 @@ will need to be decoded from JSON to be used.
 
 A Python module providing an interface to this database is also provided here.
 
-The current version of the XrayDB database is **9.1**, and the
+The current version of the XrayDB database is **9.2**, and the
 Python module is version |release|.
 
 Values in XrayDB use the most common SI units for X-ray work: Cross sections

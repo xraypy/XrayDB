@@ -16,7 +16,7 @@
 14     Si    silicon         28.085    2.329
 15     P     phosphorus      30.9738   1.823
 16     S     sulfur          32.06     2.08
-17     Cl    chlorine        35.453    3.2
+17     Cl    chlorine        35.453    0.003214
 18     Ar    argon           39.948    0.001784
 19     K     potassium       39.0983   0.89
 20     Ca    calcium         40.078    1.55

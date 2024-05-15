@@ -8,6 +8,7 @@ Main Class for full Database:  xrayDB
 
 import os
 import json
+from warnings import warn
 from collections import namedtuple
 import numpy as np
 from scipy.interpolate import UnivariateSpline
@@ -261,6 +262,9 @@ class XrayDB():
         """
         elem = self.symbol(element)
         energy = as_ndarray(energy)
+        if max(energy) > 1.e6:
+            warn('Chantler tables are unreliable for energies > 1 MeV')
+            energy[np.where(energy > 1.e6)] = 1.e6
         emin, emax = min(energy), max(energy)
 
         row = self.get_cache('Chantler', column='element', value=elem)[0]
@@ -714,13 +718,15 @@ class XrayDB():
             tab_spl = np.array(json.loads(row.log_photoabsorption_spline))
 
         en = 1.0*as_ndarray(energies)
-        emin_tab = 10*int(0.102*np.exp(tab_lne[0]))
-        en[np.where(en < emin_tab)] = emin_tab
+        if min(en) < 100.0:
+            warn('Elam tables are unreliable for energies < 100 eV')
+        if max(en) > 800_000.:
+            warn('Elam tables are unreliable for energies > 800 keV')
+        en[np.where(en < 100.0)] = 100.0
+        en[np.where(en > 8.e5)] = 8.e5
         out = np.exp(elam_spline(tab_lne, tab_val, tab_spl, np.log(en)))
-
         if isinstance(energies, (int, float)):
             return out[0]
-
         return out
 
     def mu_elam(self, element, energies, kind='total'):

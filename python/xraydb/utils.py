@@ -40,6 +40,7 @@ def as_ndarray(obj):
         return np.array([obj])
     return np.asarray(obj)
 
+
 def elam_spline(xin, yin, yspl_in, xout):
     """
     interpolate values from Elam photoabsorption and
@@ -57,12 +58,12 @@ def elam_spline(xin, yin, yspl_in, xout):
         ndarray: interpolated values
     """
     x = as_ndarray(xout)
-    x[np.where(x < min(xin))] = min(xin)
-    x[np.where(x > max(xin))] = max(xin)
-
-    lo, hi = np.array([(np.flatnonzero(xin < e)[-1],
-                        np.flatnonzero(xin > e)[0])
-                       for e in x]).transpose()
+    lo, hi = [], []
+    for e in x:
+        _elo = np.where(xin < e)[0]
+        _ehi = np.where(xin > e)[0]
+        lo.append(_elo[-1] if len(_elo) > 0 else 0)
+        hi.append(_ehi[0] if len(_ehi) > 0 else len(xin)-1)
 
     diff = xin[hi] - xin[lo]
     if any(diff <= 0):

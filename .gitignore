@@ -2,7 +2,9 @@ __pycache__/
 
 # docs
 doc/_build
-
+poster/*.aux
+poster/*.log
+poster/*.pdf
 python/dist/
 python/*.egg-info/
 python/build
@@ -11,4 +13,3 @@ python/tests/htmlcov
 python/tests/.ipynb_checkpoints
 docs/_build/
 sandbox
-

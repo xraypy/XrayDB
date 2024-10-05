@@ -713,7 +713,7 @@ def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
         ret.append((edge, iz, diff))
 
     for edge, iz, diff in ret:
-        if abs(diff - min_diff) < 2:
+        if abs(diff - min_diff) < 2 and iz > 0:
             return (atomic_symbol(iz), edge)
     return (None, None)
 

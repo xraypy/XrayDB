@@ -4,7 +4,7 @@ TARGET = xray_table
 PDFLATEX = pdflatex
 
 
-.PHONY: clean distclean all
+.PHONY: clean distclean all sees
 
 all:
 	make xray_table_50in_Barkla.pdf
@@ -15,10 +15,21 @@ all:
 	make xray_table_36in_Curie.pdf
 	make xray_table_36in_Mendeleev.pdf
 	make xray_table_36in_Moseley.pdf
+	make xray_table_36in_SEES.pdf
+	make xray_table_50in_SEES.pdf
 
+sees:
+	make xray_table_36in_SEES.pdf
+	make xray_table_50in_SEES.pdf
 
 atoms.tex:  gen_atoms.py
 	python gen_atoms.py > atoms.tex
+
+xray_table_36in_SEES.pdf: atoms.tex elines.tex ptable_seeslogo.tex header.tex xray_table_36in_SEES.tex
+	$(PDFLATEX) xray_table_36in_SEES.tex
+
+xray_table_50in_SEES.pdf: atoms.tex elines.tex ptable_seeslogo.tex header.tex xray_table_50in_SEES.tex
+	$(PDFLATEX) xray_table_50in_SEES.tex
 
 xray_table_50in_Curie.pdf: atoms.tex elines.tex ptable.tex xray_table_50in_Curie.tex
 	$(PDFLATEX) xray_table_50in_Curie.tex

@@ -7,16 +7,16 @@
 
     <title>X-ray DB: X-ray Reference Data in SQLite &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=0f882399" />
     <script src="_static/documentation_options.js?v=a284863f"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,12 +43,17 @@
 <p>XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, <code class="docutils literal notranslate"><span class="pre">xraydb.sqlite</span></code>.  This file
 can be used directly with SQLite <span id="id1">[<a class="reference internal" href="biblio.html#id10" title="D. R. Hipp. Sqlite. 2012. URL: https://www.sqlite.org.">Hipp (2012)</a>]</span> or from the many programming
-language that have interfaces to SQLite.  Some of the components of the
+language that have interfaces to SQLite.  A Python module providing an
+interface to this database is also provided.  Some of the components of the
 database hold arrays of numbers, which are stored as JSON-encoded strings, and
 will need to be decoded from JSON to be used.</p>
-<p>A Python module providing an interface to this database is also provided here.</p>
 <p>The current version of the XrayDB database is <strong>9.2</strong>, and the
-Python module is version 4.5.4.</p>
+Python module is version 4.5.4, which can be installed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
+</pre></div>
+</div>
+<p>The <a class="reference external" href="https://github.com/xraypy/XrayDB">XrayDB Github Page</a> has data sources, code, development discussions and
+issues.</p>
 <p>Values in XrayDB use the most common SI units for X-ray work: Cross sections
 are in cm^2/gr, and energies are in eV.  Energy-dependent data for
 cross-sections are typically most reliable between about 250 eV to about
@@ -57,13 +62,12 @@ for elements between Z=93 and Z=98.</p>
 <p>Some useful resources using this library include:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><a class="reference external" href="https://xraydb.xrayabsorption.org/">XrayDB Web App (xrayabsorption.org)</a> is an interactive web applications
-to browse the data in this database and make plots of X-ray attenuation,
-scattering factors, mirror reflectivity, and more.  Data tables and python
-code to generate that data are available for many of the calculations.</p></li>
+<li><p><a class="reference external" href="https://xraydb.xrayabsorption.org/">XrayDB Web App (xrayabsorption.org)</a> and <a class="reference external" href="https://millenia.cars.aps.anl.gov/xraydb">XrayDB Web App (CARS, U
+Chicago)</a> gives an interactive web applications to browse the data in
+this database and make plots of X-ray attenuation, scattering factors,
+mirror reflectivity, and more.  Data tables and python code to generate
+that data are available for many of the calculations.</p></li>
 <li><p><a class="reference internal" href="periodictable.html#periodic-tables"><span class="std std-ref">X-ray Periodic Table of the Elements</span></a> for printable Poster-sized Periodic tables of X-ray energies.</p></li>
-<li><p><a class="reference external" href="https://github.com/xraypy/XrayDB">XrayDB Github Page</a> has data sources, code, development and issues.</p></li>
-<li><p><a class="reference external" href="https://xraypy.github.io/XrayDB/xraydb.pdf">PDF Version of this documentation</a></p></li>
 </ul>
 </div></blockquote>
 <p>The project began with the data from the compilation of basic atomic
@@ -92,6 +96,7 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
 <li class="toctree-l2"><a class="reference internal" href="examples.html#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">X-ray flux calculations for ionization chambers and photodiodes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="examples.html#effective-ionization-potentials-of-gases-and-semiconductors">Effective Ionization Potentials of gases and semiconductors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#compton-scattering-and-ion-chamber-current">Compton scattering and Ion Chamber Current</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples.html#ion-chamber-flux-calculations">Ion Chamber Flux calculations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples.html#ionchamber-fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
 </ul>
@@ -197,31 +202,41 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="#">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">X-ray DB: X-ray Reference Data in SQLite</a><ul>
-<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
-</ul>
-</li>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper"><h3>XrayDB Python Package</h3>
+
+<ul>
+   <li>&nbsp; &nbsp;<a href="installation.html"> Installing XrayDB</a></li>
+   <li>&nbsp; &nbsp;<a href="python.html">    XrayDB  module</a></li>
+   <li>&nbsp; &nbsp;<a href="examples.html">   Using XrayDB</a></li>
 </ul>
 
-  </div>
-  <div>
-    <h4>Next topic</h4>
-    <p class="topless"><a href="installation.html"
-                          title="next chapter">Installation</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/index.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+<p>
+Current version: <b>4.5.4</b></br>
+Install:   <tt>pip install xraydb</tt></br>
+Develop:
+  &nbsp; <a href="https://github.com/xraypy/xraydb/">github.com</a>
+
+<h3>Other Documents</h3>
+
+<ul>
+   <li>&nbsp; &nbsp;<a href="periodictable.html"> Periodic Tables</a></li>
+   <li>&nbsp; &nbsp;<a href="dbschema.html"> SQLite  Schema</a></li>
+   <li>&nbsp; &nbsp;<a href="xraydb.pdf"> PDF document</a></li>
+ </ul>
+
+<h3>XrayDB Web App</h3>
+
+<ul>
+   <li>&nbsp; &nbsp;<a href="https://xraydb.xrayabsorption.org">
+       xraydb@rayabsorption.org</a></li>
+   <li>&nbsp; &nbsp;<a href="https://millenia.cars.aps.anl.gov/xraydb">
+       xraydb@UChicago</a></li>
+ </ul>
+
+</p>
+<hr>
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -229,13 +244,13 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -253,8 +268,8 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2023-December-05.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Last updated on 2024-October-12.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
     </div>
   </body>
 </html>

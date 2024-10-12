@@ -18,7 +18,7 @@ Depending on your system and Python installation, you may need
 administrative privileges or to use `sudo` to install to a system-installed
 Python environment.
 
-.. Note:: The Python module supports Python 3.8 and above.
+.. Note:: The Python module supports Python 3.9 and above.
 
 
 Development Version

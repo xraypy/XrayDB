@@ -7,9 +7,9 @@
 
     <title>Example Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=0f882399" />
     <script src="_static/documentation_options.js?v=a284863f"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -17,7 +17,7 @@
     <link rel="next" title="Using XrayDB from Python" href="python.html" />
     <link rel="prev" title="X-ray Periodic Table of the Elements" href="periodictable.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -88,10 +88,10 @@ following script will plot <span class="math notranslate nohighlight">\(\mu/\rho
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id4">
 <span id="fig-mu-depth"></span><a class="reference external image-reference" href="_images/mu_elements.png"><img alt="_images/mu_elements.png" src="_images/mu_elements.png" style="width: 75%;" /></a>
 <figcaption>
-<p><span class="caption-text">X-ray mass attenuation coefficient for C, Cu, and Au.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+<p><span class="caption-text">X-ray mass attenuation coefficient for C, Cu, and Au.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>As you can see in Figure from this figure, the attenuation drops very
@@ -135,10 +135,10 @@ different components of <span class="math notranslate nohighlight">\(\mu/\rho\)<
 </pre></div>
 </div>
 <p>which will generate the following plot:</p>
-<figure class="align-center" id="id6">
+<figure class="align-center" id="id5">
 <span id="fig-mu-components-c"></span><a class="reference external image-reference" href="_images/mu_components_C.png"><img alt="_images/mu_components_C.png" src="_images/mu_components_C.png" style="width: 75%;" /></a>
 <figcaption>
-<p><span class="caption-text">X-ray scattering and attenuation factors for C.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+<p><span class="caption-text">X-ray scattering and attenuation factors for C.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Note that above 20 keV, the photo-electric absorption and incoherent
@@ -148,10 +148,10 @@ be much higher for heavier elements. The Rayleigh and Compton scattering
 have a much weaker dependence on <em>Z</em>, so that the photo-electric process
 dominates to higher energies.  Replacing ‘C’ with ‘Fe’ in the script above
 will generate the following plot:</p>
-<figure class="align-center" id="id7">
+<figure class="align-center" id="id6">
 <span id="fig-mu-components-fe"></span><a class="reference external image-reference" href="_images/mu_components_Fe.png"><img alt="_images/mu_components_Fe.png" src="_images/mu_components_Fe.png" style="width: 75%;" /></a>
 <figcaption>
-<p><span class="caption-text">X-ray scattering and attenuation factors for Fe.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+<p><span class="caption-text">X-ray scattering and attenuation factors for Fe.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>which shows that the Compton scattering reaching about 0.1 to 0.25
@@ -197,10 +197,10 @@ X-ray energy:</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id8">
+<figure class="align-center" id="id7">
 <span id="fig-mu-water"></span><a class="reference external image-reference" href="_images/mu_water.png"><img alt="_images/mu_water.png" src="_images/mu_water.png" style="width: 75%;" /></a>
 <figcaption>
-<p><span class="caption-text">Fraction of X-rays absorbed and transmitted by water</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fraction of X-rays absorbed and transmitted by water</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>replacing:</p>
@@ -212,10 +212,10 @@ X-ray energy:</p>
 </pre></div>
 </div>
 <p>would generate the following plot</p>
-<figure class="align-center" id="id9">
+<figure class="align-center" id="id8">
 <span id="fig-mu-calcite"></span><a class="reference external image-reference" href="_images/mu_calcite.png"><img alt="_images/mu_calcite.png" src="_images/mu_calcite.png" style="width: 75%;" /></a>
 <figcaption>
-<p><span class="caption-text">Fraction of X-rays absorbed and transmitted by calcite</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fraction of X-rays absorbed and transmitted by calcite</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>For many X-ray experiments, selecting the size of a material size so that
@@ -234,71 +234,40 @@ example, one can simply do:</p>
 <section id="x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">
 <h2>X-ray flux calculations for ionization chambers and photodiodes<a class="headerlink" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes" title="Link to this heading">¶</a></h2>
 <p>Gas-filled ionization chambers are widely used as X-ray detectors. They are
-simple to use, inexpensive, and can be highly linear in estimating the
-photon flux over many orders of magnitude.  X-rays entering a chamber
-filled with an inert gas (typically He, N2, or one of the noble gases, or a
-mixture of these) will be partially absorbed by the gas, with the strong
-energy dependence shown above.  By adjusting the composition of the gas,
-nearly any fraction of the incident X-ray beam can be absorbed at a
-particular X-ray energy, making these ideal detectors to sample the
-intensity of an X-ray beam incident on a sample, while attenuating only a
-fraction of the beam.</p>
+simple to use, inexpensive, and can give highly linear measures of photon flux
+over many orders of magnitude.  X-rays entering a chamber filled with an inert
+gas (typically He, N2, or one of the noble gases, or a mixture of these) will
+be partially absorbed by the gas, with the strong energy dependence shown
+above.  By adjusting the composition of the gas, nearly any fraction of the
+incident X-ray beam can be absorbed at a particular X-ray energy, making these
+ideal detectors to sample the intensity of an X-ray beam incident on a sample,
+while attenuating only a fraction of the beam.</p>
 <p>Some of the X-rays in the gas will be absorbed by the photo-electric effect
-which will <em>ionize</em> the gas, generating free electrons and energetic ions.  Te
+which will <em>ionize</em> the gas, generating free electrons and energetic ions.  The
 first ionization event will generate an electron-ion pair with the energy of
 the X-ray minus the binding energy of the core electron. The high-energy
 electron and ion pair will further ionize other gas molecules.  With an
 electric potential (typically on the order of 1 kV /cm) across the plates of
-the chamber, a current can be measured that is proportional to the X-ray
-energy and fluence of the X-rays.</p>
-<p>In addition to the photo-electric absorption, X-rays can be attenuated by gas
-molecules in an ion chamber by incoherent (Compton) or coherent (Rayleigh)
-scattering processes.  The coherent scattering will not generate any electrons
-in the gas, but will elastically scatter X-rays out of the main beam.
-Incoherent scattering will generate some current, though not all (and
-typically only a small portion) of the incident X-ray energy is given to an
-electron to generate a current.  Compton scattering gives a distribution of
-energies to the scattered electron depending on the angle of scattering.  The
-median energy of electrons generated by Compton scattering X-rays of energy
-<span class="math notranslate nohighlight">\(E\)</span> at 90 degrees will be</p>
-<div class="math notranslate nohighlight">
-\[E_{median} = E / (1 + m_ec^2 / E)\]</div>
-<p>For X-rays of 10 keV, <span class="math notranslate nohighlight">\(E_{median}\)</span> is about 192 eV. For 20 keV X-rays,
-it will be 750 eV, and for 50 keV X-rays, it will be 4.5 keV.  Because the
-angular distribution of Compton scattering is not uniform, these median values
-over-estimate the amount of energy transferred to the scattered electron by a
-small amount that increases with energy.  The mean energy of the
-Compton-scattered electron can be found by integrating the Klein-Nishina
-distribution. Since these values depend only on the incident X-ray energy,
-these calculations have been done and the values tabulated in the
-<cite>Compton_energies</cite> table in the XrayDB sqlite database.</p>
-<p>Although the energy transferred to the electron by Compton scattering is much
-less than by the photo-electric process the contribution can be important.
-This is especially true for low-Z gas molecules such as He and N2 at
-relatively high energies (10 keV and above) for which incoherent scattering
-becomes much more important than photo-electric absorption, as shown above
-for C. That is, for accurate estimates of fluxes from ion chamber currents at
-energies about 20 keV or so, the contribution from Compton scattering should
-be included.  For photo-diodes (typically made of Si), the Compton scattering
-cross-section exceeds the photo-electric cross-section about 56 keV.</p>
+the chamber, a current is generated that is proportional to the X-ray energy
+and fluence of the X-rays.</p>
 <section id="effective-ionization-potentials-of-gases-and-semiconductors">
 <h3>Effective Ionization Potentials of gases and semiconductors<a class="headerlink" href="#effective-ionization-potentials-of-gases-and-semiconductors" title="Link to this heading">¶</a></h3>
 <p>The process of converting the X-ray generated current into X-ray fluence
-involves several steps. The energy from a single X-ray-generated
-electron is converted into a number of electron-ion pairs given by the
-<em>effective ionization potential</em> of the gas.  These are reasonably
-well-known values (see <span id="id2">[<a class="reference internal" href="biblio.html#id3" title="G. .F. Knoll. Radiation Detection and Measurement, 4th Edition. John Wiley &amp; Sons, 2010. URL: https://dx.doi.org/10.1002/9780470131480.">Knoll (2010)</a>]</span>) that are all between 20 and 40
-eV, given in the <a class="reference internal" href="#xray-ionpot-table"><span class="std std-ref">Table of Effective Ionization Potentials</span></a>.</p>
+involves several steps. The energy from a single X-ray-generated electron is
+converted into a number of electron-ion pairs given by the <em>effective
+ionization potential</em> of the gas.  These values are available from a few
+sources and range between 20 and 40 eV, given in the <a class="reference internal" href="#xray-ionpot-table"><span class="std std-ref">Table of Effective
+Ionization Potentials</span></a>.</p>
 <blockquote id="xray-ionpot-table">
 <span id="index-0"></span><div><p>Table of Effective Ionization Potentials. Many of these are taken from
-<span id="id3">[<a class="reference internal" href="biblio.html#id3" title="G. .F. Knoll. Radiation Detection and Measurement, 4th Edition. John Wiley &amp; Sons, 2010. URL: https://dx.doi.org/10.1002/9780470131480.">Knoll (2010)</a>]</span>, while others appear to come from International Commission
+<span id="id2">[<a class="reference internal" href="biblio.html#id3" title="G. .F. Knoll. Radiation Detection and Measurement, 4th Edition. John Wiley &amp; Sons, 2010. URL: https://dx.doi.org/10.1002/9780470131480.">Knoll (2010)</a>]</span>, while others appear to come from International Commission
 on Radiation Units &amp; Measurement, Report 31, 1979.  The names given are
 those supported by the functions <a class="reference internal" href="python.html#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a> and
 <a class="reference internal" href="python.html#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a>.</p>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>gas/materia name(s)</p></th>
+<tr class="row-odd"><th class="head"><p>gas/material name(s)</p></th>
 <th class="head"><p>potential (eV)</p></th>
 </tr>
 </thead>
@@ -347,31 +316,77 @@ those supported by the functions <a class="reference internal" href="python.html
 </div></blockquote>
 </div></blockquote>
 <p>From this table, we can see that the absorption (by photo-electric effect) of 1
-X-ray of energy 10 keV will eventually generate about 300 electron-ion pairs.
-That is not much current, but if <span class="math notranslate nohighlight">\(10^8 \,\rm Hz\)</span> X-rays are absorbed per
-second, then the current generated will be around 5 nA.  Of course, the
-thickness of the gas or more precisely the length of gas under ionizing
-potential will have an impact on how much current is generated.  The
-photo-current will then be amplified and converted to a voltage using a current
-amplifier, and that voltage will then recorded by a number of possible means.
-Note that while the ion chamber itself will be linear over many orders of
-magnitude of X-ray flux (provided the potential between the plates is high
-enough - typically in the 1 kV/cm range to efficiently collect all the charged
-particles before the recombine), a current amplifier at a particular setting of
-sensitivity will be linear only over a couple orders of magnitude (typically
-between output voltage of 0.05 to 5 V).  Because of this, the sensitivity of
-the current amplifier used with an ion chamber needs careful attention.</p>
+X-ray with energy 10 keV will generate about 300 electron-ion pairs.  That is
+not much current, but if <span class="math notranslate nohighlight">\(10^8 \,\rm Hz\)</span> X-rays are absorbed per second,
+then the current generated will be around 5 nA.  Of course, the length of the
+gas or more precisely the length of gas under ionizing potential will have an
+impact on how much current is generated.  The photo-current generated can be
+amplified and converted to a voltage using a current amplifier, and that
+voltage will then recorded by a number of possible mean: a voltage-to-frequency
+generator and a digital counter is a common method for integrated current for a
+specific amount of time, but other sampling methods can also be used.</p>
+<p>An ion chamber can be linear over many orders of magnitude of X-ray flux,
+provided the potential between the plates is high enough - typically in the 1
+kV/cm range to efficiently collect all the charged particles before the
+recombine.  As an important practical note, a typical current amplifier at a
+particular setting of sensitivity will be linear only over a limited range
+(often over an output voltage of 0.02 to 5 V).  Because of this, the
+sensitivity of the current amplifier used with an ion chamber needs careful
+attention to avoid saturation and maintain sensitivity.</p>
 <p>A photo-diode works in much the same way as an ionization chamber.  X-rays
 incident on the diode (typically Si or Ge) will be absorbed and generate a
-photo-current that can be collected.  Typically PIN diodes are used, and
-with a small reverse bias voltage.  Because the electrons do not need to
-escape the material but generate a current transported in the
-semiconductor, the effective ionization potential is much lower - a few
-times the semiconductor band gap instead of a few time the lowest
-core-level ionization potential.  The current generated per X-ray will be
-larger than for an ion chamber, but still amplified with a current
-amplifier in the same way as is used for an ion chamber.  Generally, diodes
-are thick enough that they absorb all incident X-rays.</p>
+photo-current that can be collected.  Typically PIN diodes are used, and a
+small reverse bias voltage is often applied.  Because the electrons do not need
+to escape the material but generate a current transported in the semiconductor,
+the effective ionization potential is much lower - a few times the
+semiconductor band gap instead of a few time the lowest core-level ionization
+potential.  The current generated per X-ray will therefore be larger than for
+an ion chamber, and will also generally have a much faster response time.  The
+generated current will still measured in the same manner as a gas-filled
+ionization typically using a current amplifier and integrating counter. Of
+course, the thickness of the diode is difficult to adjust.  The active length of
+diodes are typically a few hundred microns, and so are generally much more
+absorbing than an ion chamber.</p>
+</section>
+<section id="compton-scattering-and-ion-chamber-current">
+<h3>Compton scattering and Ion Chamber Current<a class="headerlink" href="#compton-scattering-and-ion-chamber-current" title="Link to this heading">¶</a></h3>
+<p>In addition to photo-electric absorption, X-rays can be attenuated by gas
+molecules in an ion chamber by incoherent (Compton) or coherent (Rayleigh)
+scattering processes.  The coherent scattering will not generate any electrons
+in the gas, but will elastically scatter X-rays out of the main beam.  On the
+other hand, incoherent scattering will generate some current, though typically
+only a small portion of the incident X-ray energy is given to a scattered
+electron.  In fact, Compton scattering has a distribution of energies given to
+the scattered electron depending on the angle of scattering, so that the energy
+of the scattered electron is</p>
+<div class="math notranslate nohighlight">
+\[E_{e} = E_{\gamma} - E_{\gamma} / [1 + E_{\gamma}/(m_ec^2)   (1- \cos\theta)]\]</div>
+<p>where <span class="math notranslate nohighlight">\(E_{\gamma}\)</span> is the incident X-ray energy, and <span class="math notranslate nohighlight">\(\theta\)</span> is the
+scattering angle.  From this, it easy to estimate the median energy of
+electrons generated by Compton scattering X-rays of energy <span class="math notranslate nohighlight">\(E\)</span> at 90
+degrees will be</p>
+<div class="math notranslate nohighlight">
+\[E_{\rm median} = E_{\gamma} / (1 + m_ec^2 / E_{\gamma})\]</div>
+<p>(recall that <span class="math notranslate nohighlight">\(1 - 1/(1+x) = 1 / (1+1/x)\)</span>).  For X-rays of 10 keV,
+<span class="math notranslate nohighlight">\(E_{\rm median}\)</span> is about 192 eV. For 20 keV X-rays, it will be 750 eV,
+and for 50 keV X-rays, it will be 4.5 keV.  Because of the angular distribution
+of Compton scattering is not uniform, these median values over-estimate the
+amount of energy transferred to the scattered electron by a small amount that
+increases with energy.  The mean energy of the Compton-scattered electron can
+be found by integrating the Klein-Nishina distribution. Since these values
+depend only on the incident X-ray energy, these calculations have been done and
+the values tabulated in the <cite>Compton_energies</cite> table in the XrayDB sqlite
+database.</p>
+<p>Although the energy transferred to the electron by Compton scattering is much
+less than by the photo-electric process the contribution can be important.
+This is especially true for low-Z gas molecules such as He and N2 at
+relatively high energies (10 keV and above) for which incoherent scattering
+becomes much more important than photo-electric absorption, as shown above
+for C. That is, for accurate estimates of fluxes from ion chamber currents at
+energies about 20 keV or so, the contribution from Compton scattering should
+be included.  For photo-diodes (typically made of Si), the Compton scattering
+cross-section exceeds the photo-electric cross-section about 56 keV, and so
+should also be included for high-energy X-ray measurements.</p>
 </section>
 <section id="ion-chamber-flux-calculations">
 <h3>Ion Chamber Flux calculations<a class="headerlink" href="#ion-chamber-flux-calculations" title="Link to this heading">¶</a></h3>
@@ -404,19 +419,21 @@ attenuated flux (in number per second, or Hz) is</p>
 both electrons and ions using the effective ionization potential above:</p>
 <div class="math notranslate nohighlight">
 \[C_{\rm photo} = 2 q_e E I_{\rm photo} / V_{\rm eff}\]</div>
-<p>where <span class="math notranslate nohighlight">\(q_{e}\)</span> is the electron charge (1.6e-19 C), <span class="math notranslate nohighlight">\(E\)</span> is the incident
-X-ray energy (in eV), <span class="math notranslate nohighlight">\(I_{\rm photo}\)</span> is the flux (in Hz), and
-<span class="math notranslate nohighlight">\(V_{\rm eff}\)</span> is the effective ionization potential for the gas.  The
-leading 2 comes because both electrons and ions are typically counted for the
-current from an ion chamber.  It is sometimes useful to add a Frisch mesh grid
-to collect the slower ions and shunt them so as to not count that portion of
-the current, and thereby give the ion chamber a faster time response.  In that
-case, the current will be half of the value given above.</p>
-<p>The coherent (Rayleigh) scattering produces no electrons, but the incoherent
-(Compton) scattering does. The energy of the Compton-scattered electron varies
-with both X-ray energy and scattering angle, as does the probability of
-scattering. Integrating over all angles gives the mean electron energy, which
-we use to obtain the current from the incoherent scattering:</p>
+<p>where <span class="math notranslate nohighlight">\(q_{e}\)</span> is the electron charge (<span class="math notranslate nohighlight">\(1.6\times10^{-19} \rm{C}\)</span>),
+<span class="math notranslate nohighlight">\(E\)</span> is the incident X-ray energy (in eV), <span class="math notranslate nohighlight">\(I_{\rm photo}\)</span> is the
+flux (in Hz), and <span class="math notranslate nohighlight">\(V_{\rm eff}\)</span> is the effective ionization potential for
+the gas.  The leading 2 comes because both electrons and ions are typically
+counted for the current from an ion chamber.  It is sometimes useful to add a
+Frisch mesh grid to collect the slower ions and shunt them so as to not count
+that portion of the current, and thereby give the ion chamber a faster time
+response.  In that case, the current will be half of the value given above.</p>
+<p>As discussed above, the coherent (Rayleigh) scattering produces no electrons,
+but the incoherent (Compton) scattering does, and the energy of the the
+Compton-scattered electron varies with both X-ray energy and scattering angle,
+as does the probability of scattering. Integrating over all angles (and
+assuming the ion chamber is large enough to stop the scattered electrons) gives
+the mean electron energy, which we use to obtain the current from the
+incoherent scattering:</p>
 <div class="math notranslate nohighlight">
 \[C_{\rm incoh} = 2 q_e E_{\rm mean}  I_{\rm incoh} / V_{\rm eff}\]</div>
 <p>where <span class="math notranslate nohighlight">\(E_{\rm mean}\)</span> is the mean energy of Compton-scattered
@@ -541,11 +558,11 @@ a few common mirror materials is given as</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id10">
+<figure class="align-center" id="id9">
 <span id="fig-mirrors"></span><a class="reference external image-reference" href="_images/mirrors.png"><img alt="_images/mirrors.png" src="_images/mirrors.png" style="width: 75%;" /></a>
 <figcaption>
 <p><span class="caption-text">X-ray mirror reflectivity at <span class="math notranslate nohighlight">\(\theta = 2\mathrm{mrad}\)</span> for
-selected mirror surfaces and coatings used for mirrors.</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+selected mirror surfaces and coatings used for mirrors.</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -572,7 +589,7 @@ anomalous scattering (as calculated with <a class="reference internal" href="pyt
 shape.</p>
 <p>All of these effects are included in the <a class="reference internal" href="python.html#xraydb.darwin_width" title="xraydb.darwin_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">darwin_width()</span></code></a> function,
 which follows very closely the description from chapter 6.4 in
-<span id="id4">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.  The function takes inputs of</p>
+<span id="id3">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.  The function takes inputs of</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><cite>energy</cite>: the X-ray energy, in eV.</p></li>
@@ -655,14 +672,14 @@ widths and plotting the intensity profile or “rocking curve” is</p>
 </pre></div>
 </div>
 <p>and generates a plot of</p>
-<figure class="align-center" id="id11">
+<figure class="align-center" id="id10">
 <span id="fig-darwin"></span><a class="reference external image-reference" href="_images/darwin_widths.png"><img alt="_images/darwin_widths.png" src="_images/darwin_widths.png" style="width: 75%;" /></a>
 <figcaption>
 <p><span class="caption-text">X-ray monochromator diffracted intensities around the Si(111)
 reflection. Here, <span class="math notranslate nohighlight">\(i\)</span> represents the intensity of a single
 reflection, and <span class="math notranslate nohighlight">\(i^2\)</span> the intensity from 2 bounces, as for a
 double-crystal monochromator.  The intensity and angular offset of the
-third harmonic is also shown.</span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
+third harmonic is also shown.</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Note that the values reported for <cite>theta_fwhm</cite> and <cite>energy_fwhm</cite> will be
@@ -680,7 +697,7 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -690,6 +707,7 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
 <li><a class="reference internal" href="#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
 <li><a class="reference internal" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">X-ray flux calculations for ionization chambers and photodiodes</a><ul>
 <li><a class="reference internal" href="#effective-ionization-potentials-of-gases-and-semiconductors">Effective Ionization Potentials of gases and semiconductors</a></li>
+<li><a class="reference internal" href="#compton-scattering-and-ion-chamber-current">Compton scattering and Ion Chamber Current</a></li>
 <li><a class="reference internal" href="#ion-chamber-flux-calculations">Ion Chamber Flux calculations</a></li>
 <li><a class="reference internal" href="#ionchamber-fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
 </ul>
@@ -718,7 +736,7 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -726,13 +744,13 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -753,8 +771,8 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2023-December-05.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+      Last updated on 2024-October-12.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
     </div>
   </body>
 </html>

@@ -40,6 +40,7 @@ bibtex_bibfiles = ['xraydb.bib']
 
 # html themes: 'default', 'sphinxdoc',  'alabaster', 'agogo', 'nature'
 html_theme = 'nature'
+html_theme = 'bizstyle'
 
 # html_theme_options = {'pagewidth':'85em',
 #                       'documentwidth':'60em',
@@ -54,3 +55,4 @@ html_static_path = ['_static']
 html_last_updated_fmt = '%Y-%B-%d'
 html_show_sourcelink = True
 htmlhelp_basename = 'xraydbdoc'
+html_sidebars = {'index': ['indexsidebar.html','searchbox.html']}

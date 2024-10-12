@@ -12,14 +12,20 @@ X-ray DB: X-ray Reference Data in SQLite
 XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, ``xraydb.sqlite``.  This file
 can be used directly with SQLite :cite:`sqlite` or from the many programming
-language that have interfaces to SQLite.  Some of the components of the
+language that have interfaces to SQLite.  A Python module providing an
+interface to this database is also provided.  Some of the components of the
 database hold arrays of numbers, which are stored as JSON-encoded strings, and
 will need to be decoded from JSON to be used.
 
-A Python module providing an interface to this database is also provided here.
-
 The current version of the XrayDB database is **9.2**, and the
-Python module is version |release|.
+Python module is version |release|, which can be installed with
+```
+pip install xraydb
+```
+
+The `XrayDB Github Page`_ has data sources, code, development discussions and
+issues.
+
 
 Values in XrayDB use the most common SI units for X-ray work: Cross sections
 are in cm^2/gr, and energies are in eV.  Energy-dependent data for
@@ -37,8 +43,6 @@ Some useful resources using this library include:
      that data are available for many of the calculations.
 
    * :ref:`periodic_tables` for printable Poster-sized Periodic tables of X-ray energies.
-
-   * `XrayDB Github Page`_ has data sources, code, development and issues.
 
    * `PDF Version of this documentation`_
 

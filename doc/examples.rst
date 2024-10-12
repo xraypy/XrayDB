@@ -255,8 +255,8 @@ an ion chamber, and will also generally have a much faster response time.  The
 generated current will still measured in the same manner as a gas-filled
 ionization typically using a current amplifier and integrating counter. Of
 course, the thickness of the diode is difficult to adjust.  The active length of
-diodes are typically a few hundred microns, which is often thick enough to
-absorb nearly all the incident X-rays.
+diodes are typically a few hundred microns, and so are generally much more
+absorbing than an ion chamber.
 
 
 Compton scattering and Ion Chamber Current

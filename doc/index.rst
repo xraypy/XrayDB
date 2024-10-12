@@ -18,10 +18,9 @@ database hold arrays of numbers, which are stored as JSON-encoded strings, and
 will need to be decoded from JSON to be used.
 
 The current version of the XrayDB database is **9.2**, and the
-Python module is version |release|, which can be installed with
-```
-pip install xraydb
-```
+Python module is version |release|, which can be installed with::
+
+    pip install xraydb
 
 The `XrayDB Github Page`_ has data sources, code, development discussions and
 issues.
@@ -43,8 +42,6 @@ Some useful resources using this library include:
      that data are available for many of the calculations.
 
    * :ref:`periodic_tables` for printable Poster-sized Periodic tables of X-ray energies.
-
-   * `PDF Version of this documentation`_
 
 The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and

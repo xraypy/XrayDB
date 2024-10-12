@@ -40,7 +40,7 @@ bibtex_bibfiles = ['xraydb.bib']
 
 # html themes: 'default', 'sphinxdoc',  'alabaster', 'agogo', 'nature'
 html_theme = 'nature'
-html_theme = 'bizstyle'
+# html_theme = 'bizstyle'
 
 # html_theme_options = {'pagewidth':'85em',
 #                       'documentwidth':'60em',

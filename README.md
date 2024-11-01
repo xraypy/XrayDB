@@ -1,4 +1,3 @@
-
 [![DOI](https://zenodo.org/badge/205441660.svg)](https://zenodo.org/badge/latestdoi/205441660)
 
 
@@ -13,12 +12,20 @@ computer programming languages and environments.
 
 The data and code here are placed in the Public Domain.
 
-## Web interface 
+## Web interface
 
-A web interface using XrayDB to display X-ray properties of the elements can be found at 
-https://millenia.cars.aps.anl.gov/xraydb/ and https://xraydb.xrayabsorption.org/
+Web interfaces using XrayDB to display X-ray properties of the elements can be
+found at
 
-The code for this web interface is at https://github.com/xraypy/xrayweb 
+-  https://seescience.org/xraydb/
+-  https://xraydb.xrayabsorption.org/
+
+The code for this web interface is at https://github.com/xraypy/xrayweb
+
+## Periodic Tables
+
+Poster-sized Periodic Tables of X-ray energies built with XrayDB can be
+downloaded from https://xraypy.github.io/XrayDB/periodictable.html
 
 ## About X-ray DB
 

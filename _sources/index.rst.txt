@@ -7,7 +7,7 @@ X-ray DB: X-ray Reference Data in SQLite
 .. _FFAST webpage:       https://www.nist.gov/pml/data/ffast/index.cfm
 .. _PDF Version of this documentation:  https://xraypy.github.io/XrayDB/xraydb.pdf
 .. _XrayDB Web App (xrayabsorption.org):  https://xraydb.xrayabsorption.org/
-.. _XrayDB Web App (CARS, U Chicago):  https://millenia.cars.aps.anl.gov/xraydb
+.. _XrayDB Web App (seescience.org):  https://seescience.org/xraydb
 
 XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, ``xraydb.sqlite``.  This file
@@ -35,13 +35,15 @@ for elements between Z=93 and Z=98.
 
 Some useful resources using this library include:
 
-   * `XrayDB Web App (xrayabsorption.org)`_ and `XrayDB Web App (CARS, U
-     Chicago)`_ gives an interactive web applications to browse the data in
-     this database and make plots of X-ray attenuation, scattering factors,
-     mirror reflectivity, and more.  Data tables and python code to generate
-     that data are available for many of the calculations.
+    +-----------------------------------------+------------------------------------------------+
+    | `XrayDB Web App (seescience.org)`_      | Web Application for calculations with  XrayDB  |
+    +-----------------------------------------+------------------------------------------------+
+    | `XrayDB Web App (xrayabsorption.org)`_  | Web Application for calculations with  XrayDB  |
+    +-----------------------------------------+------------------------------------------------+
+    | :ref:`periodic_tables`                  |  Printable  Poster-sized Periodic Tables       |
+    +-----------------------------------------+------------------------------------------------+
 
-   * :ref:`periodic_tables` for printable Poster-sized Periodic tables of X-ray energies.
+
 
 The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and

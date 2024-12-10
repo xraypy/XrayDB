@@ -8,7 +8,7 @@ X-ray DB: X-ray Reference Data in SQLite
 .. _PDF Version of this documentation:  https://xraypy.github.io/XrayDB/xraydb.pdf
 .. _XrayDB Web App (xrayabsorption.org):  https://xraydb.xrayabsorption.org/
 .. _XrayDB Web App (seescience.org):  https://xraydb.seescience.org/
-.. _XrayDB Web App (CARSS/APS):       https://millenia.cars.aps.anl.gov/xraydb
+.. _XrayDB Web App (CARS/APS):       https://millenia.cars.aps.anl.gov/xraydb
 
 XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, ``xraydb.sqlite``.  This file

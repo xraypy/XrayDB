@@ -15,9 +15,11 @@ fluxes = namedtuple('IonChamberFluxes', ('incident', 'transmitted',
 
 DarwinWidth = namedtuple('DarwinWidth', ('theta', 'theta_offset',
                                          'theta_width', 'theta_fwhm',
+                                         'rocking_theta_fwhm',
                                          'energy_width', 'energy_fwhm',
+                                         'rocking_energy_fwhm',
                                          'zeta', 'dtheta', 'denergy',
-                                         'intensity'))
+                                         'intensity', 'rocking_curve'))
 
 TransmissionSample = namedtuple('TransmissionSample', ('energy_eV',
                                                        'absorp_total',
@@ -974,72 +976,84 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
 
 def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                  polarization='s', ignore_f2=False, ignore_f1=False, m=1):
-
     """darwin width for a crystal reflection and energy
 
     Args:
-      energy (float):    X-ray energy in eV
-      crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
-      hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
-      a (float or None): lattice constant [None - use built-in value]
-      polarization ('s','p', 'u'): mono orientation relative to X-ray polarization ['s']
-      ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
-      ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
-      m (int):           order of reflection    [1]
+    energy (float):    X-ray energy in eV
+    crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
+    hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
+    a (float or None): lattice constant [None - use built-in value]
+    polarization ('s','p', 'u'): mono orientation relative to X-ray polarization ['s']
+    ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
+    ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
+    m (int):           order of reflection    [1]
 
     Returns:
 
-      A named tuple 'DarwinWidth' with the following fields
+    A named tuple 'DarwinWidth' with the following fields
 
-        `theta`:        float, nominal Bragg angle, in rad,
+    `theta`:        float, nominal Bragg angle, in rad,
 
-        `theta_offset`: float, angular offset from Bragg angle, in rad,
+    `theta_offset`: float, angular offset from Bragg angle, in rad,
 
-        `theta_width`:  float, estimated angular Darwin width, in rad,
+    `theta_width`:  float, estimated angular Darwin width, in rad,
 
-        `theta_fwhm`:   float, estimated FWHM of angular intensity, in rad,
+    `theta_fwhm`:   float, estimated FWHM of angular intensity, in rad,
 
-        `energy_width`: float, estimated angular Darwin width, in rad,
+    `rocking_theta_fwhme`:  float, estimated FWHM of a rocking curve, in rad,
 
-        `energy_fwhm`:  float, estimated FWHM of energy intensity, in eV,
+    `energy_width`: float, estimated angular Darwin width, in rad,
 
-        `zeta`:         nd-array of Zeta parameter (delta_Lambda / Lambda),
+    `energy_fwhm`:  float, estimated FWHM of energy intensity, in eV,
 
-        `dtheta`:       nd-array of angles away from Bragg angle, theta in rad,
+    `rocking_energy_fwhme`:  float, estimated FWHM of a rocking curve, in eV,
 
-        `denergy`:      nd-array of energies away from Bragg energy, in eV,
+    `zeta`:         nd-array of Zeta parameter (delta_Lambda / Lambda),
 
-        `intensity`:    nd-array of reflected intensity
+    `dtheta`:       nd-array of angles away from Bragg angle, theta in rad,
+
+    `denergy`:      nd-array of energies away from Bragg energy, in eV,
+
+    `intensity`:    nd-array of reflected intensity,
+
+    `rocking_curve`:  nd-array of rocking curve of 2 crystals,
 
     Notes:
 
-     1. This follows the calculation from section 6.4 of
-        Elements of Modern X-ray Physics, 2nd Edition
-        J Als-Nielsen, and D. McMorrow.
+    1. This follows the calculation from section 6.4 of
+    Elements of Modern X-ray Physics, 2nd Edition
+    J Als-Nielsen, and D. McMorrow.
 
-     2. Only diamond structures (Si, Ge, diamond) are currently supported.
-        Default values of lattice constant `a` are in Angstroms: 5.4309 for Si,
-        5.6578, for 'Ge', and 3.567 for 'C'.
+    2. Only diamond structures (Si, Ge, diamond) are currently supported.
+    Default values of lattice constant `a` are in Angstroms: 5.4309 for Si,
+    5.6578, for 'Ge', and 3.567 for 'C'.
 
-     3. The `theta_width` and `energy_width` values will closely match the
-        width of the intensity profile that would = 1 when ignoring the
-        effect of absorption.  These are the values commonly reported as
-        'Darwin Width'.  The value reported for `theta_fwhm' and
-        `energy_fwhm` are larger than this by sqrt(9/8) ~= 1.06.
+    3. The `theta_width` and `energy_width` values will closely match the
+    width of the intensity profile that would = 1 when ignoring the
+    effect of absorption.  These are the values commonly reported as
+    'Darwin Width'.  The value reported for `theta_fwhm' and
+    `energy_fwhm` are larger than this by sqrt(9/8) ~= 1.06.
 
-     4. Polarization can be 's', 'p', 'u',  or None. 's' means vertically
-        deflecting crystal and a horizontally-polarized source, as for most
-        synchrotron beamlines. 'p' is for a horizontally-deflecting crystal.
-        'u' or None is for unpolarized light, as for most fluorescence/emission.
+    4. Polarization can be 's', 'p', 'u',  or None. 's' means vertically
+    deflecting crystal and a horizontally-polarized source, as for most
+    synchrotron beamlines. 'p' is for a horizontally-deflecting crystal.
+    'u' or None is for unpolarized light, as for most fluorescence/emission.
+
+    5. The `rocking_curve` will be the convolution of the intensity
+    with itself, to simulate an angular scan of one crystal with
+    respect to the other, as is often done with double-crystal
+    monochromators. `rocking_theta_fwhm` and `rocking_energy_fwhm`
+    will be the FWHM of this curve in angle and energy, and will
+    typiccally be ~1.5x the Darwin widths in `theta_width` and
+    `energy_width`, respectively.
 
     Examples:
-        >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
-        >>> dw.theta_width, dw.energy_width
-        (2.8593683930207114e-05, 1.4177346002236872)
-
+    >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
+    >>> dw.theta_width, dw.energy_width
+    (2.695922108316184e-05, 1.3366689033249)
     """
-    lattice_constants = {'Si': 5.4309, 'Ge': 5.6578, 'C': 3.567}
 
+    lattice_constants = {'Si': 5.4309, 'Ge': 5.6578, 'C': 3.567}
     h_, k_, l_ = hkl
     hklsum = (h_ + k_ + l_)
     if hklsum % 4 == 0 and (h_ % 2 == 0 and k_ % 2 == 0 and l_ % 2 == 0):
@@ -1056,8 +1070,12 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     if lambd > 2*dspace:
         return DarwinWidth(theta=np.nan, theta_offset=np.nan,
                            theta_width=np.nan, theta_fwhm=np.nan,
+                           rocking_theta_fwhm=np.nan,
                            energy_width=np.nan, energy_fwhm=np.nan,
-                           zeta=[], dtheta=[], denergy=[], intensity=[])
+                           rocking_energy_fwhm=np.nan,
+                           zeta=[], dtheta=[], denergy=[], intensity=[],
+                           rocking_curve=[])
+
 
     theta  = np.arcsin(lambd/(2*dspace))
     q  = 0.5 / dspace
@@ -1078,21 +1096,22 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     g  = gscale * eqr * (f0(crystal, q)[0] + f1 - 1j*f2)
 
     total = abs(2*g/(m*np.pi))
-    fwhm  = total * 3/(2*np.sqrt(2))  # where do A-N&M get this factor?
+
+    # this scale factor from A-N&M is somewhat mysterious...
+    fwhm  = total * 3/(2*np.sqrt(2))
 
     zeta_offset = g0.real/np.pi
     theta_offset = np.tan(theta)*zeta_offset
 
     # as a check, the following formula from L Berman (and X0h doc)
     # will give identical results as theta_width. [sin(2x)= 2sin(x)*cos(x)]
-    # dw_lb = 2*R0*lambd**2 * eqr*abs(f0(crystal, q)[0] + f1 - 1j*f2)/(m*np.pi*a**3* np.sin(2*theta))
+    #   f_ = f0(crystal, q)[0] + f1 - 1j*f2
+    #   dw_berman = (2*R0*lambd**2 * eqr*abs(f_)/(m*np.pi*a**3* np.sin(2*theta))
 
-    #  hueristic zeta range and step sizes for crystals:
-    sz =  zeta_offset
+    # hueristic zeta range and step sizes for crystals:
+    # note: it is important that zeta be centered at zeta_offset
+    zeta = zeta_offset * (1 + np.arange(-4, 4, total/(150*zeta_offset)))
 
-    zeta = np.concatenate((np.arange(-1.5*sz,    0, 0.05*total),
-                           np.arange(0,       2*sz, 0.01*total),
-                           np.arange(2*sz,  3.5*sz, 0.05*total)))
     xc = (m*np.pi*zeta - g0)/g
     _p = np.where(xc.real > 1)[0]
     _n = np.where(xc.real < -1)[0]
@@ -1101,16 +1120,26 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     r[_p] = (xc - np.sqrt(xc**2 -1))[_p]
     r[_n] = (xc + np.sqrt(xc**2 -1))[_n]
 
+    intensity = abs(r*r.conjugate())
+    denergy = -zeta*energy
+    dtheta = zeta*np.tan(theta)
+    rocking_curve = np.convolve(intensity, intensity, 'same')/intensity.sum()
+    rbig = np.where(rocking_curve>=rocking_curve.max()/2.0)[0]
+    re_fwhm = np.ptp(denergy[rbig])
+    rt_fwhm = np.ptp(dtheta[rbig])
     return DarwinWidth(theta=theta,
                        theta_offset=theta_offset,
                        theta_width=total*np.tan(theta),
                        theta_fwhm=fwhm*np.tan(theta),
+                       rocking_theta_fwhm=rt_fwhm,
                        energy_width=total*energy,
                        energy_fwhm=fwhm*energy,
+                       rocking_energy_fwhm=re_fwhm,
                        zeta=zeta,
-                       dtheta=zeta*np.tan(theta),
-                       denergy=-zeta*energy,
-                       intensity=abs(r*r.conjugate()))
+                       dtheta=dtheta,
+                       denergy=denergy,
+                       intensity=intensity,
+                       rocking_curve=rocking_curve)
 
 
 def transmission_sample(sample, energy, absorp_total=2.6, area=1,

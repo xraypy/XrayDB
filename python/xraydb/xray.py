@@ -1049,8 +1049,8 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     Examples:
     >>> dw = darwin_width(10000, crystal='Si', hkl=(1, 1, 1))
-    >>> dw.theta_width, dw.energy_width
-    (2.695922108316184e-05, 1.3366689033249)
+    >>> print(dw.theta_width, dw.energy_width)
+    2.695922108316184e-05 1.336668903324966
     """
 
     lattice_constants = {'Si': 5.4309, 'Ge': 5.6578, 'C': 3.567}
@@ -1110,7 +1110,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     # hueristic zeta range and step sizes for crystals:
     # note: it is important that zeta be centered at zeta_offset
-    zeta = zeta_offset * (1 + np.arange(-4, 4, total/(150*zeta_offset)))
+    zeta = np.arange(-2.5*zeta_offset, 4.5*zeta_offset, 0.01*total)
 
     xc = (m*np.pi*zeta - g0)/g
     _p = np.where(xc.real > 1)[0]

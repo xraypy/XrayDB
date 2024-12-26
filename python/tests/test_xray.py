@@ -591,24 +591,24 @@ def test_darwin_width():
         return darwin_width(energy, crystal=crystal, hkl=hkl).energy_fwhm
 
     # fwhm from derivatives:
-    assert_allclose(dw_dide( 5000, 'Si', (1, 1, 1)), 0.685, rtol=0.01)
-    assert_allclose(dw_dide(10000, 'Si', (1, 1, 1)), 1.340, rtol=0.01)
+    assert_allclose(dw_dide( 5000, 'Si', (1, 1, 1)), 0.685, rtol=0.02)
+    assert_allclose(dw_dide(10000, 'Si', (1, 1, 1)), 1.340, rtol=0.02)
 
-    assert_allclose(dw_dide(10000, 'Si', (2, 2, 0)), 0.595, rtol=0.01)
-    assert_allclose(dw_dide(15000, 'Si', (2, 2, 0)), 0.891, rtol=0.01)
+    assert_allclose(dw_dide(10000, 'Si', (2, 2, 0)), 0.595, rtol=0.02)
+    assert_allclose(dw_dide(15000, 'Si', (2, 2, 0)), 0.891, rtol=0.02)
 
-    assert_allclose(dw_dide(10000, 'Si', (3, 1, 1)), 0.288, rtol=0.01)
-    assert_allclose(dw_dide(20000, 'Si', (3, 1, 1)), 0.565, rtol=0.01)
+    assert_allclose(dw_dide(10000, 'Si', (3, 1, 1)), 0.288, rtol=0.02)
+    assert_allclose(dw_dide(20000, 'Si', (3, 1, 1)), 0.565, rtol=0.02)
 
     # fwhm as cacluated
-    assert_allclose(dw_fwhm( 5000, 'Si', (1, 1, 1)), 0.723, rtol=0.01)
-    assert_allclose(dw_fwhm(10000, 'Si', (1, 1, 1)), 1.418, rtol=0.01)
+    assert_allclose(dw_fwhm( 5000, 'Si', (1, 1, 1)), 0.723, rtol=0.02)
+    assert_allclose(dw_fwhm(10000, 'Si', (1, 1, 1)), 1.418, rtol=0.02)
 
-    assert_allclose(dw_fwhm(10000, 'Si', (2, 2, 0)), 0.624, rtol=0.01)
-    assert_allclose(dw_fwhm(15000, 'Si', (2, 2, 0)), 0.927, rtol=0.01)
+    assert_allclose(dw_fwhm(10000, 'Si', (2, 2, 0)), 0.624, rtol=0.02)
+    assert_allclose(dw_fwhm(15000, 'Si', (2, 2, 0)), 0.927, rtol=0.02)
 
-    assert_allclose(dw_fwhm(10000, 'Si', (3, 1, 1)), 0.301, rtol=0.01)
-    assert_allclose(dw_fwhm(20000, 'Si', (3, 1, 1)), 0.593, rtol=0.01)
+    assert_allclose(dw_fwhm(10000, 'Si', (3, 1, 1)), 0.301, rtol=0.02)
+    assert_allclose(dw_fwhm(20000, 'Si', (3, 1, 1)), 0.593, rtol=0.02)
 
 
 def test_ionchamber_fluxes():

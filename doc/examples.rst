@@ -546,18 +546,28 @@ following fields:
    * `theta_offset` - the offset from the nominal Bragg angle, in rad.
    * `theta_width` - estimated angular Darwin width, in rad
    * `theta_fwhm` - estimated FWHM of the angular reflectivity curve, in rad
+   * `rocking_theta_fwhm` - estimated FWHM of a rocking curve, in rad
    * `energy_width` - estimated energy Darwin width, in eV
    * `energy_fwhm` - estimated FWHM energy reflectivity curve, in eV
+   * `rocking_energy_fwhm` - estimated FWHM of a rocking curve, in eV
    * `zeta` -  nd-array of :math:`\zeta = \Delta\lambda/\lambda`.
    * `dtheta`  - nd-array of angles around from Bragg angle, in rad
    * `denergy` -  nd-array of energies around from Bragg energy, in eV
    * `intensity` - nd-array of reflected intensity at `zeta` values.
+   * `rocking_curve` - nd-array of rocking curve of 2 crystals
 
 Here, `dtheta` will be given by :math:`\Delta\theta = \zeta \tan(\theta)`,
-and `denergy` will be given by :math:`\Delta{E} = \zeta E`.  All of the
-nd-arrays will be the same size, so that plots of reflectivity can be
-readily made.  An example usage, printing the predicted energy and angular
-widths and plotting the intensity profile or "rocking curve" is
+and `denergy` will be given by :math:`\Delta{E} = \zeta E`.  Note that
+the `rocking_` quantities are estimated as the convolution of the intensity
+with itself, to simulate an angular scan of one crystal with respect
+to the other, as is often done with double-crystal monochromators.
+`rocking_theta_fwhm` and `rocking_energy_fwhm` will be the FWHM of
+this curve in angle and energy, and will typiccally be ~1.5x the
+Darwin widths in `theta_width` and `energy_width`, respectively.
+
+All of the nd-arrays will be the same size, so that plots of
+reflectivity can be readily made.  An example usage, printing the
+predicted energy and angular widths is
 
 .. literalinclude:: ../python/examples/darwin_widths.py
 
@@ -581,7 +591,6 @@ and generates a plot of
     double-crystal monochromator.  The intensity and angular offset of the
     third harmonic is also shown.
 
-
 Note that the values reported for `theta_fwhm` and `energy_fwhm` will be
 about 6% larger than the reported values for `theta_width` and
 `energy_width`.  The `width` values closely follow the region of the curve
@@ -589,3 +598,23 @@ where the reflectivity ignoring absorption would be 1 - the flat top of the
 curve.  Since a double-crystal monochromator will suppress the tails of the
 reflectivity, this smaller value is the one typically reported as "the
 Darwin width", though some sources will report this smaller value as "FWHM".
+
+
+An example of the intensity of a single reflection and the "rocking
+curve"  of two crystals is given in
+
+.. literalinclude:: ../python/examples/darwin_rocking.py
+
+which generates a plot of
+
+.. _fig_rocking:
+
+.. figure::  _images/darwin_rocking.png
+    :target: _images/darwin_rocking.png
+    :width: 75%
+    :align: center
+
+    X-ray monochromator rocking curve around the Si(111)
+    reflection. Here, the blue curve shows the intensity of a single
+    reflection, as above, while the orange curve shows the intensity
+    from rocking one crystal through the reflection of the other.

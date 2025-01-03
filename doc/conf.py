@@ -25,7 +25,7 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.mathjax',
 todo_include_todos = True
 
 templates_path = ['_templates']
-source_suffix = '.rst'
+source_suffix = {'.rst': 'restructuredtext'}
 source_encoding = 'utf-8'
 master_doc = 'index'
 today_fmt = '%Y-%B-%d'

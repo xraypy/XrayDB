@@ -974,6 +974,68 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
                   photo=flux_photo, incoherent=flux_incoh, coherent=flux_coh)
 
 
+
+def dynamical_theta_offset(energy, crystal='Si', hkl=(1, 1, 1), a=None,
+                           m=1, polarization='s'):
+    """angular offset from Bragg diffraction for a perfect signle crystal
+
+    Args:
+    energy (float):    X-ray energy in eV
+    crystal (string):  name of crystal (one of 'Si', 'Ge', or 'C') ['Si']
+    hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
+    a (float or None): lattice constant [None - use built-in value]
+    polarization ('s','p', 'u'): mono orientation relative to X-ray polarization ['s']
+    m (int):           order of reflection    [1]
+
+    Returns:
+    theta_offset,  in radians
+
+    Notes:
+
+    1. This follows the calculation of darwin_width, but is faster
+
+    2. Only diamond structures (Si, Ge, diamond) are currently supported.
+    Default values of lattice constant `a` are in Angstroms: 5.4309 for Si,
+    5.6578, for 'Ge', and 3.567 for 'C'.
+
+    3. Polarization can be 's', 'p', 'u',  or None. 's' means vertically
+    deflecting crystal and a horizontally-polarized source, as for most
+    synchrotron beamlines. 'p' is for a horizontally-deflecting crystal.
+    'u' or None is for unpolarized light, as for most fluorescence/emission.
+
+    Examples:
+    >>> dynamical_theta_offset(10000, crystal='Si', hkl=(1, 1, 1)))
+    0.000025
+    """
+    lattice_constants = {'Si': 5.4309, 'Ge': 5.6578, 'C': 3.567}
+    h_, k_, l_ = hkl
+    hklsum = (h_ + k_ + l_)
+    if hklsum % 4 == 0 and (h_ % 2 == 0 and k_ % 2 == 0 and l_ % 2 == 0):
+        eqr = 8
+    elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
+        eqr =4*np.sqrt(2)
+    else:
+        raise ValueError("hkl must sum to 4 or be all odd")
+
+    if a is None:
+        a = lattice_constants[crystal.title()]
+    dspace = a / np.sqrt(h_*h_ + k_*k_ + l_*l_)
+    lambd  = PLANCK_HC / energy
+    if lambd > 2*dspace:
+        return 0.0
+
+    theta  = np.arcsin(lambd/(2*dspace))
+    f1 = f1_chantler(crystal, energy)
+
+    gscale = 2 * (dspace)**2 * R0 / (m*a**3)
+    if polarization is None or polarization.startswith('u'): # unpolarized
+        gscale *= (1 + abs(np.cos(2*theta)))/2.0
+    elif polarization.startswith('p'):
+        gscale *= abs(np.cos(2*theta))
+    print(theta*180/np.pi)
+    return 8*gscale*(f0(crystal, 0)[0] + f1)*np.tan(theta)/np.pi
+
+
 def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                  polarization='s', ignore_f2=False, ignore_f1=False, m=1):
     """darwin width for a crystal reflection and energy
@@ -1006,7 +1068,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     `energy_fwhm`:  float, estimated FWHM of energy intensity, in eV,
 
-    `rocking_energy_fwhme`:  float, estimated FWHM of a rocking curve, in eV,
+    `rocking_energy_fwhm`:  float, estimated FWHM of a rocking curve, in eV,
 
     `zeta`:         nd-array of Zeta parameter (delta_Lambda / Lambda),
 

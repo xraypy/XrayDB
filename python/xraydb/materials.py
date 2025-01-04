@@ -1,5 +1,8 @@
 """
 Materials dictionary
+
+Copyright 2025  Matthew Newville, The University of Chicago, newville@cars.uchicago.edu
+using the MIT license
 """
 import os
 from collections import namedtuple

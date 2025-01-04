@@ -18,12 +18,15 @@ in the following folders and subfolders:
 
 are all placed in the "Public Domain" using the CC0 1.0 dedication.
 
-The files in the folder 'python/xraydb' are copyrighted by the lead authors and
-copyrighted using an MIT License, which allows for distribution and re-use of
-the source code with the only restriction being to not remove the notice of
-copyright.  Each of these files will have an explicit notice of copyright and
-license for use.  For files that do not explicitly carry a notice copyrighted,
-no claim of copyright is made and the CC0 1.0 dedication applies.
+The files in the folder 'python' and 'python/xraydb' are copyrighted
+by the lead authors and copyrighted using an MIT License, which allows
+for distribution and re-use of the source code with the only
+restriction being to not remove the notice of copyright.  Each of
+these files will have an explicit notice of copyright and license for
+use.
+
+For files that do not explicitly carry a notice copyrighted, no claim
+of copyright is made and the CC0 1.0 dedication applies.
 
 The Creative Commons 1.0 Universal (CC0 1.0) Public Domain Dedication
 (https://creativecommons.org/publicdomain/zero/1.0/):

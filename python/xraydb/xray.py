@@ -1,5 +1,8 @@
 """
 calculations using XrayDB
+
+Copyright 2025  Matthew Newville, The University of Chicago, newville@cars.uchicago.edu
+using the MIT license
 """
 from collections import namedtuple
 import numpy as np

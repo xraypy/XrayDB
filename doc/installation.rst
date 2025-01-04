@@ -45,5 +45,19 @@ failures.
 Copyright, Licensing, and Re-distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The original sources of the data included here are mostly based on published
+works with the clear intent of providing data to the general public.  Some of
+the datasets here do not have clear statements of copyright or license, but
+have been freely available for many years. The work here is a compilation and
+reformatting of those datasets.
+
+To the extent possible, and unless otherwise stated, the database files, data
+sources, and documentation files here are placed in the public domain, using
+the Creative Commons 1.0 Universal (CC0 1.0) Public Domain Dedication below.
+
+As an important note, the Python code in the `xraydb` package is
+copyrighted and available under the terms of the MIT License.
+
+
 .. literalinclude:: ../LICENSE
   :language: none

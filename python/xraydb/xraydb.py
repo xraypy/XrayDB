@@ -4,6 +4,9 @@ SQLAlchemy wrapping of x-ray database for data from
      Elam et al, Chantler et al, Waasmaier and Kirfel
 
 Main Class for full Database:  xrayDB
+
+Copyright 2025  Matthew Newville, The University of Chicago, newville@cars.uchicago.edu
+using the MIT license
 """
 
 import os

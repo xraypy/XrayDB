@@ -1,23 +1,24 @@
 #!/usr/bin/env python
-#
-# Chemical Formula Parser:
-#
-#  returns dictionary of total atomic composition
-#  supports floats for complex stoichiometries
-#
-#    >>>> from xraydb import chemparse
-#    >>> chemparse('H2O')
-#    {'H': 2.0, 'O': 0}
-#    >>> chempars('Mn(SO4)2(H2O)7)')
-#    {'H': 14.0, 'S': 2.0, 'Mn': 1, 'O': 15.0}
-#    >>> chemparse('Zn1.e-5Fe3O4')
-#    {'Zn': 1e-05, 'Fe': 3.0, 'O': 4.0}
-#
-# based (heavily) on chemical formula parser from Tim Peters
-# modified (simplified to not compute molecular weights here,
-# extended to support floating point, made into Parser class)
-#   Matt Newville  Univ Chicago  Jan-2013
-#
+"""
+ Chemical Formula Parser:
+
+  returns dictionary of total atomic composition
+  supports floats for complex stoichiometries
+
+   >>>> from xraydb import chemparse
+   >>> chemparse('H2O')
+   {'H': 2.0, 'O': 0}
+   >>> chempars('Mn(SO4)2(H2O)7)')
+   {'H': 14.0, 'S': 2.0, 'Mn': 1, 'O': 15.0}
+   >>> chemparse('Zn1.e-5Fe3O4')
+   {'Zn': 1e-05, 'Fe': 3.0, 'O': 4.0}
+
+This is based heavily on chemical formula parser from Tim Peters,
+modified (simplified to not compute molecular weights here,
+and extended to support floating point, made into Parser class.
+  Matt Newville  Univ Chicago  Jan-2013
+
+"""
 
 from re import compile as re_compile
 class Element:

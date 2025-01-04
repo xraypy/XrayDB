@@ -12,7 +12,6 @@ from warnings import warn
 from collections import namedtuple
 import numpy as np
 from scipy.interpolate import UnivariateSpline
-from packaging.version import parse as version_parse
 
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker

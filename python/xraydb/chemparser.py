@@ -65,15 +65,16 @@ class ElementSequence:
             thing.add(totalweight, result)
 
 class Tokenizer:
-    def __init__(self, input):
-        self.input = input + "<EOS>"
+    def __init__(self, inp):
+        self.inp = inp + "<EOS>"
         self.i = 0
+        self.lasti = 0
         self.ttype = None
         self.tvalue = None
 
     def gettoken(self):
         self.lasti = self.i
-        m = LEXER(self.input, self.i)
+        m = LEXER(self.inp, self.i)
         if m is None:
             self.error("unrecognized element or number")
         self.i = m.end()
@@ -92,13 +93,14 @@ class Tokenizer:
 
     def error(self, msg):
         emsg = msg + ":\n"
-        emsg = emsg + self.input[:-5] + "\n"  # strip <EOS>
+        emsg = emsg + self.inp[:-5] + "\n"  # strip <EOS>
         emsg = emsg + " " * self.lasti + "^\n"
         raise ValueError(emsg)
 
-class ChemFormulaParser(object):
+class ChemFormulaParser:
     def __init__(self, formula=None):
         self.formula = formula
+        self.tok = None
 
     def parse(self, formula=None):
         if formula is None:

@@ -1,12 +1,14 @@
+"""
+Materials dictionary
+"""
 import os
-import numpy as np
 from collections import namedtuple
 import platformdirs
 
 from .chemparser import chemparse
 from .xray import mu_elam, atomic_mass
 
-_materials = None
+MATERIALS = None
 
 Material = namedtuple('Material', ('formula', 'density', 'name', 'categories'))
 
@@ -33,15 +35,15 @@ def get_user_materialsfile(create_folder=False):
 
 def _read_materials_db():
     """
-    return _materials dictionary, creating it if needed
+    return MATERIALS dictionary, creating it if needed
     """
-    global _materials
-    if _materials is None:
+    global MATERIALS
+    if MATERIALS is None:
         # initialize materials table
-        _materials = {}
+        MATERIALS = {}
 
         def read_materialsfile(fname):
-            with open(fname, 'r') as fh:
+            with open(fname, 'r', encoding='utf-8') as fh:
                 lines = fh.readlines()
             for line in lines:
                 line = line.strip()
@@ -53,7 +55,7 @@ def _read_materials_db():
                         density = float(words[1])
                         categories = [w.strip() for w in words[2].split(',')]
                         formula = words[3].replace(' ', '')
-                        _materials[name] = Material(formula, density, name, categories)
+                        MATERIALS[name] = Material(formula, density, name, categories)
 
         # first, read from standard list
         local_dir, _ = os.path.split(__file__)
@@ -65,7 +67,7 @@ def _read_materials_db():
         if os.path.exists(fname):
             read_materialsfile(fname)
 
-    return _materials
+    return MATERIALS
 
 def material_mu(name, energy, density=None, kind='total'):
     """X-ray attenuation length (in 1/cm) for a material by name or formula
@@ -89,14 +91,14 @@ def material_mu(name, energy, density=None, kind='total'):
         >>> material_mu('H2O', 10000.0)
         5.32986401658495
     """
-    global _materials
-    if _materials is None:
-        _materials = _read_materials_db()
+    global MATERIALS
+    if MATERIALS is None:
+        MATERIALS = _read_materials_db()
     formula = None
     _density  = None
-    mater = _materials.get(name.lower(), None)
+    mater = MATERIALS.get(name.lower(), None)
     if mater is None:
-        for key, val in _materials.items():
+        for val in MATERIALS.values():
             if name.lower() == val[0].lower(): # match formula
                 mater = val
                 break
@@ -144,10 +146,10 @@ def material_mu_components(name, energy, density=None, kind='total'):
         {'mass': 60.0843, 'density': 2.65, 'elements': ['Si', 'O'],
         'Si': (1, 28.0855, 33.87943243018506), 'O': (2.0, 15.9994, 5.952824815297084)}
      """
-    global _materials
-    if _materials is None:
-        _materials = _read_materials_db()
-    mater = _materials.get(name.lower(), None)
+    global MATERIALS
+    if MATERIALS is None:
+        MATERIALS = _read_materials_db()
+    mater = MATERIALS.get(name.lower(), None)
     if mater is None:
         formula = name
         if density is None:
@@ -206,15 +208,15 @@ def find_material(name):
        get_material()
 
     """
-    global _materials
-    if _materials is None:
-        _materials = _read_materials_db()
+    global MATERIALS
+    if MATERIALS is None:
+        MATERIALS = _read_materials_db()
 
-    mat =  _materials.get(name.lower(), None)
+    mat =  MATERIALS.get(name.lower(), None)
 
     if mat is not None:
         return mat
-    for mat in _materials.values():
+    for mat in MATERIALS.values():
         if mat.formula == name:
             return mat
     return None
@@ -246,22 +248,20 @@ def get_materials(force_read=False, categories=None):
         argon Ar 0.001784
         ...
 
-
     """
-    global _materials
+    global MATERIALS
 
-    if force_read or _materials is None:
-        _materials = _read_materials_db()
+    if force_read or MATERIALS is None:
+        MATERIALS = _read_materials_db()
     if categories is not None:
-        if not type(categories) is list:
+        if not isinstance(categories, list):
             categories = list([categories])
         filtered_materials = {
-            k: v for k,v in _materials.items() if
+            k: v for k,v in MATERIALS.items() if
             (set(v.categories) & set(categories))
         }
         return filtered_materials
-    else:
-        return _materials
+    return MATERIALS
 
 
 def add_material(name, formula, density, categories=None):
@@ -285,14 +285,14 @@ def add_material(name, formula, density, categories=None):
         >>> xraydb.add_material('becopper', 'Cu0.98e0.02', 8.3, categories=['metal'])
 
     """
-    global _materials
-    if _materials is None:
-        _materials = _read_materials_db()
+    global MATERIALS
+    if MATERIALS is None:
+        MATERIALS = _read_materials_db()
     formula = formula.replace(' ', '')
 
     if categories is None:
         categories = []
-    _materials[name.lower()] = Material(formula, float(density), name, categories)
+    MATERIALS[name.lower()] = Material(formula, float(density), name, categories)
 
     text = ['# user-specific database of materials',
             '# name  |  density |  categories | formula']
@@ -300,11 +300,11 @@ def add_material(name, formula, density, categories=None):
 
     fname = get_user_materialsfile(create_folder=True)
     if os.path.exists(fname):
-        with open(fname, 'r') as fh:
+        with open(fname, 'r', encoding='utf-8') as fh:
             text = [s[:-1] for s in fh.readlines()]
 
     # catstring = ', '.join(categories)
     text.append(f" {name:s} | {density:.6g} | {', '.join(categories):s} | {formula:s}")
     text.append('')
-    with open(fname, 'w') as fh:
+    with open(fname, 'w', encoding='utf-8') as fh:
         fh.write('\n'.join(text))

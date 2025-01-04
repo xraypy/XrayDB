@@ -1,8 +1,58 @@
 ##
-## Note: to build wheels for this project, use
-##
-##   python -m build -w
-##
 [build-system]
-requires = ["setuptools>=64"]
+requires = ["setuptools>=64", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "xraydb/version.py"
+version_scheme = "post-release"
+
+[tool.setuptools.packages.find]
+include = ["xraydb"]
+
+[tool.coverage.run]
+omit = ["tests/*"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=xraydb --cov-report html"
+
+[project]
+name = "xraydb"
+dynamic = ["version"]
+requires-python = ">= 3.9"
+description = "calculations with reference data for X-ray interactions with matter"
+readme = "README.rst"
+authors = [
+     {name = "Matthew Newville", email = "matt.newville@gmail.com"}
+]
+license = {file = "LICENSE"}
+keywords = ["X-ray",]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    ]
+
+dependencies = [
+    "numpy>=1.19",
+    "scipy>=1.6",
+    "sqlalchemy>=2.0.1",
+    "platformdirs",
+]
+
+[project.urls]
+Homepage = " https://github.com/xraypy/XrayDB"
+Documentation = "https://xraydb.github.io/XrayDB/"
+Tracker = "https://github.com/xraypy/XrayDB/issues"
+
+[project.optional-dependencies]
+dev = ["build", "twine"]
+doc = ["Sphinx"]
+test = ["pytest", "pytest-cov", "coverage"]
+all = ["xraydb[dev, doc, test]"]

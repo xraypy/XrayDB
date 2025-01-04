@@ -3,8 +3,10 @@
 requires = ["setuptools>=64", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
+# note: this is needed, since the SCM root is '..'
 [tool.setuptools_scm]
-write_to = "xraydb/version.py"
+root = '..'
+write_to = "python/xraydb/version.py"
 version_scheme = "post-release"
 
 [tool.setuptools.packages.find]
@@ -26,7 +28,7 @@ authors = [
      {name = "Matthew Newville", email = "matt.newville@gmail.com"}
 ]
 license = {file = "LICENSE"}
-keywords = ["X-ray",]
+keywords = ["X-ray", "Physics"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",

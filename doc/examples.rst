@@ -562,7 +562,7 @@ the `rocking_` quantities are estimated as the convolution of the intensity
 with itself, to simulate an angular scan of one crystal with respect
 to the other, as is often done with double-crystal monochromators.
 `rocking_theta_fwhm` and `rocking_energy_fwhm` will be the FWHM of
-this curve in angle and energy, and will typiccally be ~1.5x the
+this curve in angle and energy, and will typically be ~1.5x the
 Darwin widths in `theta_width` and `energy_width`, respectively.
 
 All of the nd-arrays will be the same size, so that plots of

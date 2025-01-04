@@ -974,7 +974,6 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
                   photo=flux_photo, incoherent=flux_incoh, coherent=flux_coh)
 
 
-
 def dynamical_theta_offset(energy, crystal='Si', hkl=(1, 1, 1), a=None,
                            m=1, polarization='s'):
     """angular offset from Bragg diffraction for a perfect signle crystal
@@ -1032,7 +1031,6 @@ def dynamical_theta_offset(energy, crystal='Si', hkl=(1, 1, 1), a=None,
         gscale *= (1 + abs(np.cos(2*theta)))/2.0
     elif polarization.startswith('p'):
         gscale *= abs(np.cos(2*theta))
-    print(theta*180/np.pi)
     return 8*gscale*(f0(crystal, 0)[0] + f1)*np.tan(theta)/np.pi
 
 

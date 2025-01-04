@@ -18,6 +18,7 @@ from xraydb import (chemparse, material_mu, material_mu_components,
 
 
 from xraydb.xray import (chantler_data, formula_to_mass_fracs,
+                         dynamical_theta_offset,
                          _validate_mass_fracs, mass_fracs_to_molar_fracs,
                          transmission_sample)
 
@@ -609,6 +610,12 @@ def test_darwin_width():
 
     assert_allclose(dw_fwhm(10000, 'Si', (3, 1, 1)), 0.301, rtol=0.02)
     assert_allclose(dw_fwhm(20000, 'Si', (3, 1, 1)), 0.593, rtol=0.02)
+
+def test_dynamical_offset():
+    t_off = dynamical_theta_offset(10000, 'Si', hkl=(1,1,1))*1e6
+
+    assert t_off > 24
+    assert t_off < 26
 
 
 def test_ionchamber_fluxes():

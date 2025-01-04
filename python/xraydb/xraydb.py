@@ -22,10 +22,11 @@ from .version import __version__
 XrayEdge = namedtuple('XrayEdge', ('energy', 'fyield', 'jump_ratio'))
 XrayLine = namedtuple('XrayLine', ('energy', 'intensity', 'initial_level',
                                    'final_level'))
-ElementData = namedtuple('ElementData', ('Z', 'symbol', 'name', 'mass', 'density'))
-ComptonEnergies = namedtuple('ComptonEnergies', ('incident', 'xray_90deg', 'xray_mean', 'electron_mean'))
+ElementData = namedtuple('ElementData',
+                          ('Z', 'symbol', 'name', 'mass', 'density'))
 
-
+ComptonEnergies = namedtuple('ComptonEnergies',
+                   ('incident', 'xray_90deg', 'xray_mean', 'electron_mean'))
 
 def make_engine(dbname):
     "create engine for sqlite connection, perhaps trying a few sqlachemy variants"
@@ -78,10 +79,10 @@ class XrayDB():
             parent, _ = os.path.split(__file__)
             dbname = os.path.join(parent, dbname)
             if not os.path.exists(dbname):
-                raise IOError("Database '%s' not found!" % dbname)
+                raise IOError(f"Database '{dbname}' not found!")
 
         if not isxrayDB(dbname):
-            raise ValueError("'%s' is not a valid X-ray Database file!" % dbname)
+            raise ValueError(f"'{dbname}' is not a valid X-ray Database file!")
         self._cache = {}
         self.dbname = os.path.abspath(dbname)
         self.engine = make_engine(dbname)
@@ -161,14 +162,12 @@ class XrayDB():
             rows = rows[-1:]
         if long or with_history:
             for row in rows:
-                out.append("XrayDB Version: %s [%s] '%s'" % (row.tag,
-                                                             row.date,
-                                                             row.notes))
-            out.append("Python Version: %s" % __version__)
+                out.append(f"XrayDB Version: {row.tag} [row.date] '{row.notes}'")
+            out.append(f"Python Version: {__version__}")
             out = "\n".join(out)
         else:
-            out = "XrayDB Version: %s, Python Version: %s" % (rows[0].tag,
-                                                              __version__)
+            out = f"XrayDB Version: {rows[0].tag}, Python Version: {__version__}"
+
         return out
 
     def f0_ions(self, element=None):
@@ -409,7 +408,7 @@ class XrayDB():
             elif element.lower() in self.__atomic_names:
                 row = [r for r in rows if r.name == element.lower()][0]
             else:
-                raise ValueError("unknown element '%s'" % repr(element))
+                raise ValueError(f"unknown element '{repr(element)}'")
         return ElementData(int(row.atomic_number),
                            row.element.title(), row.name,
                            row.molar_mass, row.density)
@@ -699,7 +698,7 @@ class XrayDB():
         elem = self.symbol(element)
         kind = kind.lower()
         if kind not in ('coh', 'incoh', 'photo'):
-            raise ValueError('unknown cross section kind=%s' % kind)
+            raise ValueError(f'unknown cross section kind={kind}')
 
         tablename = 'photoabsorption' if kind == 'photo' else 'scattering'
 
@@ -757,7 +756,7 @@ class XrayDB():
         elif kind.lower().startswith('incoh'):
             xsec = calc(element, energies, kind='incoh')
         else:
-            raise ValueError('unknown cross section kind=%s' % kind)
+            raise ValueError(f'unknown cross section kind={kind}')
         return xsec
 
     def coherent_cross_section_elam(self, element, energies):
@@ -808,5 +807,5 @@ class XrayDB():
         itab = self.tables['ionization_potentials']
         out = self.query(itab).filter(itab.c.gas == gas).all()
         if len(out) != 1:
-            raise ValueError('unknown gas for ionization potential: %s' % gas)
+            raise ValueError(f'unknown gas for ionization potential: {gas}')
         return float(out[0].potential)

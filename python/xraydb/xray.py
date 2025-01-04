@@ -1,14 +1,16 @@
-import sys
+"""
+calculations using XrayDB
+"""
 from collections import namedtuple
 import numpy as np
 
-from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC, E_MASS,
+from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
                     QCHARGE, SI_PREFIXES, index_nearest)
-
-R0 = 1.e8 * R_ELECTRON_CM
 
 from .xraydb import XrayDB,  XrayLine
 from .chemparser import chemparse
+
+R0 = 1.e8 * R_ELECTRON_CM
 
 fluxes = namedtuple('IonChamberFluxes', ('incident', 'transmitted',
                                          'photo', 'incoherent', 'coherent'))
@@ -532,8 +534,8 @@ def xray_line(element, line):
                 if lfinal is None:
                     lfinal = val[3][0]
         return XrayLine(value/scale, scale, linit, lfinal)
-    else:
-        return lines.get(line.title(), None)
+
+    return lines.get(line.title(), None)
 
 
 def fluor_yield(element, edge, line, energy):
@@ -564,7 +566,7 @@ def fluor_yield(element, edge, line, energy):
          etc) and probabilities for each of these.
 
     """
-    e0, fyield, jump = xray_edge(element, edge)
+    e0, fyield, _ = xray_edge(element, edge)
     trans  = xray_lines(element, initial_level=edge)
 
     lines = []
@@ -665,7 +667,7 @@ def ionization_potential(gas):
         return 32.0
 
 
-def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
+def guess_edge(energy, edges=('K', 'L3', 'L2', 'L1', 'M5')):
     """guess an element and edge based on energy (in eV)
 
     Args:
@@ -676,7 +678,7 @@ def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
         a tuple of (atomic symbol, edge) for best guess
 
     Notes:
-        by default, the list of edges is ['K', 'L3', 'L2', 'L1', 'M5']
+        by default, the list of edges is ('K', 'L3', 'L2', 'L1', 'M5')
 
     """
     xdb = get_xraydb()
@@ -692,7 +694,7 @@ def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
             maxz = 0
             xquery = xdb.tables['xray_levels'].select()
             for row in xdb.session.execute(xquery).fetchall():
-                ir, elem, edgename, en, eyield, xjump = row
+                ir, elem, edgename, en, eyield, _ = row
                 iz = xdb.atomic_number(elem)
                 maxz = max(iz, maxz)
                 if ename == edgename.lower():
@@ -710,8 +712,7 @@ def guess_edge(energy, edges=['K', 'L3', 'L2', 'L1', 'M5']):
             diff = 0.25*diff
         elif edge in ('L1', 'M5'): # penalize L1 and M5 edges
             diff = 2.0*diff
-        if diff < min_diff:
-            min_diff = diff
+        min_diff = min(diff, min_diff)
         ret.append((edge, iz, diff))
 
     for edge, iz, diff in ret:
@@ -917,7 +918,6 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
     from .materials import material_mu
 
     xdb = get_xraydb()
-    fin = fout = fphoto = 0.0
 
     units = sensitivity_units.replace('Volts', 'V').replace('Volt', 'V')
     units = units.replace('Amperes', 'A').replace('Ampere', 'A')
@@ -1009,11 +1009,11 @@ def dynamical_theta_offset(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     """
     lattice_constants = {'Si': 5.4309, 'Ge': 5.6578, 'C': 3.567}
     h_, k_, l_ = hkl
-    hklsum = (h_ + k_ + l_)
+    hklsum = h_ + k_ + l_
     if hklsum % 4 == 0 and (h_ % 2 == 0 and k_ % 2 == 0 and l_ % 2 == 0):
-        eqr = 8
+        pass
     elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd
-        eqr =4*np.sqrt(2)
+        pass
     else:
         raise ValueError("hkl must sum to 4 or be all odd")
 
@@ -1117,7 +1117,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     lattice_constants = {'Si': 5.4309, 'Ge': 5.6578, 'C': 3.567}
     h_, k_, l_ = hkl
-    hklsum = (h_ + k_ + l_)
+    hklsum = h_ + k_ + l_
     if hklsum % 4 == 0 and (h_ % 2 == 0 and k_ % 2 == 0 and l_ % 2 == 0):
         eqr = 8
     elif (h_ % 2 == 1 and k_ % 2 == 1 and l_ % 2 == 1): # all odd

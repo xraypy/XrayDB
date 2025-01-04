@@ -1062,7 +1062,7 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
 
     `theta_fwhm`:   float, estimated FWHM of angular intensity, in rad,
 
-    `rocking_theta_fwhme`:  float, estimated FWHM of a rocking curve, in rad,
+    `rocking_theta_fwhm`:  float, estimated FWHM of a rocking curve, in rad,
 
     `energy_width`: float, estimated angular Darwin width, in rad,
 

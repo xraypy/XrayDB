@@ -48,6 +48,14 @@ def test_get_materials():
         else:
             assert (name not in known_materials)
 
+def test_get_filtered_materials():
+    sol = get_materials(categories=['solvent'])
+    assert 'water' in sol
+    assert 'acetone' in sol
+    assert 'gold'  not in sol
+    assert 'methane'  not in sol
+
+
 def test_material_mu1():
     en = np.linspace(8500, 9500, 21)
     known_mu = np.array([236.2, 232.4, 228.7, 225.1, 221.5, 218.1, 214.7,

@@ -8,7 +8,6 @@ poster/*.pdf
 python/dist/
 python/*.egg-info/
 python/build
-python/xraydb/version.py
 python/tests/.coverage
 python/tests/htmlcov
 python/tests/.ipynb_checkpoints

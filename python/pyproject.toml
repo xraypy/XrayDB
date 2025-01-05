@@ -1,13 +1,18 @@
 ##
 [build-system]
-requires = ["setuptools>=64", "setuptools_scm>=6.2"]
+requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
-# note: this is needed, since the SCM root is '..'
-[tool.setuptools_scm]
-root = ".."
-write_to = "python/xraydb/version.py"
-version_scheme = "post-release"
+# note: using setuptools_scm does not work
+#       as this library is not at the top of the SCM directory
+# trying this: is needed, since the SCM root is '..'
+#    [tool.setuptools_scm]
+#    root = ".."
+#    write_to = "python/xraydb/version.py"
+#    version_scheme = "post-release"
+# fails to build a wheel, and even uploading the tarball
+# leaves `pip install xraydb`  from PyPI to fail
+
 
 [tool.setuptools.packages.find]
 include = ["xraydb"]
@@ -20,7 +25,7 @@ addopts = "--cov=xraydb --cov-report html"
 
 [project]
 name = "xraydb"
-dynamic = ["version"]
+version = "4.5.6"
 requires-python = ">= 3.9"
 description = "calculations with XrayDB: reference data for X-ray interactions with matter"
 readme = "README.md"
@@ -50,7 +55,7 @@ dependencies = [
 
 [project.urls]
 Homepage = " https://github.com/xraypy/XrayDB"
-Documentation = "https://xraydb.github.io/XrayDB/"
+Documentation = "https://xraypy.github.io/XrayDB/"
 Tracker = "https://github.com/xraypy/XrayDB/issues"
 
 [project.optional-dependencies]

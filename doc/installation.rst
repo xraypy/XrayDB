@@ -46,12 +46,8 @@ failures.
 Citing this work
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To cite this work, please use  https://zenodo.org/records/13924221
+To cite this work, please use  https://zenodo.org/badge/latestdoi/205441660
 
-.. raw:: html
-
-    <span class="__dimensions_badge_embed__" data-doi="10.5281/zenodo.13924221"></span>
-    <script async src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
 
 Copyright, Licensing, and Re-distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

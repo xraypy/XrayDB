@@ -7,7 +7,6 @@ X-ray DB: X-ray Reference Data in SQLite
 .. _FFAST webpage:       https://www.nist.gov/pml/data/ffast/index.cfm
 .. _PDF Version of this documentation:  https://xraypy.github.io/XrayDB/xraydb.pdf
 .. _XrayDB Web App (xrayabsorption.org):  https://xraydb.xrayabsorption.org/
-.. _XrayDB Web App (seescience.org):  https://xraydb.seescience.org/
 .. _XrayDB Web App (CARS/APS):       https://millenia.cars.aps.anl.gov/xraydb
 
 XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross

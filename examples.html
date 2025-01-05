@@ -8,7 +8,7 @@
     <title>Example Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css?v=0f882399" />
-    <script src="_static/documentation_options.js?v=a284863f"></script>
+    <script src="_static/documentation_options.js?v=06fc0226"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -89,7 +89,8 @@ following script will plot <span class="math notranslate nohighlight">\(\mu/\rho
 </pre></div>
 </div>
 <figure class="align-center" id="id4">
-<span id="fig-mu-depth"></span><a class="reference external image-reference" href="_images/mu_elements.png"><img alt="_images/mu_elements.png" src="_images/mu_elements.png" style="width: 75%;" /></a>
+<span id="fig-mu-depth"></span><a class="reference external image-reference" href="_images/mu_elements.png"><img alt="_images/mu_elements.png" src="_images/mu_elements.png" style="width: 75%;" />
+</a>
 <figcaption>
 <p><span class="caption-text">X-ray mass attenuation coefficient for C, Cu, and Au.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
@@ -136,7 +137,8 @@ different components of <span class="math notranslate nohighlight">\(\mu/\rho\)<
 </div>
 <p>which will generate the following plot:</p>
 <figure class="align-center" id="id5">
-<span id="fig-mu-components-c"></span><a class="reference external image-reference" href="_images/mu_components_C.png"><img alt="_images/mu_components_C.png" src="_images/mu_components_C.png" style="width: 75%;" /></a>
+<span id="fig-mu-components-c"></span><a class="reference external image-reference" href="_images/mu_components_C.png"><img alt="_images/mu_components_C.png" src="_images/mu_components_C.png" style="width: 75%;" />
+</a>
 <figcaption>
 <p><span class="caption-text">X-ray scattering and attenuation factors for C.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
@@ -149,7 +151,8 @@ have a much weaker dependence on <em>Z</em>, so that the photo-electric process
 dominates to higher energies.  Replacing ‘C’ with ‘Fe’ in the script above
 will generate the following plot:</p>
 <figure class="align-center" id="id6">
-<span id="fig-mu-components-fe"></span><a class="reference external image-reference" href="_images/mu_components_Fe.png"><img alt="_images/mu_components_Fe.png" src="_images/mu_components_Fe.png" style="width: 75%;" /></a>
+<span id="fig-mu-components-fe"></span><a class="reference external image-reference" href="_images/mu_components_Fe.png"><img alt="_images/mu_components_Fe.png" src="_images/mu_components_Fe.png" style="width: 75%;" />
+</a>
 <figcaption>
 <p><span class="caption-text">X-ray scattering and attenuation factors for Fe.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
 </figcaption>
@@ -198,7 +201,8 @@ X-ray energy:</p>
 </pre></div>
 </div>
 <figure class="align-center" id="id7">
-<span id="fig-mu-water"></span><a class="reference external image-reference" href="_images/mu_water.png"><img alt="_images/mu_water.png" src="_images/mu_water.png" style="width: 75%;" /></a>
+<span id="fig-mu-water"></span><a class="reference external image-reference" href="_images/mu_water.png"><img alt="_images/mu_water.png" src="_images/mu_water.png" style="width: 75%;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Fraction of X-rays absorbed and transmitted by water</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
@@ -213,7 +217,8 @@ X-ray energy:</p>
 </div>
 <p>would generate the following plot</p>
 <figure class="align-center" id="id8">
-<span id="fig-mu-calcite"></span><a class="reference external image-reference" href="_images/mu_calcite.png"><img alt="_images/mu_calcite.png" src="_images/mu_calcite.png" style="width: 75%;" /></a>
+<span id="fig-mu-calcite"></span><a class="reference external image-reference" href="_images/mu_calcite.png"><img alt="_images/mu_calcite.png" src="_images/mu_calcite.png" style="width: 75%;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Fraction of X-rays absorbed and transmitted by calcite</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
@@ -559,7 +564,8 @@ a few common mirror materials is given as</p>
 </pre></div>
 </div>
 <figure class="align-center" id="id9">
-<span id="fig-mirrors"></span><a class="reference external image-reference" href="_images/mirrors.png"><img alt="_images/mirrors.png" src="_images/mirrors.png" style="width: 75%;" /></a>
+<span id="fig-mirrors"></span><a class="reference external image-reference" href="_images/mirrors.png"><img alt="_images/mirrors.png" src="_images/mirrors.png" style="width: 75%;" />
+</a>
 <figcaption>
 <p><span class="caption-text">X-ray mirror reflectivity at <span class="math notranslate nohighlight">\(\theta = 2\mathrm{mrad}\)</span> for
 selected mirror surfaces and coatings used for mirrors.</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
@@ -616,19 +622,28 @@ following fields:</p>
 <li><p><cite>theta_offset</cite> - the offset from the nominal Bragg angle, in rad.</p></li>
 <li><p><cite>theta_width</cite> - estimated angular Darwin width, in rad</p></li>
 <li><p><cite>theta_fwhm</cite> - estimated FWHM of the angular reflectivity curve, in rad</p></li>
+<li><p><cite>rocking_theta_fwhm</cite> - estimated FWHM of a rocking curve, in rad</p></li>
 <li><p><cite>energy_width</cite> - estimated energy Darwin width, in eV</p></li>
 <li><p><cite>energy_fwhm</cite> - estimated FWHM energy reflectivity curve, in eV</p></li>
+<li><p><cite>rocking_energy_fwhm</cite> - estimated FWHM of a rocking curve, in eV</p></li>
 <li><p><cite>zeta</cite> -  nd-array of <span class="math notranslate nohighlight">\(\zeta = \Delta\lambda/\lambda\)</span>.</p></li>
 <li><p><cite>dtheta</cite>  - nd-array of angles around from Bragg angle, in rad</p></li>
 <li><p><cite>denergy</cite> -  nd-array of energies around from Bragg energy, in eV</p></li>
 <li><p><cite>intensity</cite> - nd-array of reflected intensity at <cite>zeta</cite> values.</p></li>
+<li><p><cite>rocking_curve</cite> - nd-array of rocking curve of 2 crystals</p></li>
 </ul>
 </div></blockquote>
 <p>Here, <cite>dtheta</cite> will be given by <span class="math notranslate nohighlight">\(\Delta\theta = \zeta \tan(\theta)\)</span>,
-and <cite>denergy</cite> will be given by <span class="math notranslate nohighlight">\(\Delta{E} = \zeta E\)</span>.  All of the
-nd-arrays will be the same size, so that plots of reflectivity can be
-readily made.  An example usage, printing the predicted energy and angular
-widths and plotting the intensity profile or “rocking curve” is</p>
+and <cite>denergy</cite> will be given by <span class="math notranslate nohighlight">\(\Delta{E} = \zeta E\)</span>.  Note that
+the <cite>rocking_</cite> quantities are estimated as the convolution of the intensity
+with itself, to simulate an angular scan of one crystal with respect
+to the other, as is often done with double-crystal monochromators.
+<cite>rocking_theta_fwhm</cite> and <cite>rocking_energy_fwhm</cite> will be the FWHM of
+this curve in angle and energy, and will typically be ~1.5x the
+Darwin widths in <cite>theta_width</cite> and <cite>energy_width</cite>, respectively.</p>
+<p>All of the nd-arrays will be the same size, so that plots of
+reflectivity can be readily made.  An example usage, printing the
+predicted energy and angular widths is</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">darwin_width</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -673,7 +688,8 @@ widths and plotting the intensity profile or “rocking curve” is</p>
 </div>
 <p>and generates a plot of</p>
 <figure class="align-center" id="id10">
-<span id="fig-darwin"></span><a class="reference external image-reference" href="_images/darwin_widths.png"><img alt="_images/darwin_widths.png" src="_images/darwin_widths.png" style="width: 75%;" /></a>
+<span id="fig-darwin"></span><a class="reference external image-reference" href="_images/darwin_widths.png"><img alt="_images/darwin_widths.png" src="_images/darwin_widths.png" style="width: 75%;" />
+</a>
 <figcaption>
 <p><span class="caption-text">X-ray monochromator diffracted intensities around the Si(111)
 reflection. Here, <span class="math notranslate nohighlight">\(i\)</span> represents the intensity of a single
@@ -689,6 +705,41 @@ where the reflectivity ignoring absorption would be 1 - the flat top of the
 curve.  Since a double-crystal monochromator will suppress the tails of the
 reflectivity, this smaller value is the one typically reported as “the
 Darwin width”, though some sources will report this smaller value as “FWHM”.</p>
+<p>An example of the intensity of a single reflection and the “rocking
+curve”  of two crystals is given in</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">darwin_width</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">dw_si111</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">dtheta</span>  <span class="o">=</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">dtheta</span><span class="o">*</span><span class="mf">1e6</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">intensity</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$I$, 1 crystal&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">rocking_curve</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rocking Curve&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;X-ray Rocking Curve at 10keV, Si(111)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Angle - $</span><span class="se">\\</span><span class="s1">theta_B$ ($ </span><span class="se">\\</span><span class="s1">mu \mathrm</span><span class="si">{rad}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>which generates a plot of</p>
+<figure class="align-center" id="id11">
+<span id="fig-rocking"></span><a class="reference external image-reference" href="_images/darwin_rocking.png"><img alt="_images/darwin_rocking.png" src="_images/darwin_rocking.png" style="width: 75%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">X-ray monochromator rocking curve around the Si(111)
+reflection. Here, the blue curve shows the intensity of a single
+reflection, as above, while the orange curve shows the intensity
+from rocking one crystal through the reflection of the other.</span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 
@@ -771,7 +822,7 @@ Darwin width”, though some sources will report this smaller value as “FWHM�
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2024-December-10.
+      Last updated on 2025-January-04.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
     </div>
   </body>

@@ -8,7 +8,7 @@
     <title>Using XrayDB from Python &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css?v=0f882399" />
-    <script src="_static/documentation_options.js?v=a284863f"></script>
+    <script src="_static/documentation_options.js?v=06fc0226"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -52,7 +52,7 @@ modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.5.4, corresponding to
+<p>The current version of the Python module is 4.5.5, corresponding to
 version 6 of <cite>xraydb.sqlite</cite>.</p>
 <section id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Link to this heading">¶</a></h2>
@@ -426,7 +426,7 @@ or a float with the core hole width for a specified edge.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="xraydb.guess_edge">
-<span class="sig-name descname"><span class="pre">guess_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['K',</span> <span class="pre">'L3',</span> <span class="pre">'L2',</span> <span class="pre">'L1',</span> <span class="pre">'M5']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.guess_edge" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">guess_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('K',</span> <span class="pre">'L3',</span> <span class="pre">'L2',</span> <span class="pre">'L1',</span> <span class="pre">'M5')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.guess_edge" title="Link to this definition">¶</a></dt>
 <dd><p>guess an element and edge based on energy (in eV)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -440,7 +440,7 @@ or a float with the core hole width for a specified edge.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>by default, the list of edges is [‘K’, ‘L3’, ‘L2’, ‘L1’, ‘M5’]</p>
+<p>by default, the list of edges is (‘K’, ‘L3’, ‘L2’, ‘L1’, ‘M5’)</p>
 </dd></dl>
 
 </section>
@@ -977,60 +977,57 @@ atlen :  attenuation length in cm</p>
 <dt class="sig sig-object py" id="xraydb.darwin_width">
 <span class="sig-name descname"><span class="pre">darwin_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crystal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Si'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hkl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_f2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_f1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.darwin_width" title="Link to this definition">¶</a></dt>
 <dd><p>darwin width for a crystal reflection and energy</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<em>float</em>) – X-ray energy in eV</p></li>
-<li><p><strong>crystal</strong> (<em>string</em>) – name of crystal (one of ‘Si’, ‘Ge’, or ‘C’) [‘Si’]</p></li>
-<li><p><strong>hkl</strong> (<em>tuple</em>) – h, k, l for reflection  [(1, 1, 1)]</p></li>
-<li><p><strong>a</strong> (<em>float</em><em> or </em><em>None</em>) – lattice constant [None - use built-in value]</p></li>
-<li><p><strong>polarization</strong> (<em>'s'</em><em>,</em><em>'p'</em><em>, </em><em>'u'</em>) – mono orientation relative to X-ray polarization [‘s’]</p></li>
-<li><p><strong>ignore_f1</strong> (<em>bool</em>) – ignore contribution from f1 - dispersion (False)</p></li>
-<li><p><strong>ignore_f2</strong> (<em>bool</em>) – ignore contribution from f2 - absorption (False)</p></li>
-<li><p><strong>m</strong> (<em>int</em>) – order of reflection    [1]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>A named tuple ‘DarwinWidth’ with the following fields</p>
-<blockquote>
-<div><p><cite>theta</cite>:        float, nominal Bragg angle, in rad,</p>
+<p>Args:
+energy (float):    X-ray energy in eV
+crystal (string):  name of crystal (one of ‘Si’, ‘Ge’, or ‘C’) [‘Si’]
+hkl (tuple):       h, k, l for reflection  [(1, 1, 1)]
+a (float or None): lattice constant [None - use built-in value]
+polarization (‘s’,’p’, ‘u’): mono orientation relative to X-ray polarization [‘s’]
+ignore_f1 (bool):  ignore contribution from f1 - dispersion (False)
+ignore_f2 (bool):  ignore contribution from f2 - absorption (False)
+m (int):           order of reflection    [1]</p>
+<p>Returns:</p>
+<p>A named tuple ‘DarwinWidth’ with the following fields</p>
+<p><cite>theta</cite>:        float, nominal Bragg angle, in rad,</p>
 <p><cite>theta_offset</cite>: float, angular offset from Bragg angle, in rad,</p>
 <p><cite>theta_width</cite>:  float, estimated angular Darwin width, in rad,</p>
 <p><cite>theta_fwhm</cite>:   float, estimated FWHM of angular intensity, in rad,</p>
+<p><cite>rocking_theta_fwhm</cite>:  float, estimated FWHM of a rocking curve, in rad,</p>
 <p><cite>energy_width</cite>: float, estimated angular Darwin width, in rad,</p>
 <p><cite>energy_fwhm</cite>:  float, estimated FWHM of energy intensity, in eV,</p>
+<p><cite>rocking_energy_fwhm</cite>:  float, estimated FWHM of a rocking curve, in eV,</p>
 <p><cite>zeta</cite>:         nd-array of Zeta parameter (delta_Lambda / Lambda),</p>
 <p><cite>dtheta</cite>:       nd-array of angles away from Bragg angle, theta in rad,</p>
 <p><cite>denergy</cite>:      nd-array of energies away from Bragg energy, in eV,</p>
-<p><cite>intensity</cite>:    nd-array of reflected intensity</p>
-</div></blockquote>
-</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<ol class="arabic simple">
-<li><p>This follows the calculation from section 6.4 of
+<p><cite>intensity</cite>:    nd-array of reflected intensity,</p>
+<p><cite>rocking_curve</cite>:  nd-array of rocking curve of 2 crystals,</p>
+<p>Notes:</p>
+<p>1. This follows the calculation from section 6.4 of
 Elements of Modern X-ray Physics, 2nd Edition
-J Als-Nielsen, and D. McMorrow.</p></li>
-<li><p>Only diamond structures (Si, Ge, diamond) are currently supported.
+J Als-Nielsen, and D. McMorrow.</p>
+<p>2. Only diamond structures (Si, Ge, diamond) are currently supported.
 Default values of lattice constant <cite>a</cite> are in Angstroms: 5.4309 for Si,
-5.6578, for ‘Ge’, and 3.567 for ‘C’.</p></li>
-<li><p>The <cite>theta_width</cite> and <cite>energy_width</cite> values will closely match the
+5.6578, for ‘Ge’, and 3.567 for ‘C’.</p>
+<p>3. The <cite>theta_width</cite> and <cite>energy_width</cite> values will closely match the
 width of the intensity profile that would = 1 when ignoring the
 effect of absorption.  These are the values commonly reported as
 ‘Darwin Width’.  The value reported for <cite>theta_fwhm’ and
-`energy_fwhm</cite> are larger than this by sqrt(9/8) ~= 1.06.</p></li>
-<li><p>Polarization can be ‘s’, ‘p’, ‘u’,  or None. ‘s’ means vertically
+`energy_fwhm</cite> are larger than this by sqrt(9/8) ~= 1.06.</p>
+<p>4. Polarization can be ‘s’, ‘p’, ‘u’,  or None. ‘s’ means vertically
 deflecting crystal and a horizontally-polarized source, as for most
 synchrotron beamlines. ‘p’ is for a horizontally-deflecting crystal.
-‘u’ or None is for unpolarized light, as for most fluorescence/emission.</p></li>
-</ol>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dw</span><span class="o">.</span><span class="n">theta_width</span><span class="p">,</span> <span class="n">dw</span><span class="o">.</span><span class="n">energy_width</span>
-<span class="go">(2.8593683930207114e-05, 1.4177346002236872)</span>
-</pre></div>
-</div>
+‘u’ or None is for unpolarized light, as for most fluorescence/emission.</p>
+<p>5. The <cite>rocking_curve</cite> will be the convolution of the intensity
+with itself, to simulate an angular scan of one crystal with
+respect to the other, as is often done with double-crystal
+monochromators. <cite>rocking_theta_fwhm</cite> and <cite>rocking_energy_fwhm</cite>
+will be the FWHM of this curve in angle and energy, and will
+typiccally be ~1.5x the Darwin widths in <cite>theta_width</cite> and
+<cite>energy_width</cite>, respectively.</p>
+<p>Examples:
+&gt;&gt;&gt; dw = darwin_width(10000, crystal=’Si’, hkl=(1, 1, 1))
+&gt;&gt;&gt; print(dw.theta_width, dw.energy_width)
+2.695922108316184e-05 1.336668903324966</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1346,7 +1343,7 @@ current from 1 carrier, for example if using a Frisch grid, use
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2024-December-10.
+      Last updated on 2025-January-04.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
     </div>
   </body>

@@ -22,8 +22,8 @@ addopts = "--cov=xraydb --cov-report html"
 name = "xraydb"
 dynamic = ["version"]
 requires-python = ">= 3.9"
-description = "calculations with reference data for X-ray interactions with matter"
-readme = "README"
+description = "calculations with XrayDB: reference data for X-ray interactions with matter"
+readme = "README.md"
 authors = [
      {name = "Matthew Newville", email = "matt.newville@gmail.com"}
 ]

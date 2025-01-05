@@ -1,9 +1,0 @@
-Python interface to XrayDB:  X-ray Reference Data for the Elements
-
-To install, use
-   pip install xraydb
-
-License: MIT
-Author:  Matthew Newville <newville@cars.uchicago.edu>
-         Center for Advanced Radiation Sources,
-         The University of Chicago

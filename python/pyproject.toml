@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 # note: this is needed, since the SCM root is '..'
 [tool.setuptools_scm]
-root = '..'
+root = ".."
 write_to = "python/xraydb/version.py"
 version_scheme = "post-release"
 
@@ -23,7 +23,7 @@ name = "xraydb"
 dynamic = ["version"]
 requires-python = ">= 3.9"
 description = "calculations with reference data for X-ray interactions with matter"
-readme = "README.rst"
+readme = "README"
 authors = [
      {name = "Matthew Newville", email = "matt.newville@gmail.com"}
 ]

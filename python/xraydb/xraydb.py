@@ -53,13 +53,18 @@ def isxrayDB(dbname):
                'KeskiRahkonen_Krause', 'xray_levels', 'elements',
                'photoabsorption', 'scattering')
     result = False
+    engine = None
     try:
         engine = make_engine(dbname)
         meta = sqlalchemy.MetaData()
-        meta.reflect(engine)
-        result = all([t in meta.tables for t in _tables])
-    except:
+        with engine.connect() as conn:
+            meta.reflect(conn)
+        result = all(t in meta.tables for t in _tables)
+    except Exception:
         pass
+    finally:
+        if engine is not None:
+            engine.dispose()
     return result
 
 

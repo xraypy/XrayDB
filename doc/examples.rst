@@ -503,21 +503,18 @@ can be calculated with Parratt's Recursive Method using the :func:`multilayer_re
 This function takes a list of materials from top to bottom, a matching list of 
 thicknesses of each layer, substrate material, incident angle, energy, and the number of periods.
 
-An example usage, calculating the reflectivity at 1000 eV vs. grazing angle for a 40*[W, Si] 
+An example usage, calculating the reflectivity at 1000 eV vs. grazing angle for a 40*[Si, W] 
 layered mirror on SiO2 substrate is given as 
 
-.. .. literalinclude:: ../python/examples/mulilayer_mirror.py
+.. literalinclude:: ../python/examples/multilayer_mirror.py
 
+.. _fig_mirrors:
 
-.. .. _fig_mirrors:
+.. figure::  _images/multilayer.png
+    :target: _images/multilayer.png
+    :width: 75%
+    :align: center
 
-.. .. figure::  _images/multilayer_mirror.png
-..     :target: _images/multilayer_mirror.png
-..     :width: 75%
-..     :align: center
-
-    .. X-ray mirror reflectivity at :math:`\theta = 2\mathrm{mrad}` for
-    .. selected mirror surfaces and coatings used for mirrors.
 
 
 
@@ -528,28 +525,21 @@ In principle, reflectivity calculation for coated mirrors is the same as for mul
 The function takes top layer material and thickness, substrate material and thickness, incident angle,
 energy, and optional binding layer parameters.
 
-An example script calculating the reflectivity at 1000 eV vs. grazing angle for a Rhodium on SiO2 mirror with 
-a Chromium binding layer is given as
+An example script calculating the reflectivity at :math:`\theta = 4\ \mathrm{mrad}` for a 
+Rhodium slab and Rhodium coated mirror is given as
 
-.. .. literalinclude:: ../python/examples/coated_mirror.py
-
-
-.. .. _fig_mirrors:
-
-.. .. figure::  _images/coated_mirror.png
-..     :target: _images/coated_mirror.png
-..     :width: 75%
-..     :align: center
-
-    .. X-ray mirror reflectivity at :math:`\theta = 2\mathrm{mrad}` for
-    .. selected mirror surfaces and coatings used for mirrors.
+.. literalinclude:: ../python/examples/coated_mirror.py
 
 
+.. _fig_mirrors:
 
+.. figure::  _images/coated_mirror.png
+    :target: _images/coated_mirror.png
+    :width: 75%
+    :align: center
 
-
-
-
+    X-ray reflectivity of a Rhodium on Silicon mirror with a thin 3 nm Chromium binding layer 
+    compared to a pure slab of Rhodium.
 
 Darwin widths of monochromator crystals
 -------------------------------------------

@@ -945,25 +945,26 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
         raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
     
 
-def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coating_dens=None, substrate_dens=None,
-                        binder=None, binder_thick=None, binder_dens=None, 
-                        roughness=0.0, polarization='s', output='intensity'):
+def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coating_dens=None, surface_roughness=0.0, 
+                        substrate_dens=None, substrate_roughness=0.0, binder=None, binder_thick=None, binder_dens=None, 
+                        polarization='s', output='intensity'):
     """reflectivity for a coated mirror.
 
     Args:
-       coating (str):              coating material name or formula ('Si', 'Rh', 'silicon')
-       coating_thick (float):      thickness of coating in Angstroms
-       substrate (string):         substrate material name or formula
-       theta (float or nd-array):  mirror angle in radians
-       energy (float or nd-array): X-ray energy in eV
-       coating_dens (None):        density of mirror coating in g/cm^3
-       substrate_dens (float):     density of substrate in g/cm^3
-       binder (str):               binder material name or formula 
-       binder_thick (float):       thickness of binder in Angstroms
-       binder_dens (float):        density of binder in g/cm^3
-       roughness (float):          mirror surface roughness in Angstroms
-       polarization ('s' or 'p'):  mirror orientation relative to X-ray polarization
-       output (str):               output intensity or or complex amplitude
+       coating (str):               coating material name or formula ('Si', 'Rh', 'silicon')
+       coating_thick (float):       thickness of coating in Angstroms
+       substrate (string):          substrate material name or formula
+       theta (float or nd-array):   mirror angle in radians
+       energy (float or nd-array):  X-ray energy in eV
+       coating_dens (None):         density of mirror coating in g/cm^3
+       surface_roughness (float):   coating roughness in Angstroms
+       substrate_dens (float):      density of substrate in g/cm^3
+       substrate_roughness (float): substrate roughness in Angstroms
+       binder (str):                binder material name or formula 
+       binder_thick (float):        thickness of binder in Angstroms
+       binder_dens (float):         density of binder in g/cm^3
+       polarization ('s' or 'p'):   mirror orientation relative to X-ray polarization
+       output (str):                output intensity or or complex amplitude
 
     Returns:
        mirror reflectivity values
@@ -1018,20 +1019,27 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
         n_b = 1 - delta_b + 1j*beta_b
         kbz = k0*np.sqrt(n_b**2 - np.cos(theta)**2)
         r_amp = (kbz - kz_sub)/(kbz + kz_sub)
+        if substrate_roughness > 1.e-12:
+            r_amp = r_amp * np.exp(-2*(substrate_roughness**2*kz_sub*kbz))
         fresnel_r = (ktz - kbz)/(ktz + kbz)
         p2 = np.exp(2j*binder_thick*kbz)
         r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
 
     else:
         r_amp = (ktz - kz_sub)/(ktz + kz_sub)
+        if substrate_roughness > 1.e-12:
+            r_amp = r_amp * np.exp(-2*(substrate_roughness**2*kz_sub*ktz))
 
     fresnel_r = (kiz - ktz)/(kiz + ktz)
     p2 = np.exp(2j*coating_thick*ktz)
     r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
 
-    if polarization == 'p' or roughness != 0.0:
+
+    if surface_roughness > 1.e-12:
+        r_amp = r_amp * np.exp(-2*(surface_roughness**2*kiz*ktz))
+
+    if polarization == 'p':
         print("Warning: polarization and roughness not implemented for multilayer reflectivity")
-    #TODO roughness
     #TODO polarization
 
     if output == 'intensity': 

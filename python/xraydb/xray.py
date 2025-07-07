@@ -867,8 +867,9 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
        2. thickness should be the same length as stackup
        3. density can be `None` for known materials or a list of 1 period (['Mo', 'Si'])
           for a multilayer stackup.
-       4. roughness can be a single value for all layers or a list of the same length as stackup
-       5. polarization of 's' puts the X-ray polarization along the mirror
+       4. Currently does not support interlayer diffusion gratings
+       5. roughness can be a single value for all layers or a list of the same length as stackup
+       6. polarization of 's' puts the X-ray polarization along the mirror
           surface, 'p' puts it normal to the mirror surface. For
           horizontally polarized X-ray beams from storage rings, 's' will
           usually mean 'vertically deflecting' and 'p' will usually mean
@@ -973,7 +974,8 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
        1. only one of theta or energy can be an nd-array
        2. densities can be `None` for known materials or a list of 1 period (['Mo', 'Si'])
           for a multilayer stackup.
-       3. polarization of 's' puts the X-ray polarization along the mirror
+       3. Currently does not support interlayer diffusion gratings
+       4. polarization of 's' puts the X-ray polarization along the mirror
           surface, 'p' puts it normal to the mirror surface. For
           horizontally polarized X-ray beams from storage rings, 's' will
           usually mean 'vertically deflecting' and 'p' will usually mean
@@ -1041,6 +1043,7 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
     if polarization == 'p':
         print("Warning: polarization and roughness not implemented for multilayer reflectivity")
     #TODO polarization
+    #TODO diffusion 
 
     if output == 'intensity': 
         return (r_amp*r_amp.conjugate()).real

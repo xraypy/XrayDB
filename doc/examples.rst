@@ -506,7 +506,7 @@ thicknesses of each layer, substrate material, incident angle, energy, and the n
 An example usage, calculating the reflectivity at 1000 eV vs. grazing angle for a 40*[Si, W] 
 layered mirror on SiO2 substrate is given as 
 
-.. literalinclude:: ../python/examples/multilayer_mirror.py
+.. literalinclude:: ../python/examples/mirror_multilayer.py
 
 .. _fig_mirrors:
 
@@ -528,7 +528,7 @@ energy, and optional binding layer parameters.
 An example script calculating the reflectivity at :math:`\theta = 4\ \mathrm{mrad}` for a 
 Rhodium slab and Rhodium coated mirror is given as
 
-.. literalinclude:: ../python/examples/coated_mirror.py
+.. literalinclude:: ../python/examples/mirror_coated.py
 
 
 .. _fig_mirrors:

@@ -583,7 +583,7 @@ def test_mirror_reflectivity():
 
 def test_multilayer_reflectivity():
     # generated with xrt
-    # at low reflectivity, xrt and xraydb can differ up to 5%
+    # at low reflectivity, xrt and xraydb can differ up to 10%
     xrt_r = np.array([0.9682573639725451, 0.9692894183725779,
                       0.9551412674578308, 0.8718946307435569, 0.8843826288196437,
                       0.8896591645964965, 0.8988360437159508, 0.9051158550840065,
@@ -606,7 +606,7 @@ def test_multilayer_reflectivity():
 
 def test_coated_reflectivity():
     # generated with xrt
-    # at low reflectivity, xrt and xraydb can differ up to 5%
+    # at low reflectivity, xrt and xraydb can differ up to 10%
     xrt_r = np.array([0.955832355448275, 0.9607498872134996, 0.9633490690665248,
                       0.9644769321246166, 0.9645676240437896, 0.9600938273346961,
                       0.8509155394149021, 0.8638043361169211, 0.8786334026702274,

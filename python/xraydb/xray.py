@@ -791,7 +791,7 @@ def xray_delta_beta(material, density, energy):
 
 def mirror_reflectivity(formula, theta, energy, density=None,
                         roughness=0.0, polarization='s'):
-    """mirror reflectivity for a thick, singl-layer mirror.
+    """mirror reflectivity for a thick, single-layer mirror.
 
     Args:
        formula (string):           material name or formula ('Si', 'Rh', 'silicon')
@@ -835,6 +835,107 @@ def mirror_reflectivity(formula, theta, energy, density=None,
         r_amp = r_amp * np.exp(-2*(roughness**2*kiz*ktz))
     return (r_amp*r_amp.conjugate()).real
 
+def multilayer_reflectivity(stackup, theta, energy, substrate, thickness, n_periods=1, 
+                                density=None, roughness=0.0, polarization='s', ouput='intensity'):
+    """mirror reflectivity for a multlayer mirror.
+
+    Args:
+       stackup (list of formulas): material name or formula ('Si', 'Rh', 'silicon')
+       theta (float or nd-array):  mirror angle in radians
+       energy (float or nd-array): X-ray energy in eV
+       substrate (string):         substrate material name or formula
+       thickness (list):           thickness of layers in Angstroms
+       n_periods (int):            number of periods in multilayer
+       density (list or None):     material densities in g/cm^3
+       roughness (list or float):  mirror roughness in Angstroms
+       polarization ('s' or 'p'):  mirror orientation relative to X-ray polarization
+       output (str):               output intensity or or complex amplitude
+
+    Returns:
+       mirror reflectivity values
+
+    Notes:
+       1. only one of theta or energy can be an nd-array
+       2. thickness should be the same length as stackup
+       3. density can be `None` for known materials or a list of 1 period (['Mo', 'Si'])
+          for a multilayer stackup.
+       4. roughness can be a single value for all layers or a list of the same length as stackup
+       5. polarization of 's' puts the X-ray polarization along the mirror
+          surface, 'p' puts it normal to the mirror surface. For
+          horizontally polarized X-ray beams from storage rings, 's' will
+          usually mean 'vertically deflecting' and 'p' will usually mean
+          'horizontally deflecting'.
+    """
+ 
+    if thickness is None:
+        raise Exception(f'Please provide thicknesses in Angstroms of each layer (exluding substrate)')
+    if len(stackup) != len(thickness):
+        raise Exception(f'number of materials ({len(stackup)}) should match number of thicknesses ({len(thickness)})')
+    if density is not None and len(stackup) != len(density):
+        raise Exception(f"If not None, number of densities ({len(density)}) should match number of materials({len(stackup)})")
+    
+
+    if density is None:
+        density = [None]*len(stackup)   
+
+    # stackup = stackup * n_periods
+    # t = thickness * n_periods
+    n_layers = len(stackup) 
+    
+    k0 = 2 * np.pi * energy / PLANCK_HC
+    kz0 = k0*np.sin(theta)  # air/vacuum layer (n = 0)
+    kz = []
+
+    from .materials import get_material
+    for i in range(n_layers):
+        if density[i] is None:
+            if get_material(stackup[i]) == None:
+                raise Exception(f"{stackup[i]} not found.\n" \
+                "Specify Density or use add_material() to add a custom material")
+            stackup[i], density[i] = get_material(stackup[i])
+
+        delta, beta, _ = xray_delta_beta(stackup[i], density[i], energy)
+        n_i = 1 - delta + 1j*beta
+        kz_i = k0*np.sqrt(n_i**2 - np.cos(theta)**2) 
+        kz.append(kz_i)
+
+    print(f"n_layers={n_layers}, n_periods={n_periods}, stackup={stackup}, thicknesses={thickness}")
+
+    t = thickness * n_periods
+    layers = stackup * n_periods
+    kz = kz * n_periods
+    print(f"n_layers={n_layers}, n_periods={n_periods}, stackup={layers}, thicknesses={t}")
+
+    # substrate layer
+    if get_material(substrate) is None:
+        raise Exception(f"{substrate} not found.\n" \
+        "Specify Density or use add_material() to add a custom material")
+    substrate, density_sub= get_material(substrate)
+    delta_sub, beta_sub, _ = xray_delta_beta(substrate, density_sub, energy)
+    n_sub = 1 - delta_sub + 1j*beta_sub
+    kz_sub = k0 * np.sqrt(n_sub**2 - np.cos(theta)**2)
+    r_amp = (kz[-1] - kz_sub)/(kz[-1] + kz_sub)
+
+    # parratts recursion
+    for i in reversed(range(len(layers)-1)):
+        fresnel_r = (kz[i] - kz[i+1])/(kz[i] + kz[i+1])
+        p2 = np.exp(2j*t[i+1]*kz[i+1])
+        r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
+
+    # surface
+    fresnel_r = (kz0 - kz[0])/(kz0 + kz[0])
+    p2 = np.exp(2j*t[0]*kz[0])
+    r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
+
+    #TODO roughness
+    #TODO polarization
+
+    if ouput == 'intensity': 
+        return (r_amp*r_amp.conjugate()).real
+    elif ouput == 'amplitude':
+        return r_amp
+    else:
+        raise Exception(f"Unknown output type {ouput}. Use 'intensity' or 'amplitude'.")
 
 def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
                       sensitivity=1.e-6, sensitivity_units='A/V',

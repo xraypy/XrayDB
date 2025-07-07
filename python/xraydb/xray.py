@@ -790,7 +790,7 @@ def xray_delta_beta(material, density, energy):
     return delta, beta_photo, lamb_cm/(4*np.pi*beta_total)
 
 def mirror_reflectivity(formula, theta, energy, density=None,
-                        roughness=0.0, polarization='s'):
+                        roughness=0.0, polarization='s', output='intensity'):
     """mirror reflectivity for a thick, single-layer mirror.
 
     Args:
@@ -800,6 +800,7 @@ def mirror_reflectivity(formula, theta, energy, density=None,
        density (float or None):    material density in g/cm^3
        roughness (float):          mirror roughness in Angstroms
        polarization ('s' or 'p'):  mirror orientation relative to X-ray polarization
+       output (str):               output intensity or or complex amplitude
 
     Returns:
        mirror reflectivity values
@@ -833,20 +834,27 @@ def mirror_reflectivity(formula, theta, energy, density=None,
     r_amp = (kiz - ktz)/(kiz + ktz)
     if roughness > 1.e-12:
         r_amp = r_amp * np.exp(-2*(roughness**2*kiz*ktz))
-    return (r_amp*r_amp.conjugate()).real
 
-def multilayer_reflectivity(stackup, theta, energy, substrate, thickness, n_periods=1, 
-                                density=None, roughness=0.0, polarization='s', ouput='intensity'):
-    """mirror reflectivity for a multlayer mirror.
+    if output == 'intensity':
+        return (r_amp*r_amp.conjugate()).real
+    elif output == 'amplitude':
+        return r_amp
+    else:
+        raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
+def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_periods=1, 
+                                density=None, substrate_density=None,roughness=0.0, 
+                                polarization='s', output='intensity'):
+    """reflectivity for a multilayer mirror.
 
     Args:
        stackup (list of formulas): material name or formula ('Si', 'Rh', 'silicon')
+       thickness (list):           thickness of layers in Angstroms
+       substrate (string):         substrate material name or formula
        theta (float or nd-array):  mirror angle in radians
        energy (float or nd-array): X-ray energy in eV
-       substrate (string):         substrate material name or formula
-       thickness (list):           thickness of layers in Angstroms
        n_periods (int):            number of periods in multilayer
        density (list or None):     material densities in g/cm^3
+       substrate_density (float):  density of substrate in g/cm^3
        roughness (list or float):  mirror roughness in Angstroms
        polarization ('s' or 'p'):  mirror orientation relative to X-ray polarization
        output (str):               output intensity or or complex amplitude
@@ -878,12 +886,10 @@ def multilayer_reflectivity(stackup, theta, energy, substrate, thickness, n_peri
     if density is None:
         density = [None]*len(stackup)   
 
-    # stackup = stackup * n_periods
-    # t = thickness * n_periods
     n_layers = len(stackup) 
     
     k0 = 2 * np.pi * energy / PLANCK_HC
-    kz0 = k0*np.sin(theta)  # air/vacuum layer (n = 0)
+    kiz = k0*np.sin(theta)  # air/vacuum layer (n = 0)
     kz = []
 
     from .materials import get_material
@@ -899,19 +905,18 @@ def multilayer_reflectivity(stackup, theta, energy, substrate, thickness, n_peri
         kz_i = k0*np.sqrt(n_i**2 - np.cos(theta)**2) 
         kz.append(kz_i)
 
-    print(f"n_layers={n_layers}, n_periods={n_periods}, stackup={stackup}, thicknesses={thickness}")
 
     t = thickness * n_periods
     layers = stackup * n_periods
     kz = kz * n_periods
-    print(f"n_layers={n_layers}, n_periods={n_periods}, stackup={layers}, thicknesses={t}")
 
     # substrate layer
-    if get_material(substrate) is None:
-        raise Exception(f"{substrate} not found.\n" \
-        "Specify Density or use add_material() to add a custom material")
-    substrate, density_sub= get_material(substrate)
-    delta_sub, beta_sub, _ = xray_delta_beta(substrate, density_sub, energy)
+    if substrate_density is None:
+        if get_material(substrate) is None:
+            raise Exception(f"{substrate} not found.\n" \
+            "Specify Density or use add_material() to add a custom material")
+        substrate, substrate_density= get_material(substrate)
+    delta_sub, beta_sub, _ = xray_delta_beta(substrate, substrate_density, energy)
     n_sub = 1 - delta_sub + 1j*beta_sub
     kz_sub = k0 * np.sqrt(n_sub**2 - np.cos(theta)**2)
     r_amp = (kz[-1] - kz_sub)/(kz[-1] + kz_sub)
@@ -923,19 +928,120 @@ def multilayer_reflectivity(stackup, theta, energy, substrate, thickness, n_peri
         r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
 
     # surface
-    fresnel_r = (kz0 - kz[0])/(kz0 + kz[0])
+    fresnel_r = (kiz - kz[0])/(kiz + kz[0])
     p2 = np.exp(2j*t[0]*kz[0])
     r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
 
+    if polarization == 'p' or roughness != 0.0:
+        print("Warning: polarization and roughness not implemented for multilayer reflectivity")
     #TODO roughness
     #TODO polarization
 
-    if ouput == 'intensity': 
+    if output == 'intensity': 
         return (r_amp*r_amp.conjugate()).real
-    elif ouput == 'amplitude':
+    elif output == 'amplitude':
         return r_amp
     else:
-        raise Exception(f"Unknown output type {ouput}. Use 'intensity' or 'amplitude'.")
+        raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
+    
+
+def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coating_dens=None, substrate_dens=None,
+                        binder=None, binder_thick=None, binder_dens=None, 
+                        roughness=0.0, polarization='s', output='intensity'):
+    """reflectivity for a coated mirror.
+
+    Args:
+       coating (str):              coating material name or formula ('Si', 'Rh', 'silicon')
+       coating_thick (float):      thickness of coating in Angstroms
+       substrate (string):         substrate material name or formula
+       theta (float or nd-array):  mirror angle in radians
+       energy (float or nd-array): X-ray energy in eV
+       coating_dens (None):        density of mirror coating in g/cm^3
+       substrate_dens (float):     density of substrate in g/cm^3
+       binder (str):               binder material name or formula 
+       binder_thick (float):       thickness of binder in Angstroms
+       binder_dens (float):        density of binder in g/cm^3
+       roughness (float):          mirror surface roughness in Angstroms
+       polarization ('s' or 'p'):  mirror orientation relative to X-ray polarization
+       output (str):               output intensity or or complex amplitude
+
+    Returns:
+       mirror reflectivity values
+
+    Notes:
+       1. only one of theta or energy can be an nd-array
+       2. densities can be `None` for known materials or a list of 1 period (['Mo', 'Si'])
+          for a multilayer stackup.
+       3. polarization of 's' puts the X-ray polarization along the mirror
+          surface, 'p' puts it normal to the mirror surface. For
+          horizontally polarized X-ray beams from storage rings, 's' will
+          usually mean 'vertically deflecting' and 'p' will usually mean
+          'horizontally deflecting'.
+    """
+ 
+    if coating_thick is None:
+        raise Exception(f'Please provide thicknesses in Angstroms of each layer (exluding substrate)')
+
+    k0 = 2 * np.pi * energy / PLANCK_HC
+    kiz = k0*np.sin(theta)  # air/vacuum layer (n = 0)
+
+    from .materials import get_material
+    if coating_dens is None: 
+        if get_material(coating) == None:
+            raise Exception(f"{coating} not found.\n" \
+            "Specify Density or use add_material() to add a custom material")
+        coating, coating_dens = get_material(coating)
+
+    delta, beta, _ = xray_delta_beta(coating, coating_dens, energy)
+    n_t = 1 - delta + 1j*beta
+    ktz = k0*np.sqrt(n_t**2 - np.cos(theta)**2)
+
+    # substrate layer
+    if substrate_dens is None:
+        if get_material(substrate) is None:
+            raise Exception(f"{substrate} not found.\n" \
+            "Specify Density or use add_material() to add a custom material")
+        substrate, substrate_dens = get_material(substrate)
+    delta_sub, beta_sub, _ = xray_delta_beta(substrate, substrate_dens, energy)
+    n_sub = 1 - delta_sub + 1j*beta_sub
+    kz_sub = k0*np.sqrt(n_sub**2 - np.cos(theta)**2)
+
+    if binder is not None:
+        if binder_thick is None:
+            raise Exception(f'Please provide thickness in Angstroms of binder layer')
+        if binder_dens is None:
+            if get_material(binder) == None:
+                raise Exception(f"{binder} not found.\n" \
+                "Specify Density or use add_material() to add a custom material")
+            binder, binder_dens = get_material(binder)
+        delta_b, beta_b, _ = xray_delta_beta(binder, binder_dens, energy)
+        n_b = 1 - delta_b + 1j*beta_b
+        kbz = k0*np.sqrt(n_b**2 - np.cos(theta)**2)
+        r_amp = (kbz - kz_sub)/(kbz + kz_sub)
+        fresnel_r = (ktz - kbz)/(ktz + kbz)
+        p2 = np.exp(2j*binder_thick*kbz)
+        r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
+
+    else:
+        r_amp = (ktz - kz_sub)/(ktz + kz_sub)
+
+    fresnel_r = (kiz - ktz)/(kiz + ktz)
+    p2 = np.exp(2j*coating_thick*ktz)
+    r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
+
+    if polarization == 'p' or roughness != 0.0:
+        print("Warning: polarization and roughness not implemented for multilayer reflectivity")
+    #TODO roughness
+    #TODO polarization
+
+    if output == 'intensity': 
+        return (r_amp*r_amp.conjugate()).real
+    elif output == 'amplitude':
+        return r_amp
+    else:
+        raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
+
+
 
 def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
                       sensitivity=1.e-6, sensitivity_units='A/V',

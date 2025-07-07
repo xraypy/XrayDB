@@ -14,6 +14,7 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     xray_edge, xray_lines, xray_line, fluor_yield,
                     ck_probability, core_width, guess_edge,
                     xray_delta_beta, darwin_width, mirror_reflectivity,
+                    multilayer_reflectivity, coated_reflectivity,
                     ionchamber_fluxes, XrayDB)
 
 
@@ -579,7 +580,41 @@ def test_mirror_reflectivity():
 
     assert_allclose(mirror_reflectivity('Pt', 0.001, 80000), 0.74, rtol=0.005)
 
+def test_multilayer_reflectivity():
+    WSi_r = np.array([])
+
+    stackup = ['W', 'Si']
+    thickness = [18, 27]
+    substrate = 'SiO2'
+    angle = np.linspace(0, 0.5, 25)
+    energy = 1000
+    n_periods = 40
+    r = multilayer_reflectivity(stackup, thickness, substrate, angle, energy, n_periods)
+
+    assert_allclose(r, WSi_r, rtol=0.005)
+
+def test_coated_reflectivity():
+    RhCrSi_r = np.array([1.000000e+00, 7.776340e-01, 5.477470e-01, 2.409720e-01, 5.100943e-02,
+                        1.580261e-02, 6.627787e-03, 3.180575e-03, 1.703938e-03, 1.107435e-03,
+                        7.098140e-04, 5.086654e-04, 4.295797e-04, 2.072734e-04, 1.592465e-04,
+                        1.707207e-04, 1.133023e-04, 8.167967e-05, 5.430874e-05, 8.805342e-05,
+                        2.725561e-05, 4.779536e-05, 3.314265e-05, 2.371928e-05, 2.565458e-05,
+                        2.122170e-05])
+
+    coating = 'Rh'
+    coating_thick = 500
+    substrate = 'Si'
+    angle = np.linspace(0, 0.5, 25)
+    energy = 1000
+    binder = 'Cr'
+    binder_thick = 50
+    r = coated_reflectivity(coating, coating_thick, substrate, angle, energy, binder=binder, binder_thick=binder_thick)
+
+    assert_allclose(r, RhCrSi_r, rtol=0.005)
+
+
 def test_darwin_width():
+
     def dw_dide(energy, crystal, hkl):
         """estimate darwin width in energy from min/max derivative"""
         dat = darwin_width(energy, crystal=crystal, hkl=hkl)

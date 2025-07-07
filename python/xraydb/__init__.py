@@ -27,5 +27,6 @@ from .xray import (atomic_number, atomic_symbol, atomic_name, atomic_mass,
                    xray_delta_beta, get_xraydb, darwin_width,
                    dynamical_theta_offset,
                    mirror_reflectivity, multilayer_reflectivity,
+                   coated_reflectivity,
                    ionchamber_fluxes, ionization_potential,
                    transmission_sample)

@@ -472,6 +472,9 @@ with increasing energy, increasing angle, and decreasing electron density.
 Still, this reflectivity is one of the few ways to steer X-ray beams and so
 is widely used in synchrotron radiation sources.
 
+Single Layer mirrors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The reflectivity can be calculated with the :func:`mirror_reflectivity`
 function which takes X-ray energy, incident angle, and mirror material as
 arguments.
@@ -491,6 +494,60 @@ a few common mirror materials is given as
 
     X-ray mirror reflectivity at :math:`\theta = 2\mathrm{mrad}` for
     selected mirror surfaces and coatings used for mirrors.
+
+
+Multilayer Mirrors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For more complex mirrors, such as those made of multiple materials, the reflectivity
+can be calculated with Parratt's Recursive Method using the :func:`multilayer_reflectivity` function. 
+This function takes a list of materials from top to bottom, a matching list of 
+thicknesses of each layer, substrate material, incident angle, energy, and the number of periods.
+
+An example usage, calculating the reflectivity at 1000 eV vs. grazing angle for a 40*[W, Si] 
+layered mirror on SiO2 substrate is given as 
+
+.. .. literalinclude:: ../python/examples/mulilayer_mirror.py
+
+
+.. .. _fig_mirrors:
+
+.. .. figure::  _images/multilayer_mirror.png
+..     :target: _images/multilayer_mirror.png
+..     :width: 75%
+..     :align: center
+
+    .. X-ray mirror reflectivity at :math:`\theta = 2\mathrm{mrad}` for
+    .. selected mirror surfaces and coatings used for mirrors.
+
+
+
+Coated mirrors 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In principle, reflectivity calculation for coated mirrors is the same as for multilayer mirrors; however,
+:func:`coated_reflectivity`` is provided to simplify the recursion and have more clear input parameters.
+The function takes top layer material and thickness, substrate material and thickness, incident angle,
+energy, and optional binding layer parameters.
+
+An example script calculating the reflectivity at 1000 eV vs. grazing angle for a Rhodium on SiO2 mirror with 
+a Chromium binding layer is given as
+
+.. .. literalinclude:: ../python/examples/coated_mirror.py
+
+
+.. .. _fig_mirrors:
+
+.. .. figure::  _images/coated_mirror.png
+..     :target: _images/coated_mirror.png
+..     :width: 75%
+..     :align: center
+
+    .. X-ray mirror reflectivity at :math:`\theta = 2\mathrm{mrad}` for
+    .. selected mirror surfaces and coatings used for mirrors.
+
+
+
+
+
 
 
 

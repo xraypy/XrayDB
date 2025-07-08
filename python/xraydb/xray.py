@@ -958,7 +958,6 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
         fresnel_r = (kiz - kz[0])/(kiz + kz[0])
 
     elif polarization == 'p': 
-        print('p polar')
         r_amp = (kz[-1]/n[-1]*n_sub - kz_sub/n_sub*n[-1])/(kz[-1]/n[-1]*n_sub + kz_sub/n_sub*n[-1])
         if substrate_rough >= 1.e-12:
             r_amp = r_amp * np.exp(-2*(substrate_rough**2*kz[-1]*kz_sub))

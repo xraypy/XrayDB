@@ -5,9 +5,7 @@ Copyright 2025  Matthew Newville, The University of Chicago, newville@cars.uchic
 using the MIT license
 """
 from collections import namedtuple
-from matplotlib.pyplot import polar
 import numpy as np
-from pandas.core.base import NoNewAttributesMixin
 
 from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
                     QCHARGE, SI_PREFIXES, index_nearest)

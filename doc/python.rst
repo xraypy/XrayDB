@@ -106,6 +106,8 @@ using it:
       :func:`xray_delta_beta`                 anomalous index of refraction for material and energy
       :func:`darwin_width`                    Darwin widths for monochromator crystals
       :func:`mirror_reflectivity`             X-ray reflectivities for mirror materials (thick slab limit)
+      :func:`multilayer_reflectivity`         X-ray reflectivities for multilayer mirrors
+      :func:`coated_reflectivity`             X-ray reflectivities for coated mirrors
       :func:`ionization_potential`            effective ionization potential for a gas, as for ion chambers
       :func:`ionchamber_fluxes`               calculate fluxes from ion chamber voltages, gases, and sensitivities
      ======================================= =======================================================================
@@ -202,6 +204,10 @@ For some further examples, see :ref:`example_calcs`.
 .. autofunction:: darwin_width
 
 .. autofunction:: mirror_reflectivity
+
+.. autofunction:: multilayer_reflectivity
+
+.. autofunction:: coated_reflectivity
 
 .. autofunction:: ionization_potential
 

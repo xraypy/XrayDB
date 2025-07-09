@@ -14,6 +14,7 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     xray_edge, xray_lines, xray_line, fluor_yield,
                     ck_probability, core_width, guess_edge,
                     xray_delta_beta, darwin_width, mirror_reflectivity,
+                    multilayer_reflectivity, coated_reflectivity,
                     ionchamber_fluxes, XrayDB)
 
 
@@ -579,7 +580,55 @@ def test_mirror_reflectivity():
 
     assert_allclose(mirror_reflectivity('Pt', 0.001, 80000), 0.74, rtol=0.005)
 
+
+def test_multilayer_reflectivity():
+    # generated with xrt
+    # at low reflectivity, xrt and xraydb can differ up to 10%
+    xrt_r = np.array([0.9682573639725451, 0.9692894183725779,
+                      0.9551412674578308, 0.8718946307435569, 0.8843826288196437,
+                      0.8896591645964965, 0.8988360437159508, 0.9051158550840065,
+                      0.9104682228466688, 0.9143461645742539, 0.9171157874862768,
+                      0.9194212398362299, 0.9212651629926719, 0.9226454408036748,
+                      0.9236019502977926, 0.9241776792239949, 0.9244201997527346,
+                      0.9243126499599257, 0.9236380508617884, 0.9227686240812235,
+                      0.9216928483264080, 0.9199374247672095, 0.9175654141148161,
+                      0.9145854804063109, 0.9078206179439292])
+
+    stackup = ['Si', 'W']
+    thickness = [27, 18]
+    substrate = 'Si'
+    energy = np.linspace(1000, 10000, 25)
+    theta = 0.004
+    n_periods = 40
+    r = multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_periods)
+
+    assert_allclose(r, xrt_r, rtol=0.005)
+
+def test_coated_reflectivity():
+    # generated with xrt
+    # at low reflectivity, xrt and xraydb can differ up to 10%
+    xrt_r = np.array([0.955832355448275, 0.9607498872134996, 0.9633490690665248,
+                      0.9644769321246166, 0.9645676240437896, 0.9600938273346961,
+                      0.8509155394149021, 0.8638043361169211, 0.8786334026702274,
+                      0.8873502801010402, 0.8933107988079941, 0.8979355347158112,
+                      0.9016093183389469, 0.9047690354498116, 0.907622430698658,
+                      0.9101553863828132, 0.91235727241249, 0.9142224085825185, 0.915522720229593,
+                      0.9166717314973307, 0.9177369597483173, 0.91847146708513,
+                      0.9192559822224173, 0.9201650933145156, 0.920513174385813])
+
+    E = np.linspace(1000, 10000, 25)
+    theta = 4e-3
+    coating = 'Rh'
+    coating_thick = 300
+    substrate = 'Si'
+    r = coated_reflectivity(coating, coating_thick, substrate, theta, E)
+
+    assert_allclose(r, xrt_r, rtol=0.005)
+
+
+
 def test_darwin_width():
+
     def dw_dide(energy, crystal, hkl):
         """estimate darwin width in energy from min/max derivative"""
         dat = darwin_width(energy, crystal=crystal, hkl=hkl)

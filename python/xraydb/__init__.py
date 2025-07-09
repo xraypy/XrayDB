@@ -20,11 +20,13 @@ from .materials import (material_mu, material_mu_components, get_materials,
 
 from .xray import (atomic_number, atomic_symbol, atomic_name, atomic_mass,
                    atomic_density, xray_edges, xray_edge, xray_lines,
-                   xray_line, fluor_yield, ck_probability, core_width, f0,
+                   xray_line, fluor_yield, ck_probability, core_width, f0, 
                    f0_ions, chantler_energies, f1_chantler, f2_chantler,
                    mu_chantler, mu_elam, coherent_cross_section_elam,
                    incoherent_cross_section_elam, guess_edge,
                    xray_delta_beta, get_xraydb, darwin_width,
                    dynamical_theta_offset,
-                   mirror_reflectivity, ionchamber_fluxes,
-                   ionization_potential, transmission_sample)
+                   mirror_reflectivity, multilayer_reflectivity,
+                   coated_reflectivity,
+                   ionchamber_fluxes, ionization_potential,
+                   transmission_sample)

@@ -1358,12 +1358,12 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     gscale = 2 * (dspace)**2 * R0 / (m*a**3)
 
     if polarization is None or polarization.startswith('u'): # unpolarized
-        gscale *= (1 + abs(np.cos(2*theta)))/2.0
+    	eqr *= (1 + abs(np.cos(2*theta)))/2.0
     elif polarization.startswith('p'):
-        gscale *= abs(np.cos(2*theta))
+    	eqr *= abs(np.cos(2*theta))
 
-    g0 = gscale * 8   * (f0(crystal, 0)[0] + f1 - 1j*f2)
-    g  = gscale * eqr * (f0(crystal, q)[0] + f1 - 1j*f2)
+    g0 = 8.0 * gscale * (f0(crystal, 0)[0] + f1 - 1j*f2) # polarization is always equal to 1.0
+    g  = eqr * gscale * (f0(crystal, q)[0] + f1 - 1j*f2)
 
     total = abs(2*g/(m*np.pi))
 

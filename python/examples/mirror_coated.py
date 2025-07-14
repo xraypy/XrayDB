@@ -6,17 +6,18 @@ coating = 'Rh'
 coating_thick = 300
 substrate = 'Si'
 theta = 0.004
-energy = np.linspace(10000, 30000, 500)
+energy = np.linspace(10000, 35000, 500)
 binder = 'Cr'
 binder_thick = 30
 
-r = coated_reflectivity(coating, coating_thick, substrate, theta, energy, binder=binder, binder_thick=binder_thick)
-r_Rh = mirror_reflectivity('Rh', theta, energy)
+refl_coat = coated_reflectivity(coating, coating_thick, substrate, theta, energy, binder=binder, binder_thick=binder_thick)
+refl_rhod = mirror_reflectivity('Rh', theta, energy)
 
-plt.plot(energy/1000, r, label='Rh coated')
-plt.plot(energy/1000, r_Rh, label='Rh bulk')
-plt.title(f'{coating_thick//10} nm {coating}/{binder} coated {substrate} mirror ' + 'at $\\theta$ = ' + f'{theta*1000:.0f} mrad')
-plt.xlabel('Energy (keV)')
+title = f'{coating_thick}\u212B {coating}/ {binder_thick}\u212B {binder} coated {substrate} mirror \u03B8 = {theta*1000:.0f} mrad'
+plt.plot(energy, refl_coat, label='Rh coated')
+plt.plot(energy, refl_rhod, label='Rh bulk')
+plt.title(title)
+plt.xlabel('Energy (eV)')
 plt.ylabel('Reflectivity')
 plt.yscale('log')
 plt.legend()

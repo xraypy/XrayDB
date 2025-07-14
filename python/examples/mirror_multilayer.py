@@ -2,18 +2,19 @@ import numpy as np
 from xraydb import multilayer_reflectivity
 import matplotlib.pyplot as plt
 
-stackup = ['Si', 'W']
-N = 50
-thickness = [27, 18] # angstroms
+# 40 layers of [27Ang Si, 18Ang W]
+materials = ['Si', 'W']
+thicknesses = [27, 18] # angstroms
+n_periods = 40
 substrate = 'SiO2'
 theta = 0.01
 energy = np.linspace(500, 20000, 5000)
 
-r = multilayer_reflectivity(
-    stackup, thickness, substrate, theta, energy, n_periods=N)
-plt.plot(energy/1000, r)
-plt.title('$40 \\times [\mathrm{27\ \AA\ Si, 18\ \AA\ W}]$ ' \
-          'multilayer at $\\theta$ = ' + f'{theta*1000:.0f} mrad')
-plt.xlabel('Energy (keV)')
+reflect = multilayer_reflectivity(materials, thicknesses, substrate,
+                                  theta, energy, n_periods=n_periods)
+
+plt.plot(energy, reflect)
+plt.title(f'40 x [27\u212B Si, 18\u212B W] multilayer at \u03B8 = {theta*1000:.0f} mrad')
+plt.xlabel('Energy (eV)')
 plt.ylabel('Reflectivity')
 plt.show()

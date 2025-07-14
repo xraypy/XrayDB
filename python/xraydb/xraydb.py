@@ -11,6 +11,7 @@ using the MIT license
 
 import os
 import json
+import atexit
 from warnings import warn
 from collections import namedtuple
 import numpy as np
@@ -114,9 +115,11 @@ class XrayDB():
         elems = self.get_cache('elements')
         self.__atomic_symbols = [e.element for e in elems]
         self.__atomic_names = [e.name for e in elems]
+        atexit.register(self.close)
 
     def close(self):
         "close session"
+        self.engine.dispose()
         self.session.flush()
         self.session.close()
 

@@ -1,6 +1,6 @@
 .. _example_calcs:
 
-Example Calculations of X-ray properties of materials
+Calculations of X-ray properties of materials
 =========================================================
 
 .. _XrayDB Web App (xrayabsorption.org):  https://xraydb.xrayabsorption.org/
@@ -8,15 +8,16 @@ Example Calculations of X-ray properties of materials
 .. module:: xraydb
    :noindex:
 
-A few detailed examples of using the `xraydb.sqlite` to calculate the X-ray
-properties of materials are presented here.  These all use the functions in the
-python `xraydb` module, which is describe in more detail in the next chapter,
-:ref:`python_api`.  The examples will explore some aspects of X-ray physics,
-but will not give a complete tutorial on the concepts here.  For a good
-reference on X-ray physics, see :cite:`AlsNielson_McMorrow2011`.
+This section presents several detailed examples of using
+`xraydb.sqlite` to calculate X-ray properties of materials.  All of
+the examples here us the functions in the python `xraydb` module,
+which is describe in more detail in the next chapter,
+:ref:`python_api`.  The examples will explore some aspects of X-ray
+physics, but will not give a complete tutorial on the concepts here.
+For a good reference on X-ray physics, see
+:cite:`AlsNielson_McMorrow2011`.
 
 Many of these calculations are also available at `XrayDB Web App (xrayabsorption.org)`_.
-
 
 
 X-ray attenuation by elements

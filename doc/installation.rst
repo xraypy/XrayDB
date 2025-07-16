@@ -43,6 +43,31 @@ For any release or any master branch from the git repository, running
 failures.
 
 
+Acknowledgements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The project began with the data from the compilation of basic atomic
+properties and X-ray absorption edge energies, emission energies, and
+absorption cross sections from :cite:`Elam_Ravel_Sieber`, who
+assembled data from a several sources. The original code to store this
+with SQLite was written by Darren S. Dale (see
+https://github.com/praxes/elam_physical_reference) from CHESS.  More
+data has been added from other sources.  Energy widths of core holes
+for excited electronic levels from :cite:`Keski_Krause` and
+:cite:`Krause_Oliver`.  Elastic X-ray scattering data, :math:`f_0(q)`
+is taken from :cite:`Waasmaier_Kirfel`.  Resonant scattering cross
+sections :math:`f'(E)` and :math:`f''(E)` and absorption cross
+sections from :cite:`Chantler` as from
+https://www.nist.gov/pml/data/ffast/index.cfm, but on a finer energy
+grid been provided directly by Christopher T. Chantler
+:cite:`Chantler2016`.  Nathan Whittington from U Tennessee and Roman
+Chernikov from BNL provided the code to calculate reflectivity of
+multilayer and coated mirrors.  Code for better calculation of sample
+thicknesses for XAFS transmission samples was provided by easyXAFS.
+Most of the remaining code was written and is maintained by Matt
+Newville, though with contributions from many others.
+
+
 Citing this work
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

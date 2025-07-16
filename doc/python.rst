@@ -3,8 +3,8 @@
 Using XrayDB from Python
 =========================
 
-The `python` directory contains the source code for a Python module for
-XrayDB.  This module gives a user-friendly wrapping of the XrayDB, and
+The `xraydb` Python module
+gives a user-friendly wrapping of the XrayDB, and
 automates the the conversion of data from sqlite database into Python and
 numpy arrays. The module requires the `numpy`, `scipy` and `sqlalchemy`
 modules, all of which are readily available and can be installed with::
@@ -12,15 +12,19 @@ modules, all of which are readily available and can be installed with::
     pip install xraydb
 
 The current version of the Python module is |release|, corresponding to
-version 6 of `xraydb.sqlite`.
+version 6 of `xraydb.sqlite`.  The source code for this module is in
+the `python` folder from the GitHub repository.
 
-The Python xraydb module
+
+
+The Python ``xraydb`` module
 ----------------------------------
 
 .. module:: xraydb
 
-To use the XrayDB from Python, you can import the `xraydb` module and start
-using it:
+The `xraydb` module gives a low-level interface to the data in the
+`xraydb.sqlite` database.  To use this import the `xraydb` module
+with:
 
     >>> import xraydb
     >>> xraydb.atomic_number('Ag')

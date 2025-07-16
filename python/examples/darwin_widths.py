@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 dw_si111 = darwin_width(10000, 'Si', (1, 1, 1))
 dw_si333 = darwin_width(30000, 'Si', (3, 3, 3))
 
+print(dw_si111.theta_width*1e6)
+
 fmt_string = "Darwin Width for {:s} at {:.0f} keV: {:5.2f} microrad, {:5.2f} eV"
 print(fmt_string.format('Si(111)', 10,
                         dw_si111.theta_width*1e6,
@@ -28,7 +30,7 @@ ax.plot(dw_si333.dtheta*1e6, dw_si333.intensity**2, label='$I^2$ Si(333) 30 keV'
 
 
 ax.set_title('X-ray diffraction intensity at 10keV')
-ax.set_xlabel('Angle - $\\theta_B$ ($ \mu \mathrm{rad}$)')
+ax.set_xlabel('Angle - $\\theta_B$ ($ \\mu \\mathrm{rad}$)')
 ax.set_ylabel('Reflectivity')
 ax.legend()
 

@@ -25,7 +25,7 @@ addopts = "--cov=xraydb --cov-report html"
 
 [project]
 name = "xraydb"
-version = "4.5.6"
+version = "4.5.7"
 requires-python = ">= 3.9"
 description = "calculations with XrayDB: reference data for X-ray interactions with matter"
 readme = "README.md"

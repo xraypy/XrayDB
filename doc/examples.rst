@@ -1,3 +1,7 @@
+.. only:: html
+
+   :math:`\newcommand{\AA}{\unicode{x212B}}`
+
 .. _example_calcs:
 
 Calculations of X-ray properties of materials
@@ -15,7 +19,7 @@ which is describe in more detail in the next chapter,
 :ref:`python_api`.  The examples will explore some aspects of X-ray
 physics, but will not give a complete tutorial on the concepts here.
 For a good reference on X-ray physics, see
-:cite:`AlsNielson_McMorrow2011`.
+:cite:`AlsNielson_McMorrow2011`.<
 
 Many of these calculations are also available at `XrayDB Web App (xrayabsorption.org)`_.
 
@@ -531,8 +535,8 @@ parameters.  The function takes top layer material and thickness,
 substrate material and thickness, incident angle, energy, and optional
 binding layer parameters.
 
-An example script calculating the reflectivity at :math:`\theta = 4\
-\mathrm{mrad}` for a Rhodium slab and Rhodium coated mirror is given
+An example script calculating the reflectivity at :math:`\theta = 4
+\mathrm{mrad}` for a rhodium slab and rhodium coated mirror is given
 as
 
 .. literalinclude:: ../python/examples/mirror_coated.py
@@ -545,9 +549,9 @@ as
     :width: 75%
     :align: center
 
-    X-ray reflectivity of a Rhodium on Silicon mirror with a 3
-    :math:`\unicode{x212B}` Chromium binding layer compared to a pure
-    slab of Rhodium.
+    X-ray reflectivity of a rhodium on silicon mirror with a 3
+    :math:`\mathrm{\AA}` chromium binding layer compared to a pure
+    slab of rhodium.
 
 Darwin widths of monochromator crystals
 -------------------------------------------

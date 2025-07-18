@@ -522,8 +522,10 @@ def xray_line(element, line):
     lines = xdb.xray_lines(element)
 
     family = line.lower()
-    if family == 'k': family = 'ka'
-    if family == 'l': family = 'la'
+    if family == 'k':
+        family = 'ka'
+    if family == 'l':
+        family = 'la'
     if family in ('ka', 'kb', 'la', 'lb', 'lg'):
         scale = 1.e-99
         value = 0.0
@@ -666,7 +668,7 @@ def ionization_potential(gas):
     xdb = get_xraydb()
     try:
         return xdb.ionization_potential(gas)
-    except:
+    except ValueError:
         return 32.0
 
 
@@ -855,8 +857,8 @@ def mirror_reflectivity(formula, theta, energy, density=None,
     else:
         raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
 
-def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_periods=1, 
-                                density=None, substrate_density=None, substrate_rough=0.0, 
+def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_periods=1,
+                                density=None, substrate_density=None, substrate_rough=0.0,
                                 surface_rough=0.0, polarization='s', output='intensity'):
     """reflectivity for a multilayer mirror.
 
@@ -888,9 +890,9 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
           usually mean 'vertically deflecting' and 'p' will usually mean
           'horizontally deflecting'.
     """
- 
+
     if thickness is None:
-        raise Exception(f'Please provide thicknesses in Angstroms of each layer (exluding substrate)')
+        raise Exception('Please provide thicknesses in Angstroms of each layer (exluding substrate)')
     if len(stackup) != len(thickness):
         raise Exception(f'number of materials ({len(stackup)}) should match number of thicknesses ({len(thickness)})')
     if density is not None and len(stackup) != len(density):
@@ -905,10 +907,10 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
         energy = np.ravel(energy)
 
     if density is None:
-        density = [None]*len(stackup)   
+        density = [None]*len(stackup)
 
-    n_layers = len(stackup) 
-    
+    n_layers = len(stackup)
+
     k0 = 2 * np.pi * energy / PLANCK_HC
     kiz = k0*np.sin(theta)  # air/vacuum layer (n = 0)
     n = []
@@ -925,7 +927,7 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
         delta, beta, _ = xray_delta_beta(stackup[i], density[i], energy)
         n_i = 1 - delta + 1j*beta
         n.append(n_i)
-        kz_i = k0*np.sqrt(n_i**2 - np.cos(theta)**2) 
+        kz_i = k0*np.sqrt(n_i**2 - np.cos(theta)**2)
         kz.append(kz_i)
 
     t = thickness * n_periods
@@ -955,7 +957,7 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
         # surface
         fresnel_r = (kiz - kz[0])/(kiz + kz[0])
 
-    elif polarization == 'p': 
+    elif polarization == 'p':
         r_amp = (kz[-1]/n[-1]*n_sub - kz_sub/n_sub*n[-1])/(kz[-1]/n[-1]*n_sub + kz_sub/n_sub*n[-1])
         if substrate_rough >= 1.e-12:
             r_amp = r_amp * np.exp(-2*(substrate_rough**2*kz[-1]*kz_sub))
@@ -977,16 +979,16 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
     if two_dim:
         r_amp = r_amp.reshape(shape)
 
-    if output == 'intensity': 
+    if output == 'intensity':
         return (r_amp*r_amp.conjugate()).real
     elif output == 'amplitude':
         return r_amp
     else:
         raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
-    
 
-def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coating_dens=None, surface_roughness=0.0, 
-                        substrate_dens=None, substrate_roughness=0.0, binder=None, binder_thick=None, binder_dens=None, 
+
+def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coating_dens=None, surface_roughness=0.0,
+                        substrate_dens=None, substrate_roughness=0.0, binder=None, binder_thick=None, binder_dens=None,
                         polarization='s', output='intensity'):
     """reflectivity for a coated mirror.
 
@@ -1000,7 +1002,7 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
        surface_roughness (float):   coating roughness in Angstroms
        substrate_dens (float):      density of substrate in g/cm^3
        substrate_roughness (float): substrate roughness in Angstroms
-       binder (str):                binder material name or formula 
+       binder (str):                binder material name or formula
        binder_thick (float):        thickness of binder in Angstroms
        binder_dens (float):         density of binder in g/cm^3
        polarization ('s' or 'p'):   mirror orientation relative to X-ray polarization
@@ -1019,9 +1021,9 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
           usually mean 'vertically deflecting' and 'p' will usually mean
           'horizontally deflecting'.
     """
- 
+
     if coating_thick is None:
-        raise Exception(f'Please provide thickness of the coating in Angstroms')
+        raise Exception('Please provide thickness of the coating in Angstroms')
 
     stackup = [coating]
     thickness = [coating_thick]
@@ -1029,15 +1031,15 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
 
     if binder is not None:
         if binder_thick is None:
-            raise Exception(f'Please provide thickness of binding layer in Angstroms')
+            raise Exception('Please provide thickness of binding layer in Angstroms')
         stackup.append(binder)
         thickness.append(binder_thick)
         if binder_dens is not None:
             dens = [coating_dens, binder_dens]
 
-    r = multilayer_reflectivity(stackup, thickness, substrate, theta, energy, density=dens, 
+    r = multilayer_reflectivity(stackup, thickness, substrate, theta, energy, density=dens,
                                 substrate_density=substrate_dens, substrate_rough=substrate_roughness,
-                                surface_rough=surface_roughness, polarization=polarization, 
+                                surface_rough=surface_roughness, polarization=polarization,
                                 output=output)
     return r
 
@@ -1143,8 +1145,10 @@ def ionchamber_fluxes(gas='nitrogen', volts=1.0, length=100.0, energy=10000.0,
     gas_comps = []
     for gname, frac in gas.items():
         ionpot = ionization_potential(gname)
-        if gname == 'N2': gname = 'nitrogen'
-        if gname == 'O2': gname = 'oxygen'
+        if gname == 'N2':
+            gname = 'nitrogen'
+        if gname == 'O2':
+            gname = 'oxygen'
         gas_total += frac
         gas_comps.append((gname, frac, ionpot))
 
@@ -1358,9 +1362,9 @@ def darwin_width(energy, crystal='Si', hkl=(1, 1, 1), a=None,
     gscale = 2 * (dspace)**2 * R0 / (m*a**3)
 
     if polarization is None or polarization.startswith('u'): # unpolarized
-    	eqr *= (1 + abs(np.cos(2*theta)))/2.0
+        eqr *= (1 + abs(np.cos(2*theta)))/2.0
     elif polarization.startswith('p'):
-    	eqr *= abs(np.cos(2*theta))
+        eqr *= abs(np.cos(2*theta))
 
     g0 = 8.0 * gscale * (f0(crystal, 0)[0] + f1 - 1j*f2) # polarization is always equal to 1.0
     g  = eqr * gscale * (f0(crystal, q)[0] + f1 - 1j*f2)

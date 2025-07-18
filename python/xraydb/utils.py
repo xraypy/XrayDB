@@ -1,9 +1,4 @@
-import sys
-import os
-import platform
-
 import numpy as np
-from scipy.interpolate import UnivariateSpline
 import scipy.constants as consts
 
 # atoms/mol =  6.0221413e23  atoms/mol

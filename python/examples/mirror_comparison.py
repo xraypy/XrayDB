@@ -14,7 +14,7 @@ plt.plot(energy, r_ni, label='Ni')
 plt.plot(energy, r_rh, label='Rh')
 plt.plot(energy, r_pt, label='Pt')
 
-plt.title('X-ray reflectivity at $\\theta=2 \mathrm{mrad}$')
+plt.title('X-ray reflectivity at $\\theta=2 \\mathrm{mrad}$')
 plt.xlabel('Energy (eV)')
 plt.ylabel('Reflectivity')
 plt.legend()

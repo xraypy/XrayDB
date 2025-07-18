@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Example Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=0f882399" />
-    <script src="_static/documentation_options.js?v=3104884c"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <title>Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
+    <script src="_static/documentation_options.js?v=957c0c55"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -33,7 +33,7 @@
           <a href="periodictable.html" title="X-ray Periodic Table of the Elements"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Example Calculations of X-ray properties of materials</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Calculations of X-ray properties of materials</a></li> 
       </ul>
     </div>  
 
@@ -42,14 +42,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="example-calculations-of-x-ray-properties-of-materials">
-<span id="example-calcs"></span><h1>Example Calculations of X-ray properties of materials<a class="headerlink" href="#example-calculations-of-x-ray-properties-of-materials" title="Link to this heading">¶</a></h1>
-<p>A few detailed examples of using the <cite>xraydb.sqlite</cite> to calculate the X-ray
-properties of materials are presented here.  These all use the functions in the
-python <cite>xraydb</cite> module, which is describe in more detail in the next chapter,
-<a class="reference internal" href="python.html#python-api"><span class="std std-ref">Using XrayDB from Python</span></a>.  The examples will explore some aspects of X-ray physics,
-but will not give a complete tutorial on the concepts here.  For a good
-reference on X-ray physics, see <span id="id1">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.</p>
+  <p><span class="math notranslate nohighlight">\(\newcommand{\AA}{\unicode{x212B}}\)</span></p>
+<section id="calculations-of-x-ray-properties-of-materials">
+<span id="example-calcs"></span><h1>Calculations of X-ray properties of materials<a class="headerlink" href="#calculations-of-x-ray-properties-of-materials" title="Link to this heading">¶</a></h1>
+<p>This section presents several detailed examples of using
+<cite>xraydb.sqlite</cite> to calculate X-ray properties of materials.  All of
+the examples here us the functions in the python <cite>xraydb</cite> module,
+which is describe in more detail in the next chapter,
+<a class="reference internal" href="python.html#python-api"><span class="std std-ref">Using XrayDB from Python</span></a>.  The examples will explore some aspects of X-ray
+physics, but will not give a complete tutorial on the concepts here.
+For a good reference on X-ray physics, see
+<span id="id1">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.&lt;</p>
 <p>Many of these calculations are also available at <a class="reference external" href="https://xraydb.xrayabsorption.org/">XrayDB Web App (xrayabsorption.org)</a>.</p>
 <section id="x-ray-attenuation-by-elements">
 <h2>X-ray attenuation by elements<a class="headerlink" href="#x-ray-attenuation-by-elements" title="Link to this heading">¶</a></h2>
@@ -68,10 +71,10 @@ following script will plot <span class="math notranslate nohighlight">\(\mu/\rho
 <span class="c1">#</span>
 <span class="c1"># plot X-ray mass attenuation for selected elements</span>
 <span class="c1">#</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">wxmplot.interactive</span> <span class="k">as</span> <span class="nn">wi</span>
-<span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">mu_elam</span> <span class="p">,</span> <span class="n">atomic_symbol</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wxmplot.interactive</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wi</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">mu_elam</span> <span class="p">,</span> <span class="n">atomic_symbol</span>
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># energy in eV</span>
       
@@ -110,9 +113,9 @@ different components of <span class="math notranslate nohighlight">\(\mu/\rho\)<
 <span class="c1">#</span>
 <span class="c1"># plot components of X-ray mass attenuation for C </span>
 <span class="c1">#</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">mu_elam</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">mu_elam</span> 
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># energy in eV</span>
       
@@ -179,10 +182,10 @@ X-ray energy:</p>
 <span class="c1">#</span>
 <span class="c1"># calculate the fraction of X-rays transmitted through 1 mm of water</span>
 <span class="c1">#</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">material_mu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">material_mu</span>
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">41000</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
 
@@ -229,7 +232,7 @@ that X-ray scattering and emission can be observed strongly, with neither
 all primary and scattered X-rays being absorbed by the material itself, but
 also not simply passing through the material without any interaction.  For
 example, one can simply do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">material_mu</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">material_mu</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mu_20kev</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;CaCO3&#39;</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">2.71</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CaCO3 1/e depth at 20keV = </span><span class="si">{:.3f}</span><span class="s2"> mm&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">10</span><span class="o">/</span><span class="n">mu_20kev</span><span class="p">))</span>
 <span class="go">CaCO3 1/e depth at 20keV = 0.648 mm</span>
@@ -535,14 +538,16 @@ at relatively low energies and shallow angles, but drops off dramatically
 with increasing energy, increasing angle, and decreasing electron density.
 Still, this reflectivity is one of the few ways to steer X-ray beams and so
 is widely used in synchrotron radiation sources.</p>
+<section id="single-layer-mirrors">
+<h3>Single Layer mirrors<a class="headerlink" href="#single-layer-mirrors" title="Link to this heading">¶</a></h3>
 <p>The reflectivity can be calculated with the <a class="reference internal" href="python.html#xraydb.mirror_reflectivity" title="xraydb.mirror_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a>
 function which takes X-ray energy, incident angle, and mirror material as
 arguments.</p>
 <p>An example script, comparing the energy-dependence of the reflectivity for
 a few common mirror materials is given as</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">mirror_reflectivity</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">mirror_reflectivity</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">51000</span><span class="p">,</span> <span class="mi">501</span><span class="p">)</span>
 
@@ -556,7 +561,7 @@ a few common mirror materials is given as</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_rh</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rh&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_pt</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pt&#39;</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;X-ray reflectivity at $</span><span class="se">\\</span><span class="s1">theta=2 \mathrm</span><span class="si">{mrad}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;X-ray reflectivity at $</span><span class="se">\\</span><span class="s1">theta=2 </span><span class="se">\\</span><span class="s1">mathrm</span><span class="si">{mrad}</span><span class="s1">$&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -571,6 +576,91 @@ a few common mirror materials is given as</p>
 selected mirror surfaces and coatings used for mirrors.</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
+</section>
+<section id="multilayer-mirrors">
+<h3>Multilayer Mirrors<a class="headerlink" href="#multilayer-mirrors" title="Link to this heading">¶</a></h3>
+<p>For more complex mirrors, such as those made of multiple materials,
+the reflectivity can be calculated with Parratt’s Recursive Method
+using the <a class="reference internal" href="python.html#xraydb.multilayer_reflectivity" title="xraydb.multilayer_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">multilayer_reflectivity()</span></code></a> function.  This function
+takes a list of materials from top to bottom, a matching list of
+thicknesses of each layer, substrate material, incident angle, energy,
+and the number of periods.</p>
+<p>An example usage, calculating the reflectivity at 1000 eV vs. grazing
+angle for a 40*[Si, W] layered mirror on SiO2 substrate is given as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">multilayer_reflectivity</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># 40 layers of [27Ang Si, 18Ang W]</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">]</span>
+<span class="n">thicknesses</span> <span class="o">=</span> <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span> <span class="c1"># angstroms</span>
+<span class="n">n_periods</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">substrate</span> <span class="o">=</span> <span class="s1">&#39;SiO2&#39;</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+
+<span class="n">reflect</span> <span class="o">=</span> <span class="n">multilayer_reflectivity</span><span class="p">(</span><span class="n">materials</span><span class="p">,</span> <span class="n">thicknesses</span><span class="p">,</span> <span class="n">substrate</span><span class="p">,</span>
+                                  <span class="n">theta</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">n_periods</span><span class="o">=</span><span class="n">n_periods</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">reflect</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">rm 40 x [27</span><span class="se">\\</span><span class="s1">AA</span><span class="se">\\</span><span class="s1">, Si,</span><span class="se">\\</span><span class="s1">, 18</span><span class="se">\\</span><span class="s1">AA</span><span class="se">\\</span><span class="s1">, W] </span><span class="se">\\</span><span class="s1">&gt; multilayer </span><span class="se">\\</span><span class="s1">&gt; </span><span class="se">\\</span><span class="s1">theta</span><span class="se">\\</span><span class="s1">, = </span><span class="se">\\</span><span class="s1">, </span><span class="si">{</span><span class="n">theta</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="se">\\</span><span class="s1">&gt; mrad$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="fig-multi-mirrors">
+<a class="reference external image-reference" href="_images/multilayer.png"><img alt="_images/multilayer.png" src="_images/multilayer.png" style="width: 75%;" />
+</a>
+</figure>
+</section>
+<section id="coated-mirrors">
+<h3>Coated mirrors<a class="headerlink" href="#coated-mirrors" title="Link to this heading">¶</a></h3>
+<p>In principle, reflectivity calculation for coated mirrors is the same
+as for multilayer mirrors; however, <code class="xref py py-func docutils literal notranslate"><span class="pre">coated_reflectivity`()</span></code> is
+provided to simplify the recursion and have more clear input
+parameters.  The function takes top layer material and thickness,
+substrate material and thickness, incident angle, energy, and optional
+binding layer parameters.</p>
+<p>An example script calculating the reflectivity at <span class="math notranslate nohighlight">\(\theta = 4
+\mathrm{mrad}\)</span> for a rhodium slab and rhodium coated mirror is given
+as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">coated_reflectivity</span><span class="p">,</span> <span class="n">mirror_reflectivity</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">coating</span> <span class="o">=</span> <span class="s1">&#39;Rh&#39;</span>
+<span class="n">coating_thick</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">substrate</span> <span class="o">=</span> <span class="s1">&#39;Si&#39;</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="mf">0.004</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">35000</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">binder</span> <span class="o">=</span> <span class="s1">&#39;Cr&#39;</span>
+<span class="n">binder_thick</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="n">refl_coat</span> <span class="o">=</span> <span class="n">coated_reflectivity</span><span class="p">(</span><span class="n">coating</span><span class="p">,</span> <span class="n">coating_thick</span><span class="p">,</span> <span class="n">substrate</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">binder</span><span class="o">=</span><span class="n">binder</span><span class="p">,</span> <span class="n">binder_thick</span><span class="o">=</span><span class="n">binder_thick</span><span class="p">)</span>
+<span class="n">refl_rhod</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">&#39;Rh&#39;</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+
+<span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">rm </span><span class="si">{</span><span class="n">coating_thick</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">AA </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">coating</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">binder_thick</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">AA </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">binder</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">&gt; coated </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">substrate</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">&gt; mirror </span><span class="se">\\</span><span class="s1">&gt; </span><span class="se">\\</span><span class="s1">theta</span><span class="se">\\</span><span class="s1">, =</span><span class="se">\\</span><span class="s1">, </span><span class="si">{</span><span class="n">theta</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> mrad $&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">refl_coat</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rh coated&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">refl_rhod</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rh bulk&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id10">
+<span id="fig-coated-mirrors"></span><a class="reference external image-reference" href="_images/coated_mirror.png"><img alt="_images/coated_mirror.png" src="_images/coated_mirror.png" style="width: 75%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">X-ray reflectivity of a rhodium on silicon mirror with a 3
+<span class="math notranslate nohighlight">\(\mathrm{\AA}\)</span> chromium binding layer compared to a pure
+slab of rhodium.</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 <section id="darwin-widths-of-monochromator-crystals">
 <h2>Darwin widths of monochromator crystals<a class="headerlink" href="#darwin-widths-of-monochromator-crystals" title="Link to this heading">¶</a></h2>
@@ -644,12 +734,14 @@ Darwin widths in <cite>theta_width</cite> and <cite>energy_width</cite>, respect
 <p>All of the nd-arrays will be the same size, so that plots of
 reflectivity can be readily made.  An example usage, printing the
 predicted energy and angular widths is</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">darwin_width</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">darwin_width</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">dw_si111</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 <span class="n">dw_si333</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">dw_si111</span><span class="o">.</span><span class="n">theta_width</span><span class="o">*</span><span class="mf">1e6</span><span class="p">)</span>
 
 <span class="n">fmt_string</span> <span class="o">=</span> <span class="s2">&quot;Darwin Width for </span><span class="si">{:s}</span><span class="s2"> at </span><span class="si">{:.0f}</span><span class="s2"> keV: </span><span class="si">{:5.2f}</span><span class="s2"> microrad, </span><span class="si">{:5.2f}</span><span class="s2"> eV&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">fmt_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;Si(111)&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
@@ -674,7 +766,7 @@ predicted energy and angular widths is</p>
 
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;X-ray diffraction intensity at 10keV&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Angle - $</span><span class="se">\\</span><span class="s1">theta_B$ ($ \mu \mathrm</span><span class="si">{rad}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Angle - $</span><span class="se">\\</span><span class="s1">theta_B$ ($ </span><span class="se">\\</span><span class="s1">mu </span><span class="se">\\</span><span class="s1">mathrm</span><span class="si">{rad}</span><span class="s1">$)&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
@@ -687,7 +779,7 @@ predicted energy and angular widths is</p>
 </pre></div>
 </div>
 <p>and generates a plot of</p>
-<figure class="align-center" id="id10">
+<figure class="align-center" id="id11">
 <span id="fig-darwin"></span><a class="reference external image-reference" href="_images/darwin_widths.png"><img alt="_images/darwin_widths.png" src="_images/darwin_widths.png" style="width: 75%;" />
 </a>
 <figcaption>
@@ -695,7 +787,7 @@ predicted energy and angular widths is</p>
 reflection. Here, <span class="math notranslate nohighlight">\(i\)</span> represents the intensity of a single
 reflection, and <span class="math notranslate nohighlight">\(i^2\)</span> the intensity from 2 bounces, as for a
 double-crystal monochromator.  The intensity and angular offset of the
-third harmonic is also shown.</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+third harmonic is also shown.</span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Note that the values reported for <cite>theta_fwhm</cite> and <cite>energy_fwhm</cite> will be
@@ -707,9 +799,9 @@ reflectivity, this smaller value is the one typically reported as “the
 Darwin width”, though some sources will report this smaller value as “FWHM”.</p>
 <p>An example of the intensity of a single reflection and the “rocking
 curve”  of two crystals is given in</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">darwin_width</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">darwin_width</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">dw_si111</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
@@ -730,14 +822,14 @@ curve”  of two crystals is given in</p>
 </pre></div>
 </div>
 <p>which generates a plot of</p>
-<figure class="align-center" id="id11">
+<figure class="align-center" id="id12">
 <span id="fig-rocking"></span><a class="reference external image-reference" href="_images/darwin_rocking.png"><img alt="_images/darwin_rocking.png" src="_images/darwin_rocking.png" style="width: 75%;" />
 </a>
 <figcaption>
 <p><span class="caption-text">X-ray monochromator rocking curve around the Si(111)
 reflection. Here, the blue curve shows the intensity of a single
 reflection, as above, while the orange curve shows the intensity
-from rocking one crystal through the reflection of the other.</span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
+from rocking one crystal through the reflection of the other.</span><a class="headerlink" href="#id12" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -753,7 +845,7 @@ from rocking one crystal through the reflection of the other.</span><a class="he
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Example Calculations of X-ray properties of materials</a><ul>
+<li><a class="reference internal" href="#">Calculations of X-ray properties of materials</a><ul>
 <li><a class="reference internal" href="#x-ray-attenuation-by-elements">X-ray attenuation by elements</a></li>
 <li><a class="reference internal" href="#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
 <li><a class="reference internal" href="#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">X-ray flux calculations for ionization chambers and photodiodes</a><ul>
@@ -763,7 +855,12 @@ from rocking one crystal through the reflection of the other.</span><a class="he
 <li><a class="reference internal" href="#ionchamber-fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#x-ray-mirror-reflectivities">X-ray mirror reflectivities</a></li>
+<li><a class="reference internal" href="#x-ray-mirror-reflectivities">X-ray mirror reflectivities</a><ul>
+<li><a class="reference internal" href="#single-layer-mirrors">Single Layer mirrors</a></li>
+<li><a class="reference internal" href="#multilayer-mirrors">Multilayer Mirrors</a></li>
+<li><a class="reference internal" href="#coated-mirrors">Coated mirrors</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#darwin-widths-of-monochromator-crystals">Darwin widths of monochromator crystals</a></li>
 </ul>
 </li>
@@ -817,13 +914,13 @@ from rocking one crystal through the reflection of the other.</span><a class="he
           <a href="periodictable.html" title="X-ray Periodic Table of the Elements"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Example Calculations of X-ray properties of materials</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Calculations of X-ray properties of materials</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2025-January-08.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
+      Last updated on 2025-July-18.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

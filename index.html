@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>X-ray DB: X-ray Reference Data in SQLite &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=0f882399" />
-    <script src="_static/documentation_options.js?v=3104884c"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
+    <script src="_static/documentation_options.js?v=957c0c55"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -48,7 +48,7 @@ interface to this database is also provided.  Some of the components of the
 database hold arrays of numbers, which are stored as JSON-encoded strings, and
 will need to be decoded from JSON to be used.</p>
 <p>The current version of the XrayDB database is <strong>9.2</strong>, and the
-Python module is version 4.5.6, which can be installed with:</p>
+Python module is version 4.5.7, which can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
@@ -75,16 +75,6 @@ for elements between Z=93 and Z=98.</p>
 </tbody>
 </table>
 </div></blockquote>
-<p>The project began with the data from the compilation of basic atomic
-properties and X-ray absorption edge energies, emission energies, and
-absorption cross sections from <span id="id2">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span>, who assembled
-data from a several sources.  More data has been added from other sources.
-Energy widths of core holes for excited electronic levels from
-<span id="id3">[<a class="reference internal" href="biblio.html#id5" title="O. Keski-Rahkonen and M. O. Krause. Total and partial atomic-level widths. Atomic Data and Nuclear Data Tables, 14(2):139–146, 1974. URL: https://dx.doi.org/10.1016/S0092-640X(74)80020-3.">Keski-Rahkonen and Krause (1974)</a>]</span> and <span id="id4">[<a class="reference internal" href="biblio.html#id6" title="M. O. Krause and J. H. Oliver. Natural widths of atomic k and l levels, ka x-ray lines and several kll auger lines. Journal of Physical and Chemical Reference Data, 8:329, 1979. URL: https://dx.doi.org/10.1063/1.555595.">Krause and Oliver (1979)</a>]</span>.  Elastic X-ray scattering
-data, <span class="math notranslate nohighlight">\(f_0(q)\)</span> is taken from <span id="id5">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>.  Resonant
-scattering cross sections <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> and absorption
-cross sections from <span id="id6">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span> as from the <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">FFAST webpage</a> (but on
-a finer energy grid, data from <span id="id7">[<a class="reference internal" href="biblio.html#id9" title="C. T. Chantler. FFAST Data on a finer energy grid: Personal Communication. 2016.">Chantler (2016)</a>]</span>) are also included.</p>
 <section id="table-of-contents">
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -92,12 +82,13 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#development-version">Development Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#acknowledgements">Acknowledgements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#citing-this-work">Citing this work</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#copyright-licensing-and-re-distribution">Copyright, Licensing, and Re-distribution</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="periodictable.html">X-ray Periodic Table of the Elements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Calculations of X-ray properties of materials</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Calculations of X-ray properties of materials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-attenuation-by-elements">X-ray attenuation by elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#mu-calculations-for-materials"><span class="math notranslate nohighlight">\(\mu\)</span> calculations for materials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-flux-calculations-for-ionization-chambers-and-photodiodes">X-ray flux calculations for ionization chambers and photodiodes</a><ul>
@@ -107,12 +98,17 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
 <li class="toctree-l3"><a class="reference internal" href="examples.html#ionchamber-fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-mirror-reflectivities">X-ray mirror reflectivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#x-ray-mirror-reflectivities">X-ray mirror reflectivities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#single-layer-mirrors">Single Layer mirrors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#multilayer-mirrors">Multilayer Mirrors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#coated-mirrors">Coated mirrors</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#darwin-widths-of-monochromator-crystals">Darwin widths of monochromator crystals</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Using XrayDB from Python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="python.html#module-xraydb">The Python xraydb module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python.html#module-xraydb">The Python <code class="docutils literal notranslate"><span class="pre">xraydb</span></code> module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.get_xraydb"><code class="docutils literal notranslate"><span class="pre">get_xraydb()</span></code></a></li>
 </ul>
 </li>
@@ -167,6 +163,8 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.xray_delta_beta"><code class="docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.darwin_width"><code class="docutils literal notranslate"><span class="pre">darwin_width()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.mirror_reflectivity"><code class="docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.multilayer_reflectivity"><code class="docutils literal notranslate"><span class="pre">multilayer_reflectivity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.coated_reflectivity"><code class="docutils literal notranslate"><span class="pre">coated_reflectivity()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.ionization_potential"><code class="docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html#xraydb.ionchamber_fluxes"><code class="docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
 </ul>
@@ -218,7 +216,7 @@ a finer energy grid, data from <span id="id7">[<a class="reference internal" hre
 </ul>
 
 <p>
-Current version: <b>4.5.6</b></br>
+Current version: <b>4.5.7</b></br>
 Install:   <tt>pip install xraydb</tt></br>
 Develop:
   &nbsp; <a href="https://github.com/xraypy/xraydb/">github.com</a>
@@ -274,8 +272,8 @@ Develop:
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2025-January-08.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
+      Last updated on 2025-July-18.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

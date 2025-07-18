@@ -45,19 +45,6 @@ Some useful resources using this library include:
     +-----------------------------------------+------------------------------------------------+
 
 
-
-The project began with the data from the compilation of basic atomic
-properties and X-ray absorption edge energies, emission energies, and
-absorption cross sections from :cite:`Elam_Ravel_Sieber`, who assembled
-data from a several sources.  More data has been added from other sources.
-Energy widths of core holes for excited electronic levels from
-:cite:`Keski_Krause` and :cite:`Krause_Oliver`.  Elastic X-ray scattering
-data, :math:`f_0(q)` is taken from :cite:`Waasmaier_Kirfel`.  Resonant
-scattering cross sections :math:`f'(E)` and :math:`f''(E)` and absorption
-cross sections from :cite:`Chantler` as from the `FFAST webpage`_ (but on
-a finer energy grid, data from :cite:`Chantler2016`) are also included.
-
-
 Table of Contents
 -----------------------
 

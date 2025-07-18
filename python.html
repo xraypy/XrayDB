@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Using XrayDB from Python &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=0f882399" />
-    <script src="_static/documentation_options.js?v=3104884c"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
+    <script src="_static/documentation_options.js?v=957c0c55"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Overview of Atomic and X-ray Data" href="overview.html" />
-    <link rel="prev" title="Example Calculations of X-ray properties of materials" href="examples.html" /> 
+    <link rel="prev" title="Calculations of X-ray properties of materials" href="examples.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
@@ -30,7 +30,7 @@
           <a href="overview.html" title="Overview of Atomic and X-ray Data"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="examples.html" title="Example Calculations of X-ray properties of materials"
+          <a href="examples.html" title="Calculations of X-ray properties of materials"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Using XrayDB from Python</a></li> 
@@ -44,26 +44,28 @@
             
   <section id="using-xraydb-from-python">
 <span id="python-api"></span><h1>Using XrayDB from Python<a class="headerlink" href="#using-xraydb-from-python" title="Link to this heading">¶</a></h1>
-<p>The <cite>python</cite> directory contains the source code for a Python module for
-XrayDB.  This module gives a user-friendly wrapping of the XrayDB, and
+<p>The <cite>xraydb</cite> Python module
+gives a user-friendly wrapping of the XrayDB, and
 automates the the conversion of data from sqlite database into Python and
 numpy arrays. The module requires the <cite>numpy</cite>, <cite>scipy</cite> and <cite>sqlalchemy</cite>
 modules, all of which are readily available and can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.5.6, corresponding to
-version 6 of <cite>xraydb.sqlite</cite>.</p>
+<p>The current version of the Python module is 4.5.7, corresponding to
+version 6 of <cite>xraydb.sqlite</cite>.  The source code for this module is in
+the <cite>python</cite> folder from the GitHub repository.</p>
 <section id="module-xraydb">
-<span id="the-python-xraydb-module"></span><h2>The Python xraydb module<a class="headerlink" href="#module-xraydb" title="Link to this heading">¶</a></h2>
-<p>To use the XrayDB from Python, you can import the <cite>xraydb</cite> module and start
-using it:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">xraydb</span>
+<span id="the-python-xraydb-module"></span><h2>The Python <code class="docutils literal notranslate"><span class="pre">xraydb</span></code> module<a class="headerlink" href="#module-xraydb" title="Link to this heading">¶</a></h2>
+<p>The <cite>xraydb</cite> module gives a low-level interface to the data in the
+<cite>xraydb.sqlite</cite> database.  To use this import the <cite>xraydb</cite> module
+with:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">xraydb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">atomic_number</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">)</span>
 <span class="go">47</span>
 <span class="go">#</span>
 <span class="go"># X-ray elastic (Thomson) scattering factors:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">f0</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
 <span class="go">array([25.994603  , 11.50848469,  6.55945765,  4.71039413,  3.21048827,</span>
@@ -206,6 +208,12 @@ the data comes from <span id="id1">[<a class="reference internal" href="biblio.h
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.mirror_reflectivity" title="xraydb.mirror_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></p></td>
 <td><p>X-ray reflectivities for mirror materials (thick slab limit)</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.multilayer_reflectivity" title="xraydb.multilayer_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">multilayer_reflectivity()</span></code></a></p></td>
+<td><p>X-ray reflectivities for multilayer mirrors</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xraydb.coated_reflectivity" title="xraydb.coated_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">coated_reflectivity()</span></code></a></p></td>
+<td><p>X-ray reflectivities for coated mirrors</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></p></td>
 <td><p>effective ionization potential for a gas, as for ion chambers</p></td>
 </tr>
@@ -226,7 +234,7 @@ the data comes from <span id="id1">[<a class="reference internal" href="biblio.h
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">xraydb</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">xraydb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xdb</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">get_xraydb</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -718,7 +726,7 @@ energy or array of energies.   Data is from the Chantler tables.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">chemparse</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">chemparse</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Mn(SO4)2(H2O)7)&#39;</span><span class="p">)</span>
 <span class="go">{&#39;H&#39;: 14.0, &#39;S&#39;: 2.0, &#39;Mn&#39;: 1, &#39;O&#39;: 15.0}</span>
 </pre></div>
@@ -754,7 +762,7 @@ can be parsed to a dictionary with chemparse()</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">validate_formula</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_formula</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">validate_formula</span><span class="p">(</span><span class="s1">&#39;Mn(SO4)2(H2O)7)&#39;</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
@@ -877,7 +885,7 @@ configuration folder, and will be useful in subsequent sessions.</p>
 </section>
 <section id="x-ray-properties-of-materials">
 <h2>X-ray properties of materials<a class="headerlink" href="#x-ray-properties-of-materials" title="Link to this heading">¶</a></h2>
-<p>For some further examples, see <a class="reference internal" href="examples.html#example-calcs"><span class="std std-ref">Example Calculations of X-ray properties of materials</span></a>.</p>
+<p>For some further examples, see <a class="reference internal" href="examples.html#example-calcs"><span class="std std-ref">Calculations of X-ray properties of materials</span></a>.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="xraydb.material_mu">
 <span class="sig-name descname"><span class="pre">material_mu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'total'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.material_mu" title="Link to this definition">¶</a></dt>
@@ -1032,8 +1040,8 @@ typiccally be ~1.5x the Darwin widths in <cite>theta_width</cite> and
 
 <dl class="py function">
 <dt class="sig sig-object py" id="xraydb.mirror_reflectivity">
-<span class="sig-name descname"><span class="pre">mirror_reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roughness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.mirror_reflectivity" title="Link to this definition">¶</a></dt>
-<dd><p>mirror reflectivity for a thick, singl-layer mirror.</p>
+<span class="sig-name descname"><span class="pre">mirror_reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roughness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'intensity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.mirror_reflectivity" title="Link to this definition">¶</a></dt>
+<dd><p>mirror reflectivity for a thick, single-layer mirror.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1043,6 +1051,45 @@ typiccally be ~1.5x the Darwin widths in <cite>theta_width</cite> and
 <li><p><strong>density</strong> (<em>float</em><em> or </em><em>None</em>) – material density in g/cm^3</p></li>
 <li><p><strong>roughness</strong> (<em>float</em>) – mirror roughness in Angstroms</p></li>
 <li><p><strong>polarization</strong> (<em>'s'</em><em> or </em><em>'p'</em>) – mirror orientation relative to X-ray polarization</p></li>
+<li><p><strong>output</strong> (<em>str</em>) – output intensity or or complex amplitude</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>mirror reflectivity values</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ol class="arabic simple">
+<li><p>If both theta and energy are nd-arrays, it returns a
+2D array of theta vs energy. Ex: r[i,j] = r(theta[i], energy[j])</p></li>
+<li><p>density can be <cite>None</cite> for known materials</p></li>
+<li><p>polarization of ‘s’ puts the X-ray polarization along the mirror
+surface, ‘p’ puts it normal to the mirror surface. For
+horizontally polarized X-ray beams from storage rings, ‘s’ will
+usually mean ‘vertically deflecting’ and ‘p’ will usually mean
+‘horizontally deflecting’.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xraydb.multilayer_reflectivity">
+<span class="sig-name descname"><span class="pre">multilayer_reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stackup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_periods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_rough</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_rough</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'intensity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.multilayer_reflectivity" title="Link to this definition">¶</a></dt>
+<dd><p>reflectivity for a multilayer mirror.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stackup</strong> (<em>list</em><em> of </em><em>formulas</em>) – material name or formula (‘Si’, ‘Rh’, ‘silicon’)</p></li>
+<li><p><strong>thickness</strong> (<em>list</em>) – thickness of layers in Angstroms</p></li>
+<li><p><strong>substrate</strong> (<em>string</em>) – substrate material name or formula</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>nd-array</em>) – mirror angle in radians</p></li>
+<li><p><strong>energy</strong> (<em>float</em><em> or </em><em>nd-array</em>) – X-ray energy in eV</p></li>
+<li><p><strong>n_periods</strong> (<em>int</em>) – number of periods in multilayer</p></li>
+<li><p><strong>density</strong> (<em>list</em><em> or </em><em>None</em>) – material densities in g/cm^3</p></li>
+<li><p><strong>substrate_density</strong> (<em>float</em>) – density of substrate in g/cm^3</p></li>
+<li><p><strong>substrate_rough</strong> (<em>float</em>) – mirror roughness in Angstroms</p></li>
+<li><p><strong>surface_rough</strong> (<em>float</em>) – mirror roughness in Angstroms</p></li>
+<li><p><strong>polarization</strong> (<em>'s'</em><em> or </em><em>'p'</em>) – mirror orientation relative to X-ray polarization</p></li>
+<li><p><strong>output</strong> (<em>str</em>) – output intensity or or complex amplitude</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1052,7 +1099,49 @@ typiccally be ~1.5x the Darwin widths in <cite>theta_width</cite> and
 <p class="rubric">Notes</p>
 <ol class="arabic simple">
 <li><p>only one of theta or energy can be an nd-array</p></li>
-<li><p>density can be <cite>None</cite> for known materials</p></li>
+<li><p>thickness should be the same length as stackup</p></li>
+<li><p>density can be <cite>None</cite> for known materials or a list of 1 period ([‘Mo’, ‘Si’])
+for a multilayer stackup.</p></li>
+<li><p>polarization of ‘s’ puts the X-ray polarization along the mirror
+surface, ‘p’ puts it normal to the mirror surface. For
+horizontally polarized X-ray beams from storage rings, ‘s’ will
+usually mean ‘vertically deflecting’ and ‘p’ will usually mean
+‘horizontally deflecting’.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xraydb.coated_reflectivity">
+<span class="sig-name descname"><span class="pre">coated_reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coating_thick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coating_dens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_roughness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_dens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_roughness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binder_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binder_dens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'intensity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.coated_reflectivity" title="Link to this definition">¶</a></dt>
+<dd><p>reflectivity for a coated mirror.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coating</strong> (<em>str</em>) – coating material name or formula (‘Si’, ‘Rh’, ‘silicon’)</p></li>
+<li><p><strong>coating_thick</strong> (<em>float</em>) – thickness of coating in Angstroms</p></li>
+<li><p><strong>substrate</strong> (<em>string</em>) – substrate material name or formula</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>nd-array</em>) – mirror angle in radians</p></li>
+<li><p><strong>energy</strong> (<em>float</em><em> or </em><em>nd-array</em>) – X-ray energy in eV</p></li>
+<li><p><strong>coating_dens</strong> (<em>None</em>) – density of mirror coating in g/cm^3</p></li>
+<li><p><strong>surface_roughness</strong> (<em>float</em>) – coating roughness in Angstroms</p></li>
+<li><p><strong>substrate_dens</strong> (<em>float</em>) – density of substrate in g/cm^3</p></li>
+<li><p><strong>substrate_roughness</strong> (<em>float</em>) – substrate roughness in Angstroms</p></li>
+<li><p><strong>binder</strong> (<em>str</em>) – binder material name or formula</p></li>
+<li><p><strong>binder_thick</strong> (<em>float</em>) – thickness of binder in Angstroms</p></li>
+<li><p><strong>binder_dens</strong> (<em>float</em>) – density of binder in g/cm^3</p></li>
+<li><p><strong>polarization</strong> (<em>'s'</em><em> or </em><em>'p'</em>) – mirror orientation relative to X-ray polarization</p></li>
+<li><p><strong>output</strong> (<em>str</em>) – output intensity or or complex amplitude</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>mirror reflectivity values</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ol class="arabic simple">
+<li><p>only one of theta or energy can be an nd-array</p></li>
+<li><p>densities can be <cite>None</cite> for known materials or a list of 1 period ([‘Mo’, ‘Si’])
+for a multilayer stackup.</p></li>
 <li><p>polarization of ‘s’ puts the X-ray polarization along the mirror
 surface, ‘p’ puts it normal to the mirror surface. For
 horizontally polarized X-ray beams from storage rings, ‘s’ will
@@ -1163,7 +1252,7 @@ and ion current (see note 4) [True]</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xraydb</span> <span class="kn">import</span> <span class="n">ionchamber_fluxes</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">ionchamber_fluxes</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
 <span class="go">                           length=20.0, energy=10e3, sensitivity=1.e-6)</span>
 </pre></div>
@@ -1227,7 +1316,7 @@ current from 1 carrier, for example if using a Frisch grid, use
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Using XrayDB from Python</a><ul>
-<li><a class="reference internal" href="#module-xraydb">The Python xraydb module</a><ul>
+<li><a class="reference internal" href="#module-xraydb">The Python <code class="docutils literal notranslate"><span class="pre">xraydb</span></code> module</a><ul>
 <li><a class="reference internal" href="#xraydb.get_xraydb"><code class="docutils literal notranslate"><span class="pre">get_xraydb()</span></code></a></li>
 </ul>
 </li>
@@ -1282,6 +1371,8 @@ current from 1 carrier, for example if using a Frisch grid, use
 <li><a class="reference internal" href="#xraydb.xray_delta_beta"><code class="docutils literal notranslate"><span class="pre">xray_delta_beta()</span></code></a></li>
 <li><a class="reference internal" href="#xraydb.darwin_width"><code class="docutils literal notranslate"><span class="pre">darwin_width()</span></code></a></li>
 <li><a class="reference internal" href="#xraydb.mirror_reflectivity"><code class="docutils literal notranslate"><span class="pre">mirror_reflectivity()</span></code></a></li>
+<li><a class="reference internal" href="#xraydb.multilayer_reflectivity"><code class="docutils literal notranslate"><span class="pre">multilayer_reflectivity()</span></code></a></li>
+<li><a class="reference internal" href="#xraydb.coated_reflectivity"><code class="docutils literal notranslate"><span class="pre">coated_reflectivity()</span></code></a></li>
 <li><a class="reference internal" href="#xraydb.ionization_potential"><code class="docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a></li>
 <li><a class="reference internal" href="#xraydb.ionchamber_fluxes"><code class="docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a></li>
 </ul>
@@ -1294,7 +1385,7 @@ current from 1 carrier, for example if using a Frisch grid, use
   <div>
     <h4>Previous topic</h4>
     <p class="topless"><a href="examples.html"
-                          title="previous chapter">Example Calculations of X-ray properties of materials</a></p>
+                          title="previous chapter">Calculations of X-ray properties of materials</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
@@ -1335,7 +1426,7 @@ current from 1 carrier, for example if using a Frisch grid, use
           <a href="overview.html" title="Overview of Atomic and X-ray Data"
              >next</a> |</li>
         <li class="right" >
-          <a href="examples.html" title="Example Calculations of X-ray properties of materials"
+          <a href="examples.html" title="Calculations of X-ray properties of materials"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">X-ray DB:  X-ray Reference Data in SQLite</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Using XrayDB from Python</a></li> 
@@ -1343,8 +1434,8 @@ current from 1 carrier, for example if using a Frisch grid, use
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2025-January-08.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.6.
+      Last updated on 2025-July-18.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     </div>
   </body>
 </html>

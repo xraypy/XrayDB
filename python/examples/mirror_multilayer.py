@@ -14,7 +14,7 @@ reflect = multilayer_reflectivity(materials, thicknesses, substrate,
                                   theta, energy, n_periods=n_periods)
 
 plt.plot(energy, reflect)
-plt.title(f'40 x [27\u212B Si, 18\u212B W] multilayer at \u03B8 = {theta*1000:.0f} mrad')
+plt.title(f'$\\rm 40 x [27\\AA\\, Si,\\, 18\\AA\\, W] \\> multilayer \\> \\theta\\, = \\, {theta*1000:.0f}\\> mrad$')
 plt.xlabel('Energy (eV)')
 plt.ylabel('Reflectivity')
 plt.show()

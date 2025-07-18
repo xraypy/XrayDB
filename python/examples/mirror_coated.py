@@ -13,7 +13,7 @@ binder_thick = 30
 refl_coat = coated_reflectivity(coating, coating_thick, substrate, theta, energy, binder=binder, binder_thick=binder_thick)
 refl_rhod = mirror_reflectivity('Rh', theta, energy)
 
-title = f'{coating_thick}\u212B {coating}/ {binder_thick}\u212B {binder} coated {substrate} mirror \u03B8 = {theta*1000:.0f} mrad'
+title = f'$\\rm {coating_thick} \\AA \\> {coating}/{binder_thick} \\AA \\> {binder} \\> coated \\> {substrate} \\> mirror \\> \\theta\\, =\\, {theta*1000:.0f} mrad $'
 plt.plot(energy, refl_coat, label='Rh coated')
 plt.plot(energy, refl_rhod, label='Rh bulk')
 plt.title(title)

@@ -18,9 +18,6 @@ all:
 	make xray_table_36in_SEES.pdf
 	make xray_table_50in_SEES.pdf
 
-sees:
-	make xray_table_36in_SEES.pdf
-	make xray_table_50in_SEES.pdf
 
 atoms.tex:  gen_atoms.py
 	python gen_atoms.py > atoms.tex

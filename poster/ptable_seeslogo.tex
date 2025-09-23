@@ -164,25 +164,32 @@
       \end{tabular*}
     }}};
 
-
  \node at ($(Mg.west -| Ti.north) + (0em,7em)$) [name=elementKey, Element]{\ElemKey};
 
 %% add some extra space around table
   \node at ($(Lr.south -| Rn.east) + (2em, -2em)$)  [name=Space1, Space]{ };
   \node at ($(H.north  -|  H.west) - (2em, -2em)$)  [name=Space2, Space]{ };
 
+\node at ($(Th.south -| Fr.west) + (105mm, 45mm)$) [name=diagramTitle,
+SubTitleLabel]{
+   {\small{\textsf{
+  \begin{tabular}{ll}
+         \multicolumn{2}{c}{\pgfuseimage{SEESLogo}} \\
+    \hspace{2mm}{\pgfuseimage{qrseessmall}} & \begin{minipage}{50mm}
+      \vspace{-34mm}
+      {\huge{https://seescience.org}}
+      \vspace{2mm}
+    \end{minipage}    \\
+  \end{tabular}
+  }}}
+       };
 
-\node at ($(Th.south -| Fr.west) + (35mm, 7mm)$) [name=diagramTitle,
-SubTitleLabel]{  {\small{\textsf{ \begin{tabular}{c}  \ScientistPhoto \end{tabular} }}}  };
-
-   \node at ($(Ce.south -| Ac.west) + (20mm, -25mm)$) [name=diagramTitle,
-   SubTitleLabel]{
-     {\small{\textsf{
-           \begin{tabular}{ll}
-             \multicolumn{2}{c}{ \pgfuseimage{qrsees}}  \\
-             \noalign{\vspace{0.25mm}}
-             \multicolumn{2}{l}{\Version}  \\
-             \multicolumn{2}{l}{\WebURL } \\
+\node at ($(Th.south -| Ra.west) + (100mm, 9mm)$) [name=versionTitle,
+SubTitleLabel]{
+  {\small{\textsf{
+        \begin{tabular}{ll}
+          \multicolumn{2}{l}{\Version}  \\
              \noalign{\smallskip}
-           \end{tabular}
-           }}}};
+             \multicolumn{2}{l}{\WebURL } \\
+          \end{tabular}
+}}}};

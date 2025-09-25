@@ -12,8 +12,8 @@ X-ray Periodic Table of the Elements
 .. _Curie (Medium):     https://docs.xrayabsorption.org/XrayTable/xray_table_36in_Curie.pdf
 .. _Mendeleev (Medium): https://docs.xrayabsorption.org/XrayTable/xray_table_36in_Mendeleev.pdf
 .. _Moseley (Medium):   https://docs.xrayabsorption.org/XrayTable/xray_table_36in_Moseley.pdf
-.. _SEES (Large):       https://seescience.org/wp-content/uploads/2024/09/SEES_periodic_table_large.pdf
-.. _SEES (Medium):      https://seescience.org/wp-content/uploads/2024/09/SEES_periodic_table_medium.pdf
+.. _SEES (Large):       https://docs.xrayabsorption.org/XrayTable/xray_table_50in_SEES.pdf
+.. _SEES (Medium):      https://docs.xrayabsorption.org/XrayTable/xray_table_36in_SEES.pdf
 
 .. _SEES:               https://seescience.org/
 .. _Charles Barkla:     https://en.wikipedia.org/wiki/Charles_Glover_Barkla
@@ -33,7 +33,10 @@ spectroscopies, or with `SEES`_, the group supporting this work.
 .. _periodic_table:
 
 **Table of X-ray Periodic Tables of the Elements** The poster comes in two sizes:
-Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 inches).
+Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm
+(about 36x17 inches). The posters are available at
+https://millenia.cars.aps.anl.gov/gsecars/data/XrayTable and
+https://docs.xrayabsorption.org/XrayTable
 
     +----------------------+------------------------+------------------------+
     | Scientist            | Large Periodic Table   | Medium Periodic Table  |
@@ -49,7 +52,10 @@ Large is 127.5x61 cm (about 50x24 inches) and Medium is 91x45.5 cm (about 36x17 
     | `SEES`_              | `SEES (Large)`_        | `SEES (Medium)`_       |
     +----------------------+------------------------+------------------------+
 
-These periodic tables will look like this:
+
+
+
+These posters will look like this:
 
 .. image:: _images/xray_table.png
    :width: 75%

@@ -19,10 +19,6 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
       - name: Set up Python from Miniconda/conda
         uses: conda-incubator/setup-miniconda@v2.2.0
         with:
@@ -34,11 +30,11 @@ jobs:
       - name: Install dependencies
         run: |
           printenv
-          conda install -y -c conda-forge python=${{ matrix.python-version }} "numpy>=2" "scipy>=1.13" pytest pytest-cov coverage
-      - name: Install xraydb and other dependencies with pip
+          conda install -y -c conda-forge python=${{ matrix.python-version }} "numpy>=2" "scipy>=1.13"
+      - name: Install xraydb and run tests
         run: |
           cd python
-          pip install .
+          pip install ".[all]"
           cd tests
           python -m pytest --cov=xraydb --cov-report=xml
       - name: upload coverage report to codecov

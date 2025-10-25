@@ -1,0 +1,45 @@
+name: Test xraydb python with ubuntu with conda
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 5
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+      - name: Set up Python from Miniconda/conda
+        uses: conda-incubator/setup-miniconda@v2.2.0
+        with:
+          miniconda-version: latest
+          channels: conda-forge
+          channel-priority: strict
+          activate-environment: anaconda-client-env
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          printenv
+          conda install -y -c conda-forge python=${{ matrix.python-version }} "numpy>=2" "scipy>=1.13" pytest pytest-cov coverage
+      - name: Install xraydb and other dependencies with pip
+        run: |
+          cd python
+          pip install .
+          cd tests
+          python -m pytest --cov=xraydb --cov-report=xml
+      - name: upload coverage report to codecov
+        uses: codecov/codecov-action@v2

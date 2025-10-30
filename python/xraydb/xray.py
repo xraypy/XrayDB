@@ -164,16 +164,16 @@ def get_xraydb():
         _xraydb = XrayDB()
     return _xraydb
 
-def f0(ion, q):
-    """elastic X-ray scattering factor, f0(q), for an ion.
+def f0(ion, k):
+    """elastic X-ray scattering factor, f0(k), for an ion.
 
     Args:
        ion (int or str):  atomic number, atomic symbol or ionic symbol of scatterer
 
-       q  (float, ndarray):  Q value(s)  for scattering
+       k  (float, ndarray):  k value(s)  for scattering
 
     Returns
-       scattering factor for each Q value
+       scattering factor for each k value
 
     Notes:
        1.  from D. Waasmaier and A. Kirfel, Acta Cryst. A51 p416 (1995) and
@@ -181,11 +181,14 @@ def f0(ion, q):
        2.  `ion` can be of the form: 26, `Fe`, `Fe2+`.  For a full list of ions
            use `f0_ions()`
        3. elements supported are from Z = 1 to 98 ('H' to 'Cf')
-       4. q = sin(theta) / lambda, where theta=incident angle, lambda=X-ray wavelength
+       4. k = sin(theta)/lambda, where theta=incident angle, and
+          lambda=X-ray wavelength, in Angstroms. This differs from the usual
+          definition of `q` by a factor of 4*pi
+
 
     """
     xdb = get_xraydb()
-    return xdb.f0(ion, q)
+    return xdb.f0(ion, k)
 
 def f0_ions(element=None):
     """list ion names supported in the f0() calculation from

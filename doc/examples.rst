@@ -14,7 +14,7 @@ Calculations of X-ray properties of materials
 
 This section presents several detailed examples of using
 `xraydb.sqlite` to calculate X-ray properties of materials.  All of
-the examples here us the functions in the python `xraydb` module,
+the examples here use the functions in the python `xraydb` module,
 which is describe in more detail in the next chapter,
 :ref:`python_api`.  The examples will explore some aspects of X-ray
 physics, but will not give a complete tutorial on the concepts here.
@@ -34,7 +34,7 @@ photo-electric effect is the main process that causes X-ray attenuation.
 When the photo-electric process is dominant, the values for
 :math:`\mu/\rho` depends strongly on *Z* of the atom and on X-ray energy
 *E*.  In addition to these strong dependencies, sharp increases --
-so-called absorption edges -- with be see at energies of bound core
+so-called absorption edges -- with be seen at energies of bound core
 electron levels of atoms.  To illustrate these characteristics, the
 following script will plot :math:`\mu/\rho` for selected elements:
 
@@ -55,7 +55,7 @@ depends strongly with *Z*, though the sharp absorption edges make this more
 complicated.
 
 You can also observe that at relatively high energies for relatively low-Z
-elements (such as C above about 20 keV) that the attenuation levels off.
+elements (such as C above about 20 keV) the attenuation levels off.
 This is because the coherent (Rayleigh) and incoherent (Compton) scattering
 processes dominate, so that the photo-electric absorption is no longer the
 dominant X-ray scattering process.  This can be illustrated by plotting the
@@ -106,8 +106,8 @@ energy value and density (which are known for several common materials).
 This gives the length for which X-ray intensity is reduced by a factor of
 *e*, and so can be used to calculate the fraction of the X-rays transmitted
 through a material of known thickness, as :math:`\exp(-t\mu)` for a
-material of thickness *t*.  As a first example, we calculate the the
-fraction of X-ray transmitted through 1 mm of the water as a function of
+material of thickness *t*.  As a first example, we calculate the
+fraction of X-ray transmitted through 1 mm of water as a function of
 X-ray energy:
 
 .. literalinclude:: ../python/examples/mu_water.py
@@ -142,7 +142,7 @@ would generate the following plot
     Fraction of X-rays absorbed and transmitted by calcite
 
 
-For many X-ray experiments, selecting the size of a material size so that
+For many X-ray experiments, selecting the size of a material so that
 its thickness is approximately 1 to 2 absorption length is convenient so
 that X-ray scattering and emission can be observed strongly, with neither
 all primary and scattered X-rays being absorbed by the material itself, but
@@ -230,13 +230,13 @@ Ionization Potentials <xray_ionpot_table>`.
 
 From this table, we can see that the absorption (by photo-electric effect) of 1
 X-ray with energy 10 keV will generate about 300 electron-ion pairs.  That is
-not much current, but if :math:`10^8 \,\rm Hz` X-rays are absorbed per second,
+not much current, but if :math:`10^8 \,\rm Hz` X-rays are absorbed (per second),
 then the current generated will be around 5 nA.  Of course, the length of the
 gas or more precisely the length of gas under ionizing potential will have an
 impact on how much current is generated.  The photo-current generated can be
 amplified and converted to a voltage using a current amplifier, and that
 voltage will then recorded by a number of possible mean: a voltage-to-frequency
-generator and a digital counter is a common method for integrated current for a
+generator together with a digital counter is a common method for integrated current for a
 specific amount of time, but other sampling methods can also be used.
 
 An ion chamber can be linear over many orders of magnitude of X-ray flux,
@@ -291,7 +291,7 @@ degrees will be
 
 (recall that :math:`1 - 1/(1+x) = 1 / (1+1/x)`).  For X-rays of 10 keV,
 :math:`E_{\rm median}` is about 192 eV. For 20 keV X-rays, it will be 750 eV,
-and for 50 keV X-rays, it will be 4.5 keV.  Because of the angular distribution
+and for 50 keV X-rays, it will be 4.5 keV.  Because the angular distribution
 of Compton scattering is not uniform, these median values over-estimate the
 amount of energy transferred to the scattered electron by a small amount that
 increases with energy.  The mean energy of the Compton-scattered electron can
@@ -440,7 +440,7 @@ X-ray energy and the incoherent cross-section with the ***mean***
 Compton-scattering energy, using the calculated and tabulated mean energies of
 the Compton-scattered electrons are used to estimate the incident flux from
 the photo-current. The total attenuation cross-section, including the coherent
-cross-sections, is used to calculate the transmitted flu from the incident
+cross-sections, is used to calculate the transmitted flux from the incident
 flux.
 
 As an example calculation of ion chamber currents::
@@ -511,8 +511,8 @@ takes a list of materials from top to bottom, a matching list of
 thicknesses of each layer, substrate material, incident angle, energy,
 and the number of periods.
 
-An example usage, calculating the reflectivity at 1000 eV vs. grazing
-angle for a 40*[Si, W] layered mirror on SiO2 substrate is given as
+An example usage, calculating the reflectivity at a grazing angle of 10 mrad
+vs. energy for a 40*[Si, W] layered mirror on SiO2 substrate is given as
 
 .. literalinclude:: ../python/examples/mirror_multilayer.py
 

@@ -26,7 +26,7 @@ addopts = "--cov=xraydb --cov-report html"
 [project]
 name = "xraydb"
 version = "4.5.8"
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 description = "calculations with XrayDB: reference data for X-ray interactions with matter"
 readme = "README.md"
 authors = [
@@ -39,7 +39,6 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -48,8 +47,8 @@ classifiers = [
     ]
 
 dependencies = [
-    "numpy>=1.19",
-    "scipy>=1.6",
+    "numpy>=2",
+    "scipy>=1.13",
     "sqlalchemy>=2.0.1",
     "platformdirs",
 ]

@@ -165,7 +165,6 @@ def get_xraydb():
     global _xraydb
     with _xraydb_lock:
         if _xraydb is None:
-            print("GETTING")
             _xraydb = XrayDB()
     return _xraydb
 

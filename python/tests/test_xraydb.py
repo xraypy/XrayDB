@@ -2,16 +2,14 @@
 """ Tests of xraydb interface  """
 import asyncio
 import time
+from concurrent.futures import ThreadPoolExecutor as ThreadExecutor
 import pytest
 import numpy as np
 from numpy.testing import assert_allclose
 
 from xraydb import XrayDB
 
-try:
-    from concurrent.futures import InterpretorPoolExecutor as ThreadExecutor
-except ImportError:
-    from concurrent.futures import ThreadPoolExecutor as ThreadExecutor
+
 
 def test_xraydb_version():
     xdb = XrayDB()

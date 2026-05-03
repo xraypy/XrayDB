@@ -2,6 +2,7 @@
 """ Tests of xray interface  """
 import asyncio
 import time
+from concurrent.futures import ThreadPoolExecutor as ThreadExecutor
 import pytest
 import numpy as np
 from numpy.testing import assert_allclose
@@ -24,11 +25,6 @@ from xraydb.xray import (chantler_data, formula_to_mass_fracs,
                          dynamical_theta_offset,
                          _validate_mass_fracs, mass_fracs_to_molar_fracs,
                          transmission_sample, get_xraydb)
-
-try:
-    from concurrent.futures import InterpretorPoolExecutor as ThreadExecutor
-except ImportError:
-    from concurrent.futures import ThreadPoolExecutor as ThreadExecutor
 
 def test_atomic_data():
     assert atomic_number('zn') == 30

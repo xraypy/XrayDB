@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 """ Tests of xraydb interface  """
+import asyncio
 import time
 import pytest
 import numpy as np
 from numpy.testing import assert_allclose
 
 from xraydb import XrayDB
+
+try:
+    from concurrent.futures import InterpretorPoolExecutor as ThreadExecutor
+except ImportError:
+    from concurrent.futures import ThreadPoolExecutor as ThreadExecutor
 
 def test_xraydb_version():
     xdb = XrayDB()
@@ -63,3 +69,20 @@ def test_ionization_potentials():
 
     with pytest.raises(ValueError):
         xdb.ionization_potential('p10')
+
+
+@pytest.mark.asyncio
+async def test_xray_edges_thread_safety():
+    # There is a race condition here if XrayDB.xray_edges does not use
+    # a locking mechanism, but this test does not always trigger it.
+    # TO-DO: make this test less fragile.
+    loop = asyncio.get_running_loop()
+    xdb = XrayDB()
+    n_threads = 50
+    with ThreadExecutor(n_threads) as executor:
+        coros = [
+            loop.run_in_executor(executor, xdb.xray_edges, "Ni")
+            for i in range(n_threads)
+        ]
+        edges = await asyncio.gather(*coros)
+    assert len(edges) == n_threads

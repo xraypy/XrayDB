@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """ Tests of xray interface  """
+import asyncio
 import time
 import pytest
 import numpy as np
@@ -18,10 +19,16 @@ from xraydb import (chemparse, material_mu, material_mu_components,
                     ionchamber_fluxes, XrayDB)
 
 
+from xraydb import xray
 from xraydb.xray import (chantler_data, formula_to_mass_fracs,
                          dynamical_theta_offset,
                          _validate_mass_fracs, mass_fracs_to_molar_fracs,
-                         transmission_sample)
+                         transmission_sample, get_xraydb)
+
+try:
+    from concurrent.futures import InterpretorPoolExecutor as ThreadExecutor
+except ImportError:
+    from concurrent.futures import ThreadPoolExecutor as ThreadExecutor
 
 def test_atomic_data():
     assert atomic_number('zn') == 30
@@ -761,3 +768,20 @@ def test_transmission_sample():
     assert_allclose(result3.absorbance_steps['Fe'], 0.706, rtol=0.06)
     assert_allclose(result3.mass_total_mg, 51.7, rtol=0.02)
     assert_allclose(result3.thickness_mm, 0.1466, rtol=0.02)
+
+
+@pytest.mark.asyncio
+async def test_get_xraydb_thread_safety(monkeypatch):
+    loop = asyncio.get_running_loop()
+    # Patch the cached value to make sure a new DB is created
+    monkeypatch.setattr(xray, "_xraydb", None)
+    # Each get_xraydb() runs in a thread, so they could create extra db's
+    n_threads = 5
+    with ThreadExecutor(n_threads) as executor:
+        coros = [
+            loop.run_in_executor(executor, get_xraydb)
+            for i in range(n_threads)
+        ]
+        dbs = await asyncio.gather(*coros)
+    # All threads should return the same DB instance
+    assert len(set(dbs)) == 1

@@ -62,5 +62,5 @@ Tracker = "https://github.com/xraypy/XrayDB/issues"
 [project.optional-dependencies]
 dev = ["build", "twine"]
 doc = ["Sphinx"]
-test = ["pytest", "pytest-cov", "coverage"]
+test = ["pytest", "pytest-asyncio", "pytest-cov", "coverage"]
 all = ["xraydb[dev, doc, test]"]

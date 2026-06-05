@@ -583,9 +583,10 @@ class XrayDB():
             else:
                 row = row.filter(ttab.c.initial_level == initial_level.title())
         out = {}
-        for r in row.all():
-            out[str(r.siegbahn_symbol)] = XrayLine(r.emission_energy, r.intensity,
-                                                   r.initial_level, r.final_level)
+        with self._db_lock:
+            for r in row.all():
+                out[str(r.siegbahn_symbol)] = XrayLine(r.emission_energy, r.intensity,
+                                                       r.initial_level, r.final_level)
         return out
 
     def xray_line_strengths(self, element, excitation_energy=None):

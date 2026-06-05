@@ -84,3 +84,20 @@ async def test_xray_edges_thread_safety():
         ]
         edges = await asyncio.gather(*coros)
     assert len(edges) == n_threads
+
+
+@pytest.mark.asyncio
+async def test_xray_lines_thread_safety():
+    # There is a race condition here if XrayDB.xray_lines does not use
+    # a locking mechanism, but this test does not always trigger it.
+    # TO-DO: make this test less fragile.
+    loop = asyncio.get_running_loop()
+    xdb = XrayDB()
+    n_threads = 200
+    with ThreadExecutor(n_threads) as executor:
+        coros = [
+            loop.run_in_executor(executor, xdb.xray_lines, "Si", "K")
+            for i in range(n_threads)
+        ]
+        edges = await asyncio.gather(*coros)
+    assert len(edges) == n_threads

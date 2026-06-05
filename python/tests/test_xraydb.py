@@ -9,8 +9,6 @@ from numpy.testing import assert_allclose
 
 from xraydb import XrayDB
 
-
-
 def test_xraydb_version():
     xdb = XrayDB()
     version = xdb.get_version()

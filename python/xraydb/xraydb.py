@@ -90,7 +90,7 @@ class XrayDB():
             dbname = os.path.join(parent, dbname)
             if not os.path.exists(dbname):
                 raise IOError(f"Database '{dbname}' not found!")
-        self._db_lock = threading.Lock()
+        self._db_lock = threading.RLock()
         if not isxrayDB(dbname):
             raise ValueError(f"'{dbname}' is not a valid X-ray Database file!")
         self._cache = {}

@@ -35,6 +35,7 @@ jobs:
         conda info
     - name: Install xraydb with pip and run tests
       run: |
+        conda init
         conda activate anaconda-client-env
         cd python
         pip install ".[all]"

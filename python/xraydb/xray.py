@@ -4,6 +4,7 @@ calculations using XrayDB
 Copyright 2025  Matthew Newville, The University of Chicago, newville@cars.uchicago.edu
 using the MIT license
 """
+import threading
 from collections import namedtuple
 import numpy as np
 
@@ -147,6 +148,8 @@ _edge_energies = {'k': np.array([-1.0, 13.6, 24.6, 54.7, 111.5, 188.0,
                                   4127.0])}
 
 _xraydb = None
+_xraydb_lock = threading.Lock()
+
 
 def get_xraydb():
     """return instance of the XrayDB
@@ -160,9 +163,11 @@ def get_xraydb():
 
     """
     global _xraydb
-    if _xraydb is None:
-        _xraydb = XrayDB()
+    with _xraydb_lock:
+        if _xraydb is None:
+            _xraydb = XrayDB()
     return _xraydb
+
 
 def f0(ion, k):
     """elastic X-ray scattering factor, f0(k), for an ion.

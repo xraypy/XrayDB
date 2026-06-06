@@ -11,6 +11,7 @@ using the MIT license
 
 import os
 import json
+import threading
 import atexit
 from warnings import warn
 from collections import namedtuple
@@ -89,7 +90,7 @@ class XrayDB():
             dbname = os.path.join(parent, dbname)
             if not os.path.exists(dbname):
                 raise IOError(f"Database '{dbname}' not found!")
-
+        self._db_lock = threading.RLock()
         if not isxrayDB(dbname):
             raise ValueError(f"'{dbname}' is not a valid X-ray Database file!")
         self._cache = {}
@@ -502,10 +503,11 @@ class XrayDB():
         elem = self.symbol(element)
         ltab = self.tables['xray_levels']
         out = {}
-        for r in self.query(ltab).filter(ltab.c.element == elem).all():
-            out[str(r.iupac_symbol)] = XrayEdge(r.absorption_edge,
-                                                r.fluorescence_yield,
-                                                r.jump_ratio)
+        with self._db_lock:
+            for r in self.query(ltab).filter(ltab.c.element == elem).all():
+                out[str(r.iupac_symbol)] = XrayEdge(r.absorption_edge,
+                                                    r.fluorescence_yield,
+                                                    r.jump_ratio)
         return out
 
     def xray_edge(self, element, edge):
@@ -581,9 +583,10 @@ class XrayDB():
             else:
                 row = row.filter(ttab.c.initial_level == initial_level.title())
         out = {}
-        for r in row.all():
-            out[str(r.siegbahn_symbol)] = XrayLine(r.emission_energy, r.intensity,
-                                                   r.initial_level, r.final_level)
+        with self._db_lock:
+            for r in row.all():
+                out[str(r.siegbahn_symbol)] = XrayLine(r.emission_energy, r.intensity,
+                                                       r.initial_level, r.final_level)
         return out
 
     def xray_line_strengths(self, element, excitation_energy=None):

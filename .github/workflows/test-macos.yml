@@ -22,20 +22,20 @@ jobs:
         miniconda-version: latest
         channels: conda-forge
         channel-priority: strict
-        activate-environment: main
+        activate-environment: use_xraydb
         python-version: ${{ matrix.python-version }}
     - name: Install conda dependencies from conda-forge
       run: |
         which conda
-        conda create -y -n use_xrayddb python=${{ matrix.python-version }} "numpy>=2.0" "scipy>=1.15"
+        conda info
         conda init
         conda activate use_xraydb
-        conda install -y -c conda-forge pytest pytest-cov coverage setuptools pip
+        conda install -y -c conda-forge "numpy>=2.0" "scipy>=1.15" pytest pytest-cov coverage setuptools pip
         conda list
-        conda info
     - name: Install xraydb with pip and run tests
       run: |
-        conda activate use_xraydb
+        which conda
+        which python
         cd python
         pip install ".[all]"
         cd tests

@@ -36,8 +36,8 @@ jobs:
         conda list
         conda info
     - name: Install xraydb with pip and run tests
-        run: |
-          cd python
-          pip install ".[all]"
-          cd tests
-          python -m pytest
+      run: |
+        cd python
+        pip install ".[all]"
+        cd tests
+        python -m pytest

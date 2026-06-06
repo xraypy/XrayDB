@@ -1,4 +1,4 @@
-name: Test xraydb python with windows with conda
+name: xraydb python, windows, conda
 
 on:
   push:
@@ -19,21 +19,19 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python from Miniconda/conda
-        uses: conda-incubator/setup-miniconda@v2.2.0
+      - name: Set up Python  ${{ matrix.python-version }} from Miniconda/conda
+        uses: actions/setup-python@v4
         with:
-          miniconda-version: latest
-          channels: conda-forge
-          channel-priority: strict
-          activate-environment: anaconda-client-env
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+            python-version: ${{ matrix.python-version }}
+      - name: Install conda and dependencies
         run: |
-          printenv
+          echo $CONDA/bin >> $GITHUB_PATH
           conda install -y -c conda-forge python=${{ matrix.python-version }} "numpy>=2" "scipy>=1.13"
+          conda info
+          conda list
       - name: Install xraydb and run tests
         run: |
           cd python
           pip install ".[all]"
           cd tests
-          python -m pytest --cov=xraydb --cov-report=xml
+          python -m pytest

@@ -1,4 +1,4 @@
-name: install xraydb with conda and run test suite
+name: install, test coverage xraydb python ubuntu, conda
 
 on:
   push:

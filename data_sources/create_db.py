@@ -7,10 +7,15 @@ by NIST at http://www.cstl.nist.gov/acd/839.01/xrfdownload.html
 
 import io
 import json
+import lzma
 import os
 import time
 import sqlite3
 from collections import namedtuple
+
+def pack(val):
+    return lzma.compress(json.dumps(val).encode('utf-8'))
+
 
 def add_Version(dest, append=True):
     """add Version Information"""
@@ -107,10 +112,10 @@ def add_compton_energies(dest):
                 cxmean.append(float(words[2]))
                 cemean.append(float(words[3]))
 
-    c.execute('insert into compton_energies values (?,?,?,?)', (json.dumps(e),
-                                                                json.dumps(cx90),
-                                                                json.dumps(cxmean),
-                                                                json.dumps(cemean)))
+    c.execute('insert into compton_energies values (?,?,?,?)', (pack(e),
+                                                                pack(cx90),
+                                                                pack(cxmean),
+                                                                pack(cemean)))
     conn.commit()
     c.close()
 
@@ -239,8 +244,8 @@ def add_Waasmaier(dest, append=True):
                 line = lines.pop(0)
             words = [float(w.strip()) for w in line.split()]
             off   = words[5]
-            scale = json.dumps(words[:5])
-            expon = json.dumps(words[6:])
+            scale = pack(words[:5])
+            expon = pack(words[6:])
 
             elem = ion.translate(strip_ion).strip()
             for suffix in (('va', 'val')):
@@ -318,9 +323,9 @@ def add_Chantler(dest, append=True, table='Chantler', subdir='fine', suffix='.da
         c.execute(query % args,
                   (z, elem, sigma_mu, mue_f2, density,
                    corr_henke, corr_cl35, corr_nucl,
-                   json.dumps(en), json.dumps(f1), json.dumps(f2),
-                   json.dumps(mu_photo), json.dumps(mu_incoh),
-                   json.dumps(mu_total)))
+                   pack(en), pack(f1), pack(f2),
+                   pack(mu_photo), pack(mu_incoh),
+                   pack(mu_total)))
 
     conn.commit()
     c.close()
@@ -348,6 +353,7 @@ def add_Elam(dest, overwrite=False, silent=False):
 
     conn = sqlite3.connect(dest)
     c = conn.cursor()
+    c.execute('PRAGMA page_size=8192;')
 
     current_edge_id = 0
     c.execute(
@@ -449,8 +455,8 @@ def add_Elam(dest, overwrite=False, silent=False):
                 spline.append(temp[2])
             c.execute(
                 'insert into photoabsorption values (?,?,?,?,?)',
-                (current_photo_id, current_element, json.dumps(energy),
-                json.dumps(photo), json.dumps(spline))
+                (current_photo_id, current_element, pack(energy),
+                pack(photo), pack(spline))
                 )
         elif line.startswith('Scatter'):
             current_scatter_id += 1
@@ -468,9 +474,9 @@ def add_Elam(dest, overwrite=False, silent=False):
                 icss.append(temp[4])
             c.execute(
                 'insert into scattering values (?,?,?,?,?,?,?)',
-                (current_scatter_id, current_element, json.dumps(energy),
-                json.dumps(cs), json.dumps(css), json.dumps(ics),
-                json.dumps(icss))
+                (current_scatter_id, current_element, pack(energy),
+                pack(cs), pack(css), pack(ics),
+                pack(icss))
                 )
 
     conn.commit()

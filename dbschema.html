@@ -8,10 +8,10 @@
     <title>Using the XrayDB xraydb.sqlite &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
-    <script src="_static/documentation_options.js?v=7d66af97"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/documentation_options.js?v=cc8a4273"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="References" href="biblio.html" />
@@ -45,9 +45,9 @@
   <section id="using-the-xraydb-xraydb-sqlite">
 <h1>Using the XrayDB  xraydb.sqlite<a class="headerlink" href="#using-the-xraydb-xraydb-sqlite" title="Link to this heading">¶</a></h1>
 <p>All the data for the X-ray database is held in the SQLite3 file
-<code class="docutils literal notranslate"><span class="pre">xraydb.sqlite</span></code>.  To use with SQLite, this file is all you need.  While
-many programs and languages can access SQLite files, basic
-usage with the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> program (available from Windows, Mac OS X, and
+<code class="docutils literal notranslate"><span class="pre">xraydb.sqlite</span></code>.  To use with SQLite, this file is all you need.
+While many programs and languages can access SQLite files, basic usage
+with the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> program (available from Windows, Mac OS X, and
 Linux) can be as simple as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">~&gt;</span> <span class="n">sqlite3</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">sqlite</span>
 <span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">headers</span> <span class="n">on</span>
@@ -63,7 +63,7 @@ Python.</p>
 <section id="overall-database-schema">
 <h2>Overall Database Schema<a class="headerlink" href="#overall-database-schema" title="Link to this heading">¶</a></h2>
 <p>The schema for the SQLite3 database describes where data is held in the
-database, and how to access it.  The schema for the current version (4)
+database, and how to access it.  The schema for the current version (10.0)
 looks like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Table</span> <span class="n">Version</span> <span class="p">(</span><span class="nb">id</span> <span class="n">integer</span> <span class="n">primary</span> <span class="n">key</span><span class="p">,</span>
                <span class="n">tag</span> <span class="n">text</span><span class="p">,</span>
@@ -474,7 +474,7 @@ Each row represents a transition.</p>
 <section id="waasmaier-table">
 <span id="db-waasmaier-sect"></span><h2>Waasmaier Table<a class="headerlink" href="#waasmaier-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Waasmaier</cite> table holds data for calculating elastic X-ray scattering
-factors <span class="math notranslate nohighlight">\(f_0(k)\)</span>, from <span id="id1">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>.  The scattering
+factors <span class="math notranslate nohighlight">\(f_0(k)\)</span>, from <span class="bibtex-citation" id="id1">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>.  The scattering
 factor is unitless, and <span class="math notranslate nohighlight">\(k=\sin(\theta)/\lambda\)</span> where <span class="math notranslate nohighlight">\(\theta\)</span>
 is the scattering angle and <span class="math notranslate nohighlight">\(\lambda\)</span> is the X-ray wavelength.
 available for many common ionic states for each element.  Each row
@@ -526,7 +526,7 @@ represents an ion.</p>
 <section id="keskirahkonen-krause-table">
 <span id="db-keski-sect"></span><h2>KeskiRahkonen_Krause Table<a class="headerlink" href="#keskirahkonen-krause-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>KeskiRahkonen_Krause</cite> table holds data for energy widths of the core electronic
-levels from <span id="id2">[<a class="reference internal" href="biblio.html#id5" title="O. Keski-Rahkonen and M. O. Krause. Total and partial atomic-level widths. Atomic Data and Nuclear Data Tables, 14(2):139–146, 1974. URL: https://dx.doi.org/10.1016/S0092-640X(74)80020-3.">Keski-Rahkonen and Krause (1974)</a>]</span>.  Values are in eV, and each row represents an
+levels from <span class="bibtex-citation" id="id2">[<a class="reference internal" href="biblio.html#id5" title="O. Keski-Rahkonen and M. O. Krause. Total and partial atomic-level widths. Atomic Data and Nuclear Data Tables, 14(2):139–146, 1974. URL: https://dx.doi.org/10.1016/S0092-640X(74)80020-3.">Keski-Rahkonen and Krause (1974)</a>]</span>.  Values are in eV, and each row represents an
 energy level for an element.</p>
 <blockquote id="db-keski-table">
 <span id="index-8"></span><div><p>DB Table of Core Hole Widths from Keski-Rahkonen and Krause</p>
@@ -567,7 +567,7 @@ energy level for an element.</p>
 <section id="krause-oliver-table">
 <h2>Krause_Oliver Table<a class="headerlink" href="#krause-oliver-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Krause_Oliver</cite> table holds data for energy widths of the core electronic
-levels from <span id="id3">[<a class="reference internal" href="biblio.html#id6" title="M. O. Krause and J. H. Oliver. Natural widths of atomic k and l levels, ka x-ray lines and several kll auger lines. Journal of Physical and Chemical Reference Data, 8:329, 1979. URL: https://dx.doi.org/10.1063/1.555595.">Krause and Oliver (1979)</a>]</span>.  Values are in eV, and each row represents an
+levels from <span class="bibtex-citation" id="id3">[<a class="reference internal" href="biblio.html#id6" title="M. O. Krause and J. H. Oliver. Natural widths of atomic k and l levels, ka x-ray lines and several kll auger lines. Journal of Physical and Chemical Reference Data, 8:329, 1979. URL: https://dx.doi.org/10.1063/1.555595.">Krause and Oliver (1979)</a>]</span>.  Values are in eV, and each row represents an
 energy level for an element.</p>
 <blockquote id="db-krause-table">
 <span id="index-9"></span><div><p>DB Table of Core Hole Widths from Krause and Oliver</p>
@@ -648,7 +648,7 @@ These values should be finely-spaced enough for linear interpolation</p>
 <span id="db-chantler-sect"></span><h2>Chantler Table<a class="headerlink" href="#chantler-table" title="Link to this heading">¶</a></h2>
 <p>The <cite>Chantler</cite> table holds data for resonant X-ray scattering factors
 <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> as well as photo-electric absorption,
-coherent, and incoherent scattering factors from <span id="id4">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>.  As
+coherent, and incoherent scattering factors from <span class="bibtex-citation" id="id4">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>.  As
 with other tables, scattering factors are unitless, and cross sections are
 in cm^2/gr. Each row represents an element.</p>
 <blockquote id="db-chantler-table">
@@ -802,8 +802,8 @@ in cm^2/gr. Each row represents an element.</p>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2025-September-24.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Last updated on 2026-November-09.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>

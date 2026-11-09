@@ -2,9 +2,9 @@ Using the XrayDB  xraydb.sqlite
 =====================================
 
 All the data for the X-ray database is held in the SQLite3 file
-``xraydb.sqlite``.  To use with SQLite, this file is all you need.  While
-many programs and languages can access SQLite files, basic
-usage with the ``sqlite3`` program (available from Windows, Mac OS X, and
+``xraydb.sqlite``.  To use with SQLite, this file is all you need.
+While many programs and languages can access SQLite files, basic usage
+with the ``sqlite3`` program (available from Windows, Mac OS X, and
 Linux) can be as simple as::
 
    system~> sqlite3 xraydb.sqlite
@@ -24,7 +24,7 @@ Overall Database Schema
 -----------------------------
 
 The schema for the SQLite3 database describes where data is held in the
-database, and how to access it.  The schema for the current version (4)
+database, and how to access it.  The schema for the current version (10.0)
 looks like this::
 
     Table Version (id integer primary key,

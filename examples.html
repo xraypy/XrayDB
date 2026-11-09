@@ -8,10 +8,10 @@
     <title>Calculations of X-ray properties of materials &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
-    <script src="_static/documentation_options.js?v=7d66af97"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/documentation_options.js?v=cc8a4273"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Using XrayDB from Python" href="python.html" />
@@ -47,12 +47,12 @@
 <span id="example-calcs"></span><h1>Calculations of X-ray properties of materials<a class="headerlink" href="#calculations-of-x-ray-properties-of-materials" title="Link to this heading">¶</a></h1>
 <p>This section presents several detailed examples of using
 <cite>xraydb.sqlite</cite> to calculate X-ray properties of materials.  All of
-the examples here us the functions in the python <cite>xraydb</cite> module,
+the examples here use the functions in the python <cite>xraydb</cite> module,
 which is describe in more detail in the next chapter,
 <a class="reference internal" href="python.html#python-api"><span class="std std-ref">Using XrayDB from Python</span></a>.  The examples will explore some aspects of X-ray
 physics, but will not give a complete tutorial on the concepts here.
 For a good reference on X-ray physics, see
-<span id="id1">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.&lt;</p>
+<span class="bibtex-citation" id="id1">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.&lt;</p>
 <p>Many of these calculations are also available at <a class="reference external" href="https://xraydb.xrayabsorption.org/">XrayDB Web App (xrayabsorption.org)</a>.</p>
 <section id="x-ray-attenuation-by-elements">
 <h2>X-ray attenuation by elements<a class="headerlink" href="#x-ray-attenuation-by-elements" title="Link to this heading">¶</a></h2>
@@ -63,7 +63,7 @@ photo-electric effect is the main process that causes X-ray attenuation.
 When the photo-electric process is dominant, the values for
 <span class="math notranslate nohighlight">\(\mu/\rho\)</span> depends strongly on <em>Z</em> of the atom and on X-ray energy
 <em>E</em>.  In addition to these strong dependencies, sharp increases –
-so-called absorption edges – with be see at energies of bound core
+so-called absorption edges – with be seen at energies of bound core
 electron levels of atoms.  To illustrate these characteristics, the
 following script will plot <span class="math notranslate nohighlight">\(\mu/\rho\)</span> for selected elements:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
@@ -78,16 +78,16 @@ following script will plot <span class="math notranslate nohighlight">\(\mu/\rho
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># energy in eV</span>
       
-<span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu&#39;</span><span class="p">,</span> <span class="s1">&#39;Au&#39;</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="s1">'Cu'</span><span class="p">,</span> <span class="s1">'Au'</span><span class="p">):</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">elem</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
  
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;X-ray mass attenuation&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mu/\rho \rm\, (cm^2/gr)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'X-ray mass attenuation'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Energy (eV)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$\mu/\rho \rm\, (cm^2/gr)$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -103,7 +103,7 @@ strongly with <span class="math notranslate nohighlight">\(E\)</span> – approx
 depends strongly with <em>Z</em>, though the sharp absorption edges make this more
 complicated.</p>
 <p>You can also observe that at relatively high energies for relatively low-Z
-elements (such as C above about 20 keV) that the attenuation levels off.
+elements (such as C above about 20 keV) the attenuation levels off.
 This is because the coherent (Rayleigh) and incoherent (Compton) scattering
 processes dominate, so that the photo-electric absorption is no longer the
 dominant X-ray scattering process.  This can be illustrated by plotting the
@@ -119,22 +119,22 @@ different components of <span class="math notranslate nohighlight">\(\mu/\rho\)<
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># energy in eV</span>
       
-<span class="n">elem</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span>
-<span class="n">mu_total</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;total&#39;</span><span class="p">)</span>
-<span class="n">mu_photo</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;photo&#39;</span><span class="p">)</span>
-<span class="n">mu_incoh</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;incoh&#39;</span><span class="p">)</span>
-<span class="n">mu_coher</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;coh&#39;</span><span class="p">)</span>
+<span class="n">elem</span> <span class="o">=</span> <span class="s1">'C'</span>
+<span class="n">mu_total</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'total'</span><span class="p">)</span>
+<span class="n">mu_photo</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'photo'</span><span class="p">)</span>
+<span class="n">mu_incoh</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'incoh'</span><span class="p">)</span>
+<span class="n">mu_coher</span> <span class="o">=</span> <span class="n">mu_elam</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'coh'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;X-ray mass attenuation for </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">elem</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_total</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_photo</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Photo-electric&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_incoh</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Incoherent&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_coher</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Coherent&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'X-ray mass attenuation for </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">elem</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_total</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Total'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_photo</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Photo-electric'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_incoh</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Incoherent'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">mu_coher</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Coherent'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mu/\rho \rm\, (cm^2/gr)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Energy (eV)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$\mu/\rho \rm\, (cm^2/gr)$'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -174,8 +174,8 @@ energy value and density (which are known for several common materials).
 This gives the length for which X-ray intensity is reduced by a factor of
 <em>e</em>, and so can be used to calculate the fraction of the X-rays transmitted
 through a material of known thickness, as <span class="math notranslate nohighlight">\(\exp(-t\mu)\)</span> for a
-material of thickness <em>t</em>.  As a first example, we calculate the the
-fraction of X-ray transmitted through 1 mm of the water as a function of
+material of thickness <em>t</em>.  As a first example, we calculate the
+fraction of X-ray transmitted through 1 mm of water as a function of
 X-ray energy:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># XrayDB example script    python/examples/mu_water.py</span>
@@ -189,16 +189,16 @@ X-ray energy:</p>
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">41000</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
 
-<span class="n">mu</span> <span class="o">=</span> <span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">material_mu</span><span class="p">(</span><span class="s1">'H2O'</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
 
 <span class="c1"># mu is returned in 1/cm</span>
 <span class="n">trans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">mu</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;transmitted&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">trans</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;attenuated&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;X-ray absorption by 1 mm of water&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Transmitted / Attenuated fraction&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'transmitted'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">trans</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'attenuated'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'X-ray absorption by 1 mm of water'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Energy (eV)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Transmitted / Attenuated fraction'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -211,11 +211,11 @@ X-ray energy:</p>
 </figcaption>
 </figure>
 <p>replacing:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="n">material_mu</span><span class="p">(</span><span class="s1">'H2O'</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;CaCO3&#39;</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">2.71</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="n">material_mu</span><span class="p">(</span><span class="s1">'CaCO3'</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">2.71</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>would generate the following plot</p>
@@ -226,15 +226,15 @@ X-ray energy:</p>
 <p><span class="caption-text">Fraction of X-rays absorbed and transmitted by calcite</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>For many X-ray experiments, selecting the size of a material size so that
+<p>For many X-ray experiments, selecting the size of a material so that
 its thickness is approximately 1 to 2 absorption length is convenient so
 that X-ray scattering and emission can be observed strongly, with neither
 all primary and scattered X-rays being absorbed by the material itself, but
 also not simply passing through the material without any interaction.  For
 example, one can simply do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">material_mu</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mu_20kev</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;CaCO3&#39;</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">2.71</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CaCO3 1/e depth at 20keV = </span><span class="si">{:.3f}</span><span class="s2"> mm&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">10</span><span class="o">/</span><span class="n">mu_20kev</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mu_20kev</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu</span><span class="p">(</span><span class="s1">'CaCO3'</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">2.71</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">"CaCO3 1/e depth at 20keV = </span><span class="si">{:.3f}</span><span class="s2"> mm"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">10</span><span class="o">/</span><span class="n">mu_20kev</span><span class="p">))</span>
 <span class="go">CaCO3 1/e depth at 20keV = 0.648 mm</span>
 </pre></div>
 </div>
@@ -268,7 +268,7 @@ sources and range between 20 and 40 eV, given in the <a class="reference interna
 Ionization Potentials</span></a>.</p>
 <blockquote id="xray-ionpot-table">
 <span id="index-0"></span><div><p>Table of Effective Ionization Potentials. Many of these are taken from
-<span id="id2">[<a class="reference internal" href="biblio.html#id3" title="G. .F. Knoll. Radiation Detection and Measurement, 4th Edition. John Wiley &amp; Sons, 2010. URL: https://dx.doi.org/10.1002/9780470131480.">Knoll (2010)</a>]</span>, while others appear to come from International Commission
+<span class="bibtex-citation" id="id2">[<a class="reference internal" href="biblio.html#id3" title="G. .F. Knoll. Radiation Detection and Measurement, 4th Edition. John Wiley &amp; Sons, 2010. URL: https://dx.doi.org/10.1002/9780470131480.">Knoll (2010)</a>]</span>, while others appear to come from International Commission
 on Radiation Units &amp; Measurement, Report 31, 1979.  The names given are
 those supported by the functions <a class="reference internal" href="python.html#xraydb.ionization_potential" title="xraydb.ionization_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionization_potential()</span></code></a> and
 <a class="reference internal" href="python.html#xraydb.ionchamber_fluxes" title="xraydb.ionchamber_fluxes"><code class="xref py py-func docutils literal notranslate"><span class="pre">ionchamber_fluxes()</span></code></a>.</p>
@@ -325,13 +325,13 @@ those supported by the functions <a class="reference internal" href="python.html
 </div></blockquote>
 <p>From this table, we can see that the absorption (by photo-electric effect) of 1
 X-ray with energy 10 keV will generate about 300 electron-ion pairs.  That is
-not much current, but if <span class="math notranslate nohighlight">\(10^8 \,\rm Hz\)</span> X-rays are absorbed per second,
+not much current, but if <span class="math notranslate nohighlight">\(10^8 \,\rm Hz\)</span> X-rays are absorbed (per second),
 then the current generated will be around 5 nA.  Of course, the length of the
 gas or more precisely the length of gas under ionizing potential will have an
 impact on how much current is generated.  The photo-current generated can be
 amplified and converted to a voltage using a current amplifier, and that
 voltage will then recorded by a number of possible mean: a voltage-to-frequency
-generator and a digital counter is a common method for integrated current for a
+generator together with a digital counter is a common method for integrated current for a
 specific amount of time, but other sampling methods can also be used.</p>
 <p>An ion chamber can be linear over many orders of magnitude of X-ray flux,
 provided the potential between the plates is high enough - typically in the 1
@@ -377,7 +377,7 @@ degrees will be</p>
 \[E_{\rm median} = E_{\gamma} / (1 + m_ec^2 / E_{\gamma})\]</div>
 <p>(recall that <span class="math notranslate nohighlight">\(1 - 1/(1+x) = 1 / (1+1/x)\)</span>).  For X-rays of 10 keV,
 <span class="math notranslate nohighlight">\(E_{\rm median}\)</span> is about 192 eV. For 20 keV X-rays, it will be 750 eV,
-and for 50 keV X-rays, it will be 4.5 keV.  Because of the angular distribution
+and for 50 keV X-rays, it will be 4.5 keV.  Because the angular distribution
 of Compton scattering is not uniform, these median values over-estimate the
 amount of energy transferred to the scattered electron by a small amount that
 increases with energy.  The mean energy of the Compton-scattered electron can
@@ -436,7 +436,7 @@ Frisch mesh grid to collect the slower ions and shunt them so as to not count
 that portion of the current, and thereby give the ion chamber a faster time
 response.  In that case, the current will be half of the value given above.</p>
 <p>As discussed above, the coherent (Rayleigh) scattering produces no electrons,
-but the incoherent (Compton) scattering does, and the energy of the the
+but the incoherent (Compton) scattering does, and the energy of the
 Compton-scattered electron varies with both X-ray energy and scattering angle,
 as does the probability of scattering. Integrating over all angles (and
 assuming the ion chamber is large enough to stop the scattered electrons) gives
@@ -479,10 +479,10 @@ and negative charged particles [True]</p></li>
 <p>The default <cite>sensitivity_units</cite> is ‘A/V’ but can be set to any of the
 common SI prefixes such as ‘p’, ‘pico’, ‘n’, ‘nano’, <span class="math notranslate nohighlight">\(\mu\)</span>,
 (unicode ‘03bc’), ‘u’, ‘micro’, ‘m’, or ‘milli’, so that:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">'N2'</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
 <span class="go">                               sensitivity=1.e-9)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-<span class="go">                               sensitivity=1, sensitivity_units=&#39;nA/V&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="s1">'N2'</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="go">                               sensitivity=1, sensitivity_units='nA/V')</span>
 </pre></div>
 </div>
 <p>will give the same results.</p>
@@ -504,12 +504,12 @@ X-ray energy and the incoherent cross-section with the <strong>*mean*</strong>
 Compton-scattering energy, using the calculated and tabulated mean energies of
 the Compton-scattered electrons are used to estimate the incident flux from
 the photo-current. The total attenuation cross-section, including the coherent
-cross-sections, is used to calculate the transmitted flu from the incident
+cross-sections, is used to calculate the transmitted flux from the incident
 flux.</p>
 <p>As an example calculation of ion chamber currents:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">18000</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">'nitrogen'</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="mi">18000</span><span class="p">,</span>
 <span class="go">                               length=10.0, sensitivity=1.e-6)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incident= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz, Transmitted flux= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Incident= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz, Transmitted flux= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz"</span><span class="p">)</span>
 <span class="go">Incident= 2.2358e+12 Hz, Transmitted flux= 2.214e+12 Hz</span>
 </pre></div>
 </div>
@@ -517,10 +517,10 @@ flux.</p>
 more gases so as to better control the fraction of X-rays absorbed in a
 chamber of fixed length. This can be specified by passing in a dictionary
 of gas name and fractional density, as with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Kr&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;Ar&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">'Kr'</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">'Ar'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
 <span class="go">                           energy=18000, length=10,</span>
-<span class="go">                           sensitivity=1, sensitivity_units=&#39;microA/V&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incident= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz, Transmitted flux= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="go">                           sensitivity=1, sensitivity_units='microA/V')</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Incident= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz, Transmitted flux= </span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> Hz"</span><span class="p">)</span>
 <span class="go">Incident= 1.43737e+10 Hz, Transmitted flux= 3.28986e+09 Hz</span>
 </pre></div>
 </div>
@@ -551,19 +551,19 @@ a few common mirror materials is given as</p>
 
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">51000</span><span class="p">,</span> <span class="mi">501</span><span class="p">)</span>
 
-<span class="n">r_si</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
-<span class="n">r_ni</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">&#39;Ni&#39;</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
-<span class="n">r_rh</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">&#39;Rh&#39;</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
-<span class="n">r_pt</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">&#39;Pt&#39;</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+<span class="n">r_si</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">'Si'</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+<span class="n">r_ni</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">'Ni'</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+<span class="n">r_rh</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">'Rh'</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+<span class="n">r_pt</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">'Pt'</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_si</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_ni</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ni&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_rh</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rh&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_pt</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pt&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_si</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Si'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_ni</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Ni'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_rh</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Rh'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">r_pt</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Pt'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;X-ray reflectivity at $</span><span class="se">\\</span><span class="s1">theta=2 </span><span class="se">\\</span><span class="s1">mathrm</span><span class="si">{mrad}</span><span class="s1">$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'X-ray reflectivity at $</span><span class="se">\\</span><span class="s1">theta=2 </span><span class="se">\\</span><span class="s1">mathrm</span><span class="si">{mrad}</span><span class="s1">$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Energy (eV)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Reflectivity'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -585,17 +585,17 @@ using the <a class="reference internal" href="python.html#xraydb.multilayer_refl
 takes a list of materials from top to bottom, a matching list of
 thicknesses of each layer, substrate material, incident angle, energy,
 and the number of periods.</p>
-<p>An example usage, calculating the reflectivity at 1000 eV vs. grazing
-angle for a 40*[Si, W] layered mirror on SiO2 substrate is given as</p>
+<p>An example usage, calculating the reflectivity at a grazing angle of 10 mrad
+vs. energy for a 40*[Si, W] layered mirror on SiO2 substrate is given as</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">multilayer_reflectivity</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># 40 layers of [27Ang Si, 18Ang W]</span>
-<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">]</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Si'</span><span class="p">,</span> <span class="s1">'W'</span><span class="p">]</span>
 <span class="n">thicknesses</span> <span class="o">=</span> <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span> <span class="c1"># angstroms</span>
 <span class="n">n_periods</span> <span class="o">=</span> <span class="mi">40</span>
-<span class="n">substrate</span> <span class="o">=</span> <span class="s1">&#39;SiO2&#39;</span>
+<span class="n">substrate</span> <span class="o">=</span> <span class="s1">'SiO2'</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="mf">0.01</span>
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
 
@@ -603,9 +603,9 @@ angle for a 40*[Si, W] layered mirror on SiO2 substrate is given as</p>
                                   <span class="n">theta</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">n_periods</span><span class="o">=</span><span class="n">n_periods</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">reflect</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">rm 40 x [27</span><span class="se">\\</span><span class="s1">AA</span><span class="se">\\</span><span class="s1">, Si,</span><span class="se">\\</span><span class="s1">, 18</span><span class="se">\\</span><span class="s1">AA</span><span class="se">\\</span><span class="s1">, W] </span><span class="se">\\</span><span class="s1">&gt; multilayer </span><span class="se">\\</span><span class="s1">&gt; </span><span class="se">\\</span><span class="s1">theta</span><span class="se">\\</span><span class="s1">, = </span><span class="se">\\</span><span class="s1">, </span><span class="si">{</span><span class="n">theta</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="se">\\</span><span class="s1">&gt; mrad$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'$</span><span class="se">\\</span><span class="s1">rm 40 x [27</span><span class="se">\\</span><span class="s1">AA</span><span class="se">\\</span><span class="s1">, Si,</span><span class="se">\\</span><span class="s1">, 18</span><span class="se">\\</span><span class="s1">AA</span><span class="se">\\</span><span class="s1">, W] </span><span class="se">\\</span><span class="s1">&gt; multilayer </span><span class="se">\\</span><span class="s1">&gt; </span><span class="se">\\</span><span class="s1">theta</span><span class="se">\\</span><span class="s1">, = </span><span class="se">\\</span><span class="s1">, </span><span class="si">{</span><span class="n">theta</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="se">\\</span><span class="s1">&gt; mrad$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Energy (eV)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Reflectivity'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -617,7 +617,7 @@ angle for a 40*[Si, W] layered mirror on SiO2 substrate is given as</p>
 <section id="coated-mirrors">
 <h3>Coated mirrors<a class="headerlink" href="#coated-mirrors" title="Link to this heading">¶</a></h3>
 <p>In principle, reflectivity calculation for coated mirrors is the same
-as for multilayer mirrors; however, <code class="xref py py-func docutils literal notranslate"><span class="pre">coated_reflectivity`()</span></code> is
+as for multilayer mirrors; however, <a class="reference internal" href="python.html#xraydb.coated_reflectivity" title="xraydb.coated_reflectivity"><code class="xref py py-func docutils literal notranslate"><span class="pre">coated_reflectivity()</span></code></a> is
 provided to simplify the recursion and have more clear input
 parameters.  The function takes top layer material and thickness,
 substrate material and thickness, incident angle, energy, and optional
@@ -629,24 +629,24 @@ as</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">coated_reflectivity</span><span class="p">,</span> <span class="n">mirror_reflectivity</span><span class="p">)</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="n">coating</span> <span class="o">=</span> <span class="s1">&#39;Rh&#39;</span>
+<span class="n">coating</span> <span class="o">=</span> <span class="s1">'Rh'</span>
 <span class="n">coating_thick</span> <span class="o">=</span> <span class="mi">300</span>
-<span class="n">substrate</span> <span class="o">=</span> <span class="s1">&#39;Si&#39;</span>
+<span class="n">substrate</span> <span class="o">=</span> <span class="s1">'Si'</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="mf">0.004</span>
 <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">35000</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="n">binder</span> <span class="o">=</span> <span class="s1">&#39;Cr&#39;</span>
+<span class="n">binder</span> <span class="o">=</span> <span class="s1">'Cr'</span>
 <span class="n">binder_thick</span> <span class="o">=</span> <span class="mi">30</span>
 
 <span class="n">refl_coat</span> <span class="o">=</span> <span class="n">coated_reflectivity</span><span class="p">(</span><span class="n">coating</span><span class="p">,</span> <span class="n">coating_thick</span><span class="p">,</span> <span class="n">substrate</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">binder</span><span class="o">=</span><span class="n">binder</span><span class="p">,</span> <span class="n">binder_thick</span><span class="o">=</span><span class="n">binder_thick</span><span class="p">)</span>
-<span class="n">refl_rhod</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">&#39;Rh&#39;</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+<span class="n">refl_rhod</span> <span class="o">=</span> <span class="n">mirror_reflectivity</span><span class="p">(</span><span class="s1">'Rh'</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
 
-<span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">rm </span><span class="si">{</span><span class="n">coating_thick</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">AA </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">coating</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">binder_thick</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">AA </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">binder</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">&gt; coated </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">substrate</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">&gt; mirror </span><span class="se">\\</span><span class="s1">&gt; </span><span class="se">\\</span><span class="s1">theta</span><span class="se">\\</span><span class="s1">, =</span><span class="se">\\</span><span class="s1">, </span><span class="si">{</span><span class="n">theta</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> mrad $&#39;</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">refl_coat</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rh coated&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">refl_rhod</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rh bulk&#39;</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'$</span><span class="se">\\</span><span class="s1">rm </span><span class="si">{</span><span class="n">coating_thick</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">AA </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">coating</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">binder_thick</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">AA </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">binder</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">&gt; coated </span><span class="se">\\</span><span class="s1">&gt; </span><span class="si">{</span><span class="n">substrate</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">&gt; mirror </span><span class="se">\\</span><span class="s1">&gt; </span><span class="se">\\</span><span class="s1">theta</span><span class="se">\\</span><span class="s1">, =</span><span class="se">\\</span><span class="s1">, </span><span class="si">{</span><span class="n">theta</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> mrad $'</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">refl_coat</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Rh coated'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">refl_rhod</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Rh bulk'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy (eV)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Energy (eV)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Reflectivity'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -685,7 +685,7 @@ anomalous scattering (as calculated with <a class="reference internal" href="pyt
 shape.</p>
 <p>All of these effects are included in the <a class="reference internal" href="python.html#xraydb.darwin_width" title="xraydb.darwin_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">darwin_width()</span></code></a> function,
 which follows very closely the description from chapter 6.4 in
-<span id="id3">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.  The function takes inputs of</p>
+<span class="bibtex-citation" id="id3">[<a class="reference internal" href="biblio.html#id2" title="J. Als-Nielsen and D. McMorrow. Elements of Modern X-ray Physics, 2nd Edition. John Wiley &amp; Sons, 2011. URL: https://dx.doi.org/10.1002/9781119998365.">Als-Nielsen and McMorrow (2011)</a>]</span>.  The function takes inputs of</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><cite>energy</cite>: the X-ray energy, in eV.</p></li>
@@ -738,18 +738,18 @@ predicted energy and angular widths is</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">darwin_width</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="n">dw_si111</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">dw_si333</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">dw_si111</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">'Si'</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">dw_si333</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="s1">'Si'</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">dw_si111</span><span class="o">.</span><span class="n">theta_width</span><span class="o">*</span><span class="mf">1e6</span><span class="p">)</span>
 
-<span class="n">fmt_string</span> <span class="o">=</span> <span class="s2">&quot;Darwin Width for </span><span class="si">{:s}</span><span class="s2"> at </span><span class="si">{:.0f}</span><span class="s2"> keV: </span><span class="si">{:5.2f}</span><span class="s2"> microrad, </span><span class="si">{:5.2f}</span><span class="s2"> eV&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fmt_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;Si(111)&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+<span class="n">fmt_string</span> <span class="o">=</span> <span class="s2">"Darwin Width for </span><span class="si">{:s}</span><span class="s2"> at </span><span class="si">{:.0f}</span><span class="s2"> keV: </span><span class="si">{:5.2f}</span><span class="s2"> microrad, </span><span class="si">{:5.2f}</span><span class="s2"> eV"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'Si(111)'</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
                         <span class="n">dw_si111</span><span class="o">.</span><span class="n">theta_width</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span>
                         <span class="n">dw_si111</span><span class="o">.</span><span class="n">energy_width</span><span class="p">))</span>
 
 
-<span class="nb">print</span><span class="p">(</span><span class="n">fmt_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;Si(333)&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'Si(333)'</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span>
                         <span class="n">dw_si333</span><span class="o">.</span><span class="n">theta_width</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span>
                         <span class="n">dw_si333</span><span class="o">.</span><span class="n">energy_width</span><span class="p">))</span>
 
@@ -760,14 +760,14 @@ predicted energy and angular widths is</p>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">intensity</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$I$, Si(111)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">intensity</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$I^2$, Si(111)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dw_si333</span><span class="o">.</span><span class="n">dtheta</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">dw_si333</span><span class="o">.</span><span class="n">intensity</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$I^2$ Si(333) 30 keV&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">intensity</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'$I$, Si(111)'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">intensity</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'$I^2$, Si(111)'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dw_si333</span><span class="o">.</span><span class="n">dtheta</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">dw_si333</span><span class="o">.</span><span class="n">intensity</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'$I^2$ Si(333) 30 keV'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;X-ray diffraction intensity at 10keV&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Angle - $</span><span class="se">\\</span><span class="s1">theta_B$ ($ </span><span class="se">\\</span><span class="s1">mu </span><span class="se">\\</span><span class="s1">mathrm</span><span class="si">{rad}</span><span class="s1">$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'X-ray diffraction intensity at 10keV'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Angle - $</span><span class="se">\\</span><span class="s1">theta_B$ ($ </span><span class="se">\\</span><span class="s1">mu </span><span class="se">\\</span><span class="s1">mathrm</span><span class="si">{rad}</span><span class="s1">$)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Reflectivity'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -803,19 +803,19 @@ curve”  of two crystals is given in</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">darwin_width</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="n">dw_si111</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">dw_si111</span> <span class="o">=</span> <span class="n">darwin_width</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="s1">'Si'</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
 <span class="n">dtheta</span>  <span class="o">=</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">dtheta</span><span class="o">*</span><span class="mf">1e6</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">intensity</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$I$, 1 crystal&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">rocking_curve</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rocking Curve&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">intensity</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'$I$, 1 crystal'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dtheta</span><span class="p">,</span> <span class="n">dw_si111</span><span class="o">.</span><span class="n">rocking_curve</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Rocking Curve'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;X-ray Rocking Curve at 10keV, Si(111)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Angle - $</span><span class="se">\\</span><span class="s1">theta_B$ ($ </span><span class="se">\\</span><span class="s1">mu \mathrm</span><span class="si">{rad}</span><span class="s1">$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectivity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'X-ray Rocking Curve at 10keV, Si(111)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Angle - $</span><span class="se">\\</span><span class="s1">theta_B$ ($ </span><span class="se">\\</span><span class="s1">mu \mathrm</span><span class="si">{rad}</span><span class="s1">$)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Reflectivity'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -919,8 +919,8 @@ from rocking one crystal through the reflection of the other.</span><a class="he
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2025-September-24.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Last updated on 2026-November-09.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>

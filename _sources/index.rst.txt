@@ -8,7 +8,6 @@ X-ray DB: X-ray Reference Data in SQLite
 .. _PDF Version of this documentation:    https://xraypy.github.io/XrayDB/xraydb.pdf
 .. _XrayDB Web App (xrayabsorption.org):  https://xraydb.xrayabsorption.org/
 .. _XrayDB Web App (SEES):                https://xraydb.seescience.org/
-.. _XrayDB Web App (CARS/APS):            https://millenia.cars.aps.anl.gov/xraydb
 
 XrayDB provides atomic data, characteristic X-ray energies, and X-ray cross
 sections for the elements in an SQLite3 database, ``xraydb.sqlite``.  This file
@@ -18,7 +17,7 @@ interface to this database is also provided.  Some of the components of the
 database hold arrays of numbers, which are stored as JSON-encoded strings, and
 will need to be decoded from JSON to be used.
 
-The current version of the XrayDB database is **9.2**, and the
+The current version of the XrayDB database is **10.0**, and the
 Python module is version |release|, which can be installed with::
 
     pip install xraydb

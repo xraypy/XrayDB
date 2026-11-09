@@ -8,10 +8,10 @@
     <title>Using XrayDB from Python &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
-    <script src="_static/documentation_options.js?v=7d66af97"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/documentation_options.js?v=cc8a4273"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Overview of Atomic and X-ray Data" href="overview.html" />
@@ -44,16 +44,16 @@
             
   <section id="using-xraydb-from-python">
 <span id="python-api"></span><h1>Using XrayDB from Python<a class="headerlink" href="#using-xraydb-from-python" title="Link to this heading">¶</a></h1>
-<p>The <cite>xraydb</cite> Python module
-gives a user-friendly wrapping of the XrayDB, and
-automates the the conversion of data from sqlite database into Python and
-numpy arrays. The module requires the <cite>numpy</cite>, <cite>scipy</cite> and <cite>sqlalchemy</cite>
-modules, all of which are readily available and can be installed with:</p>
+<p>The <cite>xraydb</cite> Python module gives a user-friendly wrapping of the
+XrayDB, and automates the conversion of data from sqlite database into
+Python and numpy arrays. The module requires the <cite>numpy</cite>, <cite>scipy</cite> and
+<cite>sqlalchemy</cite> modules, all of which are readily available and can be
+installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">xraydb</span>
 </pre></div>
 </div>
-<p>The current version of the Python module is 4.5.8, corresponding to
-version 6 of <cite>xraydb.sqlite</cite>.  The source code for this module is in
+<p>The current version of the Python module is 4.6.0, corresponding to
+version 10.0 of <cite>xraydb.sqlite</cite>.  The source code for this module is in
 the <cite>python</cite> folder from the GitHub repository.</p>
 <section id="module-xraydb">
 <span id="the-python-xraydb-module"></span><h2>The Python <code class="docutils literal notranslate"><span class="pre">xraydb</span></code> module<a class="headerlink" href="#module-xraydb" title="Link to this heading">¶</a></h2>
@@ -61,38 +61,38 @@ the <cite>python</cite> folder from the GitHub repository.</p>
 <cite>xraydb.sqlite</cite> database.  To use this import the <cite>xraydb</cite> module
 with:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">xraydb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">atomic_number</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">atomic_number</span><span class="p">(</span><span class="s1">'Ag'</span><span class="p">)</span>
 <span class="go">47</span>
 <span class="go">#</span>
 <span class="go"># X-ray elastic (Thomson) scattering factors:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">f0</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">f0</span><span class="p">(</span><span class="s1">'Fe'</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
 <span class="go">array([25.994603  , 11.50848469,  6.55945765,  4.71039413,  3.21048827,</span>
 <span class="go">       2.20939146,  1.65112769,  1.36705887,  1.21133507,  1.10155689,</span>
 <span class="go">       1.0035555 ])</span>
 <span class="go">#</span>
 <span class="go"># X-ray emission lines:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_lines</span><span class="p">(</span><span class="s1">&#39;Zn&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39; = &#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_lines</span><span class="p">(</span><span class="s1">'Zn'</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">' = '</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 <span class="gp">...</span>
-<span class="go">Ka3  =  XrayLine(energy=8462.8, intensity=0.000316256, initial_level=&#39;K&#39;, final_level=&#39;L1&#39;)</span>
-<span class="go">Ka2  =  XrayLine(energy=8614.1, intensity=0.294353, initial_level=&#39;K&#39;, final_level=&#39;L2&#39;)</span>
-<span class="go">Ka1  =  XrayLine(energy=8637.2, intensity=0.576058, initial_level=&#39;K&#39;, final_level=&#39;L3&#39;)</span>
-<span class="go">Kb3  =  XrayLine(energy=9567.6, intensity=0.0438347, initial_level=&#39;K&#39;, final_level=&#39;M2&#39;)</span>
-<span class="go">Kb1  =  XrayLine(energy=9570.4, intensity=0.0846229, initial_level=&#39;K&#39;, final_level=&#39;M3&#39;)</span>
-<span class="go">Kb5  =  XrayLine(energy=9648.8, intensity=0.000815698, initial_level=&#39;K&#39;, final_level=&#39;M4,5&#39;)</span>
+<span class="go">Ka3  =  XrayLine(energy=8462.8, intensity=0.000316256, initial_level='K', final_level='L1')</span>
+<span class="go">Ka2  =  XrayLine(energy=8614.1, intensity=0.294353, initial_level='K', final_level='L2')</span>
+<span class="go">Ka1  =  XrayLine(energy=8637.2, intensity=0.576058, initial_level='K', final_level='L3')</span>
+<span class="go">Kb3  =  XrayLine(energy=9567.6, intensity=0.0438347, initial_level='K', final_level='M2')</span>
+<span class="go">Kb1  =  XrayLine(energy=9570.4, intensity=0.0846229, initial_level='K', final_level='M3')</span>
+<span class="go">Kb5  =  XrayLine(energy=9648.8, intensity=0.000815698, initial_level='K', final_level='M4,5')</span>
 <span class="go">#</span>
 <span class="go"># X-ray absorption edges:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">xray_edge</span><span class="p">(</span><span class="s1">&#39;As&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">xray_edge</span><span class="p">(</span><span class="s1">'As'</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">)</span>
 <span class="go">XrayEdge(energy=11867.0, fyield=0.548989, jump_ratio=7.314)</span>
 <span class="go">#</span>
 <span class="go"># X-ray attenuation factors:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">as_kedge</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_edge</span><span class="p">(</span><span class="s1">&#39;As&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">energy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">as_kedge</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_edge</span><span class="p">(</span><span class="s1">'As'</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">)</span><span class="o">.</span><span class="n">energy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="n">as_kedge</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">muvals</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">mu_elam</span><span class="p">(</span><span class="s1">&#39;As&#39;</span><span class="p">,</span> <span class="n">energies</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">muvals</span> <span class="o">=</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">mu_elam</span><span class="p">(</span><span class="s1">'As'</span><span class="p">,</span> <span class="n">energies</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">en</span><span class="p">,</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energies</span><span class="p">,</span> <span class="n">muvals</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.0f}</span><span class="s2">   </span><span class="si">{:8.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">en</span><span class="p">,</span> <span class="n">mu</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">{:.0f}</span><span class="s2">   </span><span class="si">{:8.2f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">en</span><span class="p">,</span> <span class="n">mu</span><span class="p">))</span>
 <span class="gp">...</span>
 <span class="go">11817      26.07</span>
 <span class="go">11842      25.92</span>
@@ -106,7 +106,7 @@ with:</p>
 <p>Most of these function return some element-specific property from the
 element symbol or atomic number.  Some of the data extends to Z=98 (Cf),
 but some data may not be available for Z &gt; 92 (U).  Except where noted,
-the data comes from <span id="id1">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span>.</p>
+the data comes from <span class="bibtex-citation" id="id1">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span>.</p>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -131,10 +131,10 @@ the data comes from <span id="id1">[<a class="reference internal" href="biblio.h
 <td><p>density of pure element</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a></p></td>
-<td><p>elastic scattering factor (<span id="id2">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>)</p></td>
+<td><p>elastic scattering factor (<span class="bibtex-citation" id="id2">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>)</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f0_ions" title="xraydb.f0_ions"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0_ions()</span></code></a></p></td>
-<td><p>list of valid “ions” for <a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a>  (<span id="id3">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>)</p></td>
+<td><p>list of valid “ions” for <a class="reference internal" href="#xraydb.f0" title="xraydb.f0"><code class="xref py py-func docutils literal notranslate"><span class="pre">f0()</span></code></a>  (<span class="bibtex-citation" id="id3">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.xray_edge" title="xraydb.xray_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">xray_edge()</span></code></a></p></td>
 <td><p>xray edge data for a particular element and edge</p></td>
@@ -161,16 +161,16 @@ the data comes from <span id="id1">[<a class="reference internal" href="biblio.h
 <td><p>incoherent scattering cross-section for an element</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.chantler_energies" title="xraydb.chantler_energies"><code class="xref py py-func docutils literal notranslate"><span class="pre">chantler_energies()</span></code></a></p></td>
-<td><p>energies of tabulation for Chantler data (<span id="id4">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
+<td><p>energies of tabulation for Chantler data (<span class="bibtex-citation" id="id4">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.f1_chantler" title="xraydb.f1_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f1_chantler()</span></code></a></p></td>
-<td><p><span class="math notranslate nohighlight">\(f'(E)\)</span> anomalous scattering factor (<span id="id5">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(f'(E)\)</span> anomalous scattering factor (<span class="bibtex-citation" id="id5">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.f2_chantler" title="xraydb.f2_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">f2_chantler()</span></code></a></p></td>
-<td><p><span class="math notranslate nohighlight">\(f&quot;(E)\)</span> anomalous scattering factor (<span id="id6">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\(f&quot;(E)\)</span> anomalous scattering factor (<span class="bibtex-citation" id="id6">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#xraydb.mu_chantler" title="xraydb.mu_chantler"><code class="xref py py-func docutils literal notranslate"><span class="pre">mu_chantler()</span></code></a></p></td>
-<td><p>absorption cross-section (<span id="id7">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
+<td><p>absorption cross-section (<span class="bibtex-citation" id="id7">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xraydb.guess_edge" title="xraydb.guess_edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">guess_edge()</span></code></a></p></td>
 <td><p>guess element and edge from energy of absorption edge</p></td>
@@ -318,18 +318,18 @@ the data comes from <span id="id1">[<a class="reference internal" href="biblio.h
 <h2>Elastic Scattering Factors<a class="headerlink" href="#elastic-scattering-factors" title="Link to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="xraydb.f0">
-<span class="sig-name descname"><span class="pre">f0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.f0" title="Link to this definition">¶</a></dt>
-<dd><p>elastic X-ray scattering factor, f0(q), for an ion.</p>
+<span class="sig-name descname"><span class="pre">f0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.f0" title="Link to this definition">¶</a></dt>
+<dd><p>elastic X-ray scattering factor, f0(k), for an ion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ion</strong> (<em>int</em><em> or </em><em>str</em>) – atomic number, atomic symbol or ionic symbol of scatterer</p></li>
-<li><p><strong>q</strong> (<em>float</em><em>, </em><em>ndarray</em>) – Q value(s)  for scattering</p></li>
+<li><p><strong>k</strong> (<em>float</em><em>, </em><em>ndarray</em>) – k value(s)  for scattering</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="simple">
-<dt>Returns</dt><dd><p>scattering factor for each Q value</p>
+<dt>Returns</dt><dd><p>scattering factor for each k value</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -339,7 +339,9 @@ International Tables for Crystallography, Vol. C.</p></li>
 <li><p><cite>ion</cite> can be of the form: 26, <cite>Fe</cite>, <cite>Fe2+</cite>.  For a full list of ions
 use <cite>f0_ions()</cite></p></li>
 <li><p>elements supported are from Z = 1 to 98 (‘H’ to ‘Cf’)</p></li>
-<li><p>q = sin(theta) / lambda, where theta=incident angle, lambda=X-ray wavelength</p></li>
+<li><p>k = sin(theta)/lambda, where theta=incident angle, and
+lambda=X-ray wavelength, in Angstroms. This differs from the usual
+definition of <cite>q</cite> by a factor of 4*pi</p></li>
 </ol>
 </dd></dl>
 
@@ -477,15 +479,15 @@ XrayLine tuples of (energy, intensity, initial level, final level)</p>
 ‘all intial levels with below this energy</p></li>
 </ol>
 <dl>
-<dt>Exaample:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_lines</span><span class="p">(</span><span class="s1">&#39;Mn&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<dt>Exaample:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">xraydb</span><span class="o">.</span><span class="n">xray_lines</span><span class="p">(</span><span class="s1">'Mn'</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 <span class="gp">...</span>
-<span class="go">Ka3 XrayLine(energy=5769.9, intensity=0.000265963, initial_level=&#39;K&#39;, final_level=&#39;L1&#39;)</span>
-<span class="go">Ka2 XrayLine(energy=5889.1, intensity=0.293941, initial_level=&#39;K&#39;, final_level=&#39;L2&#39;)</span>
-<span class="go">Ka1 XrayLine(energy=5900.3, intensity=0.58134, initial_level=&#39;K&#39;, final_level=&#39;L3&#39;)</span>
-<span class="go">Kb3 XrayLine(energy=6491.8, intensity=0.042234, initial_level=&#39;K&#39;, final_level=&#39;M2&#39;)</span>
-<span class="go">Kb1 XrayLine(energy=6491.8, intensity=0.0815329, initial_level=&#39;K&#39;, final_level=&#39;M3&#39;)</span>
-<span class="go">Kb5 XrayLine(energy=6537.0, intensity=0.000685981, initial_level=&#39;K&#39;, final_level=&#39;M4,5&#39;)</span>
+<span class="go">Ka3 XrayLine(energy=5769.9, intensity=0.000265963, initial_level='K', final_level='L1')</span>
+<span class="go">Ka2 XrayLine(energy=5889.1, intensity=0.293941, initial_level='K', final_level='L2')</span>
+<span class="go">Ka1 XrayLine(energy=5900.3, intensity=0.58134, initial_level='K', final_level='L3')</span>
+<span class="go">Kb3 XrayLine(energy=6491.8, intensity=0.042234, initial_level='K', final_level='M2')</span>
+<span class="go">Kb1 XrayLine(energy=6491.8, intensity=0.0815329, initial_level='K', final_level='M3')</span>
+<span class="go">Kb5 XrayLine(energy=6537.0, intensity=0.000685981, initial_level='K', final_level='M4,5')</span>
 </pre></div>
 </div>
 </dd>
@@ -510,15 +512,15 @@ XrayLine tuples of (energy, intensity, initial level, final level)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;Ka&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">'Fe'</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">,</span> <span class="s1">'Ka'</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
 <span class="go">0.350985, 6400.752419799043, 0.874576096</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;Ka&#39;</span><span class="p">,</span> <span class="mi">6800</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">'Fe'</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">,</span> <span class="s1">'Ka'</span><span class="p">,</span> <span class="mi">6800</span><span class="p">)</span>
 <span class="go">0.0, 6400.752419799043, 0.874576096</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="s1">&#39;L3&#39;</span><span class="p">,</span> <span class="s1">&#39;La&#39;</span><span class="p">,</span> <span class="mi">6000</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">fluor_yield</span><span class="p">(</span><span class="s1">'Ag'</span><span class="p">,</span> <span class="s1">'L3'</span><span class="p">,</span> <span class="s1">'La'</span><span class="p">,</span> <span class="mi">6000</span><span class="p">)</span>
 <span class="go">0.052, 2982.129655446868, 0.861899000000000</span>
 </pre></div>
 </div>
@@ -563,7 +565,7 @@ energy or array of energies.  Data is from the Elam tables.</p>
 <li><p><strong>element</strong> (<em>int</em><em>, </em><em>str</em>) – atomic number, atomic symbol for element</p></li>
 <li><p><strong>energy</strong> (<em>float</em><em> or </em><em>ndarray</em>) – energy or array of energies</p></li>
 <li><p><strong>kind</strong> (<em>str</em>) – type of cross-section to use, one of (‘total’,
-‘photo’, ‘coh’, ‘incoh’) [‘total’]</p></li>
+‘photo’, ‘coh’, ‘incoh’, ‘nonphoto’) [‘total’]</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -687,7 +689,7 @@ energy or array of energies.   Data is from the Chantler tables.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="xraydb.mu_chantler">
-<span class="sig-name descname"><span class="pre">mu_chantler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incoh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.mu_chantler" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mu_chantler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incoh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonphoto</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.mu_chantler" title="Link to this definition">¶</a></dt>
 <dd><p>X-ray mass attenuation coeficient, mu/rho, for an element and
 energy or array of energies.   Data is from the Chantler tables.</p>
 <dl class="field-list simple">
@@ -695,8 +697,11 @@ energy or array of energies.   Data is from the Chantler tables.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>element</strong> (<em>int</em><em>, </em><em>str</em>) – atomic number, atomic symbol for element</p></li>
 <li><p><strong>energy</strong> (<em>float</em><em> or </em><em>ndarray</em>) – energy or array of energies</p></li>
-<li><p><strong>incoh</strong> (<em>bool</em>) – whether to return only the incoherent contribution [False]</p></li>
+<li><p><strong>incoh</strong> (<em>bool</em>) – whether to return only the incoherent+coherenet contribution [False]</p></li>
 <li><p><strong>photo</strong> (<em>bool</em>) – whether to return only the photo-electric contribution [False]</p></li>
+<li><p><strong>nonphoto</strong> (<em>bool</em>) – whether to return only the incoherent+cohereent contribution [False]</p></li>
+<li><p><strong>kind</strong> (<em>str</em><em> or </em><em>None</em>) – type of cross-section to use, one of (None,
+‘total’, ‘photo’, ‘nonphoto’) [None]</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -707,6 +712,9 @@ energy or array of energies.   Data is from the Chantler tables.</p>
 <ol class="arabic simple">
 <li><p>Values returned are in units of cm^2/gr</p></li>
 <li><p>The default is to return total attenuation coefficient.</p></li>
+<li><p>The Chantler tables do not separate coherent from incoherent scattering</p></li>
+<li><p>Using <cite>incoh</cite>, <cite>photo</cite>, <cite>nonphoto</cite> should be considered deprecated and
+use of <cite>kind</cite> preferred.</p></li>
 </ol>
 </dd></dl>
 
@@ -727,21 +735,21 @@ energy or array of energies.   Data is from the Chantler tables.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">chemparse</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Mn(SO4)2(H2O)7)&#39;</span><span class="p">)</span>
-<span class="go">{&#39;H&#39;: 14.0, &#39;S&#39;: 2.0, &#39;Mn&#39;: 1, &#39;O&#39;: 15.0}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">'Mn(SO4)2(H2O)7)'</span><span class="p">)</span>
+<span class="go">{'H': 14.0, 'S': 2.0, 'Mn': 1, 'O': 15.0}</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Zn1.e-5Fe3O4&#39;</span><span class="p">)</span>
-<span class="go">{&#39;Zn&#39;: 1e-05, &#39;Fe&#39;: 3.0, &#39;O&#39;: 4.0}</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">'Zn1.e-5Fe3O4'</span><span class="p">)</span>
+<span class="go">{'Zn': 1e-05, 'Fe': 3.0, 'O': 4.0}</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;CO&#39;</span><span class="p">)</span>
-<span class="go">{&#39;C&#39;: 1, &#39;O&#39;: 1}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;Co&#39;</span><span class="p">)</span>
-<span class="go">{&#39;Co&#39;: 1}</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">'CO'</span><span class="p">)</span>
+<span class="go">{'C': 1, 'O': 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">'Co'</span><span class="p">)</span>
+<span class="go">{'Co': 1}</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">&#39;co&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chemparse</span><span class="p">(</span><span class="s1">'co'</span><span class="p">)</span>
 <span class="go">ValueError: unrecognized element or number:</span>
 <span class="go">co</span>
 </pre></div>
@@ -763,15 +771,15 @@ can be parsed to a dictionary with chemparse()</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_formula</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_formula</span><span class="p">(</span><span class="s1">&#39;Mn(SO4)2(H2O)7)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_formula</span><span class="p">(</span><span class="s1">'Mn(SO4)2(H2O)7)'</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">validate_formula</span><span class="p">(</span><span class="s1">&#39;Mn(SO4)2(H2O7&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">validate_formula</span><span class="p">(</span><span class="s1">'Mn(SO4)2(H2O7'</span><span class="p">)</span>
 <span class="go">False</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">validate_formula</span><span class="p">(</span><span class="s1">&#39;Z&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">validate_formula</span><span class="p">(</span><span class="s1">'Z'</span><span class="p">)</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -823,8 +831,8 @@ to those that match category names</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">find_material</span><span class="p">(</span><span class="s1">&#39;kapton&#39;</span><span class="p">)</span>
-<span class="go">Material(formula=&#39;C22H10N2O5&#39;, density=1.42, name=&#39;kapton&#39;, categories=[&#39;polymer&#39;])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">find_material</span><span class="p">(</span><span class="s1">'kapton'</span><span class="p">)</span>
+<span class="go">Material(formula='C22H10N2O5', density=1.42, name='kapton', categories=['polymer'])</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -846,8 +854,8 @@ to those that match category names</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">get_material</span><span class="p">(</span><span class="s1">&#39;kapton&#39;</span><span class="p">)</span>
-<span class="go">(&#39;C22H10N2O5&#39;, 1.43)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">get_material</span><span class="p">(</span><span class="s1">'kapton'</span><span class="p">)</span>
+<span class="go">('C22H10N2O5', 1.43)</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -877,7 +885,7 @@ to those that match category names</p></li>
 <p>the data will be saved to the file ‘xraydb/materials.dat’ in the users
 configuration folder, and will be useful in subsequent sessions.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">add_material</span><span class="p">(</span><span class="s1">&#39;becopper&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu0.98e0.02&#39;</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;metal&#39;</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">add_material</span><span class="p">(</span><span class="s1">'becopper'</span><span class="p">,</span> <span class="s1">'Cu0.98e0.02'</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">'metal'</span><span class="p">])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -912,7 +920,7 @@ chemical compounds are case sensitive.</p></li>
 <li><p>if density is None and material is known, that density will be used.</p></li>
 </ol>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">material_mu</span><span class="p">(</span><span class="s1">'H2O'</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">)</span>
 <span class="go">5.32986401658495</span>
 </pre></div>
 </div>
@@ -920,7 +928,7 @@ chemical compounds are case sensitive.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="xraydb.material_mu_components">
-<span class="sig-name descname"><span class="pre">material_mu_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'total'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.material_mu_components" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">material_mu_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'total'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'elam'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xraydb.material_mu_components" title="Link to this definition">¶</a></dt>
 <dd><p>material_mu_components: absorption coefficient (in 1/cm) for a compound</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -928,8 +936,9 @@ chemical compounds are case sensitive.</p></li>
 <li><p><strong>name</strong> (<em>str</em>) – chemical formul or name of material from materials list.</p></li>
 <li><p><strong>energy</strong> (<em>float</em><em> or </em><em>ndarray</em>) – energy or array of energies in eV</p></li>
 <li><p><strong>density</strong> (<em>None</em><em> or </em><em>float</em>) – material density (gr/cm^3).</p></li>
-<li><p><strong>kind</strong> (<em>str</em>) – ‘photo’ or ‘total’for whether to
+<li><p><strong>kind</strong> (<em>str</em>) – ‘photo’ or ‘total’ for whether to
 return photo-absorption or total cross-section [‘total’]</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – ‘elam’ or ‘chantler’ for which table to use [‘elam’]</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -944,11 +953,11 @@ with tuple of (stoichiometric fraction, atomic mass, mu)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu</span><span class="p">(</span><span class="s1">&#39;quartz&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu</span><span class="p">(</span><span class="s1">'quartz'</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="go">50.36774553547068</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu_components</span><span class="p">(</span><span class="s1">&#39;quartz&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
-<span class="go">{&#39;mass&#39;: 60.0843, &#39;density&#39;: 2.65, &#39;elements&#39;: [&#39;Si&#39;, &#39;O&#39;],</span>
-<span class="go">&#39;Si&#39;: (1, 28.0855, 33.87943243018506), &#39;O&#39;: (2.0, 15.9994, 5.952824815297084)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xraydb</span><span class="o">.</span><span class="n">material_mu_components</span><span class="p">(</span><span class="s1">'quartz'</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="go">{'mass': 60.0843, 'density': 2.65, 'elements': ['Si', 'O'],</span>
+<span class="go">'Si': (1, 28.0855, 33.87943243018506), 'O': (2.0, 15.9994, 5.952824815297084)}</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1253,20 +1262,20 @@ and ion current (see note 4) [True]</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">xraydb</span><span class="w"> </span><span class="kn">import</span> <span class="n">ionchamber_fluxes</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="s1">'nitrogen'</span><span class="p">,</span> <span class="n">volts</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span>
 <span class="go">                           length=20.0, energy=10e3, sensitivity=1.e-6)</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fluxes: In=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Out=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Transmitted=</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="o">/</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Fluxes: In=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Out=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Transmitted=</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="o">/</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
 <span class="go">Fluxes: In=3.20045e+11, Out=2.90464e+11, Transmitted=90.76%</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;nitrogen&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;helium&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fl</span> <span class="o">=</span> <span class="n">ionchamber_fluxes</span><span class="p">(</span><span class="n">gas</span><span class="o">=</span><span class="p">{</span><span class="s1">'nitrogen'</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">'helium'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
 <span class="go">                           volts=1.25, length=20.0, energy=10000.0,</span>
 <span class="go">                           sensitivity=1.e-6)</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fluxes: In=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Out=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Transmitted=</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="o">/</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Fluxes: In=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Out=</span><span class="si">{</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, Transmitted=</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">fl</span><span class="o">.</span><span class="n">transmitted</span><span class="o">/</span><span class="n">fl</span><span class="o">.</span><span class="n">incident</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
 <span class="go">Fluxes: In=6.83845e+11, Out=6.51188e+11, Transmitted=95.22%</span>
 </pre></div>
 </div>
@@ -1434,8 +1443,8 @@ current from 1 carrier, for example if using a Frisch grid, use
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2025-September-24.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Last updated on 2026-November-09.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>

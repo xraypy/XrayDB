@@ -8,10 +8,10 @@
     <title>Installation &#8212; X-ray DB:  X-ray Reference Data in SQLite</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
-    <script src="_static/documentation_options.js?v=7d66af97"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/documentation_options.js?v=cc8a4273"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="X-ray Periodic Table of the Elements" href="periodictable.html" />
@@ -82,19 +82,19 @@ failures.</p>
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading">¶</a></h2>
 <p>The project began with the data from the compilation of basic atomic
 properties and X-ray absorption edge energies, emission energies, and
-absorption cross sections from <span id="id1">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span>, who
+absorption cross sections from <span class="bibtex-citation" id="id1">[<a class="reference internal" href="biblio.html#id4" title="W. T. Elam, B. D. Ravel, and J. R. Sieber. A new atomic database for x-ray spectroscopic calculations. Radiation Physics and Chemistry, 63(2):121–128, February 2002. URL: https://dx.doi.org/10.1016/S0969-806X(01)00227-4.">Elam, Ravel, and Sieber (2002)</a>]</span>, who
 assembled data from a several sources. The original code to store this
 with SQLite was written by Darren S. Dale (see
 <a class="reference external" href="https://github.com/praxes/elam_physical_reference">https://github.com/praxes/elam_physical_reference</a>) from CHESS.  More
 data has been added from other sources.  Energy widths of core holes
-for excited electronic levels from <span id="id2">[<a class="reference internal" href="biblio.html#id5" title="O. Keski-Rahkonen and M. O. Krause. Total and partial atomic-level widths. Atomic Data and Nuclear Data Tables, 14(2):139–146, 1974. URL: https://dx.doi.org/10.1016/S0092-640X(74)80020-3.">Keski-Rahkonen and Krause (1974)</a>]</span> and
-<span id="id3">[<a class="reference internal" href="biblio.html#id6" title="M. O. Krause and J. H. Oliver. Natural widths of atomic k and l levels, ka x-ray lines and several kll auger lines. Journal of Physical and Chemical Reference Data, 8:329, 1979. URL: https://dx.doi.org/10.1063/1.555595.">Krause and Oliver (1979)</a>]</span>.  Elastic X-ray scattering data, <span class="math notranslate nohighlight">\(f_0(q)\)</span>
-is taken from <span id="id4">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>.  Resonant scattering cross
+for excited electronic levels from <span class="bibtex-citation" id="id2">[<a class="reference internal" href="biblio.html#id5" title="O. Keski-Rahkonen and M. O. Krause. Total and partial atomic-level widths. Atomic Data and Nuclear Data Tables, 14(2):139–146, 1974. URL: https://dx.doi.org/10.1016/S0092-640X(74)80020-3.">Keski-Rahkonen and Krause (1974)</a>]</span> and
+<span class="bibtex-citation" id="id3">[<a class="reference internal" href="biblio.html#id6" title="M. O. Krause and J. H. Oliver. Natural widths of atomic k and l levels, ka x-ray lines and several kll auger lines. Journal of Physical and Chemical Reference Data, 8:329, 1979. URL: https://dx.doi.org/10.1063/1.555595.">Krause and Oliver (1979)</a>]</span>.  Elastic X-ray scattering data, <span class="math notranslate nohighlight">\(f_0(q)\)</span>
+is taken from <span class="bibtex-citation" id="id4">[<a class="reference internal" href="biblio.html#id7" title="D. Waasmaier and A. Kirfel. New analytical scattering factor functions for free atoms and ions. Acta Crystallographica A, 51:416–431, 1995. URL: https://dx.doi.org/10.1107/S0108767394013292.">Waasmaier and Kirfel (1995)</a>]</span>.  Resonant scattering cross
 sections <span class="math notranslate nohighlight">\(f'(E)\)</span> and <span class="math notranslate nohighlight">\(f''(E)\)</span> and absorption cross
-sections from <span id="id5">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span> as from
+sections from <span class="bibtex-citation" id="id5">[<a class="reference internal" href="biblio.html#id8" title="C. T. Chantler. Detailed tabulation of atomic form factors, photoelectric absorption and scattering cross section, and mass attenuation coefficients in the vicinity of absorption edges in the soft X-ray (Z=30-36, Z=60-89, E=0.1 keV-10 keV), addressing convergence issues of earlier work. Journal of Physical and Chemical Reference Data, 29(4):597–1048, JUL-AUG 2000. URL: https://dx.doi.org/10.1063/1.1321055.">Chantler (2000)</a>]</span> as from
 <a class="reference external" href="https://www.nist.gov/pml/data/ffast/index.cfm">https://www.nist.gov/pml/data/ffast/index.cfm</a>, but on a finer energy
 grid been provided directly by Christopher T. Chantler
-<span id="id6">[<a class="reference internal" href="biblio.html#id9" title="C. T. Chantler. FFAST Data on a finer energy grid: Personal Communication. 2016.">Chantler (2016)</a>]</span>.  Nathan Whittington from U Tennessee and Roman
+<span class="bibtex-citation" id="id6">[<a class="reference internal" href="biblio.html#id9" title="C. T. Chantler. FFAST Data on a finer energy grid: Personal Communication. 2016.">Chantler (2016)</a>]</span>.  Nathan Whittington from U Tennessee and Roman
 Chernikov from BNL provided the code to calculate reflectivity of
 multilayer and coated mirrors.  Code for better calculation of sample
 thicknesses for XAFS transmission samples was provided by easyXAFS.
@@ -129,15 +129,15 @@ To the extent possible, and unless otherwise stated, the database files, data
 sources, and documentation files here are placed in the public domain, using
 the Creative Commons 1.0 Universal (CC0 1.0) Public Domain Dedication below.
 
-In particular, the files named &quot;xraydb.sqlite&quot;, &quot;xraydb.schema&quot;, and all files
+In particular, the files named "xraydb.sqlite", "xraydb.schema", and all files
 in the following folders and subfolders:
   data_sources/
   poster/
   doc/
 
-are all placed in the &quot;Public Domain&quot; using the CC0 1.0 dedication.
+are all placed in the "Public Domain" using the CC0 1.0 dedication.
 
-The files in the folder &#39;python&#39; and &#39;python/xraydb&#39; are copyrighted
+The files in the folder 'python' and 'python/xraydb' are copyrighted
 by the lead authors and copyrighted using an MIT License, which allows
 for distribution and re-use of the source code with the only
 restriction being to not remove the notice of copyright.  Each of
@@ -246,8 +246,8 @@ The Creative Commons 1.0 Universal (CC0 1.0) Public Domain Dedication
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright Public Domain.
-      Last updated on 2025-September-24.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Last updated on 2026-November-09.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
     </div>
   </body>
 </html>

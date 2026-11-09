@@ -79,7 +79,7 @@ def unpack_compressed(val):
 def readonly_flush(*args, **kwargs):
     return
 
-class XrayDB():
+class XrayDB:
     """
     Database of Atomic and X-ray Data
 
@@ -98,7 +98,7 @@ class XrayDB():
             parent, _ = os.path.split(__file__)
             dbname = os.path.join(parent, dbname)
             if not os.path.exists(dbname):
-                raise IOError(f"Database '{dbname}' not found!")
+                raise OSError(f"Database '{dbname}' not found!")
         self._db_lock = threading.RLock()
         if not isxrayDB(dbname):
             raise ValueError(f"'{dbname}' is not a valid X-ray Database file!")
@@ -154,7 +154,7 @@ class XrayDB():
             else:
                 data = self._cache[tablename] = {}
 
-            key = f"{column:s}_{repr(value)}"
+            key = f"{column:s}_{value!r}"
             if key not in data:
                 tab = self.tables[tablename]
                 col = getattr(tab.c, column, None)
@@ -456,7 +456,7 @@ class XrayDB():
             elif element.lower() in self.__atomic_names:
                 row = [r for r in rows if r.name == element.lower()][0]
             else:
-                raise ValueError(f"unknown element '{repr(element)}'")
+                raise ValueError(f"unknown element '{element!r}'")
         return ElementData(int(row.atomic_number),
                            row.element.title(), row.name,
                            row.molar_mass, row.density)

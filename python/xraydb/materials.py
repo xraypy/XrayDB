@@ -9,7 +9,7 @@ from collections import namedtuple
 import platformdirs
 
 from .chemparser import chemparse
-from .xray import mu_elam, atomic_mass
+from .xray import mu_elam, mu_chantler, atomic_mass
 
 MATERIALS = None
 

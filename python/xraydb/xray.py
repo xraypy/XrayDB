@@ -881,7 +881,7 @@ def mirror_reflectivity(formula, theta, energy, density=None,
     elif output == 'amplitude':
         return r_amp
     else:
-        raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
+        raise ValueError(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
 
 def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_periods=1,
                                 density=None, substrate_density=None, substrate_rough=0.0,
@@ -918,11 +918,11 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
     """
 
     if thickness is None:
-        raise Exception('Please provide thicknesses in Angstroms of each layer (exluding substrate)')
+        raise ValueError('Please provide thicknesses in Angstroms of each layer (exluding substrate)')
     if len(stackup) != len(thickness):
-        raise Exception(f'number of materials ({len(stackup)}) should match number of thicknesses ({len(thickness)})')
+        raise ValueError(f'number of materials ({len(stackup)}) should match number of thicknesses ({len(thickness)})')
     if density is not None and len(stackup) != len(density):
-        raise Exception(f"If not None, number of densities ({len(density)}) should match number of materials({len(stackup)})")
+        raise ValueError(f"If not None, number of densities ({len(density)}) should match number of materials({len(stackup)})")
 
     two_dim = False
     if isinstance(theta, (list, np.ndarray)) and isinstance(energy, (list, np.ndarray)):
@@ -946,7 +946,7 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
     for i in range(n_layers):
         if density[i] is None:
             if get_material(stackup[i]) is None:
-                raise Exception(f"{stackup[i]} not found.\n" \
+                raise ValueError(f"{stackup[i]} not found.\n" \
                 "Specify Density or use add_material() to add a custom material")
             stackup[i], density[i] = get_material(stackup[i])
 
@@ -964,7 +964,7 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
     # substrate layer
     if substrate_density is None:
         if get_material(substrate) is None:
-            raise Exception(f"{substrate} not found.\n" \
+            raise ValueError(f"{substrate} not found.\n" \
             "Specify Density or use add_material() to add a custom material")
         substrate, substrate_density= get_material(substrate)
     delta_sub, beta_sub, _ = xray_delta_beta(substrate, substrate_density, energy)
@@ -994,7 +994,7 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
     # surface
         fresnel_r = (kiz - kz[0]/n[0])/(kiz + kz[0]/n[0])
     else:
-        raise Exception("Use either 's' or 'p' polarization")
+        raise ValueError("Use either 's' or 'p' polarization")
 
     p2 = np.exp(2j*t[0]*kz[0])
     r_amp = (fresnel_r + r_amp*(p2))/(1 + fresnel_r*r_amp*(p2))
@@ -1010,7 +1010,7 @@ def multilayer_reflectivity(stackup, thickness, substrate, theta, energy, n_peri
     elif output == 'amplitude':
         return r_amp
     else:
-        raise Exception(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
+        raise ValueError(f"Unknown output type {output}. Use 'intensity' or 'amplitude'.")
 
 
 def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coating_dens=None, surface_roughness=0.0,
@@ -1049,7 +1049,7 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
     """
 
     if coating_thick is None:
-        raise Exception('Please provide thickness of the coating in Angstroms')
+        raise ValueError('Please provide thickness of the coating in Angstroms')
 
     stackup = [coating]
     thickness = [coating_thick]
@@ -1057,7 +1057,7 @@ def coated_reflectivity(coating, coating_thick, substrate, theta, energy, coatin
 
     if binder is not None:
         if binder_thick is None:
-            raise Exception('Please provide thickness of binding layer in Angstroms')
+            raise ValueError('Please provide thickness of binding layer in Angstroms')
         stackup.append(binder)
         thickness.append(binder_thick)
         if binder_dens is not None:
@@ -1582,7 +1582,7 @@ def transmission_sample(sample, energy, absorp_total=2.6, area=1,
 
     absorbance_steps = {}
     pre_edge = np.linspace(energy - 200, energy - 60, 100)
-    for el in sample.keys():
+    for el in sample:
         coeffs = np.polyfit(pre_edge, mu_elam(el, pre_edge), 3)
         extrapolated = sum([c * energy ** (len(coeffs) - 1 - i) \
                             for i, c in enumerate(coeffs)])

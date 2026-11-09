@@ -36,7 +36,7 @@ jobs:
         python -m pip install '.[all]'
     - name: Test with pytest
       run: |
-        cd tests
+        cd python/tests
         python -m pytest
         python -m pytest --cov=xraydb --cov-report=xml
     - name: upload coverage report to codecov

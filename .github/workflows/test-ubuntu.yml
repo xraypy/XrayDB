@@ -1,4 +1,4 @@
-name: xraydb python, ubuntu, conda
+name: xraydb on ubuntu
 
 permissions:
   contents: read
@@ -12,7 +12,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

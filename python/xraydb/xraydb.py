@@ -766,8 +766,8 @@ class XrayDB:
             tab_spl = self.unpack(row.log_photoabsorption_spline)
 
         en = 1.0*as_ndarray(energies)
-        if min(en) < 100.0:
-            warn('Elam tables are unreliable for energies < 100 eV')
+        if min(en) < 800.0:
+            warn('Elam tables are unreliable for energies < 800 eV')
         if max(en) > 800_000.:
             warn('Elam tables are unreliable for energies > 800 keV')
         en[np.where(en < 100.0)] = 100.0

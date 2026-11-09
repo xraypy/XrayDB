@@ -5,6 +5,7 @@ Copyright 2025  Matthew Newville, The University of Chicago, newville@cars.uchic
 using the MIT license
 """
 import threading
+from warnings import warn
 from collections import namedtuple
 from collections.abc import Iterable
 import numpy as np
@@ -336,9 +337,9 @@ def mu_elam(element, energy, kind='total'):
         emin, emax = energy, energy
 
     if emax > 0.8e6:
-        raise Warning('Elam Tables fail above 800 keV')
+        warn('Elam Tables fail above 800 keV')
     if emin < 800.0:
-        raise Warning('Elam Tables unreliable below 800 eV')
+        warn('Elam Tables unreliable below 800 eV')
 
     return xdb.mu_elam(element, energy, kind=kind)
 

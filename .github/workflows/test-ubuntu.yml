@@ -1,5 +1,9 @@
 name: xraydb python, ubuntu, conda
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   push:
     branches: [ master ]
@@ -8,32 +12,32 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 5
       fail-fast: false
       matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
-    defaults:
-      run:
-        shell: bash -l {0}
+        python-version: ["3.11", "3.12", "3.13", "3.14", "3.15"]
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python  ${{ matrix.python-version }} from Miniconda/conda
-        uses: actions/setup-python@v4
-        with:
-            python-version: ${{ matrix.python-version }}
-      - name: Install conda and dependencies
-        run: |
-          echo $CONDA/bin >> $GITHUB_PATH
-          conda install -y -c conda-forge python=${{ matrix.python-version }} "numpy>=2" "scipy>=1.13"
-          conda info
-          conda list
-      - name: Install xraydb and run tests
-        run: |
-          cd python
-          pip install ".[all]"
-          cd tests
-          python -m pytest --cov=xraydb --cov-report=xml
-      - name: upload coverage report to codecov
-        uses: codecov/codecov-action@v2
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install setuptools codecov pytest pytest-cov coverage numpy scipy
+    - name: Install this package
+      run: |
+        cd python
+        python -m pip install '.[all]'
+    - name: Test with pytest
+      run: |
+        cd tests
+        python -m pytest
+        python -m pytest --cov=xraydb --cov-report=xml
+    - name: upload coverage report to codecov
+      uses: codecov/codecov-action@v2

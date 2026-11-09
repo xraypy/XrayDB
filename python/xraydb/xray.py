@@ -6,6 +6,7 @@ using the MIT license
 """
 import threading
 from collections import namedtuple
+from collections.abc import Iterable
 import numpy as np
 
 from .utils import (R_ELECTRON_CM, AVOGADRO, PLANCK_HC,
@@ -283,15 +284,19 @@ def f2_chantler(element, energy):
     return xdb.f2_chantler(element, energy)
 
 
-def mu_chantler(element, energy, incoh=False, photo=False):
+def mu_chantler(element, energy, incoh=False, photo=False,
+                nonphoto=False, kind=None):
     """X-ray mass attenuation coeficient, mu/rho, for an element and
     energy or array of energies.   Data is from the Chantler tables.
 
     Args:
         element (int, str):  atomic number, atomic symbol for element
         energy (float or ndarray):   energy or array of energies
-        incoh (bool): whether to return only the incoherent contribution [False]
+        incoh (bool): whether to return only the incoherent+coherenet contribution [False]
         photo (bool): whether to return only the photo-electric contribution [False]
+        nonphoto (bool): whether to return only the incoherent+cohereent contribution [False]
+        kind (str or None): type of cross-section to use, one of (None,
+                               'total', 'photo', 'nonphoto') [None]
 
     Returns:
         float value or ndarray
@@ -299,6 +304,9 @@ def mu_chantler(element, energy, incoh=False, photo=False):
     Notes:
         1. Values returned are in units of cm^2/gr
         2. The default is to return total attenuation coefficient.
+        3. The Chantler tables do not separate coherent from incoherent scattering
+        4. Using `incoh`, `photo`, `nonphoto` should be considered deprecated and
+           use of `kind` preferred.
     """
     xdb = get_xraydb()
     return xdb.mu_chantler(element, energy, incoh=incoh, photo=photo)
@@ -311,7 +319,7 @@ def mu_elam(element, energy, kind='total'):
         element (int, str):  atomic number, atomic symbol for element
         energy (float or ndarray):   energy or array of energies
         kind (str):  type of cross-section to use, one of ('total',
-                     'photo', 'coh', 'incoh') ['total']
+                     'photo', 'coh', 'incoh', 'nonphoto') ['total']
 
     Returns:
         float value or ndarray
@@ -322,6 +330,16 @@ def mu_elam(element, energy, kind='total'):
 
     """
     xdb = get_xraydb()
+    if isinstance(energy, Iterable):
+        emin, emax = min(energy), max(energy)
+    else:
+        emin, emax = energy, energy
+
+    if emax > 0.8e6:
+        raise Warning('Elam Tables fail above 800 keV')
+    if emin < 800.0:
+        raise Warning('Elam Tables unreliable below 800 eV')
+
     return xdb.mu_elam(element, energy, kind=kind)
 
 

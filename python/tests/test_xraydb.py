@@ -12,12 +12,15 @@ from xraydb import XrayDB
 def test_xraydb_version():
     xdb = XrayDB()
     version = xdb.get_version()
-    assert 'XrayDB Version: 9.2, Python' in version
+    assert 'XrayDB Version:' in version
 
     hist = xdb.get_version(with_history=True)
     assert len(hist) > 350
     hist = hist.split('\n')
     assert len(hist) > 4
+
+    str_val = float(xdb.version_string())
+    assert str_val > 9.99
 
 def test_molar_mass():
     xdb = XrayDB()

@@ -367,7 +367,7 @@ that portion of the current, and thereby give the ion chamber a faster time
 response.  In that case, the current will be half of the value given above.
 
 As discussed above, the coherent (Rayleigh) scattering produces no electrons,
-but the incoherent (Compton) scattering does, and the energy of the the
+but the incoherent (Compton) scattering does, and the energy of the
 Compton-scattered electron varies with both X-ray energy and scattering angle,
 as does the probability of scattering. Integrating over all angles (and
 assuming the ion chamber is large enough to stop the scattered electrons) gives
@@ -529,7 +529,7 @@ Coated mirrors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In principle, reflectivity calculation for coated mirrors is the same
-as for multilayer mirrors; however, :func:`coated_reflectivity`` is
+as for multilayer mirrors; however, :func:`coated_reflectivity` is
 provided to simplify the recursion and have more clear input
 parameters.  The function takes top layer material and thickness,
 substrate material and thickness, incident angle, energy, and optional

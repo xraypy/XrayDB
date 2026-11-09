@@ -125,15 +125,16 @@ def material_mu(name, energy, density=None, kind='total'):
     return density*mu/mass_tot
 
 
-def material_mu_components(name, energy, density=None, kind='total'):
+def material_mu_components(name, energy, density=None, kind='total', table='elam'):
     """material_mu_components: absorption coefficient (in 1/cm) for a compound
 
     Args:
         name (str): chemical formul or name of material from materials list.
         energy (float or ndarray):   energy or array of energies in eV
         density (None or float):  material density (gr/cm^3).
-        kind (str):  'photo' or 'total'for whether to
+        kind (str):  'photo' or 'total' for whether to
                   return photo-absorption or total cross-section ['total']
+        table (str):  'elam' or 'chantler' for which table to use ['elam']
 
     Returns:
         dict for constructing mu per element,
@@ -161,10 +162,14 @@ def material_mu_components(name, energy, density=None, kind='total'):
         formula = mater.formula
         density = mater.density
 
+    if kind.lower() not in ('photo', 'total'):
+        kind = 'total'
+
     out = {'mass': 0.0, 'density': density, 'elements':[]}
+    mufunc = mu_chanter if table.lower().startswith('chant') else mu_elam
     for atom, frac in chemparse(formula).items():
         mass  = atomic_mass(atom)
-        mu    = mu_elam(atom, energy, kind=kind)
+        mu    = mufunc(atom, energy, kind=kind)
         out['mass'] += frac*mass
         out[atom] = (frac, mass, mu)
         out['elements'].append(atom)

@@ -130,9 +130,10 @@ class XrayDB:
 
     def close(self):
         "close session"
-        self.engine.dispose()
+        self.conn.close()
         self.session.flush()
         self.session.close()
+        self.engine.dispose()
 
     def query(self, *args, **kws):
         "generic query"
@@ -147,7 +148,6 @@ class XrayDB:
                 q = self.tables[tablename].select()
                 rows = self.session.execute(q).fetchall()
                 self._cache[tablename] = rows
-                # print("cached ", tablename)
         else:
             if tablename in self._cache:
                 data = self._cache[tablename]

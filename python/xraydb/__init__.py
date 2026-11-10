@@ -9,6 +9,9 @@
             The University of Chicago
 """
 
+import warnings
+warnings.filterwarnings('once')
+
 from .version import __version__
 
 from .xraydb import XrayDB

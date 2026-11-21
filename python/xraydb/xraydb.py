@@ -238,7 +238,7 @@ class XrayDB:
         Parameters:
             ion (string, int, or None):  atomic number, symbol or ionic symbol
                   of scattering element.
-            q (float, list, ndarray): value(s) of q for scattering factors
+            q (float, list, ndarray): sin(theta) / wavelength, in inverse angstroms
 
         Returns:
             ndarray: elastic scattering factors
@@ -252,8 +252,9 @@ class XrayDB:
                      0.43883403,   0.27673021])
 
         Notes:
-            q = sin(theta) / lambda, where theta = incident angle,
-            and lambda = X-ray wavelength
+            The angle between the incident and scattered beams is 2*theta.
+            For a scattering-vector magnitude Q in inverse angstroms, pass
+            q = Q / (4*pi).
 
             Z values from 1 to 98 (and symbols 'H' to 'Cf') are supported.
             The list of ionic symbols can be read with the function .f0_ions()

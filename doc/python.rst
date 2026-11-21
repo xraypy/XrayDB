@@ -32,8 +32,8 @@ with:
     #
     # X-ray elastic (Thomson) scattering factors:
     >>> import numpy as np
-    >>> q =np.linspace(0, 5, 11)
-    >>> xraydb.f0('Fe', q)
+    >>> k = np.linspace(0, 5, 11)  # sin(theta) / wavelength, in inverse angstroms
+    >>> xraydb.f0('Fe', k)
     array([25.994603  , 11.50848469,  6.55945765,  4.71039413,  3.21048827,
            2.20939146,  1.65112769,  1.36705887,  1.21133507,  1.10155689,
            1.0035555 ])
@@ -135,6 +135,15 @@ Atomic Properties
 
 Elastic Scattering Factors
 ---------------------------------
+
+For a scattering angle :math:`2\theta` of 60 degrees and a wavelength of
+2 angstroms, the argument to :func:`f0` is 0.25 inverse angstroms:
+
+    >>> import numpy as np
+    >>> import xraydb
+    >>> k = np.sin(np.deg2rad(60 / 2)) / 2
+    >>> print(f"{xraydb.f0('Fe', k)[0]:.4f}")
+    18.3594
 
 .. autofunction:: f0
 

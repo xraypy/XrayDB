@@ -339,12 +339,13 @@ Each row represents a transition.
 Waasmaier Table
 ------------------------
 
-The `Waasmaier` table holds data for calculating elastic X-ray scattering
-factors :math:`f_0(k)`, from :cite:`Waasmaier_Kirfel`.  The scattering
-factor is unitless, and :math:`k=\sin(\theta)/\lambda` where :math:`\theta`
-is the scattering angle and :math:`\lambda` is the X-ray wavelength.
-available for many common ionic states for each element.  Each row
-represents an ion.
+The `Waasmaier` table holds coefficients for calculating the unitless elastic
+X-ray scattering factor :math:`f_0(k)` from :cite:`Waasmaier_Kirfel`.
+Each row describes a neutral atom or an ion. The argument is
+:math:`k=\sin(\theta)/\lambda` in inverse angstroms, where :math:`2\theta`
+is the angle between the incident and scattered beams and :math:`\lambda`
+is the wavelength in angstroms. For a scattering-vector magnitude
+:math:`Q=4\pi\sin(\theta)/\lambda`, use :math:`k=Q/(4\pi)`.
 
 .. index:: DB Table of Elastic Scattering Cross Section Coefficients
 .. _db_waasmaier_table:

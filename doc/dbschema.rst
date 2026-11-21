@@ -345,7 +345,8 @@ Each row describes a neutral atom or an ion. The argument is
 :math:`k=\sin(\theta)/\lambda` in inverse angstroms, where :math:`2\theta`
 is the angle between the incident and scattered beams and :math:`\lambda`
 is the wavelength in angstroms. For a scattering-vector magnitude
-:math:`Q=4\pi\sin(\theta)/\lambda`, use :math:`k=Q/(4\pi)`.
+:math:`Q=4\pi\sin(\theta)/\lambda` (Eq. 2 of :cite:`Li_Zhang`), use
+:math:`k=Q/(4\pi)`.
 
 .. index:: DB Table of Elastic Scattering Cross Section Coefficients
 .. _db_waasmaier_table:
